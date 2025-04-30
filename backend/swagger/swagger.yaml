@@ -1,0 +1,48 @@
+openapi: 3.0.0
+info:
+  title: Seedly API
+  version: 1.0.0
+  description: API documentation for the Seedly project
+
+servers:
+  - url: http://localhost:5000
+
+paths:
+  /plants:
+    get:
+      summary: Get all plants
+      description: Returns a list of all available plants
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /plants/search:
+    get:
+      summary: Search plants with filters
+      description: Returns filtered plant data based on query parameters
+      parameters:
+        - name: name
+          in: query
+          schema:
+            type: string
+          description: Filter by plant name
+        - name: edible
+          in: query
+          schema:
+            type: boolean
+          description: Filter by edibility
+      responses:
+        '200':
+          description: A filtered list of plants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object

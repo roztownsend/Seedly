@@ -1,4 +1,4 @@
-import { pool } from '../config/connection';
+import { pool } from '../config/dbConnection';
 import fs from 'fs';
 import path from 'path';
 

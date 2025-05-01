@@ -5,7 +5,7 @@ dotenv.config();
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 import path from 'path';
-import { pool } from './config/connection';
+import { pool } from './config/dbConnection';
 
 //testing server startup
 pool.query('SELECT NOW()')

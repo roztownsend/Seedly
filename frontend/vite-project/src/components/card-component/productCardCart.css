@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.product-card {
+  @apply w-[560px] h-[133px] flex;
+}
+
+.product-card__image {
+  @apply w-[133px] h-[133px];
+}
+
+.product-card__details {
+  @apply flex justify-between items-start flex-col w-[367px] h-[130px] p-2;
+}
+
+.product-card__title {
+  @apply font-semibold text-[22px] leading-[30px] tracking-[-0.55px];
+}
+
+.product-card__price {
+  @apply font-semibold text-[22px] leading-[30px] tracking-[-0.55px];
+}
+
+.product-card__actions {
+    @apply flex items-start gap-[12px];
+}
+
+.product-card__quantity {
+    @apply w-[90px] h-[46px] flex items-center justify-between border-[1px] py-[11px] px-[9px] border-black;
+}
+
+
+.product-card__remove {
+  @apply mt-auto font-normal text-[14px] leading-[20px] tracking-[-0.4px] align-bottom underline decoration-solid [text-decoration-thickness:0%];
+}
+  
+  
+  
+  
+  

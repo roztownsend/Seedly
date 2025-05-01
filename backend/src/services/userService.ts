@@ -1,1 +1,1 @@
-import { pool } from '../config/connection';
+import { pool } from '../config/dbConnection';

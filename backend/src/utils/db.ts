@@ -1,4 +1,4 @@
-import { pool } from '../config/connection';
+import { pool } from '../config/dbConnection';
 
 //query wrapper
 export const db = {

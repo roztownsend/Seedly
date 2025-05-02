@@ -1,40 +1,62 @@
-import { Router } from 'express';
-import { pool } from '../config/connection';
+//there are a few debug console.logs, shouldnt be touched
+
+import { Router, Request, Response } from 'express';
+import { pool } from '../config/dbConnection';
+import { z } from 'zod';
 
 const router = Router();
 
-router.get('/plants/search', async (req, res) => {
+//get all plants
+router.get('/', async (_req: Request, res: Response): Promise<void> => {
+  console.log('GET /plants triggered');
   try {
-    const { name, cycle, min_price, max_price } = req.query;
+    const { rows } = await pool.query('SELECT * FROM plants');
+    res.json({ data: rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
-    const conditions: string[] = [];
-    const values: any[] = [];
+//search w parameters, needs to be add timeline later, mb.
+router.get('/search', async (req: Request, res: Response): Promise<void> => {
+  const schema = z.object({
+    name: z.string().optional(),
+    cycle: z.string().optional(),
+    keyword: z.string().optional(),
+    min_price: z.preprocess((v) => v !== undefined ? Number(v) : undefined, z.number().nonnegative().optional()),
+    max_price: z.preprocess((v) => v !== undefined ? Number(v) : undefined, z.number().nonnegative().optional())
+  });
 
-    if (name) {
-      values.push(`%${name}%`);
-      conditions.push(`product_name ILIKE $${values.length}`);
-    }
+  const parsed = schema.safeParse(req.query);
+  if (!parsed.success) {
+    console.log('Zod parse failed:', parsed.error.flatten());
+    res.status(400).json({ error: parsed.error.flatten() });
+    return;
+  }
 
-    if (cycle) {
-      values.push(`%${cycle}%`);
-      conditions.push(`cycle ILIKE $${values.length}`);
-    }
+  const { name, cycle, keyword, min_price, max_price } = parsed.data;
 
-    if (min_price) {
-      values.push(min_price);
-      conditions.push(`price >= $${values.length}`);
-    }
+  const conditions: string[] = [];
+  const values: any[] = [];
 
-    if (max_price) {
-      values.push(max_price);
-      conditions.push(`price <= $${values.length}`);
-    }
+  const addCond = (sql: string, val: any) => {
+    values.push(val);
+    conditions.push(`${sql} $${values.length}`);
+  };
 
-    const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
-    const query = `SELECT * FROM plants ${whereClause};`;
+  if (name) addCond('product_name ILIKE', `%${name}%`);
+  if (cycle) addCond('cycle ILIKE', `%${cycle}%`);
+  if (keyword) addCond('description ILIKE', `%${keyword}%`);
+  if (min_price !== undefined) addCond('price >=', min_price);
+  if (max_price !== undefined) addCond('price <=', max_price);
 
-    const result = await pool.query(query, values);
-    res.json(result.rows);
+  const whereClause = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+  const sql = `SELECT DISTINCT ON (product_name) * FROM plants ${whereClause} ORDER BY product_name, id LIMIT 50`;
+
+  try {
+    const { rows } = await pool.query(sql, values);
+    res.json({ data: rows });
   } catch (err) {
     console.error('Error searching plants:', err);
     res.status(500).json({ error: 'Internal server error' });

@@ -1,4 +1,4 @@
-import { pool } from '../config/connection';
+import { pool } from '../config/dbConnection';
 
 //query wrapper
 export const db = {
@@ -7,10 +7,10 @@ export const db = {
     try {
       const result = await pool.query(text, params);
       const duration = Date.now() - start;
-      console.log('✅ DB Query', { text, duration, rows: result.rowCount });
+      console.log('DB Query', { text, duration, rows: result.rowCount });
       return result;
     } catch (err) {
-      console.error('❌ DB Query Failed', { text, error: err });
+      console.error('DB Query Failed', { text, error: err });
       throw err;
     }
   },

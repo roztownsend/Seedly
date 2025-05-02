@@ -1,1 +1,2 @@
-import { pool } from '../config/connection';
+//we will use this later
+import { pool } from '../config/dbConnection';

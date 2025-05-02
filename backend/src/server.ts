@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
 
+import plantRoutes from './routes/plantRoutes';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 import path from 'path';
@@ -25,7 +26,10 @@ app.get('/', (_req, res) => {
     res.send("API is running");
   });
 
-  
+//routes
+app.use('/plants', plantRoutes);
+
+
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //testing database connection

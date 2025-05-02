@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ProductCardProps } from '../../types/types';
-import './productCardCartCheckOut.css';
+import './productCardCheckOut.css';
 
 const ProductCardCheckOut: React.FC<ProductCardProps> = ({
   imageUrl,
@@ -12,9 +12,15 @@ const ProductCardCheckOut: React.FC<ProductCardProps> = ({
 }) => {
   const [counter, setCounter] = useState(quantity);
 
+  //Sync state with prop
+  useEffect(() => {
+    setCounter(quantity);
+  }, [quantity]);
+
+  //Notify parent when counter changes
   useEffect(() => {
     onQuantityChange?.(counter);
-  }, [counter, onQuantityChange]);
+  }, [counter]);
 
   return (
     <section className="product-card-checkout">

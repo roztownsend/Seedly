@@ -2,9 +2,9 @@ import Sample from "./components/card-component/Sample"
 
 const App = () => {
   return (
-    <>
-   <Sample />
-    </>
+    <div>
+      <Sample />      
+    </div>
   )
 }
 

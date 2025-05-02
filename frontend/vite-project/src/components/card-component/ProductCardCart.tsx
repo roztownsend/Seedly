@@ -7,7 +7,8 @@ const ProductCardCart: React.FC<ProductCardProps> = ({
   seedName,
   price,
   quantity,
-  onQuantityChange
+  onQuantityChange,
+  onRemove
 }) => {
   const [counter, setCounter] = useState(quantity);
 
@@ -24,22 +25,27 @@ const ProductCardCart: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <section className="product-card">
-      <div className="product-card__image">
+    <section className="product-card-cart">
+      <div className="product-card-cart__image">
         <img src={imageUrl} alt={seedName} className="object-cover w-full h-full" />
       </div>
-      <div className="product-card__details">
-        <h2 className="product-card__title">{seedName}</h2>
-          <div className="product-card__actions">
-            <div className="product-card__quantity">
-              <button onClick={handleDecrement} disabled={counter <= 0}>-</button>
-              <span>{counter}</span>
-              <button onClick={handleIncrement}>+</button>
-            </div>
+      <div className="product-card-cart__details">
+        <h2 className="product-card-cart__title">{seedName}</h2>
+        <div className="product-card-cart__actions">
+          <div className="product-card-cart__quantity">
+            <button onClick={handleDecrement} disabled={counter <= 0}>-</button>
+            <span>{counter}</span>
+            <button onClick={handleIncrement}>+</button>
           </div>
-        <h2 className="product-card__price">{price.toFixed(2)}Kr</h2>
+        </div>
+        <h2 className="product-card-cart__price">{(price * counter).toFixed(2)}Kr</h2>
       </div>
-      <button className="product-card__remove">Remove</button>
+      <button 
+        className="product-card-cart__remove"
+        onClick={onRemove}
+      >
+        Remove
+      </button>
     </section>
   );
 };

@@ -7,7 +7,8 @@ const ProductCardCheckOut: React.FC<ProductCardProps> = ({
   seedName,
   price,
   quantity,
-  onQuantityChange
+  onQuantityChange,
+  onRemove
 }) => {
   const [counter, setCounter] = useState(quantity);
 
@@ -16,16 +17,21 @@ const ProductCardCheckOut: React.FC<ProductCardProps> = ({
   }, [counter, onQuantityChange]);
 
   return (
-    <section className="product-card">
-      <div className="product-card__image">
+    <section className="product-card-checkout">
+      <div className="product-card-checkout__image">
         <img src={imageUrl} alt={seedName} className="object-cover w-full h-full" />
       </div>
-      <div className="product-card__details">
-        <h2 className="product-card__title">{seedName}</h2>
-        <p className="product-card__quantity-text">Quantity: {counter}</p>
-        <h2 className="product-card__price">{price.toFixed(2)}Kr</h2>
+      <div className="product-card-checkout__details">
+        <h2 className="product-card-checkout__title">{seedName}</h2>
+        <p className="product-card-checkout__quantity-text">Quantity: {counter}</p>
+        <h2 className="product-card-checkout__price">{(price * counter).toFixed(2)}Kr</h2>
       </div>
-      <button className="product-card__remove">Remove</button>
+      <button 
+        className="product-card-checkout__remove"
+        onClick={onRemove}
+      >
+        Remove
+      </button>
     </section>
   );
 };

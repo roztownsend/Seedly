@@ -5,5 +5,6 @@ export interface ProductCardProps {
     quantity: number;
     onQuantityChange?: (newQuantity: number) => void;
     onAddToCart?: (quantity: number) => void;
+    onRemove?: () => void;
   }
   

@@ -2,36 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-.product-card {
+.product-card-cart {
   @apply w-[560px] h-[133px] flex;
 }
 
-.product-card__image {
+.product-card-cart__image {
   @apply w-[133px] h-[133px];
 }
 
-.product-card__details {
+.product-card-cart__details {
   @apply flex justify-between items-start flex-col w-[367px] h-[130px] p-2;
 }
 
-.product-card__title {
+.product-card-cart__title {
   @apply font-semibold text-[22px] leading-[30px] tracking-[-0.55px];
 }
 
-.product-card__price {
+.product-card-cart__price {
   @apply font-semibold text-[22px] leading-[30px] tracking-[-0.55px];
 }
 
-.product-card__actions {
+.product-card-cart__actions {
     @apply flex items-start gap-[12px];
 }
 
-.product-card__quantity {
+.product-card-cart__quantity {
     @apply w-[90px] h-[46px] flex items-center justify-between border-[1px] py-[11px] px-[9px] border-black;
 }
 
 
-.product-card__remove {
+.product-card-cart__remove {
   @apply mt-auto font-normal text-[14px] leading-[20px] tracking-[-0.4px] align-bottom underline decoration-solid [text-decoration-thickness:0%];
 }
   

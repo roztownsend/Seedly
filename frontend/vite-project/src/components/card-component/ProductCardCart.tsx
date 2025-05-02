@@ -8,7 +8,8 @@ const ProductCardCart: React.FC<ProductCardProps> = ({
   price,
   quantity,
   onQuantityChange,
-  onRemove
+  onRemove,
+  showQuantityControls = true,
 }) => {
   const [counter, setCounter] = useState(quantity);
 
@@ -36,11 +37,19 @@ const ProductCardCart: React.FC<ProductCardProps> = ({
       <div className="product-card-cart__details">
         <h2 className="product-card-cart__title">{seedName}</h2>
         <div className="product-card-cart__actions">
-          <div className="product-card-cart__quantity">
-            <button onClick={handleDecrement} disabled={counter <= 0}>-</button>
-            <span>{counter}</span>
-            <button onClick={handleIncrement}>+</button>
-          </div>
+
+          {/* Quantity controls */}
+          {showQuantityControls ? (
+            <div className="product-card-cart__quantity">
+              <button onClick={handleDecrement} disabled={counter <= 0}>-</button>
+              <span>{counter}</span>
+              <button onClick={handleIncrement}>+</button>
+            </div>
+          ) : (
+            // If showQuantityControls is false, display quantity text
+            <p className="product-card-checkout__quantity-text">Quantity: {counter}</p>
+          )}
+
         </div>
         <h2 className="product-card-cart__price">{(price * counter).toFixed(2)}Kr</h2>
       </div>

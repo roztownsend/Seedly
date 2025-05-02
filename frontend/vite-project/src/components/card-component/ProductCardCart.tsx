@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ProductCardProps } from '../../types/types';
 import './productCardCart.css';
 
@@ -11,6 +11,10 @@ const ProductCardCart: React.FC<ProductCardProps> = ({
   onRemove
 }) => {
   const [counter, setCounter] = useState(quantity);
+
+  useEffect(() => {
+    setCounter(quantity);
+  }, [quantity]);
 
   const handleDecrement = () => {
     const newCount = Math.max(counter - 1, 0);

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ProductCardProps } from '../../types/types';
 import './productCard.css';
 
@@ -12,20 +12,25 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const [counter, setCounter] = useState(quantity);
 
+  // Keep the quantity updated if the parent changes it
+  useEffect(() => {
+    setCounter(quantity);
+  }, [quantity]);
+
   const handleDecrement = () => {
-    const newCount = Math.max(counter - 1, 0);
+    const newCount = Math.max(counter - 1, 0); // Prevent going below 0
     setCounter(newCount);
-    onQuantityChange?.(newCount);
+    onQuantityChange?.(newCount);  // Notify parent component of the change
   };
 
   const handleIncrement = () => {
     const newCount = counter + 1;
     setCounter(newCount);
-    onQuantityChange?.(newCount);
+    onQuantityChange?.(newCount);  // Notify parent component of the change
   };
 
   const handleAddToCart = () => {
-    onAddToCart?.(counter);
+    onAddToCart?.(counter);  // Pass the quantity to the parent
   };
 
   return (

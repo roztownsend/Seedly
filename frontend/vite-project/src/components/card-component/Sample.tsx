@@ -1,57 +1,111 @@
-import { useState } from "react";
-import ProductCardCheckOut from "./ProductCardCheckOut";
-import ProductCardCart from "./ProductCardCart";
-import ProductCard from "./ProductCard";
+import { useState } from 'react';
+import ProductCard from "../card-component/ProductCard";
+import ProductCardCart from "../card-component/ProductCardCart";
+import ProductCardCheckOut from "../card-component/ProductCardCheckOut";
 
 const Sample = () => {
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      imageUrl: "https://images.pexels.com/photos/61127/pexels-photo-61127.jpeg",
-      seedName: "Banana",
-      price: 10,
-      quantity: 10
-    },
-    {
-      id: 2,
-      imageUrl: "https://images.pexels.com/photos/1327838/pexels-photo-1327838.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      seedName: "Tomato",
-      price: 12,
-      quantity: 5
-    }
-  ]);
+    const productCatalog = [
+        {
+          id: 1,
+          imageUrl: "https://images.pexels.com/photos/54082/carrots-vegetables-food-orange-54082.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          seedName: "Carrot",
+          price: 10,
+        },
+        {
+          id: 2,
+          imageUrl: "https://images.pexels.com/photos/1327838/pexels-photo-1327838.jpeg",
+          seedName: "Tomato",
+          price: 12,
+        },
+        {
+          id: 3,
+          imageUrl: "https://images.pexels.com/photos/128420/pexels-photo-128420.jpeg",
+          seedName: "Zucchini",
+          price: 8,
+        },
+    ];
+      
 
-  const handleRemove = (id: number) => {
-    setProducts(prev => prev.filter(product => product.id !== id));
+  const [cart, setCart] = useState<{ id: number; quantity: number }[]>([]);
+
+  const handleAddToCart = (id: number, quantity: number) => {
+    if (quantity === 0) return;
+
+    setCart(prev => {
+      const existing = prev.find(item => item.id === id);
+      if (existing) {
+        return prev.map(item =>
+          item.id === id ? { ...item, quantity: item.quantity + quantity } : item
+        );
+      }
+      return [...prev, { id, quantity }];
+    });
   };
 
+  const handleRemove = (id: number) => {
+    setCart(prev => prev.filter(item => item.id !== id));
+  };
+
+  const handleQuantityChange = (id: number, newQuantity: number) => {
+    setCart(prev =>
+      prev.map(item =>
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
+  const getProductData = (id: number) =>
+    productCatalog.find(product => product.id === id);
+
   return (
-    <div>
-        <ProductCard imageUrl={"https://images.pexels.com/photos/61127/pexels-photo-61127.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"} seedName={"Banana"} price={10} quantity={10} />
-        
-        {products.map(product => (
-        <ProductCardCart
+    <>
+      <h2>Product List</h2>
+      {productCatalog.map(product => (
+        <ProductCard
           key={product.id}
           imageUrl={product.imageUrl}
           seedName={product.seedName}
           price={product.price}
-          quantity={product.quantity}
-          onRemove={() => handleRemove(product.id)}
+          quantity={1}
+          onAddToCart={(qty) => handleAddToCart(product.id, qty)}
         />
-        ))}     
+      ))}
 
-        {products.map(product => (
-        <ProductCardCheckOut
-          key={product.id}
-          imageUrl={product.imageUrl}
-          seedName={product.seedName}
-          price={product.price}
-          quantity={product.quantity}
-          onRemove={() => handleRemove(product.id)}
-        />
-      ))}    
-    </div>
-  )
-}
+      <h2>Cart</h2>
+      {cart.map(item => {
+        const product = getProductData(item.id);
+        if (!product) return null;
+        return (
+          <ProductCardCart
+            key={`cart-${item.id}`}
+            imageUrl={product.imageUrl}
+            seedName={product.seedName}
+            price={product.price}
+            quantity={item.quantity}
+            onQuantityChange={(qty) => handleQuantityChange(item.id, qty)}
+            onRemove={() => handleRemove(item.id)}
+          />
+        );
+      })}
 
-export default Sample
+      <h2>Checkout</h2>
+      {cart.map(item => {
+        const product = getProductData(item.id);
+        if (!product) return null;
+        return (
+          <ProductCardCheckOut
+            key={`checkout-${item.id}`}
+            imageUrl={product.imageUrl}
+            seedName={product.seedName}
+            price={product.price}
+            quantity={item.quantity}
+            onQuantityChange={(qty) => handleQuantityChange(item.id, qty)}
+            onRemove={() => handleRemove(item.id)}
+          />
+        );
+      })}
+    </>
+  );
+};
+
+export default Sample;

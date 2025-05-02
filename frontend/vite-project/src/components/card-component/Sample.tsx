@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import ProductCard from "../card-component/ProductCard";
 import ProductCardCart from "../card-component/ProductCardCart";
-import ProductCardCheckOut from "../card-component/ProductCardCheckOut";
 
 const Sample = () => {
     const productCatalog = [
@@ -68,6 +67,7 @@ const Sample = () => {
           price={product.price}
           quantity={1}
           onAddToCart={(qty) => handleAddToCart(product.id, qty)}
+          
         />
       ))}
 
@@ -84,6 +84,7 @@ const Sample = () => {
             quantity={item.quantity}
             onQuantityChange={(qty) => handleQuantityChange(item.id, qty)}
             onRemove={() => handleRemove(item.id)}
+            showQuantityControls={true}
           />
         );
       })}
@@ -93,7 +94,7 @@ const Sample = () => {
         const product = getProductData(item.id);
         if (!product) return null;
         return (
-          <ProductCardCheckOut
+          <ProductCardCart
             key={`checkout-${item.id}`}
             imageUrl={product.imageUrl}
             seedName={product.seedName}
@@ -101,6 +102,7 @@ const Sample = () => {
             quantity={item.quantity}
             onQuantityChange={(qty) => handleQuantityChange(item.id, qty)}
             onRemove={() => handleRemove(item.id)}
+            showQuantityControls={false}
           />
         );
       })}

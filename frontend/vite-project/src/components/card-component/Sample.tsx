@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ProductCard from "../card-component/ProductCard";
-import ProductCardCart from "../card-component/ProductCardCart";
+import ProductCardCartMobile from './ProductCardCartMobile';
 
 const Sample = () => {
     const productCatalog = [
@@ -76,7 +76,7 @@ const Sample = () => {
         const product = getProductData(item.id);
         if (!product) return null;
         return (
-          <ProductCardCart
+          <ProductCardCartMobile
             key={`cart-${item.id}`}
             imageUrl={product.imageUrl}
             seedName={product.seedName}
@@ -94,7 +94,7 @@ const Sample = () => {
         const product = getProductData(item.id);
         if (!product) return null;
         return (
-          <ProductCardCart
+          <ProductCardCartMobile
             key={`checkout-${item.id}`}
             imageUrl={product.imageUrl}
             seedName={product.seedName}

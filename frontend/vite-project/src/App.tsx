@@ -1,13 +1,22 @@
-import Sample from "./components/card-component/Sample"
+import Home from "./pages/Home";
+import Shop from "./pages/Shop";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Cart from "./pages/Cart";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-
-const App = () => {
-
+function App() {
   return (
-    <div>   
-      <Sample />
-    </div>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

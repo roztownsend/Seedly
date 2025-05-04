@@ -1,3 +1,4 @@
+
 import express from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -6,6 +7,8 @@ import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 import path from 'path';
 import { pool } from './config/dbConnection';
+import plantRoutes from './routes/plantRoutes';
+
 
 //testing server startup
 pool.query('SELECT NOW()')
@@ -15,12 +18,13 @@ pool.query('SELECT NOW()')
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
+app.use('/plants', plantRoutes);
 
 
 const swaggerDocument = YAML.load(path.join(__dirname, '../swagger/swagger.yaml'));
 
 
-// route, to fill out later
+// basic route, look /routes folder for actual ones
 app.get('/', (_req, res) => {
     res.send("API is running");
   });
@@ -28,7 +32,7 @@ app.get('/', (_req, res) => {
   
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-//testing database connection
+//testing/debug
 app.get('/health/db', async (_req, res) => {
   try {
     const result = await pool.query('SELECT NOW()');

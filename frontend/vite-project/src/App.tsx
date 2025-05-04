@@ -1,4 +1,3 @@
-import Sample from "./components/card-component/Sample"
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
 import Login from "./pages/Login";
@@ -12,7 +11,6 @@ function App () {
 
   return (
     <BrowserRouter>
-    <Sample />
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

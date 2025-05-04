@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ProductCard from "../card-component/ProductCard";
 import ProductCardCartMobile from './ProductCardCartMobile';
+import ProductCardCart from './ProductCardCart';
 
 const Sample = () => {
     const productCatalog = [
@@ -58,7 +59,7 @@ const Sample = () => {
 
   return (
     <>
-      <h2>Product List</h2>
+      <h2>Product List Desktop</h2>
       {productCatalog.map(product => (
         <ProductCard
           key={product.id}
@@ -71,7 +72,43 @@ const Sample = () => {
         />
       ))}
 
-      <h2>Cart</h2>
+      <h2>Cart Desktop</h2>
+      {cart.map(item => {
+        const product = getProductData(item.id);
+        if (!product) return null;
+        return (
+          <ProductCardCart
+            key={`cart-${item.id}`}
+            imageUrl={product.imageUrl}
+            seedName={product.seedName}
+            price={product.price}
+            quantity={item.quantity}
+            onQuantityChange={(qty) => handleQuantityChange(item.id, qty)}
+            onRemove={() => handleRemove(item.id)}
+            showQuantityControls={true}
+          />
+        );
+      })}
+
+      <h2>Checkout Desktop</h2>
+      {cart.map(item => {
+        const product = getProductData(item.id);
+        if (!product) return null;
+        return (
+          <ProductCardCart
+            key={`checkout-${item.id}`}
+            imageUrl={product.imageUrl}
+            seedName={product.seedName}
+            price={product.price}
+            quantity={item.quantity}
+            onQuantityChange={(qty) => handleQuantityChange(item.id, qty)}
+            onRemove={() => handleRemove(item.id)}
+            showQuantityControls={false}
+          />
+        );
+      })}
+
+      <h2>Cart Mobile</h2>
       {cart.map(item => {
         const product = getProductData(item.id);
         if (!product) return null;
@@ -89,7 +126,7 @@ const Sample = () => {
         );
       })}
 
-      <h2>Checkout</h2>
+      <h2>Checkout mobile</h2>
       {cart.map(item => {
         const product = getProductData(item.id);
         if (!product) return null;

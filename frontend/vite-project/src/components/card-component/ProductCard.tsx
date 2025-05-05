@@ -38,10 +38,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <div className="product-card__image">
         <img src={imageUrl} alt={seedName} className="object-cover w-full h-full" />
       </div>
-      <div className="product-card__details">
+      <div className="product-card__content">
+        <div className="product-card__listing">
         <h5 className="product-card__title">{seedName}</h5>
         <p className="product-card__price">{price.toFixed(2)}Kr</p>
-      </div>
+        </div>
       <div className="product-card__actions">
         <div className="product-card__quantity">
           <button onClick={handleDecrement} disabled={counter <= 0}>-</button>
@@ -49,6 +50,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <button onClick={handleIncrement}>+</button>
         </div>
         <button className="product-card__add" onClick={handleAddToCart}>Add to Cart</button>
+      </div>
       </div>
     </section>
   );

@@ -3,26 +3,26 @@
 @tailwind utilities;
 
 .product-card {
-  @apply w-[265px] h-[374px] bg-[#DFDFDF] bg-cover;
+  @apply w-64 h-96 bg-[#DFDFDF] bg-cover;
 }
 
 .product-card__image {
-  @apply w-full h-[264px];
+  @apply w-full h-64;
 }
 
 .product-card__details {
-  @apply flex justify-between items-center w-[247px] h-[54px] mx-auto;
+  @apply flex justify-between items-center w-64 h-14 mx-auto;
 }
 
 
 .product-card__actions {
-  @apply flex justify-between items-center w-[247px] h-[46px] mx-auto gap-[12px];
+  @apply flex justify-between items-center w-64 h-12 mx-auto gap-3 p-0.5;
 }
 
 .product-card__quantity {
-  @apply w-[90px] h-[46px] flex items-center justify-between border-[1px] py-[11px] px-[9px] border-black;
+  @apply w-24 h-11 flex items-center justify-between border-[1px] p-2.5 border-black;
 }
 
 .product-card__add {
-  @apply w-[144.52px] h-[45.16px] flex items-center justify-center;
+  @apply w-36 h-11 flex items-center justify-center;
 }

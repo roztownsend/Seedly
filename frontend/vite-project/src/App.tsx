@@ -5,6 +5,7 @@ import Signup from "./pages/Signup";
 import Cart from "./pages/Cart";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Sample from "./components/card-component/Sample";
+import "./index.css";
 
 function App() {
   return (

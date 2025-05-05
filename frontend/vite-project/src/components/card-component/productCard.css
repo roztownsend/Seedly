@@ -19,7 +19,7 @@
 }
 
 .product-card__quantity {
-  @apply w-24 h-11 flex items-center justify-between border-[1px] p-2.5 border-black;
+  @apply w-24 h-11 flex items-center justify-between border p-2.5 border-black;
 }
 
 .product-card__add {

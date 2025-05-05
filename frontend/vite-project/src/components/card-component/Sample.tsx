@@ -11,18 +11,6 @@ const Sample = () => {
           seedName: "Carrot",
           price: 10,
         },
-        {
-          id: 2,
-          imageUrl: "https://images.pexels.com/photos/1327838/pexels-photo-1327838.jpeg",
-          seedName: "Tomato",
-          price: 12,
-        },
-        {
-          id: 3,
-          imageUrl: "https://images.pexels.com/photos/128420/pexels-photo-128420.jpeg",
-          seedName: "Zucchini",
-          price: 8,
-        },
     ];
       
 

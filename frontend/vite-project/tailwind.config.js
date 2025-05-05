@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         'public-sans': ['"Public Sans"', 'sans-serif'],
+        'inter': ['Inter', 'sans-serif'],
       },
     },
   },

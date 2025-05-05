@@ -40,7 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <img src={imageUrl} alt={seedName} className="object-cover w-full h-full" />
       </div>
       <div className="product-card__details">
-        <h2 className="product-card__title">{seedName}</h2>
+        <h5>{seedName}</h5>
         <p className="product-card__price">{price.toFixed(2)}Kr</p>
       </div>
       <div className="product-card__actions">

@@ -4,35 +4,31 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-    .font-public-sans {
-      font-family: 'Public Sans', sans-serif;
-    }
-    .font-inter {
-      font-family: 'Inter', sans-serif;
-    }
-}
+/* Global*/
+@layer base {
+  h1, h2, h3, h4, h5{
+    @apply font-public-sans font-semibold text-yellow-500;
+  }
 
-h1, h2, h3, h4, h5, h6 {
-  @apply font-public-sans font-semibold;
-}
-
-h1 {
+  h1 {
     @apply text-6xl tracking-tight;
-}
+  }
 
-h2 {
+  h2 {
     @apply text-5xl tracking-tight;
-}
-  
-h3{
+  }
+
+  h3 {
     @apply text-4xl tracking-tight;
-}
+  }
 
-h4{
+  h4 {
     @apply text-3xl leading-6 tracking-tight;
+  }
+
+  h5 {
+    @apply text-xl tracking-tight;
+  }
 }
 
-h5{
-    @apply text-xl tracking-tight;
-}
+

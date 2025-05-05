@@ -14,7 +14,6 @@
   @apply flex justify-between items-start flex-col w-96 h-32 p-2;
 }
 
-
 .product-card-cart__actions {
   @apply flex items-start gap-3;
 }

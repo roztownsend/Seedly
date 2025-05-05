@@ -35,7 +35,7 @@ const ProductCardCart: React.FC<ProductCardProps> = ({
         <img src={imageUrl} alt={seedName} className="object-cover w-full h-full" />
       </div>
       <div className="product-card-cart__details">
-        <h2 className="product-card-cart__title">{seedName}</h2>
+        <h4 className="product-card-cart__title">{seedName}</h4>
         <div className="product-card-cart__actions">
 
           {/* Quantity controls */}
@@ -51,7 +51,7 @@ const ProductCardCart: React.FC<ProductCardProps> = ({
           )}
 
         </div>
-        <h2 className="product-card-cart__price">{(price * counter).toFixed(2)}Kr</h2>
+        <h4 className="product-card-cart__price">{(price * counter).toFixed(2)}Kr</h4>
       </div>
       <button 
         className="product-card-cart__remove"

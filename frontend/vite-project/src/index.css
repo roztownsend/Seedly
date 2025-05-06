@@ -4,7 +4,11 @@
 
 /* Global */
 @layer base {
-  h1, h2, h3, h4, h5 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
     @apply font-sans font-semibold;
   }
 
@@ -27,4 +31,17 @@
   h5 {
     @apply text-xl leading-snug tracking-tight;
   }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+#root {
+  display: flex;
+  background-color: #eff2f6;
+  justify-content: center;
+  align-items: center;
 }

@@ -3,14 +3,14 @@ import { FormHeaderProps } from "../../types/credentialsFormTypes";
 function FormHeader({ formType }: { formType: FormHeaderProps }) {
   return (
     <>
-      <h4 className="signup-header font-semibold text-xl tracking-tighter mb-2">
+      <h4 className="credential-form-header">
         {formType === "signup" ? "Welcome!" : "Welcome back"}
       </h4>
-      <span className="font-medium text-lg text-[#A9ABBD] mb-4 ">
+      <p className="credential-form-subheader">
         {formType === "signup"
           ? "Create an account with us"
           : "Login with email"}
-      </span>
+      </p>
     </>
   );
 }

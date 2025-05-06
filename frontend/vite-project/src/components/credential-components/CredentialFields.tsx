@@ -7,7 +7,7 @@ function CredentialFields({
 }: CredentialsFormProps) {
   return (
     <form
-      className="flex  w-full flex-col"
+      className="credential-form"
       onSubmit={(e) => handlers.handleSubmit(e)}
     >
       <label htmlFor="email"></label>
@@ -19,7 +19,7 @@ function CredentialFields({
         autoComplete="email"
         onChange={(e) => handlers.handleChange(e)}
         required
-        className="border border-black text-black mb-3 p-3 placeholder:text-[#A9ABBD] text-sm font-normal"
+        className="credential-form-input email-input"
       />
       <div className="flex w-full relative mb-5">
         <label htmlFor="password"></label>
@@ -31,42 +31,33 @@ function CredentialFields({
           autoComplete="new-password"
           required
           onChange={(e) => handlers.handleChange(e)}
-          className="border w-full border-black text-black  p-3 placeholder:text-[#A9ABBD] text-sm font-normal"
+          className="credential-form-input password-input"
         />
         <span
           onClick={() => handlers.togglePassword()}
-          className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500"
+          className="credential-eye-icon "
         >
           {showPassword ? <FaEyeSlash /> : <FaEye />}
         </span>
       </div>
       {formType === "login" && (
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="credentials-footer">
+          <label htmlFor="rememberMe" className="rememberme-label">
             <input
-              className="w-5 h-5 rounded-none"
+              className="credential-form-checkbox"
               type="checkbox"
               id="rememberMe"
               name="rememberMe"
               onChange={(e) => handlers.handleChange(e)}
             />
-            <label
-              className="text-[#979797] font-normal text-sm leading-4 tracking-tighter"
-              htmlFor="rememberMe"
-            >
-              Remember me
-            </label>
-          </div>
-          <a className="font-bold text-sm text-[#979797]" href="">
+            <span className="rememberme-span-text">Remember me</span>
+          </label>
+          <a className="forgot-password-link" href="">
             Forgot Password?
           </a>
         </div>
       )}
-
-      <button
-        type="submit"
-        className="invisible h-0 w-0 p-0 m-0 border-0"
-      ></button>
+      <button type="submit" className="credential-submit-btn"></button>
     </form>
   );
 }

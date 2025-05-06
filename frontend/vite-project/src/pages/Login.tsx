@@ -1,12 +1,13 @@
-import FormHeader from "../components/userAccess/FormHeader";
-import CredentialFields from "../components/userAccess/CredentialFields";
-import SocialButtons from "../components/userAccess/SocialButtons";
+import FormHeader from "../components/credential-components/FormHeader";
+import CredentialFields from "../components/credential-components/CredentialFields";
+import SocialButtons from "../components/credential-components/SocialButtons";
 import { useAuthForm } from "../hooks/useCredentialsForm";
+import "../components/credential-components/Credential.css";
 function Login() {
   const { showPassword, formType, handlers } = useAuthForm("login");
 
   return (
-    <div className="bg-white w-full max-w-[471px]  $min-h-[460px] p-8 flex flex-col">
+    <div className="credential-form-container">
       <FormHeader formType={formType} />
 
       <CredentialFields

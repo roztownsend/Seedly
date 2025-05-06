@@ -164,11 +164,11 @@ documentation/
 ## Team Members
 
 - Roz (Product Owner)
-- Merve (Scrum Master)
-- Carmelo (Developer)
+- Carmelo (Scrum Master)
 - Joao (Developer)
 - Jacob (Developer)
 - Sudipta (Developer)
+- Merve (Initial Repo setup, Developer)
 
 ---
 

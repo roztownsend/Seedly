@@ -5,10 +5,10 @@ import Signup from "./pages/Signup";
 import Cart from "./pages/Cart";
 import Navbar from "./components/navbar/Navbar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import './index.css';
 
 function App() {
   return (
-
     <BrowserRouter>
       <Navbar />
       <Routes>

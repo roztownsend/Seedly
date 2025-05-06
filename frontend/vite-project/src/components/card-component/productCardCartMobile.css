@@ -1,0 +1,21 @@
+.product-card-cart {
+  @apply w-80 h-32 flex;
+}
+
+.product-card-cart__image {
+  @apply w-32 h-32;
+}
+
+.product-card-cart__details {
+  @apply flex justify-between items-start flex-col w-48 h-32 ml-2;
+}
+
+.product-card-cart__actions {
+  @apply flex items-start;
+}
+
+.product-card-cart__quantity {
+  @apply w-24 h-8 flex items-center justify-between border py-2.5 border-black;
+}
+
+

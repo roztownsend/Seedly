@@ -15,9 +15,7 @@ function Login() {
         handlers={handlers}
         formType={formType}
       />
-      <span className="font-medium text-lg text-[#A9ABBD] mt-6">
-        Or use one of these:
-      </span>
+      <span className="form-alternative-text">Or use one of these:</span>
       <SocialButtons />
     </div>
   );

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ProductCardProps } from '../../types/types';
+import QuantityControl from '../quantity-control/QuantityControl';
 import './productCard.css';
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -12,7 +13,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const [counter, setCounter] = useState(quantity);
 
-  // Keep the quantity updated if the parent changes it
   useEffect(() => {
     setCounter(quantity);
   }, [quantity]);
@@ -20,17 +20,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const handleDecrement = () => {
     const newCount = Math.max(counter - 1, 0); // Prevent going below 0
     setCounter(newCount);
-    onQuantityChange?.(newCount);  // Notify parent component of the change
+    onQuantityChange?.(newCount);
   };
 
   const handleIncrement = () => {
     const newCount = counter + 1;
     setCounter(newCount);
-    onQuantityChange?.(newCount);  // Notify parent component of the change
+    onQuantityChange?.(newCount);
   };
 
   const handleAddToCart = () => {
-    onAddToCart?.(counter);  // Pass the quantity to the parent
+    onAddToCart?.(counter);
   };
 
   return (
@@ -40,17 +40,20 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </div>
       <div className="product-card__content">
         <div className="product-card__listing">
-        <h5 className="product-card__title">{seedName}</h5>
-        <p className="product-card__price">{price.toFixed(2)}Kr</p>
+          <h5 className="product-card__title">{seedName}</h5>
+          <p className="product-card__price">{price.toFixed(2)}Kr</p>
         </div>
-      <div className="product-card__actions">
-        <div className="product-card__quantity">
-          <button onClick={handleDecrement} disabled={counter <= 0}>-</button>
-          <span>{counter}</span>
-          <button onClick={handleIncrement}>+</button>
+        <div className="product-card__actions">
+          <QuantityControl
+            counter={counter}
+            onIncrement={handleIncrement}
+            onDecrement={handleDecrement}
+            disabled={counter <= 0}
+          />
+          <button className="product-card__add" onClick={handleAddToCart}>
+            Add to Cart
+          </button>
         </div>
-        <button className="product-card__add" onClick={handleAddToCart}>Add to Cart</button>
-      </div>
       </div>
     </section>
   );

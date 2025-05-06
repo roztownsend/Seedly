@@ -25,7 +25,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   const handleIncrement = () => {
     const newCount = counter + 1;
-    setCounter(newCount);
+    setCounter((prevState) => (prevState -1 === 0 ? 1: prevState -1));
     onQuantityChange?.(newCount);
   };
 

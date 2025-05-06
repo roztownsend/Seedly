@@ -6,15 +6,25 @@ import {
 } from "../types/authFormTypes";
 
 export const useAuthForm = (formType: AuthType): UseAuthFormType => {
-  const [formData, setFormData] = useState<AuthFieldsInputData>({
-    email: "",
-    password: "",
+  const [formData, setFormData] = useState<AuthFieldsInputData>(() => {
+    const defaultData = {
+      email: "",
+      password: "",
+    };
+    if (formType === "login") {
+      return { ...defaultData, rememberMe: false };
+    }
+    return defaultData;
   });
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+    console.log(formData);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

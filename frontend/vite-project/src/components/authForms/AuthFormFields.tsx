@@ -42,12 +42,13 @@ function AuthFormFields({ handlers, showPassword, formType }: UseAuthFormType) {
             <input
               className="w-5 h-5 rounded-none"
               type="checkbox"
-              id="remember"
-              name="remember"
+              id="rememberMe"
+              name="rememberMe"
+              onChange={(e) => handlers.handleChange(e)}
             />
             <label
               className="text-[#979797] font-normal text-sm leading-4 tracking-tighter"
-              htmlFor="remember"
+              htmlFor="rememberMe"
             >
               Remember me
             </label>

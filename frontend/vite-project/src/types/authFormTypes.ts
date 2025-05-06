@@ -1,6 +1,7 @@
 export type AuthFieldsInputData = {
   email: string;
   password: string;
+  rememberMe?: boolean;
 };
 
 export type AuthType = "login" | "signup";

@@ -48,10 +48,9 @@ npm install swagger-ui-react
 
 State Management (optional):
 
-Redux:
-npm install @reduxjs/toolkit react-redux @types/react-redux
+Zustand
 
-Or React Context
+npm install zustand
 ```
 
 ### Install backend dependencies
@@ -164,11 +163,11 @@ documentation/
 ## Team Members
 
 - Roz (Product Owner)
-- Merve (Scrum Master)
-- Carmelo (Developer)
+- Carmelo (Scrum Master)
 - Joao (Developer)
 - Jacob (Developer)
 - Sudipta (Developer)
+- Merve (Initial Repo setup, Developer)
 
 ---
 

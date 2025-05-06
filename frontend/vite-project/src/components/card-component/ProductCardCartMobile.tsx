@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ProductCardProps } from '../../types/types';
 import './productCardCartMobile.css';
-import QuantityControl from '../quantity-control/QuantityControl';
+import { QuantityControl } from '../quantity-control/QuantityControl';
 
 const ProductCardCart: React.FC<ProductCardProps> = ({
   imageUrl,
@@ -44,7 +44,7 @@ const ProductCardCart: React.FC<ProductCardProps> = ({
               counter={counter}
               onIncrement={handleIncrement}
               onDecrement={handleDecrement}
-              disabled={counter <= 0}
+              disableDecrement={counter <= 0}
             />
           ) : (
             <p className="product-card-checkout__quantity-text">Quantity: {counter}</p>

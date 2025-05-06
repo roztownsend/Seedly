@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ShoppingBag, Search, Menu, X, User2 } from "lucide-react";
-import "../navbar-component/Navbar-styles.css";
+import "../navbar/Navbar.css";
 
 export default function Navbar() {
     const [searchTerm, setSearchTerm] = useState<string>("");
@@ -69,7 +69,7 @@ export default function Navbar() {
                         <Search className="navbar-search-icon mr-2" />
                         <input
                             type="text"
-                            placeholder="Search seeds"
+                            placeholder="Search seeds!"
                             className="navbar-search-input bg-transparent w-full"
                             value={searchTerm}
                             onChange={handleInputChange}

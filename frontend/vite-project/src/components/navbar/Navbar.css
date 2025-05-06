@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .navbar {
-    @apply fixed top-0 left-0 w-full z-50 bg-[#EFF2F6] px-6 py-3 shadow-sm;
+    @apply fixed top-0 left-0 w-full z-50 bg-gray-200 px-6 py-3 shadow-sm;
 }
 
 .navbar-container {
@@ -39,7 +39,7 @@
 }
 
 .navbar-search-input {
-    @apply bg-[#EFF2F6] px-4 py-2 border-gray-300 text-sm placeholder-gray-500 w-full md:w-64 shadow-sm;
+    @apply bg-gray-200 px-4 py-2 border-gray-300 text-sm placeholder-gray-500 w-full sm:w-64 md:w-80 lg:w-[38rem] xl:w-[36rem] 2xl:w-[58rem] max-w-full shadow-sm;
 }
 
 .navbar-right {
@@ -63,7 +63,7 @@
 }
 
 .mobile-menu {
-    @apply fixed inset-0 z-50 bg-[#EFF2F6] flex flex-col items-center justify-center gap-6;
+    @apply fixed inset-0 z-50 bg-gray-200 flex flex-col items-center justify-center gap-6;
 }
 
 .mobile-link {

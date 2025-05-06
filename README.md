@@ -48,10 +48,9 @@ npm install swagger-ui-react
 
 State Management (optional):
 
-Redux:
-npm install @reduxjs/toolkit react-redux @types/react-redux
+Zustand
 
-Or React Context
+npm install zustand
 ```
 
 ### Install backend dependencies

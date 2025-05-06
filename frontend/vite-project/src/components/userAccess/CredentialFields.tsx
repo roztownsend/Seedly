@@ -1,6 +1,10 @@
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { UseAuthFormType } from "../../types/authFormTypes";
-function AuthFormFields({ handlers, showPassword, formType }: UseAuthFormType) {
+import { CredentialsFormProps } from "../../types/credentialsFormTypes";
+function CredentialFields({
+  handlers,
+  showPassword,
+  formType,
+}: CredentialsFormProps) {
   return (
     <form
       className="flex  w-full flex-col"
@@ -66,4 +70,4 @@ function AuthFormFields({ handlers, showPassword, formType }: UseAuthFormType) {
     </form>
   );
 }
-export default AuthFormFields;
+export default CredentialFields;

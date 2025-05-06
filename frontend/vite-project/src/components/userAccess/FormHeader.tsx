@@ -1,6 +1,6 @@
-import { AuthType } from "../../types/authFormTypes";
+import { FormHeaderProps } from "../../types/credentialsFormTypes";
 
-function AuthHeader({ formType }: { formType: AuthType }) {
+function FormHeader({ formType }: { formType: FormHeaderProps }) {
   return (
     <>
       <h4 className="signup-header font-semibold text-xl tracking-tighter mb-2">
@@ -15,4 +15,4 @@ function AuthHeader({ formType }: { formType: AuthType }) {
   );
 }
 
-export default AuthHeader;
+export default FormHeader;

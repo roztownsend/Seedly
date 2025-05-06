@@ -1,12 +1,12 @@
 import { useState } from "react";
 import {
-  UseAuthFormType,
-  AuthFieldsInputData,
-  AuthType,
-} from "../types/authFormTypes";
+  CredentialsInput,
+  FormType,
+  UseCredentialsFormReturn,
+} from "../types/credentialsFormTypes";
 
-export const useAuthForm = (formType: AuthType): UseAuthFormType => {
-  const [formData, setFormData] = useState<AuthFieldsInputData>(() => {
+export const useAuthForm = (formType: FormType): UseCredentialsFormReturn => {
+  const [formData, setFormData] = useState<CredentialsInput>(() => {
     const defaultData = {
       email: "",
       password: "",

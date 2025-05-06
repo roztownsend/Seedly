@@ -1,6 +1,6 @@
 import { FaFacebookF, FaGoogle } from "react-icons/fa";
 
-function AuthOptionButtons() {
+function SocialButtons() {
   return (
     <div className="flex flex-col mt-5 gap-3">
       <button className="border text-[#65676E] text-sm border-[#E1E4EB] flex justify-center items-center px-3 py-[10px] rounded-[5px]">
@@ -14,4 +14,4 @@ function AuthOptionButtons() {
   );
 }
 
-export default AuthOptionButtons;
+export default SocialButtons;

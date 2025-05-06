@@ -10,9 +10,9 @@ import './index.css';
 
 function App() {
   return (
-
     <BrowserRouter>
       <Navbar />
+      <Sample />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />

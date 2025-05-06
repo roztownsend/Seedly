@@ -47,7 +47,6 @@ const Sample = () => {
 
   return (
     <>
-      <h2>Product List Desktop</h2>
       {productCatalog.map(product => (
         <ProductCard
           key={product.id}
@@ -60,7 +59,6 @@ const Sample = () => {
         />
       ))}
 
-      <h2>Cart Desktop</h2>
       {cart.map(item => {
         const product = getProductData(item.id);
         if (!product) return null;
@@ -78,7 +76,6 @@ const Sample = () => {
         );
       })}
 
-      <h2>Checkout Desktop</h2>
       {cart.map(item => {
         const product = getProductData(item.id);
         if (!product) return null;
@@ -96,7 +93,6 @@ const Sample = () => {
         );
       })}
 
-      <h2>Cart Mobile</h2>
       {cart.map(item => {
         const product = getProductData(item.id);
         if (!product) return null;
@@ -114,7 +110,6 @@ const Sample = () => {
         );
       })}
 
-      <h2>Checkout mobile</h2>
       {cart.map(item => {
         const product = getProductData(item.id);
         if (!product) return null;

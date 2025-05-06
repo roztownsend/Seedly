@@ -7,11 +7,19 @@
 }
 
 .navbar-container {
-    @apply flex items-center justify-between;
+    @apply flex items-center justify-between gap-4;
+}
+
+.navbar-icons {
+    @apply w-5 h-5 text-black;
+}
+
+.mobile-navbar-icons {
+    @apply w-6 h-6 text-black;
 }
 
 .navbar-left {
-    @apply flex items-center gap-4;
+    @apply flex items-center gap-4 w-full gap-4;
 }
 
 .navbar-logo {
@@ -19,7 +27,7 @@
 }
 
 .navbar-links {
-    @apply hidden md:flex gap-6 ml-6;
+    @apply hidden md:flex gap-6 ml-6 w-1/4;
 }
 
 .navbar-link {
@@ -27,11 +35,11 @@
 }
 
 .navbar-links-search {
-    @apply flex items-center gap-10 ml-6;
+    @apply flex items-center gap-10 w-full;
 }
 
 .navbar-search {
-    @apply flex items-center space-x-2;
+    @apply flex items-center w-full space-x-2;
 }
 
 .navbar-search-icon {
@@ -39,11 +47,11 @@
 }
 
 .navbar-search-input {
-    @apply bg-gray-200 px-4 py-2 border-gray-300 text-sm placeholder-gray-500 w-full sm:w-64 md:w-80 lg:w-[38rem] xl:w-[36rem] 2xl:w-[58rem] max-w-full shadow-sm;
+    @apply bg-gray-200 px-4 py-2 border-gray-300 text-sm placeholder-gray-500 w-full shadow-sm flex flex-grow;
 }
 
 .navbar-right {
-    @apply flex items-center gap-4;
+    @apply flex items-center justify-end gap-4 w-1/6;
 }
 
 .navbar-cart {

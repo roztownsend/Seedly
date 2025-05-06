@@ -39,7 +39,7 @@ export default function Navbar() {
 
                     <div className="navbar-right">
                         <div className="navbar-cart">
-                            <ShoppingBag className="w-5 h-5 text-black" />
+                            <ShoppingBag className="navbar-icons" />
                             <span className="text-black">{cartCount}</span>
                         </div>
                         <a href="#" className="navbar-auth">Login</a>
@@ -54,12 +54,12 @@ export default function Navbar() {
                     <span className="navbar-logo">Seedly</span>
                     <div className="navbar-mobile-icons">
                         <div className="navbar-cart">
-                            <ShoppingBag className="w-5 h-5 text-black" />
+                            <ShoppingBag className="navbar-icons" />
                             <span className="text-black">{cartCount}</span>
                         </div>
-                        <User2 className="w-5 h-5 text-black" />
+                        <User2 className="navbar-icons" />
                         <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                            {isMenuOpen ? <X className="w-6 h-6 text-black" /> : <Menu className="w-6 h-6 text-black" />}
+                            {isMenuOpen ? <X className="mobile-navbar-icons" /> : <Menu className="mobile-navbar-icons" />}
                         </button>
                     </div>
                 </div>

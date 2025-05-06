@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ProductCardProps } from '../../types/types';
-import QuantityControl from '../quantity-control/QuantityControl';
+import { QuantityControl } from '../quantity-control/QuantityControl';
 import './productCard.css';
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -44,12 +44,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <p className="product-card__price">{price.toFixed(2)}Kr</p>
         </div>
         <div className="product-card__actions">
-          <QuantityControl
-            counter={counter}
-            onIncrement={handleIncrement}
-            onDecrement={handleDecrement}
-            disabled={counter <= 0}
-          />
+        <QuantityControl
+          counter={counter}
+          onIncrement={handleIncrement}
+          onDecrement={handleDecrement}
+          disableDecrement={counter <= 0}
+        />
           <button className="product-card__add" onClick={handleAddToCart}>
             Add to Cart
           </button>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ProductCardProps } from '../../types/types';
 import './productCardCartMobile.css';
+import QuantityControl from '../quantity-control/QuantityControl';
 
 const ProductCardCart: React.FC<ProductCardProps> = ({
   imageUrl,
@@ -38,19 +39,16 @@ const ProductCardCart: React.FC<ProductCardProps> = ({
         <h4 className="product-card-cart__title">{seedName}</h4>
         <h4 className="product-card-cart__price">{(price * counter).toFixed(2)}Kr</h4>
         <div className="product-card-cart__actions">
-
-          {/* Quantity controls */}
           {showQuantityControls ? (
-            <div className="product-card-cart__quantity">
-              <button onClick={handleDecrement} disabled={counter <= 0}>-</button>
-              <span>{counter}</span>
-              <button onClick={handleIncrement}>+</button>
-            </div>
+            <QuantityControl
+              counter={counter}
+              onIncrement={handleIncrement}
+              onDecrement={handleDecrement}
+              disabled={counter <= 0}
+            />
           ) : (
-            // If showQuantityControls is false, display quantity text
             <p className="product-card-checkout__quantity-text">Quantity: {counter}</p>
           )}
-
         </div>
         <button 
           className="product-card-cart__remove"

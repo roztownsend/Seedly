@@ -44,21 +44,24 @@ const ProductCardCart: React.FC<ProductCardProps> = ({
       </div>
       <div className="product-card-cart__details">
         <h4 className="product-card-cart__title">{seedName}</h4>
+        <h4 className="product-card-cart__title">{seedName}</h4>
         <div className="product-card-cart__actions">
 
-          {/* Quantity controls */}
+          {/* Use QuantityComponent here */}
           {showQuantityControls ? (
-            <div className="product-card-cart__quantity">
-              <button onClick={handleDecrement} disabled={counter <= 0}>-</button>
-              <span>{counter}</span>
-              <button onClick={handleIncrement}>+</button>
-            </div>
+            <QuantityControl
+              counter={counter}
+              onIncrement={handleIncrement}
+              onDecrement={handleDecrement}
+              disableDecrement={counter <= 0}
+            />
           ) : (
             // If showQuantityControls is false, display quantity text
             <p className="product-card-checkout__quantity-text">Quantity: {counter}</p>
           )}
 
         </div>
+        <h4 className="product-card-cart__price">{(price * counter).toFixed(2)}Kr</h4>
         <h4 className="product-card-cart__price">{(price * counter).toFixed(2)}Kr</h4>
       </div>
       <button 

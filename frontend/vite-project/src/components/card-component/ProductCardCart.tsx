@@ -36,7 +36,6 @@ const ProductCardCart: React.FC<ProductCardProps> = ({
       </div>
       <div className="product-card-cart__details">
         <h4 className="product-card-cart__title">{seedName}</h4>
-        <h4 className="product-card-cart__title">{seedName}</h4>
         <div className="product-card-cart__actions">
 
           {/* Use QuantityComponent here */}
@@ -53,7 +52,6 @@ const ProductCardCart: React.FC<ProductCardProps> = ({
           )}
 
         </div>
-        <h4 className="product-card-cart__price">{(price * counter).toFixed(2)}Kr</h4>
         <h4 className="product-card-cart__price">{(price * counter).toFixed(2)}Kr</h4>
       </div>
       <button 

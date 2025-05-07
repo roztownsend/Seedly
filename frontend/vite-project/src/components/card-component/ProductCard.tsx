@@ -18,7 +18,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   }, [quantity]);
 
   const handleDecrement = () => {
-    const newCount = Math.max(counter - 1, 0); // Prevent going below 0
+    const newCount = Math.max(counter - 1, 0);
     setCounter(newCount);
     onQuantityChange?.(newCount);
   };

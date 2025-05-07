@@ -105,3 +105,25 @@
 
 - Took initiative to independently connect with team members for understanding the project flow.
 - Actively participated in clarifying documentation and workflow expectations for future tasks.
+
+---
+
+## Carmelo
+
+**Completed Tasks:**
+
+- Created Card component / card for checkout for desktop and mobile.
+- Created reusable increment component
+- Configured global style for typography
+
+**Challenges:**
+
+- Learning to work with Trello
+- Keeping code DRY while maintaining readability.
+- Attention to class names.
+- Use of tailwind in a separate file with @apply
+
+**Learning Insights:**
+
+- Starter learning SM role
+- Try to work better with git commands specially solving conflict when they appear

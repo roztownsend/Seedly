@@ -2,7 +2,7 @@ import FormHeader from "../components/credential-components/FormHeader";
 import CredentialFields from "../components/credential-components/CredentialFields";
 import SocialButtons from "../components/credential-components/SocialButtons";
 import { useAuthForm } from "../hooks/useCredentialsForm";
-import "../components/credential-components/Credential.css";
+import "../components/credential-components/Credentials.css";
 function Signup() {
   const { showPassword, handlers, formType } = useAuthForm("signup");
 

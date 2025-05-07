@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 // ProductCardCart.tsx
 import { useEffect, useState } from 'react';
 import { ProductCardProps } from '../../types/types';
 import './productCardCart.css';
 import { QuantityControl } from '../quantity-control/QuantityControl';
+=======
+import { useEffect, useState } from 'react';
+import { ProductCardProps } from '../../types/types';
+import './productCardCart.css';
+
+>>>>>>> 2132645ab211b38b33ff9d555584770a108666d3
 const ProductCardCart: React.FC<ProductCardProps> = ({
   imageUrl,
   seedName,
@@ -39,14 +46,13 @@ const ProductCardCart: React.FC<ProductCardProps> = ({
         <h4 className="product-card-cart__title">{seedName}</h4>
         <div className="product-card-cart__actions">
 
-          {/* Use QuantityComponent here */}
+          {/* Quantity controls */}
           {showQuantityControls ? (
-            <QuantityControl
-              counter={counter}
-              onIncrement={handleIncrement}
-              onDecrement={handleDecrement}
-              disableDecrement={counter <= 0}
-            />
+            <div className="product-card-cart__quantity">
+              <button onClick={handleDecrement} disabled={counter <= 0}>-</button>
+              <span>{counter}</span>
+              <button onClick={handleIncrement}>+</button>
+            </div>
           ) : (
             // If showQuantityControls is false, display quantity text
             <p className="product-card-checkout__quantity-text">Quantity: {counter}</p>

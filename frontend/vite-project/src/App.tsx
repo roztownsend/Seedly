@@ -6,22 +6,20 @@ import Cart from "./pages/Cart";
 import Navbar from "./components/navbar/Navbar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './index.css';
-import Sample from "./components/card-component/Sample";
 
-function App () {
-
+function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <Sample />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/cart" element={<Cart />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
+
 export default App;

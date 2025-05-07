@@ -1,10 +1,10 @@
 import FormHeader from "../components/credential-components/FormHeader";
 import CredentialFields from "../components/credential-components/CredentialFields";
 import SocialButtons from "../components/credential-components/SocialButtons";
-import { useAuthForm } from "../hooks/useCredentialsForm";
+import { useCredentialForm } from "../hooks/useCredentialForm";
 import "../components/credential-components/Credentials.css";
 function Login() {
-  const { showPassword, formType, handlers } = useAuthForm("login");
+  const { showPassword, formType, handlers } = useCredentialForm("login");
 
   return (
     <div className="credential-form-container">

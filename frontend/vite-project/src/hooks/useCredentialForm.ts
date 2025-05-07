@@ -5,7 +5,10 @@ import {
   UseCredentialsFormReturn,
 } from "../types/credentialsFormTypes";
 
-export const useAuthForm = (formType: FormType): UseCredentialsFormReturn => {
+// useCredentialForm expects a 'formType' argument, which can either be 'login' or 'signup'.
+export const useCredentialForm = (
+  formType: FormType
+): UseCredentialsFormReturn => {
   const [formData, setFormData] = useState<CredentialsInput>(() => {
     const defaultData = {
       email: "",
@@ -29,14 +32,17 @@ export const useAuthForm = (formType: FormType): UseCredentialsFormReturn => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+    // Logs the form data based on the form type (login or signup).
+    formType === "login"
+      ? console.log("Login form submit was triggerd", formData)
+      : console.log("Signup form submit was triggerd", formData);
   };
 
   const togglePassword = () => setShowPassword((prevState) => !prevState);
 
   return {
-    formData,
     formType,
+    formData,
     showPassword,
     handlers: {
       handleChange,

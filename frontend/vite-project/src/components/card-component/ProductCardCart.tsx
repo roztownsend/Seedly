@@ -1,15 +1,7 @@
-<<<<<<< HEAD
-// ProductCardCart.tsx
 import { useEffect, useState } from 'react';
 import { ProductCardProps } from '../../types/types';
 import './productCardCart.css';
 import { QuantityControl } from '../quantity-control/QuantityControl';
-=======
-import { useEffect, useState } from 'react';
-import { ProductCardProps } from '../../types/types';
-import './productCardCart.css';
-
->>>>>>> 2132645ab211b38b33ff9d555584770a108666d3
 const ProductCardCart: React.FC<ProductCardProps> = ({
   imageUrl,
   seedName,

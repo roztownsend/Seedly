@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Cart from "./pages/Cart";
 import Navbar from "./components/navbar/Navbar";
+import Footer from "./components/footer/Footer";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './index.css';
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }

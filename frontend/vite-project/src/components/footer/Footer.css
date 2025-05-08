@@ -1,0 +1,23 @@
+.footer {
+    @apply fixed bottom-0 left-0 w-full bg-gray-200 text-black px-6 py-6 z-50 shadow-sm;
+}
+
+.footer-container {
+    @apply flex w-full items-start justify-between;
+}
+
+.footer-links {
+    @apply flex flex-col items-start gap-2 text-base;
+}
+
+.footer-link {
+    @apply text-black hover:text-green-700;
+}
+
+.footer-logo {
+    @apply text-xl font-bold self-center;
+}
+
+.footer-back {
+    @apply self-center;
+}

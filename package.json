@@ -1,0 +1,26 @@
+{
+  "name": "seedly",
+  "version": "1.0.0",
+  "description": "//project description",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roztownsend/Seedly.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/roztownsend/Seedly/issues"
+  },
+  "homepage": "https://github.com/roztownsend/Seedly#readme",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "pg": "^8.15.6"
+  }
+}

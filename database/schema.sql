@@ -26,7 +26,9 @@ CREATE TABLE IF NOT EXISTS plants (
   timeline TEXT,
   image_url TEXT,
   created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW()
+  updated_at TIMESTAMP DEFAULT NOW(),
+  isEdible BOOLEAN,
+  Sunlight VARCHAR(50)
 );
 
 -- Add indexes for common search/filter fields

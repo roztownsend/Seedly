@@ -7,11 +7,11 @@
 }
 
 .product-card__details {
-  @apply flex justify-between items-center w-64 h-14 mx-auto;
+  @apply flex justify-between items-center w-60 h-14 mx-auto;
 }
 
 .product-card__actions {
-  @apply flex justify-between items-center w-64 h-12 mx-auto gap-3 p-0.5;
+  @apply flex justify-between items-center w-60 h-12 mx-auto gap-3 p-0.5;
 }
 
 .product-card__quantity {

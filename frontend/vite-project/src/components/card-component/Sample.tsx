@@ -35,7 +35,10 @@ const Sample = () => {
   };
 
   const handleQuantityChange = (id: number, newQuantity: number) => {
-    setCart(prev =>
+   if(newQuantity === 0 ){
+    handleRemove(id)
+   }
+     setCart(prev =>
       prev.map(item =>
         item.id === id ? { ...item, quantity: newQuantity } : item
       )

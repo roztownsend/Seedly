@@ -1,7 +1,9 @@
+import Sample from "../components/card-component/Sample";
+
 function Home() {
   return (
     <>
-      <h1>Home</h1>
+      <Sample />
     </>
   );
 }

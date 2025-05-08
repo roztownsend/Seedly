@@ -70,3 +70,27 @@ CREATE TABLE IF NOT EXISTS tasks (
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
 );
+-- ============================
+-- PLANT_TIMELINE
+-- ===========================
+CREATE TABLE IF NOT EXISTS plant_timelines (
+  id UUID PRIMARY KEY,
+  product_name VARCHAR(100) NOT NULL,
+  jan VARCHAR(50),
+  feb VARCHAR(50),
+  mar VARCHAR(50),
+  apr VARCHAR(50),
+  may VARCHAR(50),
+  jun VARCHAR(50),
+  jul VARCHAR(50),
+  aug VARCHAR(50),
+  sep VARCHAR(50),
+  oct VARCHAR(50),
+  nov VARCHAR(50),
+  dec VARCHAR(50),
+  CONSTRAINT fk_plant
+    FOREIGN KEY (id)
+    REFERENCES plants(id)
+    ON DELETE CASCADE
+);
+

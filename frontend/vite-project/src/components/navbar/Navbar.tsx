@@ -22,9 +22,9 @@ export default function Navbar() {
                         <Link to="/" className="navbar-logo">Seedly</Link>
                         <div className="navbar-links-search">
                             <div className="navbar-links">
-                                <a href="#" className="navbar-link">Seeds</a>
-                                <a href="#" className="navbar-link">Offers</a>
-                                <a href="#" className="navbar-link">Contact Us</a>
+                                <Link to="/seeds" className="navbar-link">Seeds</Link>
+                                <Link to="/offers" className="navbar-link">Offers</Link>
+                                <Link to="/contact" className="navbar-link">Contact Us</Link>
                             </div>
                             <div className="navbar-search">
                                 <Search className="navbar-search-icon" />
@@ -96,9 +96,9 @@ export default function Navbar() {
                     >
                         <X className="w-6 h-6 text-black" />
                     </button>
-                    <a href="#" className="mobile-link">Seeds</a>
-                    <a href="#" className="mobile-link">Offers</a>
-                    <a href="#" className="mobile-link">Contact Us</a>
+                    <Link to="/seeds" className="mobile-link">Seeds</Link>
+                    <Link to="/offers" className="mobile-link">Offers</Link>
+                    <Link to="/contact" className="mobile-link">Contact Us</Link>
                 </div>
             )}
         </>

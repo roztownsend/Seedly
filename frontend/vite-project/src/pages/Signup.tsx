@@ -1,8 +1,8 @@
-import FormHeader from "../components/credential-components/FormHeader";
-import CredentialFields from "../components/credential-components/CredentialFields";
-import SocialButtons from "../components/credential-components/SocialButtons";
+import FormHeader from "../components/credentials/FormHeader";
+import CredentialFields from "../components/credentials/CredentialFields";
+import SocialButtons from "../components/credentials/SocialButtons";
 import { useCredentialForm } from "../hooks/useCredentialForm";
-import "../components/credential-components/Credentials.css";
+import "../components/credentials/Credentials.css";
 function Signup() {
   const { showPassword, handlers, formType } = useCredentialForm("signup");
 

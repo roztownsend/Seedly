@@ -1,0 +1,3 @@
+.subtotal, .shipping, .total {
+    @apply flex justify-between;
+}

@@ -1,0 +1,24 @@
+.cart-sections {
+    @apply grid grid-cols-4;
+}
+
+.header, .cart-items {
+    @apply col-start-2;
+}
+
+.header {
+    @apply py-6;
+}
+
+.cart-items__list {
+    @apply flex flex-col gap-3;
+}
+
+.list-wrapper {
+    @apply p-3 mb-3 border-b-2;
+}
+
+.order-summary {
+    @apply col-start-3;
+}
+

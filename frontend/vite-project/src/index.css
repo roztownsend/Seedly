@@ -19,7 +19,8 @@ nav {
 }
 
 main {
-  @apply row-start-4 lg:row-start-3 row-end-11 flex  justify-center items-center;
+  @apply row-start-4 lg:row-start-2 row-end-11 
+    flex justify-center items-center overflow-y-scroll;
 }
 
 footer {
@@ -37,24 +38,34 @@ footer {
     @apply font-sans font-semibold;
   }
   
-  h1 {
+  h1, .h1 {
     @apply text-7xl leading-tight tracking-tight;
   }
 
-  h2 {
+  h2, .h2 {
     @apply text-5xl leading-tight tracking-tight;
   }
 
-  h3 {
+  h3, .h3 {
     @apply text-3xl leading-snug tracking-tight;
   }
 
-  h4 {
+  h4, .h4 {
     @apply text-2xl leading-snug tracking-tight;
   }
 
-  h5 {
+  h5, .h5 {
     @apply text-xl leading-snug tracking-tight;
+  }
+
+  .button-primary {
+      @apply w-36 h-11 
+        flex items-center justify-center bg-black text-white;
+  }
+
+  .button-secondary {
+      @apply border text-gray-500 text-sm border-gray-200 
+        flex justify-center items-center p-3 rounded-lg;
   }
 }
 

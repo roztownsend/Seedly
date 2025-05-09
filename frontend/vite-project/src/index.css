@@ -19,7 +19,7 @@ nav {
 }
 
 main {
-  @apply row-start-4 lg:row-start-3 row-end-11;
+  @apply row-start-4 lg:row-start-3 row-end-11 flex  justify-center items-center;
 }
 
 footer {

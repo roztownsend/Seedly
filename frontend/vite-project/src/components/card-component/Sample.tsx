@@ -1,134 +1,49 @@
-import { useState } from 'react';
+import { useState, useEffect } from "react";
 import ProductCard from "../card-component/ProductCard";
-import ProductCardCartMobile from './ProductCardCartMobile';
-import ProductCardCart from './ProductCardCart';
+import ProductCardCartMobile from "./ProductCardCartMobile";
+import ProductCardCart from "./ProductCardCart";
+import { useProductsStore } from "../../stores/productsStore";
+import { useCartStore } from "../../stores/cartStore";
 
 const Sample = () => {
-    const productCatalog = [
-        {
-          id: 1,
-          imageUrl: "https://images.pexels.com/photos/54082/carrots-vegetables-food-orange-54082.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-          seedName: "Carrot",
-          price: 10,
-        },
-    ];
-      
-
-  const [cart, setCart] = useState<{ id: number; quantity: number }[]>([]);
-
-  const handleAddToCart = (id: number, quantity: number) => {
-    if (quantity === 0) return;
-
-    setCart(prev => {
-      const existing = prev.find(item => item.id === id);
-      if (existing) {
-        return prev.map(item =>
-          item.id === id ? { ...item, quantity: item.quantity + quantity } : item
-        );
-      }
-      return [...prev, { id, quantity }];
-    });
-  };
-
-  const handleRemove = (id: number) => {
-    setCart(prev => prev.filter(item => item.id !== id));
-  };
-
-  const handleQuantityChange = (id: number, newQuantity: number) => {
-   if(newQuantity === 0 ){
-    handleRemove(id)
-   }
-     setCart(prev =>
-      prev.map(item =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
-
-  const getProductData = (id: number) =>
-    productCatalog.find(product => product.id === id);
+  const { cartItems, cartTotal, calculateCartTotal } = useCartStore();
+  const { productList } = useProductsStore();
+  useEffect(() => {
+    // Need some condition so it doesn't fire on first render, but too lazy to fix it now.
+    calculateCartTotal();
+    console.log(cartItems);
+  }, [cartItems]);
 
   return (
     <>
-      {productCatalog.map(product => (
-        <ProductCard
-          key={product.id}
-          imageUrl={product.imageUrl}
-          seedName={product.seedName}
-          price={product.price}
-          quantity={1}
-          onAddToCart={(qty) => handleAddToCart(product.id, qty)}
-          
-        />
-      ))}
-
-      {cart.map(item => {
-        const product = getProductData(item.id);
-        if (!product) return null;
-        return (
-          <ProductCardCart
-            key={`cart-${item.id}`}
-            imageUrl={product.imageUrl}
-            seedName={product.seedName}
-            price={product.price}
-            quantity={item.quantity}
-            onQuantityChange={(qty) => handleQuantityChange(item.id, qty)}
-            onRemove={() => handleRemove(item.id)}
-            showQuantityControls={true}
-          />
-        );
-      })}
-
-      {cart.map(item => {
-        const product = getProductData(item.id);
-        if (!product) return null;
-        return (
-          <ProductCardCart
-            key={`checkout-${item.id}`}
-            imageUrl={product.imageUrl}
-            seedName={product.seedName}
-            price={product.price}
-            quantity={item.quantity}
-            onQuantityChange={(qty) => handleQuantityChange(item.id, qty)}
-            onRemove={() => handleRemove(item.id)}
-            showQuantityControls={false}
-          />
-        );
-      })}
-
-      {cart.map(item => {
-        const product = getProductData(item.id);
-        if (!product) return null;
-        return (
-          <ProductCardCartMobile
-            key={`cart-${item.id}`}
-            imageUrl={product.imageUrl}
-            seedName={product.seedName}
-            price={product.price}
-            quantity={item.quantity}
-            onQuantityChange={(qty) => handleQuantityChange(item.id, qty)}
-            onRemove={() => handleRemove(item.id)}
-            showQuantityControls={true}
-          />
-        );
-      })}
-
-      {cart.map(item => {
-        const product = getProductData(item.id);
-        if (!product) return null;
-        return (
-          <ProductCardCartMobile
-            key={`checkout-${item.id}`}
-            imageUrl={product.imageUrl}
-            seedName={product.seedName}
-            price={product.price}
-            quantity={item.quantity}
-            onQuantityChange={(qty) => handleQuantityChange(item.id, qty)}
-            onRemove={() => handleRemove(item.id)}
-            showQuantityControls={false}
-          />
-        );
-      })}
+      <div>
+        <div className="flex">
+          {productList.map((item) => (
+            <ProductCard key={item.id} item={item} />
+          ))}
+        </div>
+        <h2>Cart total: {cartTotal}Kr</h2>
+        <div className="flex">
+          {cartItems.map((item) => {
+            return <ProductCardCart key={item.id} item={item} />;
+          })}
+        </div>
+      </div>
+      <div className="flex">
+        {cartItems.map((item) => {
+          return <ProductCardCart key={item.id} item={item} />;
+        })}
+      </div>
+      <div className="flex">
+        {cartItems.map((item) => {
+          return <ProductCardCartMobile key={item.id} item={item} />;
+        })}
+      </div>
+      <div className="flex">
+        {cartItems.map((item) => {
+          return <ProductCardCartMobile key={item.id} item={item} />;
+        })}
+      </div>
     </>
   );
 };

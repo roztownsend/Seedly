@@ -5,7 +5,6 @@ import "../navbar/Navbar.css";
 import { useCartStore } from "../../stores/cartStore";
 export default function Navbar() {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [cartCount, setCartCount] = useState<number>(0);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
@@ -51,7 +50,7 @@ export default function Navbar() {
           <div className="navbar-right">
             <div className="navbar-cart">
               <ShoppingBag className="navbar-icons" />
-              <span className="text-black">{cartCount}</span>
+              <span className="text-black">{cartItems.length}</span>
             </div>
             <Link to="/login" className="navbar-auth">
               Login
@@ -72,7 +71,7 @@ export default function Navbar() {
           <div className="navbar-mobile-icons">
             <div className="navbar-cart">
               <ShoppingBag className="navbar-icons" />
-              <span className="text-black">{cartCount}</span>
+              <span className="text-black">{cartItems.length}</span>
             </div>
             <div className="relative">
               <button onClick={() => setShowUserMenu(!showUserMenu)}>

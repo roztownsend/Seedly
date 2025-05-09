@@ -29,17 +29,21 @@ const Sample = () => {
           })}
         </div>
       </div>
-      {cartItems.map((item) => {
-        return <ProductCardCart key={item.id} item={item} />;
-      })}
-
-      {cartItems.map((item) => {
-        return <ProductCardCartMobile key={item.id} item={item} />;
-      })}
-
-      {cartItems.map((item) => {
-        return <ProductCardCartMobile key={item.id} item={item} />;
-      })}
+      <div className="flex">
+        {cartItems.map((item) => {
+          return <ProductCardCart key={item.id} item={item} />;
+        })}
+      </div>
+      <div className="flex">
+        {cartItems.map((item) => {
+          return <ProductCardCartMobile key={item.id} item={item} />;
+        })}
+      </div>
+      <div className="flex">
+        {cartItems.map((item) => {
+          return <ProductCardCartMobile key={item.id} item={item} />;
+        })}
+      </div>
     </>
   );
 };

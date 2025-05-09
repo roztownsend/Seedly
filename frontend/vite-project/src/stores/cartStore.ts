@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type CartItem = {
+export type CartItem = {
   id: number;
   seedName: string;
   price: number;
@@ -11,7 +11,7 @@ type CartItem = {
 type CartState = {
   cartItems: CartItem[];
   cartTotal: number;
-  addItem: (itemId: CartItem, quantity: number) => void;
+  addItem: (itemId: CartItem) => void;
   removeItem: (id: number) => void;
   updateQuantity: (
     id: number,
@@ -24,15 +24,15 @@ type CartState = {
 export const useCartStore = create<CartState>((set, get) => ({
   cartItems: [],
   cartTotal: 0,
-  addItem: (item, quantity) =>
+  addItem: (item) =>
     set((state) => {
       const existing = state.cartItems.find((i) => i.id === item.id);
       if (existing) {
-        get().updateQuantity(item.id, quantity);
+        get().updateQuantity(item.id, item.quantity);
         // No need to return new state, updateQuantity already did it.
         return {};
       }
-      return { cartItems: [...state.cartItems, { ...item, quantity }] };
+      return { cartItems: [...state.cartItems, item] };
     }),
   removeItem: (id) =>
     set((state) => ({

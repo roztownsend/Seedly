@@ -1,10 +1,9 @@
+import { ProductItem } from "../stores/productsStore";
+import { CartItem } from "../stores/cartStore";
 export interface ProductCardProps {
-  imageUrl: string;
-  seedName: string;
-  price: number;
-  id: number;
-  onQuantityChange?: (newQuantity: number) => void;
-  onAddToCart?: (quantity: number) => void;
-  onRemove?: () => void;
-  showQuantityControls?: boolean;
+  item: ProductItem;
 }
+
+export type ProductCardCartProps = {
+  item: CartItem;
+};

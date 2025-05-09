@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ProductCardProps } from "../../types/types";
 import "./productCard.css";
-import { tempCardType } from "../../types/tempTypes";
 import { useCartStore } from "../../stores/cartStore";
 
-const ProductCard: React.FC<tempCardType> = ({ item }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
   const [counter, setCounter] = useState(1);
   const { imageUrl, seedName, price } = item;
   const { addItem } = useCartStore();
@@ -20,7 +19,8 @@ const ProductCard: React.FC<tempCardType> = ({ item }) => {
   };
 
   const handleAddToCart = () => {
-    addItem(item, counter);
+    const tempItem = { ...item, quantity: counter };
+    addItem(tempItem);
     setCounter(1);
   };
 

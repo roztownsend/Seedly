@@ -4,9 +4,13 @@ import "./productCard.css";
 import { useCartStore } from "../../stores/cartStore";
 
 const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
-  const [counter, setCounter] = useState(1);
-  const { imageUrl, seedName, price } = item;
-  const { addItem } = useCartStore();
+  const { imageUrl, seedName, price, id } = item;
+
+  const { addItem, cartItems } = useCartStore();
+
+  const existingItem = cartItems.find((cartItem) => cartItem.id === id);
+  const initialQuantity = existingItem?.quantity ?? 1;
+  const [counter, setCounter] = useState(initialQuantity);
 
   // Prevent going below 0
   const handleDecrement = () => {
@@ -21,7 +25,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
   const handleAddToCart = () => {
     const tempItem = { ...item, quantity: counter };
     addItem(tempItem);
-    setCounter(1);
   };
 
   return (

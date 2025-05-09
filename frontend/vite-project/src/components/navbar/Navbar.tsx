@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { ShoppingBag, Search, Menu, X, User2 } from "lucide-react";
 import "../navbar/Navbar.css";
 import { useCartStore } from "../../stores/cartStore";
@@ -6,6 +7,7 @@ export default function Navbar() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [cartCount, setCartCount] = useState<number>(0);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   const { cartItems } = useCartStore();
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,18 +20,20 @@ export default function Navbar() {
       <nav className="navbar hidden md:block">
         <div className="navbar-container">
           <div className="navbar-left">
-            <span className="navbar-logo">Seedly</span>
+            <Link to="/" className="navbar-logo">
+              Seedly
+            </Link>
             <div className="navbar-links-search">
               <div className="navbar-links">
-                <a href="#" className="navbar-link">
+                <Link to="/seeds" className="navbar-link">
                   Seeds
-                </a>
-                <a href="#" className="navbar-link">
+                </Link>
+                <Link to="/offers" className="navbar-link">
                   Offers
-                </a>
-                <a href="#" className="navbar-link">
+                </Link>
+                <Link to="/contact" className="navbar-link">
                   Contact Us
-                </a>
+                </Link>
               </div>
               <div className="navbar-search">
                 <Search className="navbar-search-icon" />
@@ -47,14 +51,14 @@ export default function Navbar() {
           <div className="navbar-right">
             <div className="navbar-cart">
               <ShoppingBag className="navbar-icons" />
-              <span className="text-black">{cartItems.length}</span>
+              <span className="text-black">{cartCount}</span>
             </div>
-            <a href="#" className="navbar-auth">
+            <Link to="/login" className="navbar-auth">
               Login
-            </a>
-            <a href="#" className="navbar-auth">
+            </Link>
+            <Link to="/signup" className="navbar-auth">
               Sign Up
-            </a>
+            </Link>
           </div>
         </div>
       </nav>
@@ -62,13 +66,40 @@ export default function Navbar() {
       {/* MOBILE NAVBAR */}
       <nav className="navbar md:hidden">
         <div className="navbar-container">
-          <span className="navbar-logo">Seedly</span>
+          <Link to="/" className="navbar-logo">
+            Seedly
+          </Link>
           <div className="navbar-mobile-icons">
             <div className="navbar-cart">
               <ShoppingBag className="navbar-icons" />
               <span className="text-black">{cartCount}</span>
             </div>
-            <User2 className="navbar-icons" />
+            <div className="relative">
+              <button onClick={() => setShowUserMenu(!showUserMenu)}>
+                <User2 className="navbar-icons" />
+              </button>
+
+              <div
+                className={`user-menu ${
+                  showUserMenu ? "user-menu-open" : "user-menu-closed"
+                }`}
+              >
+                <Link
+                  to="/login"
+                  className="user-menu-link"
+                  onClick={() => setShowUserMenu(false)}
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/signup"
+                  className="user-menu-link"
+                  onClick={() => setShowUserMenu(false)}
+                >
+                  Sign Up
+                </Link>
+              </div>
+            </div>
             <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
               {isMenuOpen ? (
                 <X className="mobile-navbar-icons" />
@@ -100,15 +131,15 @@ export default function Navbar() {
           >
             <X className="w-6 h-6 text-black" />
           </button>
-          <a href="#" className="mobile-link">
+          <Link to="/seeds" className="mobile-link">
             Seeds
-          </a>
-          <a href="#" className="mobile-link">
+          </Link>
+          <Link to="/offers" className="mobile-link">
             Offers
-          </a>
-          <a href="#" className="mobile-link">
+          </Link>
+          <Link to="/contact" className="mobile-link">
             Contact Us
-          </a>
+          </Link>
         </div>
       )}
     </>

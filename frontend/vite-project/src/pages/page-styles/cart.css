@@ -1,13 +1,17 @@
 .cart-sections {
-    @apply grid grid-cols-4;
+    @apply grid grid-cols-10 gap-4;
 }
 
-.header, .cart-items {
-    @apply col-start-2;
+.cart-header {
+    @apply col-start-2 col-end-8;
 }
 
-.header {
-    @apply py-6;
+.cart-items {
+    @apply col-start-2 col-end-5;
+}
+
+.cart-items {
+    @apply overflow-y-scroll;
 }
 
 .cart-items__list {
@@ -15,10 +19,10 @@
 }
 
 .list-wrapper {
-    @apply p-3 mb-3 border-b-2;
+    @apply py-3 mb-3 border-b-2;
 }
 
 .order-summary {
-    @apply col-start-3;
+    @apply col-start-7 col-end-10 flex flex-col gap-6 w-full;
 }
 

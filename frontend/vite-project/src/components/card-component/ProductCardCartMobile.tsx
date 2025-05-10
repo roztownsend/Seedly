@@ -41,7 +41,7 @@ const ProductCardCart: React.FC<tempCardType> = ({ item }) => {
           />
         </div>
         <button
-          className="product-card-cart__remove"
+          className="product-card-cart__remove text-link-primary"
           onClick={() => removeItem(id)}
         >
           Remove

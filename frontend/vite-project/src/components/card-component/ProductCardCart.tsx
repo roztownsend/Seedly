@@ -32,7 +32,7 @@ const ProductCardCart: React.FC<ProductCardCartProps> = ({ item }) => {
         </h4>
       </div>
       <button
-        className="product-card-cart__remove"
+        className="product-card-cart__remove text-link-primary"
         onClick={() => removeItem(id)}
       >
         Remove

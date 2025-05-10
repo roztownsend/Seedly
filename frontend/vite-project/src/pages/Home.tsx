@@ -1,14 +1,18 @@
-import Hero from "../components/hero/Hero";
-import heroImg from "../assets/images/heroImg.webp"
-
+import { useEffect } from "react";
+import { useCartStore } from "../stores/cartStore";
+import Sample from "../components/card-component/Sample";
 function Home() {
+  const { cartItems, calculateCartTotal } = useCartStore();
+
+  useEffect(() => {
+    calculateCartTotal();
+  }, [cartItems]);
+
   return (
     <>
-      <Hero 
-        heading={"Spring Vibes"} 
-        description={"The time has come for you to buy some seeds, and actually keep track of the growth of your crops!"} 
-        imageObject={heroImg}
-      />
+      <div>
+        <Sample />
+      </div>
     </>
   );
 }

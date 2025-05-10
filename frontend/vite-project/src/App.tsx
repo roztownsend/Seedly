@@ -12,6 +12,7 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar />
+    <main>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
@@ -19,6 +20,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
+    </main>
       <Footer />
     </BrowserRouter>
   );

@@ -8,7 +8,7 @@ function Signup() {
 
   return (
     <div className="credential-form-container">
-      <FormHeader formType="signup" />
+      <FormHeader formType={formType} />
 
       <CredentialFields
         showPassword={showPassword}

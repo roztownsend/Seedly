@@ -1,55 +1,56 @@
-import { useState, useEffect } from 'react';
-import { ProductCardProps } from '../../types/types';
-import './productCard.css';
+import { useState } from "react";
+import { ProductCardProps } from "../../types/types";
+import "./productCard.css";
+import { useCartStore } from "../../stores/cartStore";
 
-const ProductCard: React.FC<ProductCardProps> = ({
-  imageUrl,
-  seedName,
-  price,
-  quantity,
-  onQuantityChange,
-  onAddToCart
-}) => {
-  const [counter, setCounter] = useState(quantity);
+const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
+  const { imageUrl, seedName, price, id } = item;
 
-  // Keep the quantity updated if the parent changes it
-  useEffect(() => {
-    setCounter(quantity);
-  }, [quantity]);
+  const { addItem, cartItems } = useCartStore();
+
+  const existingItem = cartItems.find((cartItem) => cartItem.id === id);
+  const initialQuantity = existingItem?.quantity ?? 1;
+  const [counter, setCounter] = useState(initialQuantity);
 
   // Prevent going below 0
   const handleDecrement = () => {
-    const newCount = Math.max(counter - 1, 0);
-    setCounter(newCount);
-    onQuantityChange?.(newCount); 
+    setCounter((prevState) => (prevState - 1 === 0 ? 1 : prevState - 1));
   };
 
   const handleIncrement = () => {
     const newCount = counter + 1;
     setCounter(newCount);
-    onQuantityChange?.(newCount);  // Notify parent component of the change
   };
 
   const handleAddToCart = () => {
-    onAddToCart?.(counter);  // Pass the quantity to the parent
+    const tempItem = { ...item, quantity: counter };
+    addItem(tempItem);
   };
 
   return (
     <section className="product-card">
       <div className="product-card__image">
-        <img src={imageUrl} alt={seedName} className="object-cover w-full h-full" />
+        <img
+          src={imageUrl}
+          alt={seedName}
+          className="object-cover w-full h-full"
+        />
       </div>
       <div className="product-card__details">
         <h5>{seedName}</h5>
-        <p className="product-card__price">{price.toFixed(2)}Kr</p>
+        <p className="product-card__price">{(price * counter).toFixed(2)}Kr</p>
       </div>
       <div className="product-card__actions">
         <div className="product-card__quantity">
-          <button onClick={handleDecrement} disabled={counter <= 0}>-</button>
+          <button onClick={handleDecrement} disabled={counter <= 0}>
+            -
+          </button>
           <span>{counter}</span>
           <button onClick={handleIncrement}>+</button>
         </div>
-        <button className="product-card__add" onClick={handleAddToCart}>Add to Cart</button>
+        <button className="product-card__add" onClick={() => handleAddToCart()}>
+          Add to Cart
+        </button>
       </div>
     </section>
   );

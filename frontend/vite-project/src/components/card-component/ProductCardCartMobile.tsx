@@ -1,58 +1,48 @@
-import { useEffect, useState } from 'react';
-import { ProductCardProps } from '../../types/types';
-import './productCardCartMobile.css';
-import { QuantityControl } from '../quantity-control/QuantityControl';
-
-const ProductCardCart: React.FC<ProductCardProps> = ({
-  imageUrl,
-  seedName,
-  price,
-  quantity,
-  onQuantityChange,
-  onRemove,
-  showQuantityControls = true,
-}) => {
+import { useEffect, useState } from "react";
+import { ProductCardProps } from "../../types/types";
+import { tempCardType } from "../../types/tempTypes";
+import "./productCardCartMobile.css";
+import { QuantityControl } from "../quantity-control/QuantityControl";
+import { useCartStore } from "../../stores/cartStore";
+const ProductCardCart: React.FC<tempCardType> = ({ item }) => {
+  const { quantity, id, imageUrl, price, seedName } = item;
   const [counter, setCounter] = useState(quantity);
-
-  useEffect(() => {
-    setCounter(quantity);
-  }, [quantity]);
-
+  const { removeItem, updateQuantity } = useCartStore();
   const handleDecrement = () => {
     const newCount = Math.max(counter - 1, 0);
     setCounter(newCount);
-    onQuantityChange?.(newCount);
   };
 
   const handleIncrement = () => {
     const newCount = counter + 1;
     setCounter(newCount);
-    onQuantityChange?.(newCount);
   };
 
   return (
     <section className="product-card-cart">
       <div className="product-card-cart__image">
-        <img src={imageUrl} alt={seedName} className="object-cover w-full h-full" />
+        <img
+          src={imageUrl}
+          alt={seedName}
+          className="object-cover w-full h-full"
+        />
       </div>
       <div className="product-card-cart__details">
         <h5 className="product-card-cart__title">{seedName}</h5>
-        <h5 className="product-card-cart__price">{(price * counter).toFixed(2)}Kr</h5>
+        <h5 className="product-card-cart__price">
+          {(price * quantity).toFixed(2)}Kr
+        </h5>
         <div className="product-card-cart__actions">
-          {showQuantityControls ? (
-            <QuantityControl
-              counter={counter}
-              onIncrement={handleIncrement}
-              onDecrement={handleDecrement}
-              disableDecrement={counter <= 0}
-            />
-          ) : (
-            <p className="product-card-checkout__quantity-text">Quantity: {counter}</p>
-          )}
+          <QuantityControl
+            counter={quantity}
+            onIncrement={() => updateQuantity(id, 1, "increment")}
+            onDecrement={() => updateQuantity(id, 1, "decrement")}
+            disableDecrement={quantity <= 1}
+          />
         </div>
-        <button 
+        <button
           className="product-card-cart__remove"
-          onClick={onRemove}
+          onClick={() => removeItem(id)}
         >
           Remove
         </button>

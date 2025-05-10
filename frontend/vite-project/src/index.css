@@ -2,8 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Layout styles */
+
+html,
+body,
+#root {
+  @apply h-full m-0 p-0; 
+}
+
+#root {
+  @apply grid grid-rows-12;
+}
+
+nav {
+  @apply row-span-3 lg:row-span-1;
+}
+
+main {
+  @apply row-start-4 lg:row-start-3 row-end-11 flex  justify-center items-center;
+}
+
+footer {
+  @apply row-start-11 row-end-13;
+}
+
 /* Global */
 @layer base {
+
   h1,
   h2,
   h3,
@@ -11,7 +36,7 @@
   h5 {
     @apply font-sans font-semibold;
   }
-
+  
   h1 {
     @apply text-7xl leading-tight tracking-tight;
   }
@@ -33,15 +58,4 @@
   }
 }
 
-html,
-body,
-#root {
-  height: 100%;
-  margin: 0;
-}
-#root {
-  display: flex;
-  background-color: #eff2f6;
-  justify-content: center;
-  align-items: center;
-}
+

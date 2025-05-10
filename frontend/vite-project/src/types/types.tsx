@@ -8,3 +8,8 @@ export interface ProductCardProps {
     onRemove?: () => void;
     showQuantityControls?: boolean  }
   
+export interface HeroProps {
+    heading: string;
+    description: string;
+    imageObject: string;
+}

@@ -1,0 +1,12 @@
+.hero {
+    @apply flex flex-col items-center justify-center max-w-6xl max-h-screen mx-auto pt-56;
+  }
+  
+p{
+    @apply w-2/4 text-lg text-center py-5;
+}
+
+  .hero-img {
+    @apply w-full max-w-6xl h-auto rounded-lg object-cover;
+}
+  

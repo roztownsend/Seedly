@@ -105,13 +105,26 @@ export const useAuthStore = create<AuthActions & AuthState>((set, get) => ({
         });
         return;
       }
+      let activeSession = session;
+      if (!activeSession) {
+        console.log("No session found, signin in anonymously");
+        const {
+          data: { session: anonSession },
+          error: anonError,
+        } = await supabase.auth.signInAnonymously();
+        if (anonError) {
+          set({ error: anonError, isLoading: false });
+          return;
+        }
+        activeSession = anonSession;
+      }
       // Update state with session and user data.
       set({
-        user: session?.user ?? null,
-        session: session
+        user: activeSession?.user ?? null,
+        session: activeSession
           ? {
-              access_token: session.access_token,
-              expires_at: session.expires_at,
+              access_token: activeSession.access_token,
+              expires_at: activeSession.expires_at,
             }
           : null,
       });
@@ -121,7 +134,7 @@ export const useAuthStore = create<AuthActions & AuthState>((set, get) => ({
         data: { subscription },
       } = supabase.auth.onAuthStateChange((event, eventSession) => {
         console.log(
-          `onAthStateChange - Event ${event} Session ${eventSession}`
+          `onAthStateChange - Event ${event} Session ${eventSession?.user.is_anonymous}`
         );
         set({
           user: eventSession?.user ?? null,

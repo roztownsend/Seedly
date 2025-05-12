@@ -11,8 +11,9 @@ import './index.css';
 function App() {
   return (
     <BrowserRouter>
+    <div className="layout">
       <Navbar />
-    
+    <main>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
@@ -20,8 +21,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
-    
-      {/*<Footer />*/}
+    </main>
+      <Footer />
+    </div>
     </BrowserRouter>
   );
 }

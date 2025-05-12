@@ -12,14 +12,14 @@ function Home() {
 
   return (
     <>
-      <div>
+      <section>
         <Hero 
           heading={"Spring Vibe"} 
           subheading={"The time has come for you to buy some seeds, and actually keep track of the growth of your crops!"} 
           imageUrl={heroImg} 
         />
         <Sample />
-      </div>
+      </section>
     </>
   );
 }

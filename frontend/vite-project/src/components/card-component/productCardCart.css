@@ -1,14 +1,18 @@
 
+.product-card-cart {
+  @apply w-64 flex gap-3;
+}
+
 .product-card-cart__image-box {
-  @apply w-full overflow-hidden;
+  @apply w-1/2 overflow-hidden;
 }
 
 .product-card-cart__image {
-  @apply w-52 h-52 object-fill;
+  @apply w-full h-full object-cover;
 }
 
 .product-card-cart__actions-wrapper {
- @apply flex w-full flex-col;
+ @apply flex w-2/3 lg:flex-wrap;
 }
 
 .product-card-cart__details {

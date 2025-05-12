@@ -10,6 +10,10 @@
     @apply flex flex-col items-center text-center;
 }
 
+.no-items {
+    @apply p-3;
+}
+
 .cart-items {
     @apply lg:col-start-2 lg:col-end-5;
 }

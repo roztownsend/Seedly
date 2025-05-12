@@ -1,5 +1,5 @@
 .order-summary-box {
-    @apply flex flex-col gap-6;
+    @apply flex flex-col gap-6 p-3 lg:p-0;
 }
 
 .subtotal, .shipping, .total {

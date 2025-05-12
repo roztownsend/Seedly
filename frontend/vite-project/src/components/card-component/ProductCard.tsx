@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ProductCardProps } from "../../types/types";
 import "./productCard.css";
 import { useCartStore } from "../../stores/cartStore";
@@ -6,24 +5,20 @@ import { useCartStore } from "../../stores/cartStore";
 const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
   const { imageUrl, seedName, price, id } = item;
 
-  const { addItem, cartItems } = useCartStore();
+  const { addItem, cartItems, updateQuantity, removeItem } = useCartStore();
 
   const existingItem = cartItems.find((cartItem) => cartItem.id === id);
   const initialQuantity = existingItem?.quantity ?? 1;
-  const [counter, setCounter] = useState(initialQuantity);
 
-  // Prevent going below 0
   const handleDecrement = () => {
-    setCounter((prevState) => (prevState - 1 === 0 ? 1 : prevState - 1));
+    if (existingItem?.quantity && existingItem?.quantity - 1 <= 0) {
+      removeItem(id);
+      return;
+    }
+    updateQuantity(id, 1, "decrement");
   };
-
-  const handleIncrement = () => {
-    const newCount = counter + 1;
-    setCounter(newCount);
-  };
-
   const handleAddToCart = () => {
-    const tempItem = { ...item, quantity: counter };
+    const tempItem = { ...item, quantity: 1 };
     addItem(tempItem);
   };
 
@@ -38,19 +33,24 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
       </div>
       <div className="product-card__details">
         <h5>{seedName}</h5>
-        <p className="product-card__price">{(price * counter).toFixed(2)}Kr</p>
+        <p className="product-card__price">
+          {(price * initialQuantity).toFixed(2)}Kr
+        </p>
       </div>
       <div className="product-card__actions">
-        <div className="product-card__quantity">
-          <button onClick={handleDecrement} disabled={counter <= 0}>
-            -
+        {existingItem?.quantity ? (
+          <div className="product-card__quantity">
+            <button onClick={() => handleDecrement()}>-</button>
+            <span>{existingItem?.quantity}</span>
+            <button onClick={() => updateQuantity(id, 1, "increment")}>
+              +
+            </button>
+          </div>
+        ) : (
+          <button className="button-primary" onClick={() => handleAddToCart()}>
+            Add to Cart
           </button>
-          <span>{counter}</span>
-          <button onClick={handleIncrement}>+</button>
-        </div>
-        <button className="button-primary" onClick={() => handleAddToCart()}>
-          Add to Cart
-        </button>
+        )}
       </div>
     </section>
   );

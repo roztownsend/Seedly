@@ -19,22 +19,21 @@ const ProductCardCart: React.FC<ProductCardCartProps> = ({ item }) => {
         <div className="product-card-cart__details">
           <h4 className="product-card-cart__title">{seedName}</h4>
           <div className="product-card-cart__actions">
-          <h5 className="product-card-cart__price">
-            {(price * quantity).toFixed(2)} Kr
-          </h5>
+            <h5 className="product-card-cart__price">
+              {(price * quantity).toFixed(2)} Kr
+            </h5>
             <QuantityControl
               counter={quantity}
               onIncrement={() => updateQuantity(id, 1, "increment")}
               onDecrement={() => updateQuantity(id, 1, "decrement")}
-              disableDecrement={quantity <= 1}
             />
           </div>
-        <button
-          className="product-card-cart__remove text-link-primary"
-          onClick={() => removeItem(id)}
-        >
-          Remove
-        </button>
+          <button
+            className="product-card-cart__remove text-link-primary"
+            onClick={() => removeItem(id)}
+          >
+            Remove
+          </button>
         </div>
       </div>
     </div>

@@ -25,33 +25,36 @@ export const useCartStore = create<CartState>((set, get) => ({
   cartItems: [],
   cartTotal: 0,
   addItem: (item) =>
-    set((state) => {
-      const existing = state.cartItems.find((i) => i.id === item.id);
-      if (existing) {
-        get().updateQuantity(item.id, item.quantity);
-        // No need to return new state, updateQuantity already did it.
-        return {};
-      }
-      return { cartItems: [...state.cartItems, item] };
-    }),
+    set((state) => ({
+      cartItems: [...state.cartItems, item],
+    })),
+
   removeItem: (id) =>
     set((state) => ({
       cartItems: state.cartItems.filter((item) => item.id !== id),
     })),
   updateQuantity: (id, quantity, operation) =>
-    set((state) => ({
-      cartItems: state.cartItems.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              quantity:
-                operation === "decrement"
-                  ? item.quantity - quantity
-                  : item.quantity + quantity,
-            }
-          : item
-      ),
-    })),
+    set((state) => {
+      const updatedCartItems = state.cartItems
+        .map((item) => {
+          if (item.id !== id) return item;
+
+          const newQuantity =
+            operation === "decrement"
+              ? item.quantity - quantity
+              : item.quantity + quantity;
+
+          if (newQuantity <= 0) {
+            return null;
+          }
+          return {
+            ...item,
+            quantity: newQuantity,
+          };
+        })
+        .filter((item) => item !== null);
+      return { cartItems: updatedCartItems };
+    }),
   calculateCartTotal: () => {
     const items = get().cartItems;
     if (items.length === 0) {

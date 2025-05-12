@@ -9,6 +9,7 @@ type PrivateRouteProps = {
 function PrivateRoute({ children }: PrivateRouteProps) {
   const { user, isLoading } = useAuthStore();
   const navigate = useNavigate();
+
   useEffect(() => {
     if (isLoading) {
       console.log("PrivateRoute: auth state is loading", isLoading);
@@ -22,14 +23,15 @@ function PrivateRoute({ children }: PrivateRouteProps) {
       return;
     }
   }, [user, navigate, isLoading]);
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-  if (user) {
-    return <>{children}</>;
+
+  if (user?.is_anonymous) {
+    navigate("/login");
+    return;
   }
 
-  return null;
+  if (!isLoading && user) {
+    return <>{children}</>;
+  }
 }
 
 export default PrivateRoute;

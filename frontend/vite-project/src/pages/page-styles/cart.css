@@ -1,13 +1,17 @@
 .cart-sections {
-    @apply grid grid-cols-10 gap-4;
+    @apply lg:grid lg:grid-cols-10 lg:gap-4 overflow-y-scroll;
 }
 
-.cart-header {
-    @apply col-start-2 col-end-8;
+.cart-header, .cart-header--nothing {
+    @apply lg:col-start-2 lg:col-end-8;
+}
+
+.cart-header--nothing {
+    @apply flex flex-col items-center text-center;
 }
 
 .cart-items {
-    @apply col-start-2 col-end-5;
+    @apply lg:col-start-2 lg:col-end-5;
 }
 
 .cart-items {
@@ -23,6 +27,6 @@
 }
 
 .order-summary {
-    @apply col-start-7 col-end-10 flex flex-col gap-6 w-full;
+    @apply lg:col-start-7 lg:col-end-10 flex flex-col gap-6 w-full;
 }
 

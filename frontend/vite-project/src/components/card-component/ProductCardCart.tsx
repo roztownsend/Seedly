@@ -7,37 +7,39 @@ const ProductCardCart: React.FC<ProductCardCartProps> = ({ item }) => {
   const { id, imageUrl, price, seedName, quantity } = item;
 
   return (
-    <section className="product-card-cart">
-      <div className="product-card-cart__image">
+    <div className="product-card-cart">
+      <div className="product-card-cart__image-box">
         <img
           src={imageUrl}
           alt={seedName}
-          className="object-cover w-full h-full"
+          className="product-card-cart__image"
         />
       </div>
-      <div className="product-card-cart__details">
-        <h4 className="product-card-cart__title">{seedName}</h4>
-        <div className="product-card-cart__actions">
-          {/* Use QuantityComponent here */}
+      <div className="product-card-cart__actions-wrapper">
+        <div className="product-card-cart__details">
+          <h4 className="product-card-cart__title">{seedName}</h4>
+          <div className="product-card-cart__actions">
+            {/* Use QuantityComponent here */}
 
-          <QuantityControl
-            counter={quantity}
-            onIncrement={() => updateQuantity(id, 1, "increment")}
-            onDecrement={() => updateQuantity(id, 1, "decrement")}
-            disableDecrement={quantity <= 1}
-          />
+            <QuantityControl
+              counter={quantity}
+              onIncrement={() => updateQuantity(id, 1, "increment")}
+              onDecrement={() => updateQuantity(id, 1, "decrement")}
+              disableDecrement={quantity <= 1}
+            />
+          </div>
+          <h4 className="product-card-cart__price">
+            {(price * quantity).toFixed(2)} Kr
+          </h4>
         </div>
-        <h4 className="product-card-cart__price">
-          {(price * quantity).toFixed(2)}Kr
-        </h4>
+        <button
+          className="product-card-cart__remove text-link-primary"
+          onClick={() => removeItem(id)}
+        >
+          Remove
+        </button>
       </div>
-      <button
-        className="product-card-cart__remove text-link-primary"
-        onClick={() => removeItem(id)}
-      >
-        Remove
-      </button>
-    </section>
+    </div>
   );
 };
 

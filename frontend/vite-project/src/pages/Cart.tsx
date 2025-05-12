@@ -18,9 +18,11 @@ const Cart: React.FC = () => {
 
   if (cartItems.length === 0) {
     return (
-      <div className="cart-header">
+      <div className="cart-header--nothing">
       <h1 className="h3">Your Cart</h1>
-      You currently have no items in your cart. Why not <Link to="/seeds" className="text-link-primary">check out our selection of seeds</Link> and add something?
+      <div className="cart-header--nothing__no-items">
+        You currently have no items in your cart. Why not <Link to="/seeds" className="text-link-primary">check out our selection of seeds</Link> and add something?
+      </div>
       </div>
     )}
   else {    
@@ -44,10 +46,10 @@ const Cart: React.FC = () => {
                 })}
               </div>
             </section>
-            <section className="order-summary">
+            {/* <section className="order-summary">
               <OrderSummary />
               <LoginCta />
-          </section>
+          </section> */}
           </div>
         </div>
       );

@@ -54,7 +54,8 @@ export const useCredentialForm = (
           formData.email,
           formData.password
         );
-        if (result.data) {
+        if (result.success) {
+          navigate("/dashboard");
           console.log(result.data);
         }
         if (result.error) {

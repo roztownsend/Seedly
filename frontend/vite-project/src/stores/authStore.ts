@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { supabase } from "../helper/supabaseClient";
-import { AuthError, Session, User } from "@supabase/supabase-js";
+import { AuthError, Session, Subscription, User } from "@supabase/supabase-js";
 
 type ClientSession = {
   access_token: string;
@@ -21,6 +21,7 @@ type AuthState = {
   session: ClientSession;
   isLoading: boolean;
   error: AuthError | null;
+  authSubscription: Subscription | null;
 };
 
 type AuthActions = {
@@ -30,13 +31,15 @@ type AuthActions = {
     email: string,
     password: string
   ) => Promise<AuthResponse>;
+  signOutUser: () => void;
 };
 
-export const useAuthStore = create<AuthActions & AuthState>((set) => ({
+export const useAuthStore = create<AuthActions & AuthState>((set, get) => ({
   user: null,
   session: null,
   isLoading: true,
   error: null,
+  authSubscription: null,
   signUpNewUser: async (email, password) => {
     try {
       const { data, error } = await supabase.auth.signUp({
@@ -70,15 +73,33 @@ export const useAuthStore = create<AuthActions & AuthState>((set) => ({
     }
   },
   initializeAuth: async () => {
+    if (!get().isLoading) {
+      set({ isLoading: true });
+    }
+
+    const existringSubscription = get().authSubscription;
+
+    if (existringSubscription) {
+      existringSubscription.unsubscribe();
+    }
+
+    console.log("initializeAuth: Attempting to get session...");
     try {
       const {
         data: { session },
         error,
       } = await supabase.auth.getSession();
 
-      if (error) throw error;
+      if (error) {
+        set({
+          error: error,
+          isLoading: false,
+        });
+        return;
+      }
 
-      set({
+      set((state) => ({
+        ...state,
         user: session?.user ?? null,
         session: session
           ? {
@@ -86,30 +107,45 @@ export const useAuthStore = create<AuthActions & AuthState>((set) => ({
               expires_at: session.expires_at,
             }
           : null,
-        isLoading: false,
-      });
-
+      }));
       const {
-        data: { subscription },
-      } = supabase.auth.onAuthStateChange((event, session) => {
-        console.log(event);
+        data: { subscription: newSubscription },
+      } = supabase.auth.onAuthStateChange((event, eventSession) => {
+        console.log(
+          `onAthStateChange - Event ${event} Session ${eventSession}`
+        );
         set({
-          user: session?.user ?? null,
-          session: session
+          user: eventSession?.user ?? null,
+          session: eventSession
             ? {
-                access_token: session.access_token,
-                expires_at: session.expires_at,
+                access_token: eventSession.access_token,
+                expires_at: eventSession.expires_at,
               }
             : null,
           isLoading: false,
+          error: null,
+          authSubscription: get().authSubscription,
         });
       });
-      return () => subscription.unsubscribe();
+      set({
+        authSubscription: newSubscription,
+        isLoading: false,
+      });
     } catch (error) {
       set({
         error: error as AuthError,
         isLoading: false,
       });
+    }
+  },
+  signOutUser: async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        throw new Error(error.message);
+      }
+    } catch (error) {
+      console.error("Something unexpected occured when logging out", error);
     }
   },
 }));

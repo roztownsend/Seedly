@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { ProductCardProps } from "../../types/types";
+import { ProductCardCartProps } from "../../types/types";
 import { tempCardType } from "../../types/tempTypes";
 import "./productCardCartMobile.css";
 import { QuantityControl } from "../quantity-control/QuantityControl";
 import { useCartStore } from "../../stores/cartStore";
-const ProductCardCart: React.FC<tempCardType> = ({ item }) => {
+const ProductCardCart: React.FC<ProductCardCartProps> = ({ item }) => {
   const { quantity, id, imageUrl, price, seedName } = item;
   const [counter, setCounter] = useState(quantity);
   const { removeItem, updateQuantity } = useCartStore();
@@ -41,7 +41,7 @@ const ProductCardCart: React.FC<tempCardType> = ({ item }) => {
           />
         </div>
         <button
-          className="product-card-cart__remove"
+          className="product-card-cart__remove text-link-primary"
           onClick={() => removeItem(id)}
         >
           Remove

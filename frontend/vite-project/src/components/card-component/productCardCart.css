@@ -1,23 +1,24 @@
+
 .product-card-cart {
-  @apply w-full h-32 flex;
+  @apply w-64 flex gap-3;
+}
+
+.product-card-cart__image-box {
+  @apply w-1/2 overflow-hidden;
 }
 
 .product-card-cart__image {
-  @apply w-32 h-32;
+  @apply w-full h-full object-cover;
+}
+
+.product-card-cart__actions-wrapper {
+ @apply flex w-2/3 lg:flex-wrap;
 }
 
 .product-card-cart__details {
-  @apply flex justify-between items-start flex-col w-96 h-32 p-2;
-}
-
-.product-card-cart__actions {
-  @apply flex items-start gap-3;
+  @apply flex w-full justify-between items-start flex-col;
 }
 
 .product-card-cart__quantity {
-  @apply w-24 h-12 flex items-center justify-between border p-2.5 border-black;
-}
-
-.product-card-cart__remove {
-  @apply mt-auto;
+  @apply flex items-center justify-between border border-black;
 }

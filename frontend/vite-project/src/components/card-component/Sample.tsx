@@ -29,7 +29,7 @@ const Sample = () => {
           })}
         </div>
       </div>
-      <div className="flex">
+      {/* <div className="flex">
         {cartItems.map((item) => {
           return <ProductCardCart key={item.id} item={item} />;
         })}
@@ -43,7 +43,7 @@ const Sample = () => {
         {cartItems.map((item) => {
           return <ProductCardCartMobile key={item.id} item={item} />;
         })}
-      </div>
+      </div> */}
     </>
   );
 };

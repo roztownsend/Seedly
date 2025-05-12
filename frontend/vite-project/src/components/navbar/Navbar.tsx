@@ -48,10 +48,12 @@ export default function Navbar() {
           </div>
 
           <div className="navbar-right">
-            <div className="navbar-cart">
-              <ShoppingBag className="navbar-icons" />
-              <span className="text-black">{cartItems.length}</span>
+            <Link to="/cart" className="navbar-auth">
+              <div className="navbar-cart">
+                <ShoppingBag className="navbar-icons" />
+                <span className="text-black">{cartItems.length}</span>
             </div>
+            </Link>
             <Link to="/login" className="navbar-auth">
               Login
             </Link>

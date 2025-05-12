@@ -6,12 +6,13 @@
 
 html,
 body,
-#root {
-  @apply h-full m-0 p-0; 
+#root,
+.layout {
+  @apply h-screen m-0 p-0; 
 }
 
-#root {
-  @apply grid grid-rows-12;
+.layout {
+  @apply grid grid-rows-[auto_auto_auto] h-screen;
 }
 
 nav {
@@ -19,12 +20,11 @@ nav {
 }
 
 main {
-  @apply row-start-4 lg:row-start-2 row-end-11 
-    flex justify-center items-center overflow-y-scroll;
+  @apply overflow-y-auto min-h-0;
 }
 
 footer {
-  @apply row-start-11 row-end-13;
+  @apply row-start-11;
 }
 
 /* Global */

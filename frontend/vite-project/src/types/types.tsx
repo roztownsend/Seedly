@@ -7,3 +7,10 @@ export interface ProductCardProps {
 export type ProductCardCartProps = {
   item: CartItem;
 };
+
+
+export interface HeroProps {
+    heading: string;
+    subheading: string;
+    imageUrl: string;
+  }

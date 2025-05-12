@@ -5,7 +5,8 @@ import { useCredentialForm } from "../hooks/useCredentialForm";
 import "../components/credentials/Credentials.css";
 import { Link } from "react-router-dom";
 function Signup() {
-  const { showPassword, handlers, formType } = useCredentialForm("signup");
+  const { showPassword, handlers, formType, errorMessage } =
+    useCredentialForm("signup");
 
   return (
     <>
@@ -17,6 +18,7 @@ function Signup() {
             showPassword={showPassword}
             handlers={handlers}
             formType={formType}
+            errorMessage={errorMessage}
           />
           <span className="form-alternative-text">Or use one of these:</span>
           <SocialButtons />

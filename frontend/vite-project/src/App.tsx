@@ -5,25 +5,27 @@ import Signup from "./pages/Signup";
 import Cart from "./pages/Cart";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
+import Dashboard from "./pages/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import './index.css';
+import "./index.css";
 
 function App() {
   return (
     <BrowserRouter>
-    <div className="layout">
-      <Navbar />
-    <main>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
-    </main>
-      <Footer />
-    </div>
+      <div className="layout">
+        <Navbar />
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </BrowserRouter>
   );
 }

@@ -1,51 +1,56 @@
-
-import express from 'express';
-import dotenv from 'dotenv';
+import cors from "cors";
+import express from "express";
+import dotenv from "dotenv";
 dotenv.config();
 
-import swaggerUi from 'swagger-ui-express';
-import YAML from 'yamljs';
-import path from 'path';
-import { pool } from './config/dbConnection';
-import plantRoutes from './routes/plantRoutes';
-
+import swaggerUi from "swagger-ui-express";
+import YAML from "yamljs";
+import path from "path";
+import { pool } from "./config/dbConnection";
+import plantRoutes from "./routes/plantRoutes";
+import { types } from "pg";
 
 //testing server startup
-pool.query('SELECT NOW()')
-  .then(res => console.log('PostgreSQL Connected:', res.rows[0]))
-  .catch(err => console.error('Connection Error:', err));
+pool
+  .query("SELECT NOW()")
+  .then((res) => console.log("PostgreSQL Connected:", res.rows[0]))
+  .catch((err) => console.error("Connection Error:", err));
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+app.use(cors());
 app.use(express.json());
-app.use('/plants', plantRoutes);
+app.use("/plants", plantRoutes);
 
+const swaggerDocument = YAML.load(
+  path.join(__dirname, "../swagger/swagger.yaml")
+);
 
-const swaggerDocument = YAML.load(path.join(__dirname, '../swagger/swagger.yaml'));
-
+const pgTypes = types;
+pgTypes.setTypeParser(types.builtins.NUMERIC, (value: any) =>
+  parseFloat(value)
+);
 
 // basic route, look /routes folder for actual ones
-app.get('/', (_req, res) => {
-    res.send("API is running");
-  });
+app.get("/", (_req, res) => {
+  res.send("API is running");
+});
 
-  
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //testing/debug
-app.get('/health/db', async (_req, res) => {
+app.get("/health/db", async (_req, res) => {
   try {
-    const result = await pool.query('SELECT NOW()');
+    const result = await pool.query("SELECT NOW()");
     res.status(200).json({
-      message: 'Database connected',
+      message: "Database connected",
       time: result.rows[0].now,
     });
   } catch (err) {
-    console.error('DB health check failed:', err);
-    res.status(500).json({ message: 'Database connection failed' });
+    console.error("DB health check failed:", err);
+    res.status(500).json({ message: "Database connection failed" });
   }
-}); 
-
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

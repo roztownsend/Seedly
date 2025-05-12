@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuthStore } from "../stores/authStore";
 import {
   CredentialsInput,
   FormType,
@@ -9,6 +10,8 @@ import {
 export const useCredentialForm = (
   formType: FormType
 ): UseCredentialsFormReturn => {
+  const { signUpNewUser } = useAuthStore();
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [formData, setFormData] = useState<CredentialsInput>(() => {
     const defaultData = {
       email: "",
@@ -30,12 +33,21 @@ export const useCredentialForm = (
     console.log(formData);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Logs the form data based on the form type (login or signup).
-    formType === "login"
-      ? console.log("Login form submit was triggerd", formData)
-      : console.log("Signup form submit was triggerd", formData);
+    try {
+      if (formType === "signup") {
+        const result = await signUpNewUser(formData.email, formData.password);
+        if (result.data) {
+          console.log(result.data);
+        }
+        if (result.error) {
+          setErrorMessage(result.error.message);
+        }
+      }
+    } catch (error) {
+      console.error("Unexpected error in useCredentialForm", error);
+    }
   };
 
   const togglePassword = () => setShowPassword((prevState) => !prevState);
@@ -44,6 +56,7 @@ export const useCredentialForm = (
     formType,
     formData,
     showPassword,
+    errorMessage,
     handlers: {
       handleChange,
       handleSubmit,

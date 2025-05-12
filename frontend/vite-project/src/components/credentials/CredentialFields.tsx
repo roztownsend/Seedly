@@ -4,6 +4,7 @@ function CredentialFields({
   handlers,
   showPassword,
   formType,
+  errorMessage,
 }: CredentialsFormProps) {
   return (
     <form
@@ -40,6 +41,7 @@ function CredentialFields({
           {showPassword ? <FaEyeSlash /> : <FaEye />}
         </span>
       </div>
+      {errorMessage && <p className="text-red-600">{errorMessage}</p>}
       {formType === "login" && (
         <div className="credentials-footer">
           <label htmlFor="rememberMe" className="rememberme-label">

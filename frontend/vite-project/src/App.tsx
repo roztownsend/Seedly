@@ -6,10 +6,16 @@ import Cart from "./pages/Cart";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import Dashboard from "./pages/Dashboard";
+import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
-
+import { useEffect } from "react";
+import { useAuthStore } from "./stores/authStore";
 function App() {
+  const { initializeAuth } = useAuthStore();
+  useEffect(() => {
+    initializeAuth();
+  }, []);
   return (
     <BrowserRouter>
       <div className="layout">
@@ -21,7 +27,14 @@ function App() {
             <Route path="/shop" element={<Shop />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
           </Routes>
         </main>
         <Footer />

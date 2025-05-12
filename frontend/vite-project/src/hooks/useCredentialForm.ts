@@ -38,32 +38,31 @@ export const useCredentialForm = (
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrorMessage("");
     try {
-      if (formType === "signup") {
-        const result = await signUpNewUser(formData.email, formData.password);
-        if (result.success) {
-          console.log(result.data);
-          navigate("/dashboard");
-        }
-        if (result.error) {
-          setErrorMessage(result.error.message);
-        }
+      const { email, password } = formData;
+      const action =
+        formType === "signup"
+          ? signUpNewUser
+          : formType === "login"
+          ? signInWithPassword
+          : null;
+
+      if (!action) {
+        throw new Error("Invalid form type");
       }
-      if (formType === "login") {
-        const result = await signInWithPassword(
-          formData.email,
-          formData.password
-        );
-        if (result.success) {
-          navigate("/dashboard");
-          console.log(result.data);
-        }
-        if (result.error) {
-          setErrorMessage(result.error.message);
-        }
+
+      const result = await action(email, password);
+
+      if (result.success) {
+        console.log(result.data);
+        navigate("/dashboard");
+      } else if (result.error) {
+        setErrorMessage(result.error.message);
       }
     } catch (error) {
       console.error("Unexpected error in useCredentialForm", error);
+      setErrorMessage("Something went wrong. Please try again.");
     }
   };
 

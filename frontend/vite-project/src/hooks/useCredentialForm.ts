@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuthStore } from "../stores/authStore";
+import { useNavigate } from "react-router-dom";
 import {
   CredentialsInput,
   FormType,
@@ -10,7 +11,9 @@ import {
 export const useCredentialForm = (
   formType: FormType
 ): UseCredentialsFormReturn => {
-  const { signUpNewUser } = useAuthStore();
+  const navigate = useNavigate();
+
+  const { signUpNewUser, signInWithPassword } = useAuthStore();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [formData, setFormData] = useState<CredentialsInput>(() => {
     const defaultData = {
@@ -38,6 +41,19 @@ export const useCredentialForm = (
     try {
       if (formType === "signup") {
         const result = await signUpNewUser(formData.email, formData.password);
+        if (result.success) {
+          console.log(result.data);
+          navigate("/dashboard");
+        }
+        if (result.error) {
+          setErrorMessage(result.error.message);
+        }
+      }
+      if (formType === "login") {
+        const result = await signInWithPassword(
+          formData.email,
+          formData.password
+        );
         if (result.data) {
           console.log(result.data);
         }

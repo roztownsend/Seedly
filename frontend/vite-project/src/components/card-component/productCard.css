@@ -18,6 +18,3 @@
   @apply w-24 h-11 flex items-center justify-between border-[1px] p-2.5 border-black;
 }
 
-.product-card__add {
-  @apply w-36 h-11 flex items-center justify-center bg-black text-white;
-}

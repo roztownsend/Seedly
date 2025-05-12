@@ -48,7 +48,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
           <span>{counter}</span>
           <button onClick={handleIncrement}>+</button>
         </div>
-        <button className="product-card__add" onClick={() => handleAddToCart()}>
+        <button className="button-primary" onClick={() => handleAddToCart()}>
           Add to Cart
         </button>
       </div>

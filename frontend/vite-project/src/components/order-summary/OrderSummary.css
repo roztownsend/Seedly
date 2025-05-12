@@ -1,0 +1,16 @@
+.order-summary-box {
+    @apply flex flex-col gap-6 p-3 lg:p-0;
+}
+
+.subtotal, .shipping, .total {
+    @apply flex justify-between py-2;
+}
+
+.shipping__figure--next-step {
+    @apply text-gray-700;
+}
+
+.total {
+    @apply border-t-2 border-black pt-4;   
+}
+

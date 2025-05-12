@@ -1,0 +1,8 @@
+.login-cta {
+    @apply flex flex-col gap-6 text-center p-3 lg:pb-3;
+}
+
+.sign-in-button {
+    @apply w-full;
+}
+

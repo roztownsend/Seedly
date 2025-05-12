@@ -42,10 +42,12 @@ export const useAuthStore = create<AuthActions & AuthState>((set, get) => ({
   authSubscription: null,
   signUpNewUser: async (email, password) => {
     try {
+      // Sign up a new user to the Supabase authentication database.
       const { data, error } = await supabase.auth.signUp({
         email: email,
         password: password,
       });
+      // Errors may include cases like 'email already being in use'.
       if (error) {
         console.error("There was a problem signing up ", error);
         return { success: false, error };
@@ -58,12 +60,14 @@ export const useAuthStore = create<AuthActions & AuthState>((set, get) => ({
   },
   signInWithPassword: async (email, password) => {
     try {
+      // Attempt to sign in the user using Supabase email/password authentication.
       const { data, error } = await supabase.auth.signInWithPassword({
         email: email,
         password: password,
       });
+      // Handle potential sign-in errors (e.g., invalid credentials).
       if (error) {
-        console.error("There was a proble signing up ", error);
+        console.error("There was a problem signing up ", error);
         return { success: false, error };
       }
       return { success: true, data };
@@ -73,18 +77,22 @@ export const useAuthStore = create<AuthActions & AuthState>((set, get) => ({
     }
   },
   initializeAuth: async () => {
+    // Make sure loading state is true while initializing.
     if (!get().isLoading) {
       set({ isLoading: true });
     }
 
-    const existringSubscription = get().authSubscription;
+    // If there's an existring subscription, unsubscribe to avoid duplicates.
+    const existingSubscription = get().authSubscription;
 
-    if (existringSubscription) {
-      existringSubscription.unsubscribe();
+    if (existingSubscription) {
+      existingSubscription.unsubscribe();
     }
 
     console.log("initializeAuth: Attempting to get session...");
+
     try {
+      // Attempt to retrive the current session.
       const {
         data: { session },
         error,
@@ -97,9 +105,8 @@ export const useAuthStore = create<AuthActions & AuthState>((set, get) => ({
         });
         return;
       }
-
-      set((state) => ({
-        ...state,
+      // Update state with session and user data.
+      set({
         user: session?.user ?? null,
         session: session
           ? {
@@ -107,9 +114,11 @@ export const useAuthStore = create<AuthActions & AuthState>((set, get) => ({
               expires_at: session.expires_at,
             }
           : null,
-      }));
+      });
+
+      // Listen for authentication state changes and update store accordingly.
       const {
-        data: { subscription: newSubscription },
+        data: { subscription },
       } = supabase.auth.onAuthStateChange((event, eventSession) => {
         console.log(
           `onAthStateChange - Event ${event} Session ${eventSession}`
@@ -122,16 +131,16 @@ export const useAuthStore = create<AuthActions & AuthState>((set, get) => ({
                 expires_at: eventSession.expires_at,
               }
             : null,
-          isLoading: false,
           error: null,
-          authSubscription: get().authSubscription,
         });
       });
+      // Save subscription and mark loading as complete.
       set({
-        authSubscription: newSubscription,
+        authSubscription: subscription,
         isLoading: false,
       });
     } catch (error) {
+      // Handle unexpected errors during initialization.
       set({
         error: error as AuthError,
         isLoading: false,
@@ -140,11 +149,14 @@ export const useAuthStore = create<AuthActions & AuthState>((set, get) => ({
   },
   signOutUser: async () => {
     try {
+      // Sign the user out using Supabase.
       const { error } = await supabase.auth.signOut();
+      // If there is an error during sign-out, throw it to be caught below.
       if (error) {
         throw new Error(error.message);
       }
     } catch (error) {
+      // Log any unexpected sign-out errors.
       console.error("Something unexpected occured when logging out", error);
     }
   },

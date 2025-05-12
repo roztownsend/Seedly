@@ -15,7 +15,7 @@ function PrivateRoute({ children }: PrivateRouteProps) {
       console.log("PrivateRoute: auth state is loading", isLoading);
       return;
     }
-    if (!user) {
+    if (!user || user?.is_anonymous) {
       console.log(
         "PrivateRoute: No user found and loading completed redirecting to /login"
       );
@@ -24,14 +24,14 @@ function PrivateRoute({ children }: PrivateRouteProps) {
     }
   }, [user, navigate, isLoading]);
 
-  if (user?.is_anonymous) {
-    navigate("/login");
-    return;
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
 
-  if (!isLoading && user) {
+  if (user && !user.is_anonymous) {
     return <>{children}</>;
   }
+  return null;
 }
 
 export default PrivateRoute;

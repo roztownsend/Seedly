@@ -1,10 +1,16 @@
 import { create } from "zustand";
 
 export type CartItem = {
-  id: number;
-  seedName: string;
+  id: string;
+  productName: string;
   price: number;
-  imageUrl: string;
+  description?: string;
+  cycle?: string;
+  image_url?: string;
+  createdAt: string;
+  updatedAt: string;
+  isEdible?: boolean;
+  sunlight?: string;
   quantity: number;
 };
 
@@ -12,9 +18,9 @@ type CartState = {
   cartItems: CartItem[];
   cartTotal: number;
   addItem: (itemId: CartItem) => void;
-  removeItem: (id: number) => void;
+  removeItem: (id: string) => void;
   updateQuantity: (
-    id: number,
+    id: string,
     quantity: number,
     operation?: "decrement" | "increment"
   ) => void;

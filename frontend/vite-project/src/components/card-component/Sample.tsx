@@ -12,13 +12,14 @@ const Sample = () => {
     // Need some condition so it doesn't fire on first render, but too lazy to fix it now.
     calculateCartTotal();
     console.log(cartItems);
+    console.log(productList);
   }, [cartItems]);
 
   return (
     <>
       <div>
         <div className="flex">
-          {productList.map((item) => (
+          {productList.slice(0, 5).map((item) => (
             <ProductCard key={item.id} item={item} />
           ))}
         </div>

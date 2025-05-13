@@ -14,3 +14,13 @@ export interface HeroProps {
     subheading: string;
     imageUrl: string;
   }
+
+export type Plant = {
+  id: string;
+  product_name: string;
+  price: number;
+  description: string;
+  cycle: string;
+  image_url: string;
+  sunlight: string;
+};

@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useCartStore } from "../stores/cartStore";
 import { FaHourglassHalf, FaRegSadTear } from "react-icons/fa";
+import { useCartStore } from "../stores/cartStore";
+import { Plant } from "../types/types";
 import "./page-styles/ProductDetails.css";
-
-type Plant = {
-    id: string;
-    product_name: string;
-    price: number;
-    description: string;
-    cycle: string;
-    image_url: string;
-    sunlight: string;
-};
 
 const ProductDetails: React.FC = () => {
     const { id } = useParams(); // get the product ID via route
@@ -24,7 +15,7 @@ const ProductDetails: React.FC = () => {
     useEffect(() => {
         const fetchPlant = async () => {
             try {
-                const res = await fetch("http://localhost:5001/plants");
+                const res = await fetch("http://localhost:5001/plants"); // fetch all plants but if you're using a different port, adjust the URL accordingly
                 const data = await res.json();
                 const found = data.data.find((p: Plant) => p.id === id);
                 setPlant(found || null); // defines the product found
@@ -52,11 +43,13 @@ const ProductDetails: React.FC = () => {
         } else {
             addItem({
                 id: plant.id,
-                seedName: plant.product_name,
+                productName: plant.product_name,
                 price: plant.price,
-                imageUrl: plant.image_url,
+                image_url: plant.image_url,
                 quantity,
-            });
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+              });
         }
     };
 
@@ -88,12 +81,10 @@ const ProductDetails: React.FC = () => {
             <div className="product-info">
                 <h1 className="product-title">{plant.product_name}</h1>
                 <h2 className="product-price">{plant.price} kr</h2>
-
                 <p className="product-description">Description: {plant.description}</p>
-
                 <p className="product-details">Cycle: {plant.cycle}</p>
                 <p className="product-details">Sunlight: {plant.sunlight}</p>
-
+                
                 <div className="product-actions">
                     <div className="quantity-selector">
                         <button className="qty-button" onClick={decrement}>-</button>

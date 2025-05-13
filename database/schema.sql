@@ -14,20 +14,21 @@ CREATE TABLE IF NOT EXISTS users (
   updated_at TIMESTAMP DEFAULT NOW()
 );
 
--- ============================
--- PLANTS
--- ============================
-CREATE TABLE IF NOT EXISTS plants (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  product_name VARCHAR(100) NOT NULL,
-  price NUMERIC(10, 2) NOT NULL,
-  description TEXT,
-  cycle VARCHAR(50), -- Consider ENUM if values are limited
-  timeline TEXT,
-  image_url TEXT,
-  created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW()
-);
+-- ============================ 
+-- PLANTS 
+-- ============================ 
+CREATE TABLE IF NOT EXISTS plants ( 
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(), 
+product_name VARCHAR(100) NOT NULL, 
+price NUMERIC(10, 2) NOT NULL, 
+description TEXT, 
+cycle VARCHAR(50), -- Consider ENUM if values are limited 
+image_url TEXT, 
+created_at TIMESTAMP DEFAULT NOW(), 
+updated_at TIMESTAMP DEFAULT NOW(), 
+isEdible BOOLEAN, 
+Sunlight VARCHAR(50) 
+); 
 
 -- Add indexes for common search/filter fields
 CREATE INDEX IF NOT EXISTS idx_plants_name ON plants(product_name);

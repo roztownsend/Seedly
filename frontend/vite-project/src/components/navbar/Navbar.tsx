@@ -27,9 +27,6 @@ export default function Navbar() {
                 <Link to="/seeds" className="navbar-link">
                   Seeds
                 </Link>
-                <Link to="/offers" className="navbar-link">
-                  Offers
-                </Link>
                 <Link to="/contact" className="navbar-link">
                   Contact Us
                 </Link>
@@ -134,9 +131,6 @@ export default function Navbar() {
           </button>
           <Link to="/seeds" className="mobile-link">
             Seeds
-          </Link>
-          <Link to="/offers" className="mobile-link">
-            Offers
           </Link>
           <Link to="/contact" className="mobile-link">
             Contact Us

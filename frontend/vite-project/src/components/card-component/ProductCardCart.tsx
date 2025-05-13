@@ -4,20 +4,20 @@ import { QuantityControl } from "../quantity-control/QuantityControl";
 import { useCartStore } from "../../stores/cartStore";
 const ProductCardCart: React.FC<ProductCardCartProps> = ({ item }) => {
   const { updateQuantity, removeItem } = useCartStore();
-  const { id, image_url, price, productName, quantity } = item;
+  const { id, image_url, price, product_name, quantity } = item;
 
   return (
     <div className="product-card-cart">
       <div className="product-card-cart__image-box">
         <img
           src={image_url}
-          alt={productName}
+          alt={product_name}
           className="product-card-cart__image"
         />
       </div>
       <div className="product-card-cart__actions-wrapper">
         <div className="product-card-cart__details">
-          <h4 className="product-card-cart__title">{productName}</h4>
+          <h4 className="product-card-cart__title">{product_name}</h4>
           <div className="product-card-cart__actions">
             <h5 className="product-card-cart__price">
               {(price * quantity).toFixed(2)} Kr

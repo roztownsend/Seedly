@@ -33,9 +33,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
       </div>
       <div className="product-card__details">
         <h5>{productName}</h5>
-        <p className="product-card__price">
-          {(price * initialQuantity).toFixed(2)}Kr
-        </p>
+        <p className="product-card__price">{price.toFixed(2)}Kr</p>
       </div>
       <div className="product-card__actions">
         {existingItem?.quantity ? (

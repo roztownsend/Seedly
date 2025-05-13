@@ -24,11 +24,11 @@
 }
 
 .navbar-links {
-    @apply hidden md:flex gap-6 ml-6 w-1/4;
+    @apply hidden md:flex gap-6 ml-6;
 }
 
 .navbar-link {
-    @apply text-black hover:text-green-700;
+    @apply text-black whitespace-nowrap hover:text-green-700;
 }
 
 .navbar-links-search {
@@ -48,7 +48,7 @@
 }
 
 .navbar-right {
-    @apply flex items-center justify-end gap-4 w-1/6;
+    @apply flex items-center justify-end gap-4;
 }
 
 .navbar-cart {
@@ -56,7 +56,7 @@
 }
 
 .navbar-auth {
-    @apply text-black hover:underline;
+    @apply text-black hover:underline whitespace-nowrap;
 }
 
 .navbar-mobile-icons {

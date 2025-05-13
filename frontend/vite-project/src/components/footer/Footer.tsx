@@ -9,7 +9,6 @@ export default function Footer() {
             <div className="footer-container">
                 <div className="footer-links">
                     <a href="#" className="footer-link">Seeds</a>
-                    <a href="#" className="footer-link">Offers</a>
                     <a href="#" className="footer-link">Contact Us</a>
                 </div>
                 <div className="footer-logo">Seedly</div>

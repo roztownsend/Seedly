@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import axios from "axios";
 const productCatalog = [
   {
     id: 1,
@@ -23,15 +24,38 @@ const productCatalog = [
   },
 ];
 
+type FetchAllPlantsResponse = {
+  data: ProductItem[];
+};
+
 export type ProductItem = {
-  id: number;
-  seedName: string;
+  id: string;
+  productName: string;
   price: number;
-  imageUrl: string;
+  description?: string;
+  cycle?: string;
+  image_url?: string;
+  createdAt: string;
+  updatedAt: string;
+  isEdible?: boolean;
+  sunlight?: string;
 };
 
 type ProductList = { productList: ProductItem[] };
 
-export const useProductsStore = create<ProductList>(() => ({
-  productList: productCatalog,
+type ProductState = {
+  fetchAllPlants: () => void;
+};
+
+export const useProductsStore = create<ProductState & ProductList>((set) => ({
+  productList: [],
+  fetchAllPlants: async () => {
+    const response = await axios.get<FetchAllPlantsResponse>(
+      "http://localhost:5000/plants"
+    );
+
+    set({
+      productList: response.data.data,
+    });
+  },
 }));

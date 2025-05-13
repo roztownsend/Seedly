@@ -11,6 +11,7 @@ type Plant = {
     description: string;
     cycle: string;
     image_url: string;
+    sunlight: string;
 };
 
 const ProductDetails: React.FC = () => {
@@ -88,9 +89,10 @@ const ProductDetails: React.FC = () => {
                 <h1 className="product-title">{plant.product_name}</h1>
                 <h2 className="product-price">{plant.price} kr</h2>
 
-                <p className="product-description">{plant.description}</p>
+                <p className="product-description">Description: {plant.description}</p>
 
                 <p className="product-details">Cycle: {plant.cycle}</p>
+                <p className="product-details">Sunlight: {plant.sunlight}</p>
 
                 <div className="product-actions">
                     <div className="quantity-selector">

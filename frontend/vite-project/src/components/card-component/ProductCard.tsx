@@ -8,7 +8,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
   const { addItem, cartItems, updateQuantity, removeItem } = useCartStore();
 
   const existingItem = cartItems.find((cartItem) => cartItem.id === id);
-  const initialQuantity = existingItem?.quantity ?? 1;
 
   const handleDecrement = () => {
     if (existingItem?.quantity && existingItem?.quantity - 1 <= 0) {

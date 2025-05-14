@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-type FetchAllPlantsResponse = {
+export type FetchAllPlantsResponse = {
   data: ProductItem[];
 };
 

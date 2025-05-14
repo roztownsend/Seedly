@@ -15,11 +15,11 @@
 }
 
 .product-title {
-    @apply h2;
+    @apply h1;
 }
 
 .product-price {
-    @apply text-xl sm:text-2xl font-semibold text-green-700;
+    @apply h3 text-green-700;
 }
 
 .product-description,

@@ -3,7 +3,7 @@ import "./productCard.css";
 import { useCartStore } from "../../stores/cartStore";
 
 const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
-  const { image_url, productName, price, id } = item;
+  const { image_url, product_name, price, id } = item;
 
   const { addItem, cartItems, updateQuantity, removeItem } = useCartStore();
 
@@ -27,12 +27,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
       <div className="product-card__image">
         <img
           src={image_url}
-          alt={productName}
+          alt={product_name}
           className="object-cover w-full h-full"
         />
       </div>
       <div className="product-card__details">
-        <h5>{productName}</h5>
+        <h5>{product_name}</h5>
         <p className="product-card__price">
           {(price * initialQuantity).toFixed(2)}Kr
         </p>

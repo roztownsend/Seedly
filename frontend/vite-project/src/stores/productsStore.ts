@@ -1,37 +1,38 @@
 import { create } from "zustand";
-const productCatalog = [
-  {
-    id: 1,
-    imageUrl:
-      "https://images.pexels.com/photos/54082/carrots-vegetables-food-orange-54082.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    seedName: "Carrot",
-    price: 10,
-  },
-  {
-    id: 2,
-    imageUrl:
-      "https://images.pexels.com/photos/1327838/pexels-photo-1327838.jpeg",
-    seedName: "Tomato",
-    price: 12,
-  },
-  {
-    id: 3,
-    imageUrl:
-      "https://images.pexels.com/photos/128420/pexels-photo-128420.jpeg",
-    seedName: "Zucchini",
-    price: 8,
-  },
-];
+import axios from "axios";
+
+type FetchAllPlantsResponse = {
+  data: ProductItem[];
+};
 
 export type ProductItem = {
-  id: number;
-  seedName: string;
+  id: string;
+  product_name: string;
   price: number;
-  imageUrl: string;
+  description?: string;
+  cycle?: string;
+  image_url?: string;
+  created_at: string;
+  updated_at: string;
+  isedible?: boolean;
+  sunlight?: string;
 };
 
 type ProductList = { productList: ProductItem[] };
 
-export const useProductsStore = create<ProductList>(() => ({
-  productList: productCatalog,
+type ProductState = {
+  fetchAllPlants: () => void;
+};
+
+export const useProductsStore = create<ProductState & ProductList>((set) => ({
+  productList: [],
+  fetchAllPlants: async () => {
+    const response = await axios.get<FetchAllPlantsResponse>(
+      "http://localhost:5000/plants"
+    );
+    console.log(response.data.data);
+    set({
+      productList: response.data.data,
+    });
+  },
 }));

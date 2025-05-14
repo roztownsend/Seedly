@@ -43,12 +43,12 @@ const ProductDetails: React.FC = () => {
         } else {
             addItem({
                 id: plant.id,
-                productName: plant.product_name,
+                product_name: plant.product_name,
                 price: plant.price,
                 image_url: plant.image_url,
                 quantity,
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString(),
               });
         }
     };

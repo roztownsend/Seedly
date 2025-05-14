@@ -5,7 +5,7 @@ import ProductCard from '../card-component/ProductCard';
 import Hero from '../hero/Hero';
 
 interface Plant {
-  id: number;
+  id: string;
   product_name: string;
   cycle: 'Annual' | 'Perennial';
   image_url: string;
@@ -70,6 +70,7 @@ const GridHome = ({ heading, subheading }: HeroProps) => {
       <Hero 
         heading={heading}
         subheading={subheading}
+        imageUrl={''}
       />
         
       <section>
@@ -79,9 +80,9 @@ const GridHome = ({ heading, subheading }: HeroProps) => {
               <ProductCard
                 item={{
                   id: plant.id,
-                  seedName: plant.product_name,
+                  product_name: plant.product_name,
                   price: plant.price,
-                  imageUrl: plant.image_url
+                  image_url: plant.image_url
                 }}
               />
             </div>
@@ -90,7 +91,7 @@ const GridHome = ({ heading, subheading }: HeroProps) => {
       </section>
 
       {showMore && (
-        <div className="flex justify-center my-6">
+        <div className="flex justify-center mt-6">
           <button 
             onClick={handleShowMore} 
             className="button-primary"

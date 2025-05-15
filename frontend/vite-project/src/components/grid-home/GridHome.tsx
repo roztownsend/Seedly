@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import { HeroProps } from "../../types/types";
-import { ProductItem, useProductsStore } from "../../stores/productsStore";
+import {
+  ProductItem,
+  useProductList,
+  useProductActions,
+} from "../../stores/productsStore";
 import ProductCard from "../card-component/ProductCard";
 import Hero from "../hero/Hero";
 import useIsMobile from "../../hooks/useIsMobile";
 import "./gridHome.css";
 
 const GridHome = ({ heading, subheading }: HeroProps) => {
-  const { productList, fetchAllPlants } = useProductsStore();
+  const productList = useProductList();
+  const { fetchAllPlants } = useProductActions();
   const [displayedPlants, setDisplayedPlants] = useState<ProductItem[]>([]);
   const [showMore, setShowMore] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
@@ -33,7 +38,10 @@ const GridHome = ({ heading, subheading }: HeroProps) => {
   // Set the initial displayed plants and show more button
   useEffect(() => {
     if (!loading && productList.length > 0) {
-      const initial = productList.slice(0, loadStep);{/* Load the first 3 or 8 plants based on screen size */ }
+      const initial = productList.slice(0, loadStep);
+      {
+        /* Load the first 3 or 8 plants based on screen size */
+      }
       setDisplayedPlants(initial);
       setShowMore(productList.length > loadStep);
     }

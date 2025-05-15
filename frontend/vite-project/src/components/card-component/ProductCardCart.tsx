@@ -3,7 +3,7 @@ import "./productCardCart.css";
 import { QuantityControl } from "../quantity-control/QuantityControl";
 import { useCartActions } from "../../stores/cartStore";
 const ProductCardCart: React.FC<ProductCardCartProps> = ({ item }) => {
-  const { updateQuantity, removeItem } = useCartActions();
+  const { removeItem } = useCartActions();
   const { id, image_url, price, product_name, quantity } = item;
 
   return (
@@ -22,11 +22,7 @@ const ProductCardCart: React.FC<ProductCardCartProps> = ({ item }) => {
             <h5 className="product-card-cart__price">
               {(price * quantity).toFixed(2)} Kr
             </h5>
-            <QuantityControl
-              counter={quantity}
-              onIncrement={() => updateQuantity(id, 1, "increment")}
-              onDecrement={() => updateQuantity(id, 1, "decrement")}
-            />
+            <QuantityControl cartId={id} />
           </div>
           <button
             className="product-card-cart__remove text-link-primary"

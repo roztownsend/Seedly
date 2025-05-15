@@ -22,11 +22,7 @@ const ProductCardCart: React.FC<ProductCardCartProps> = ({ item }) => {
           {(price * quantity).toFixed(2)}Kr
         </h5>
         <div className="product-card-cart__actions">
-          <QuantityControl
-            counter={quantity}
-            onIncrement={() => updateQuantity(id, 1, "increment")}
-            onDecrement={() => updateQuantity(id, 1, "decrement")}
-          />
+          <QuantityControl cartId={id} />
         </div>
         <button
           className="product-card-cart__remove text-link-primary"

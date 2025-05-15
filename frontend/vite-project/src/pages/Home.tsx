@@ -1,4 +1,3 @@
-import Sample from "../components/card-component/Sample";
 import Hero from "../components/hero/Hero";
 import heroImg from "../assets/image/heroImg.webp";
 import GridHome from "../components/grid-home/GridHome";
@@ -14,7 +13,7 @@ function Home() {
           }
           imageUrl={heroImg}
         />
-        <Sample />
+
         <GridHome
           heading={"Get ready to sow"}
           subheading={

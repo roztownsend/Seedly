@@ -1,11 +1,5 @@
 import { create } from 'zustand';
-import { PaymentFormTypes } from '../types/paymentFormTypes';
-
-interface PaymentState {
-    formData: PaymentFormTypes;
-    setFormData: (data: PaymentFormTypes) => void;
-    updateFormField: <K extends keyof PaymentFormTypes>(key: K, value: PaymentFormTypes[K]) => void;
-}
+import { PaymentFormTypes, PaymentState } from '../types/paymentFormTypes';
 
 export const usePaymentStore = create<PaymentState>((set) => ({
     formData: {

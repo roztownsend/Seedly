@@ -9,9 +9,9 @@ import ProductDetails from "./pages/ProductDetails";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import { useEffect } from "react";
-import { useProductsStore } from "./stores/productsStore";
+import { useProductActions } from "./stores/productsStore";
 function App() {
-  const { fetchAllPlants } = useProductsStore();
+  const { fetchAllPlants } = useProductActions();
 
   useEffect(() => {
     fetchAllPlants();

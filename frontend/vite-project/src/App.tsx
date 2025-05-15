@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import { useEffect } from "react";
 import { useProductsStore } from "./stores/productsStore";
+import ShippingForm from "./components/shipping-form/ShippingForm";
 function App() {
   const { fetchAllPlants } = useProductsStore();
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="/shop" element={<Shop />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/shippingForm" element={<ShippingForm />} />
           </Routes>
         </main>
         <Footer />

@@ -2,23 +2,22 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { FaHourglassHalf, FaRegSadTear } from "react-icons/fa";
-import { useCartActions, useCartItems } from "../stores/cartStore";
+import { useCartActions } from "../stores/cartStore";
 import { FetchAllPlantsResponse, ProductItem } from "../stores/productsStore";
+import { QuantityControl } from "../components/quantity-control/QuantityControl";
 import "./page-styles/ProductDetails.css";
 
 const ProductDetails: React.FC = () => {
   const { id } = useParams(); // get the product ID via route
   const [plant, setPlant] = useState<ProductItem | null>(null);
   const [loading, setLoading] = useState(true);
-  const cartItems = useCartItems();
-  const { addItem, updateQuantity } = useCartActions();
-  const existingItem = cartItems.find((cartItem) => cartItem.id === id);
+  const { addItem } = useCartActions();
 
   useEffect(() => {
     const fetchPlant = async () => {
       try {
         const res = await axios.get<FetchAllPlantsResponse>(
-          "http://localhost:5001/plants"
+          "http://localhost:5000/plants"
         ); // fetch all plants but if you're using a different port, adjust the URL accordingly
         const data = res.data.data;
         const found = data.find((p: ProductItem) => p.id === id);
@@ -71,27 +70,14 @@ const ProductDetails: React.FC = () => {
         <p className="product-details">Sunlight: {plant.sunlight}</p>
 
         <div className="product-actions">
-          {existingItem?.quantity ? (
-            <div className="quantity-selector">
-              <button
-                className="qty-button"
-                onClick={() => updateQuantity(existingItem?.id, 1, "decrement")}
-              >
-                -
+          <QuantityControl
+            cartId={plant.id}
+            fallbackButton={
+              <button className="btn-add-to-cart" onClick={handleAddToCart}>
+                Add to cart
               </button>
-              <span className="qty-value">{existingItem?.quantity}</span>
-              <button
-                className="qty-button"
-                onClick={() => updateQuantity(existingItem?.id, 1, "increment")}
-              >
-                +
-              </button>
-            </div>
-          ) : (
-            <button className="btn-add-to-cart" onClick={handleAddToCart}>
-              Add to cart
-            </button>
-          )}
+            }
+          />
         </div>
       </div>
     </div>

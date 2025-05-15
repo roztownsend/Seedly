@@ -22,18 +22,15 @@ type CartActions = {
     quantity: number,
     operation?: "decrement" | "increment"
   ) => void;
-  calculateCartTotal: () => void;
 };
 
 type CartState = {
   cartItems: CartItem[];
-  cartTotal: number;
   actions: CartActions;
 };
 
-export const useCartStore = create<CartState>((set, get) => ({
+const useCartStore = create<CartState>((set, get) => ({
   cartItems: [],
-  cartTotal: 0,
   actions: {
     addItem: (item) =>
       set((state) => ({
@@ -66,23 +63,25 @@ export const useCartStore = create<CartState>((set, get) => ({
           .filter((item) => item !== null);
         return { cartItems: updatedCartItems };
       }),
-    calculateCartTotal: () => {
-      const items = get().cartItems;
-      if (items.length === 0) {
-        set({ cartTotal: 0 });
-        return;
-      }
-      const total = items.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-      );
-      set({ cartTotal: total });
-    },
   },
 }));
 
 export const useCartItems = () => useCartStore((state) => state.cartItems);
 
-export const useCartTotal = () => useCartStore((state) => state.cartTotal);
+export const useCartTotal = () =>
+  useCartStore((state) =>
+    state.cartItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    )
+  );
 
 export const useCartActions = () => useCartStore((state) => state.actions);
+
+export const useCartUniqueItems = () =>
+  useCartStore((state) => state.cartItems.length);
+
+export const useCartItem = (id: string) =>
+  useCartStore((state) =>
+    state.cartItems.find((cartItem) => cartItem.id === id)
+  );

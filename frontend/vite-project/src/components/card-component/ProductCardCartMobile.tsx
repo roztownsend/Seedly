@@ -1,10 +1,11 @@
 import { ProductCardCartProps } from "../../types/types";
 import "./productCardCartMobile.css";
 import { QuantityControl } from "../quantity-control/QuantityControl";
-import { useCartStore } from "../../stores/cartStore";
+import { useCartActions } from "../../stores/cartStore";
 const ProductCardCart: React.FC<ProductCardCartProps> = ({ item }) => {
+  const { removeItem, updateQuantity } = useCartActions();
+
   const { quantity, id, image_url, price, product_name } = item;
-  const { removeItem, updateQuantity } = useCartStore();
 
   return (
     <section className="product-card-cart">

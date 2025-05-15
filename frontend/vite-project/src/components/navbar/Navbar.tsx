@@ -2,13 +2,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingBag, Search, Menu, X, User2 } from "lucide-react";
 import "../navbar/Navbar.css";
-import { useCartStore } from "../../stores/cartStore";
+import { useCartUniqueItems } from "../../stores/cartStore";
 export default function Navbar() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
-  const { cartItems } = useCartStore();
+  const cartUniqueItems = useCartUniqueItems();
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
@@ -48,8 +49,8 @@ export default function Navbar() {
             <Link to="/cart" className="navbar-auth">
               <div className="navbar-cart">
                 <ShoppingBag className="navbar-icons" />
-                <span className="text-black">{cartItems.length}</span>
-            </div>
+                <span className="text-black">{cartUniqueItems}</span>
+              </div>
             </Link>
             <Link to="/login" className="navbar-auth">
               Login
@@ -70,7 +71,7 @@ export default function Navbar() {
           <div className="navbar-mobile-icons">
             <div className="navbar-cart">
               <ShoppingBag className="navbar-icons" />
-              <span className="text-black">{cartItems.length}</span>
+              <span className="text-black">{cartUniqueItems}</span>
             </div>
             <div className="relative">
               <button onClick={() => setShowUserMenu(!showUserMenu)}>

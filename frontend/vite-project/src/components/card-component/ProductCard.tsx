@@ -1,19 +1,14 @@
 import { ProductCardProps } from "../../types/types";
 import "./productCard.css";
-import { useCartStore } from "../../stores/cartStore";
+import { useCartItem, useCartActions } from "../../stores/cartStore";
 
 const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
   const { image_url, product_name, price, id } = item;
 
-  const { addItem, cartItems, updateQuantity, removeItem } = useCartStore();
-
-  const existingItem = cartItems.find((cartItem) => cartItem.id === id);
+  const cartItem = useCartItem(id);
+  const { addItem, updateQuantity } = useCartActions();
 
   const handleDecrement = () => {
-    if (existingItem?.quantity && existingItem?.quantity - 1 <= 0) {
-      removeItem(id);
-      return;
-    }
     updateQuantity(id, 1, "decrement");
   };
   const handleAddToCart = () => {
@@ -35,10 +30,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
         <p className="product-card__price">{price.toFixed(2)}Kr</p>
       </div>
       <div className="product-card__actions">
-        {existingItem?.quantity ? (
+        {cartItem?.quantity ? (
           <div className="product-card__quantity">
             <button onClick={() => handleDecrement()}>-</button>
-            <span>{existingItem?.quantity}</span>
+            <span>{cartItem?.quantity}</span>
             <button onClick={() => updateQuantity(id, 1, "increment")}>
               +
             </button>

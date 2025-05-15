@@ -3,9 +3,9 @@ import "./productCard.css";
 import { useCartActions } from "../../stores/cartStore";
 import { memo } from "react";
 import { QuantityControl } from "../quantity-control/QuantityControl";
+import { Link } from "react-router-dom";
 const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
   const { image_url, product_name, price, id } = item;
-
   const { addItem } = useCartActions();
 
   const handleAddToCart = () => {
@@ -16,11 +16,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
   return (
     <section className="product-card">
       <div className="product-card__image">
-        <img
-          src={image_url}
-          alt={product_name}
-          className="object-cover w-full h-full"
-        />
+        <Link to={`/product/${id}`}>
+          <img
+            src={image_url}
+            alt={product_name}
+            className="object-cover w-full h-full"
+          />
+        </Link>
       </div>
       <div className="product-card__details">
         <h5>{product_name}</h5>

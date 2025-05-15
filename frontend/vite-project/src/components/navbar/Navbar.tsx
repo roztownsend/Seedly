@@ -48,7 +48,7 @@ export default function Navbar() {
             <Link to="/cart" className="navbar-auth">
               <div className="navbar-cart">
                 <ShoppingBag className="navbar-icons" />
-                <span className="text-black">{cartItems.length}</span>
+                {cartItems.length}
             </div>
             </Link>
             <Link to="/login" className="navbar-auth">
@@ -70,7 +70,7 @@ export default function Navbar() {
           <div className="navbar-mobile-icons">
             <div className="navbar-cart">
               <ShoppingBag className="navbar-icons" />
-              <span className="text-black">{cartItems.length}</span>
+              {cartItems.length}
             </div>
             <div className="relative">
               <button onClick={() => setShowUserMenu(!showUserMenu)}>
@@ -110,11 +110,11 @@ export default function Navbar() {
 
         <div className="mobile-search-wrapper">
           <div className="navbar-search">
-            <Search className="navbar-search-icon mr-2" />
+            <Search className="navbar-search-icon" />
             <input
               type="text"
               placeholder="Search seeds!"
-              className="navbar-search-input bg-transparent w-full"
+              className="navbar-search-input"
               value={searchTerm}
               onChange={handleInputChange}
             />
@@ -123,12 +123,6 @@ export default function Navbar() {
       </nav>
       {isMenuOpen && (
         <div className="mobile-menu animate-fadeIn relative">
-          <button
-            className="absolute top-4 right-4"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <X className="w-6 h-6 text-black" />
-          </button>
           <Link to="/seeds" className="mobile-link">
             Seeds
           </Link>

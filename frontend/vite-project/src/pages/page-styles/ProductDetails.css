@@ -3,7 +3,7 @@
 }
 
 .product-image {
-    @apply w-full h-[400px] sm:h-[549px] bg-gray-200 rounded-lg overflow-hidden;
+    @apply w-full h-[400px] sm:h-[549px] overflow-hidden;
 }
 
 .product-image img {
@@ -11,15 +11,19 @@
 }
 
 .product-info {
-    @apply flex flex-col justify-start gap-4 text-gray-800 px-2;
+    @apply flex h-full flex-col flex-1 justify-start gap-6 px-2;
 }
 
-.product-title {
-    @apply h1;
+.title-price {
+    @apply flex md:flex-col w-full justify-between items-baseline;
 }
 
-.product-price {
-    @apply h3 text-green-700;
+.product-title, h4 {
+    @apply text-yellow-800;
+}
+
+.desc-actions {
+    @apply flex flex-1 flex-col justify-between lg:flex-col;
 }
 
 .product-description,
@@ -27,23 +31,15 @@
     @apply text-base leading-relaxed;
 }
 
-
-.product-tasks {
-    @apply mt-4;
-}
-
-.tasks-heading {
-    @apply h4 mb-2;
-}
-
-.task-label {
-    @apply font-bold;
+.product-tasks-heading {
+    @apply pt-3;
 }
 
 .product-actions {
-    @apply flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-6;
+    @apply flex w-full justify-center md:justify-start py-6;
 }
 
+/* to-remove */
 .quantity-selector {
     @apply flex items-center bg-gray-100 border border-gray-400 px-4 py-2;
 }
@@ -56,21 +52,9 @@
     @apply text-base font-medium w-8 text-center;
 }
 
-.btn-add-to-cart {
-    @apply button-primary px-6 py-3 rounded hover:bg-gray-900 transition;
-}
-
 .loading-state,
 .not-found-state {
     @apply flex flex-col items-center justify-center h-screen gap-2;
-}
-
-.loading-state {
-    @apply text-gray-600;
-}
-
-.not-found-state {
-    @apply text-gray-500;
 }
 
 .state-icon {
@@ -78,5 +62,5 @@
 }
 
 .state-message {
-    @apply text-lg font-medium;
+    @apply w-1/2;
 }

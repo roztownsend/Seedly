@@ -1,11 +1,13 @@
 import { ProductCardCartProps } from "../../types/types";
 import "./productCardCart.css";
 import { QuantityControl } from "../quantity-control/QuantityControl";
-import { useCartActions } from "../../stores/cartStore";
-const ProductCardCart: React.FC<ProductCardCartProps> = ({ item }) => {
+import { useCartActions, useCartItem } from "../../stores/cartStore";
+import { memo } from "react";
+const ProductCardCart: React.FC<ProductCardCartProps> = ({ id }) => {
   const { removeItem } = useCartActions();
-  const { id, image_url, price, product_name, quantity } = item;
-
+  const cartItem = useCartItem(id);
+  if (!cartItem) return null;
+  const { image_url, product_name, price, quantity } = cartItem;
   return (
     <div className="product-card-cart">
       <div className="product-card-cart__image-box">
@@ -36,4 +38,4 @@ const ProductCardCart: React.FC<ProductCardCartProps> = ({ item }) => {
   );
 };
 
-export default ProductCardCart;
+export default memo(ProductCardCart);

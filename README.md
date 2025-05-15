@@ -18,8 +18,8 @@
 ### Clone the repository
 
 ```bash
-git clone git@github.com:Zonkkatul/final-project.git
-cd project-name
+git clone git@github.com:roztownsend/Seedly.git
+cd final-project
 ```
 
 ### Install frontend dependencies
@@ -27,63 +27,64 @@ cd project-name
 ```bash
 cd frontend
 npm install
+```
+A simple `npm install` should be fine for most of these, but if you need individual packages:
 
-React and React-DOM
-npx create-react-app your-app-name --template typescript
+React and React-DOM  
+`npx create-react-app your-app-name --template typescript`
 
 For API requests:
 
-Axios (or Fetch API)
-npm install axios
+Axios (or Fetch API)  
+` npm install axios` 
 
 For Routing:
 
-React Router
-npm install react-router-dom @types/react-router-dom
+React Router  
+`npm install react-router-dom @types/react-router-dom`
 
 For Swagger frontend client (optional if you want API integration help):
 
-swagger-ui-react
-npm install swagger-ui-react
+swagger-ui-react  
+`npm install swagger-ui-react`
 
-State Management (optional):
+State Management:
 
-Zustand
-
-npm install zustand
-```
+Zustand  
+`npm install zustand`
 
 ### Install backend dependencies
 
 ```bash
 cd backend
 npm install
+```
+---
 
-Express (web framework)
-npm install express
+And if you need individual backend packages:
 
-TypeScript
-npm install typescript ts-node @types/node @types/express
+Express (web framework)  
+`npm install express`
 
-Swagger (for API documentation)
-npm install swagger-jsdoc swagger-ui-express
+TypeScript  
+`npm install typescript ts-node @types/node @types/express`
+
+Swagger (for API documentation)  
+`npm install swagger-jsdoc swagger-ui-express`
 
 Database:
 
-For PostgreSQL:
-npm install pg (plus optional ORM like typeorm or prisma)
+For PostgreSQL:  
+`npm install pg` (plus optional ORM like typeorm or prisma)
 
-CORS
-npm install cors
+CORS  
+`npm install cors`
 
-dotenv (for environment variables)
-npm install dotenv
+dotenv (for environment variables)  
+`npm install dotenv`
 
-Nodemon
-npm install nodemon --save-dev
-```
-
----
+Nodemon  
+`npm install nodemon --save-dev`
 
 ## Running the Application
 
@@ -97,7 +98,7 @@ npm run dev
 ### Run Frontend
 
 ```bash
-cd frontend
+cd frontend/vite-project
 npm run dev
 ```
 
@@ -155,7 +156,8 @@ documentation/
 ## Documentation
 
 - Swagger API Docs:
-- Wireframes: `/documentation/wireframes/`
+- Wireframe/style notes: [View on Figma](https://www.figma.com/design/gMn627cuSapgWL1CenFnWa/Seedly-Wireframe?node-id=0-1&t=nsUu9aTIooXdR5Vv-1)
+- Product Pitch Document: [View on Google Docs](https://docs.google.com/document/d/1KjFo1T9YKlO1MeHd6rgLfnSx8KKZHpXvHecRJZiAnIM/edit?usp=sharing)
 - Weekly Reflections: `/documentation/weekly-reflections/`
 
 ---
@@ -167,7 +169,7 @@ documentation/
 - Joao (Developer)
 - Jacob (Developer)
 - Sudipta (Developer)
-- Merve (Initial Repo setup, Developer)
+- Merve (Initial Repo setup, Former Scrum Master)
 
 ---
 

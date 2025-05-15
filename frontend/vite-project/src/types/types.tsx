@@ -8,7 +8,6 @@ export type ProductCardCartProps = {
   item: CartItem;
 };
 
-
 export interface HeroProps {
     heading: string;
     subheading: string;

@@ -5,13 +5,11 @@ export interface ProductCardProps {
 }
 
 export type ProductCardCartProps = {
-  item: CartItem;
+  id: string;
 };
 
 export interface HeroProps {
-    heading: string;
-    subheading: string;
-    imageUrl?: string;
-  }
-
-  
+  heading: string;
+  subheading: string;
+  imageUrl?: string;
+}

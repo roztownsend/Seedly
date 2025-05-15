@@ -1,5 +1,5 @@
 import { create } from "zustand";
-
+import { useShallow } from "zustand/shallow";
 export type CartItem = {
   id: string;
   product_name: string;
@@ -85,3 +85,6 @@ export const useCartItem = (id: string) =>
   useCartStore((state) =>
     state.cartItems.find((cartItem) => cartItem.id === id)
   );
+
+export const useCartItemIds = () =>
+  useCartStore(useShallow((state) => state.cartItems.map((item) => item.id)));

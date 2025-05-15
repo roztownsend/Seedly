@@ -3,12 +3,13 @@ import ProductCardCart from "../components/card-component/ProductCardCart";
 import { OrderSummary } from "../components/order-summary/OrderSummary";
 import { LoginCta } from "../components/login-cta/LoginCta";
 
-import { useCartItems } from "../stores/cartStore";
+import { useCartUniqueItems, useCartItemIds } from "../stores/cartStore";
 import "./page-styles/cart.css";
 
 const Cart: React.FC = () => {
-  const cartItems = useCartItems();
-  if (cartItems.length === 0) {
+  const cartUniqueItems = useCartUniqueItems();
+  const cartItemsIds = useCartItemIds();
+  if (cartUniqueItems === 0) {
     return (
       <div className="cart-header--nothing">
         <h1 className="h3">Your Cart</h1>
@@ -40,10 +41,10 @@ const Cart: React.FC = () => {
           </div>
           <section className="cart-items">
             <div className="cart-items__list">
-              {cartItems.map((item) => {
+              {cartItemsIds.map((id) => {
                 return (
                   <div className="list-wrapper">
-                    <ProductCardCart key={item.id} item={item} />
+                    <ProductCardCart key={id} id={id} />
                   </div>
                 );
               })}

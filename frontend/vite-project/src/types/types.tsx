@@ -11,5 +11,7 @@ export type ProductCardCartProps = {
 export interface HeroProps {
     heading: string;
     subheading: string;
-    imageUrl: string;
+    imageUrl?: string;
   }
+
+  

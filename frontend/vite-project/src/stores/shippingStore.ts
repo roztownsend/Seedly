@@ -1,4 +1,3 @@
-// store/shippingStore.ts
 import { create } from 'zustand';
 import { ShippingFormTypes } from '../types/shippingFormTypes'
 

@@ -3,6 +3,7 @@ import './shippingForm.css'
 
 const ShippingForm = () => {
   const { formData, updateFormField } = useShippingStore();
+  console.log(formData)
 
   return (
     <section className="section-wrapper">
@@ -94,7 +95,7 @@ const ShippingForm = () => {
 
         <div>
           <button type="submit" className="submit-button">
-            Submit
+            Continue to shipping
           </button>
         </div>
       </form>

@@ -1,20 +1,27 @@
 .product-card {
-  @apply w-64 h-96 bg-[#DFDFDF] bg-cover;
+  @apply w-64 h-96 bg-yellow-100 bg-cover;
 }
 
-.product-card__image {
-  @apply w-full h-64;
+.product-card__image-box {
+  @apply w-full h-60; 
+}
+
+.product-card__img {
+  @apply object-cover w-full h-full;
 }
 
 .product-card__details {
-  @apply flex justify-between items-center w-60 h-14 mx-auto;
+  @apply flex flex-col h-36 justify-between items-center;
+}
+
+.name-price {
+  @apply flex justify-between w-full h-14 p-2;
 }
 
 .product-card__actions {
-  @apply flex justify-between items-center w-60 h-12 mx-auto gap-3 p-0.5;
+  @apply flex flex-col justify-center w-full h-12;
 }
 
 .product-card__quantity {
-  @apply w-24 h-11 flex items-center justify-between border-[1px] p-2.5 border-black;
+  @apply w-full h-11 flex items-center justify-between border p-2.5 border-black;
 }
-

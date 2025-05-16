@@ -16,7 +16,7 @@ const ProductDetails: React.FC = () => {
     useEffect(() => {
         const fetchPlant = async () => {
             try {
-                const res = await axios.get<FetchAllPlantsResponse>("http://localhost:5001/plants"); // fetch all plants but if you're using a different port, adjust the URL accordingly
+                const res = await axios.get<FetchAllPlantsResponse>("http://localhost:5000/plants"); // fetch all plants but if you're using a different port, adjust the URL accordingly
                 const data = res.data.data;
                 const found = data.find((p: ProductItem) => p.id === id);
                 setPlant(found || null); // defines the product found
@@ -39,7 +39,7 @@ const ProductDetails: React.FC = () => {
         return (
             <div className="loading-state">
                 <FaHourglassHalf className="state-icon animate-pulse" />
-                <p className="state-message">Loading...</p>
+                <p className="status-text state-message">Loading...</p>
             </div>
         );
 
@@ -47,7 +47,7 @@ const ProductDetails: React.FC = () => {
         return (
             <div className="not-found-state">
                 <FaRegSadTear className="state-icon" />
-                <p className="state-message">Product not found.</p>
+                <div className="status-text state-message">We couldn't find that product. Please try again in a few minutes. If you still get this error, please contact us and we can assist you further. Thanks for your patience!</div>
             </div>
         );
 
@@ -61,35 +61,47 @@ const ProductDetails: React.FC = () => {
                 />
             </div>
             <div className="product-info">
-                <h1 className="product-title">{plant.product_name}</h1>
-                <h3 className="product-price">{plant.price} kr</h3>
-                <p className="product-description">{plant.description}</p>
-                <p className="product-details">Cycle: {plant.cycle}</p>
-                <p className="product-details">Sunlight: {plant.sunlight}</p>
-
-                <div className="product-actions">
-                    {existingItem?.quantity ? (
-                        <div className="quantity-selector">
-                            <button
-                                className="qty-button"
-                                onClick={() => updateQuantity(existingItem?.id, 1, "decrement")}
-                            >
-                                -
-                            </button>
-                            <span className="qty-value">{existingItem?.quantity}</span>
-                            <button
-                                className="qty-button"
-                                onClick={() => updateQuantity(existingItem?.id, 1, "increment")}
-                            >
-                                +
-                            </button>
-                        </div>
-                    ) : (
-                        <button className="btn-add-to-cart" onClick={handleAddToCart}>
-                            Add to cart
-                        </button>
-                    )}
+                <div className="title-price">
+                    <h1 className="h2 product-title">{plant.product_name}</h1>
+                    <h3 className="product-price">{plant.price} kr</h3>
                 </div>
+                <div className="desc-actions">
+                        <p className="product-description">{plant.description}</p>
+                        <p className="product-details"><strong>Cycle:</strong> {plant.cycle}<br />
+                        <strong>Sunlight:</strong> {plant.sunlight}</p>
+                        <div className="product-tasks">
+                            <h4 className="product-tasks-heading">Tasks for {plant.product_name}</h4>
+                            <ul className="product-tasks__items">
+                                <li><strong>Task:</strong> This is some placeholder text to test styling.</li>
+                                <li><strong>Another Task:</strong> This is some more placeholder text.</li>
+                                <li><strong>One More Task:</strong> This is one last placeholder text to test styling.</li>
+                            </ul>
+                    </div>
+                    <div className="product-actions">
+                        {existingItem?.quantity ? (
+                            <div className="quantity-selector">
+                                <button
+                                    className="qty-button"
+                                    onClick={() => updateQuantity(existingItem?.id, 1, "decrement")}
+                                >
+                                    -
+                                </button>
+                                <span className="qty-value">{existingItem?.quantity}</span>
+                                <button
+                                    className="qty-button"
+                                    onClick={() => updateQuantity(existingItem?.id, 1, "increment")}
+                                >
+                                    +
+                                </button>
+                            </div>
+                        ) : (
+                            <button className="button-primary" onClick={handleAddToCart}>
+                                Add to cart
+                            </button>
+                        )}
+                    </div>
+                </div>
+
             </div>
         </div>
     );

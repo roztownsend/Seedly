@@ -18,17 +18,17 @@ const Sample = () => {
   return (
     <>
       <div>
-        <div className="flex">
+        <div className="flex gap-6 p-6">
           {productList.slice(0, 5).map((item) => (
             <ProductCard key={item.id} item={item} />
           ))}
         </div>
-        <h2>Cart total: {cartTotal}Kr</h2>
+        {/* <h2>Cart total: {cartTotal}Kr</h2>
         <div className="flex">
           {cartItems.map((item) => {
             return <ProductCardCart key={item.id} item={item} />;
           })}
-        </div>
+        </div> */}
       </div>
       {/* <div className="flex">
         {cartItems.map((item) => {

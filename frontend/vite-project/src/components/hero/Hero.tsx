@@ -7,7 +7,7 @@ const Hero = ({ heading, subheading, imageUrl }: HeroProps) => {
       {/* Desktop Hero */}
       <section className="hero-desktop">
         <h2 className="hero-desktop-heading">{heading}</h2>
-        <p className="hero-desktop-subheading">{subheading}</p>
+        <p className="h5 hero-desktop-subheading">{subheading}</p>
         {imageUrl && (
           <img
             src={imageUrl}

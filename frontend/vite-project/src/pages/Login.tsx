@@ -15,7 +15,7 @@ function Login() {
         handlers={handlers}
         formType={formType}
       />
-      <span className="form-alternative-text">Or use one of these:</span>
+      <h5 className="form-alternative-text">Or use one of these:</h5>
       <SocialButtons />
     </div>
   );

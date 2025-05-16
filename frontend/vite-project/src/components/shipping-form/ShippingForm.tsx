@@ -2,31 +2,38 @@ import { useShippingStore } from "../../stores/shippingStore";
 
 const ShippingForm = () => {
   const { formData, updateFormField } = useShippingStore();
-  
 
   return (
-    <section className="p-6">
-      <p className="text-lg font-semibold mb-4">Shipping Information</p>
+    <section className="p-6 border max-w-lg border-black">
 
-      <form className="max-w-md h-full flex flex-col justify-between p-4 space-y-4">
+    <form
+        className="max-w-md h-full flex flex-col justify-between p-4 space-y-4"
+        onSubmit={(e) => {
+            e.preventDefault();
+            console.log("Shipping form submitted", formData);
+        }}
+    >
         {/* Name Fields */}
-        <div className="flex justify-between">
-          <input
-            className="border border-black w-48 h-10 pl-4"
-            type="text"
-            id="firstName"
-            value={formData.firstName}
-            onChange={(e) => updateFormField("firstName", e.target.value)}
-            placeholder="First name"
-          />
-          <input
-            className="border border-black w-48 h-10 pl-4"
-            type="text"
-            id="lastName"
-            value={formData.lastName}
-            onChange={(e) => updateFormField("lastName", e.target.value)}
-            placeholder="Last name"
-          />
+        <div className="flex flex-col justify-between">
+            <p className="text-lg mb-4">Shipping Information</p>
+                <div className="flex justify-between">
+                    <input
+                        className="border border-black w-48 h-10 pl-4"
+                        type="text"
+                        id="firstName"
+                        value={formData.firstName}
+                        onChange={(e) => updateFormField("firstName", e.target.value)}
+                        placeholder="First name"
+                    />
+                    <input
+                        className="border border-black w-48 h-10 pl-4"
+                        type="text"
+                        id="lastName"
+                        value={formData.lastName}
+                        onChange={(e) => updateFormField("lastName", e.target.value)}
+                        placeholder="Last name"
+                    />
+                </div>
         </div>
 
         {/* Address Fields */}
@@ -82,16 +89,12 @@ const ShippingForm = () => {
 
         {/* Submit */}
         <div>
-          <button
-            type="submit"
-            className="button-primary px-4 py-2 rounded w-full"
-            onClick={(e) => {
-              e.preventDefault();
-              console.log("Shipping form submitted", formData);
-            }}
-          >
-            Submit
-          </button>
+            <button
+                type="submit"
+                className="button-primary px-4 py-2 rounded w-full"
+            >
+                Submit
+            </button>
         </div>
       </form>
     </section>

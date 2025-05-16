@@ -2,8 +2,7 @@ import { useEffect } from "react";
 import { useCartStore } from "../stores/cartStore";
 import Hero from "../components/hero/Hero";
 import heroImg from "../assets/image/heroImg.webp"
-import GridHome from "../components/grid-home/GridHome";
-import Sample from "../components/card-component/Sample";
+import ProductGrid from "../components/product-grid/ProductGrid";
 function Home() {
   const { cartItems, calculateCartTotal } = useCartStore();
 
@@ -21,8 +20,7 @@ function Home() {
           }
           imageUrl={heroImg}
         />
-        <Sample />
-        <GridHome 
+        <ProductGrid 
           heading={"Get ready to sow"} 
           subheading={"Spring has sprong and it’s time for you to get a-plantin, buddy."} 
         />

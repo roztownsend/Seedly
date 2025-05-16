@@ -4,9 +4,9 @@ import { ProductItem, useProductsStore } from "../../stores/productsStore";
 import ProductCard from "../card-component/ProductCard";
 import Hero from "../hero/Hero";
 import useIsMobile from "../../hooks/useIsMobile";
-import "./gridHome.css";
+import "./productGrid.css";
 
-const GridHome = ({ heading, subheading }: HeroProps) => {
+const ProductGrid = ({ heading, subheading }: HeroProps) => {
   const { productList, fetchAllPlants } = useProductsStore();
   const [displayedPlants, setDisplayedPlants] = useState<ProductItem[]>([]);
   const [showMore, setShowMore] = useState<boolean>(false);
@@ -71,4 +71,4 @@ const GridHome = ({ heading, subheading }: HeroProps) => {
   );
 };
 
-export default GridHome;
+export default ProductGrid;

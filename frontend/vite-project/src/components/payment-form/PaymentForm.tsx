@@ -3,6 +3,7 @@ import { usePaymentStore } from "../../stores/paymentStore";
 import { ValidationRule } from "../../types/paymentFormTypes";
 import paypalIcon from '../../assets/image/paypal.svg';
 import applepayIcon from '../../assets/image/applepay.svg';
+import "../payment-form/PaymentForm.css"; 
 
 const PaymentForm = () => {
     const { formData, updateFormField } = usePaymentStore();
@@ -49,43 +50,44 @@ const PaymentForm = () => {
         value.replace(/\D/g, "").slice(0, maxLength);
 
     return (
-        <section className="p-6">
-            <div className="max-w-md mx-auto">
-                <p className="text-lg font-semibold mb-4">Payment Details</p>
+        <section className="payment-section">
+            <div className="payment-container">
+                {/* Title */}
+                <p className="h3 mb-4">Payment Details</p>
 
-                {/* Payment form fields */}
-                <form className="flex flex-col space-y-4 p-4" onSubmit={handleSubmit}>
+                {/* Payment Form */}
+                <form className="payment-form" onSubmit={handleSubmit}>
                     {/* Cardholder Name */}
                     <div>
                         <input
-                            className="border border-black w-full h-10 pl-4"
+                            className="payment-input"
                             type="text"
                             placeholder="Cardholder Name"
                             value={formData.cardholderName}
                             onChange={(e) => updateFormField("cardholderName", e.target.value)}
                         />
-                        {errors.cardholderName && <p className="text-sm text-red-600">{errors.cardholderName}</p>}
+                        {errors.cardholderName && <p className="payment-error">{errors.cardholderName}</p>}
                     </div>
 
                     {/* Card Number */}
                     <div>
                         <input
-                            className="border border-black w-full h-10 pl-4"
+                            className="payment-input"
                             type="text"
                             inputMode="numeric"
                             placeholder="Card Number"
                             value={formData.cardNumber}
                             onChange={(e) => updateFormField("cardNumber", formatCardNumber(e.target.value))}
                         />
-                        {errors.cardNumber && <p className="text-sm text-red-600">{errors.cardNumber}</p>}
+                        {errors.cardNumber && <p className="payment-error">{errors.cardNumber}</p>}
                     </div>
 
-                    {/* Expiration and CVC */}
-                    <div className="flex justify-between gap-2">
-                        {/* Month */}
+                    {/* Expiration Date and CVC */}
+                    <div className="payment-exp-group">
+                        {/* Exp Month */}
                         <div className="w-1/3">
                             <select
-                                className="border border-black w-full h-10 pl-2"
+                                className="payment-input"
                                 value={formData.expMonth}
                                 onChange={(e) => updateFormField("expMonth", e.target.value)}
                             >
@@ -94,13 +96,13 @@ const PaymentForm = () => {
                                     <option key={i} value={(i + 1).toString().padStart(2, "0")}>{(i + 1).toString().padStart(2, "0")}</option>
                                 ))}
                             </select>
-                            {errors.expMonth && <p className="text-sm text-red-600">{errors.expMonth}</p>}
+                            {errors.expMonth && <p className="payment-error">{errors.expMonth}</p>}
                         </div>
 
-                        {/* Year */}
+                        {/* Exp Year */}
                         <div className="w-1/3">
                             <select
-                                className="border border-black w-full h-10 pl-2"
+                                className="payment-input"
                                 value={formData.expYear}
                                 onChange={(e) => updateFormField("expYear", e.target.value)}
                             >
@@ -110,13 +112,13 @@ const PaymentForm = () => {
                                     return <option key={year} value={year}>{year}</option>;
                                 })}
                             </select>
-                            {errors.expYear && <p className="text-sm text-red-600">{errors.expYear}</p>}
+                            {errors.expYear && <p className="payment-error">{errors.expYear}</p>}
                         </div>
 
                         {/* CVC */}
                         <div className="w-1/3">
                             <input
-                                className="border border-black w-full h-10 pl-4"
+                                className="payment-input"
                                 type="text"
                                 inputMode="numeric"
                                 pattern="\d*"
@@ -124,12 +126,12 @@ const PaymentForm = () => {
                                 value={formData.cvc}
                                 onChange={(e) => updateFormField("cvc", handleNumericInput(e.target.value, 4))}
                             />
-                            {errors.cvc && <p className="text-sm text-red-600">{errors.cvc}</p>}
+                            {errors.cvc && <p className="payment-error">{errors.cvc}</p>}
                         </div>
                     </div>
 
-                    {/* Save card checkbox (currently disabled) */}
-                    <div className="flex items-center gap-2 opacity-50 cursor-not-allowed">
+                    {/* Save card (disabled for now) */}
+                    <div className="payment-savecard-disabled">
                         <input
                             type="checkbox"
                             id="saveCard"
@@ -141,16 +143,16 @@ const PaymentForm = () => {
                     </div>
 
                     {/* Submit button */}
-                    <button type="submit" className="bg-black text-white py-2 w-full">
+                    <button type="submit" className="button-primary w-full">
                         Pay with card
                     </button>
 
                     {/* Alternative payment methods */}
                     <div className="flex gap-2 mb-4">
-                        <button className="border border-black px-4 py-2 flex-1 flex justify-center items-center gap-2">
+                        <button className="button-secondary flex-1">
                             <img src={applepayIcon} alt="Apple Pay" className="h-6 w-auto" />
                         </button>
-                        <button className="border border-black px-4 py-2 flex-1 flex justify-center items-center gap-2">
+                        <button className="button-secondary flex-1">
                             <img src={paypalIcon} alt="PayPal" className="h-6 w-auto" />
                         </button>
                     </div>

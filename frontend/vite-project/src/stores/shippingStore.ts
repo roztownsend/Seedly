@@ -28,3 +28,5 @@ const useShippingStore = create<ShippingState>((set) => ({
  
     })),
 }));
+export const useFormData = () => useShippingStore((state) => state.formData);
+export const useShippingActions = () => useShippingStore((state) => state.actions);

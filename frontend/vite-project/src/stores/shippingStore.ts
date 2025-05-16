@@ -3,8 +3,7 @@ import { ShippingFormTypes } from '../types/shippingFormTypes'
 
 interface ShippingState {
   formData: ShippingFormTypes;
-  setFormData: (data: ShippingFormTypes) => void;
-  updateFormField: <K extends keyof ShippingFormTypes>(key: K, value: ShippingFormTypes[K]) => void;
+  actions: ShippingActions
 }
 
 export const useShippingStore = create<ShippingState>((set) => ({

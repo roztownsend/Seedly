@@ -6,7 +6,7 @@ interface ShippingState {
   actions: ShippingActions
 }
 
-export const useShippingStore = create<ShippingState>((set) => ({
+const useShippingStore = create<ShippingState>((set) => ({
   formData: {
     firstName: '',
     lastName: '',

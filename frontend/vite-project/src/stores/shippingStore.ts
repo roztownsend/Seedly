@@ -9,8 +9,8 @@ interface ShippingState {
 
 export const useShippingStore = create<ShippingState>((set) => ({
   formData: {
-    firstName: '',
-    lastName: '',
+    name: '',
+    email: '',
     address: '',
     apartment: '',
     postalCode: '',

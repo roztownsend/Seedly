@@ -14,32 +14,32 @@ const ShippingForm = () => {
           console.log("Shipping form submitted", formData);
         }}
       >
-        <div className="flex flex-col">
+        <div className="input-container-flex-col">
           <p className="section-title">Shipping Information</p>
 
           <div className="input-group">
             <input
               className="text-input"
               type="text"
-              id="firstName"
-              value={formData.firstName}
-              onChange={(e) => updateFormField("firstName", e.target.value)}
-              placeholder="First name"
+              id="name"
+              value={formData.name}
+              onChange={(e) => updateFormField("name", e.target.value)}
+              placeholder="Tom Seedly"
               required
             />
             <input
               className="text-input"
-              type="text"
-              id="lastName"
-              value={formData.lastName}
-              onChange={(e) => updateFormField("lastName", e.target.value)}
-              placeholder="Last name"
+              type="email"
+              id="email"
+              value={formData.email}
+              onChange={(e) => updateFormField("email", e.target.value)}
+              placeholder="tom@seedly.se"
               required
             />
           </div>
         </div>
 
-        <div className="flex flex-col">
+        <div className="input-container-flex-col">
           <input
             className="full-width-input"
             type="text"
@@ -80,7 +80,7 @@ const ShippingForm = () => {
           />
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="checkbox-container">
           <input
             type="checkbox"
             id="saveContact"
@@ -94,7 +94,7 @@ const ShippingForm = () => {
         </div>
 
         <div>
-          <button type="submit" className="submit-button">
+          <button type="submit" className="button-primary submit-button">
             Continue to shipping
           </button>
         </div>

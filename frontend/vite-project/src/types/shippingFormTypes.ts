@@ -1,6 +1,6 @@
 export type ShippingFormTypes = {
-    firstName: string;
-    lastName: string;
+    name: string;
+    email: string;
     address: string;
     apartment?: string;
     postalCode: string;

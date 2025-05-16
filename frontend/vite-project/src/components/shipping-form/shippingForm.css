@@ -1,11 +1,13 @@
-/* ShippingForm.css */
-
 .section-wrapper {
   @apply p-4 sm:p-6 max-w-lg mx-auto;
 }
 
 .shipping-form {
   @apply w-full flex flex-col justify-between space-y-4;
+}
+
+.input-container-flex-col{
+  @apply flex flex-col;
 }
 
 .section-title {
@@ -24,6 +26,10 @@
   @apply border border-black text-black p-3 placeholder:text-gray-400 text-sm font-normal mb-3;
 }
 
+.checkbox-container{
+  @apply flex items-center gap-2;
+}
+
 .checkbox-input {
   @apply w-5 h-5 rounded-none cursor-pointer;
 }
@@ -33,5 +39,5 @@
 }
 
 .submit-button {
-  @apply button-primary w-full;
+  @apply w-full;
 }

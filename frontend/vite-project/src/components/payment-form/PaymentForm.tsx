@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { usePaymentStore } from "../../stores/paymentStore";
 import { ValidationRule } from "../../types/paymentFormTypes";
-import paypalIcon from '../../assets/image/paypal.svg';
-import applepayIcon from '../../assets/image/applepay.svg';
-import "../payment-form/PaymentForm.css"; 
+import swishIcon from '../../assets/image/swish.svg';
+import klarnaIcon from '../../assets/image/klarna.svg';
+import "../payment-form/PaymentForm.css";
 
 const PaymentForm = () => {
     const { formData, updateFormField } = usePaymentStore();
@@ -38,12 +38,26 @@ const PaymentForm = () => {
         return Object.keys(newErrors).length === 0;
     };
 
-    // Handle form submission
-    const handleSubmit = (e: React.FormEvent) => {
+    // Handle form submission - idea for the future
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!validate()) return;
-        console.log("Payment submitted", formData);
-    };
+
+        try {
+            const response = await fetch("name_endpoint", { // Replace with the actual endpoint
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const result = await response.json();
+            console.log("Server response:", result);
+        } catch (error) {
+            console.error("Payment submission failed:", error);
+        }
+      };
 
     // Allow only numeric input with a max length
     const handleNumericInput = (value: string, maxLength: number) =>
@@ -53,7 +67,7 @@ const PaymentForm = () => {
         <section className="payment-section">
             <div className="payment-container">
                 {/* Title */}
-                <p className="h3 mb-4">Payment Details</p>
+                <h1 className="h4">Payment Details</h1>
 
                 {/* Payment Form */}
                 <form className="payment-form" onSubmit={handleSubmit}>
@@ -131,7 +145,7 @@ const PaymentForm = () => {
                     </div>
 
                     {/* Save card (disabled for now) */}
-                    <div className="payment-savecard-disabled">
+                    <div className="payment-savecard-disabled" title="This option will be available soon.">
                         <input
                             type="checkbox"
                             id="saveCard"
@@ -139,21 +153,21 @@ const PaymentForm = () => {
                             checked={formData.saveCard}
                             onChange={(e) => updateFormField("saveCard", e.target.checked)}
                         />
-                        <label htmlFor="saveCard" className="text-sm">Save card data for future payments</label>
+                        <label htmlFor="saveCard" className="text-sm">
+                            Save card data for future payments
+                        </label>
                     </div>
 
                     {/* Submit button */}
                     <button type="submit" className="button-primary w-full">
                         Pay with card
                     </button>
-
-                    {/* Alternative payment methods */}
-                    <div className="flex gap-2 mb-4">
-                        <button className="button-secondary flex-1">
-                            <img src={applepayIcon} alt="Apple Pay" className="h-6 w-auto" />
+                    <div className="payment-button-group ">
+                        <button className="button-secondary__payment flex-1">
+                            <img src={swishIcon} alt="Swish" className="h-8 w-auto" />
                         </button>
-                        <button className="button-secondary flex-1">
-                            <img src={paypalIcon} alt="PayPal" className="h-6 w-auto" />
+                        <button className="button-secondary__payment flex-1">
+                            <img src={klarnaIcon} alt="Klarna" className="h-8 w-auto" />
                         </button>
                     </div>
                 </form>

@@ -1,5 +1,5 @@
 .payment-section {
-    @apply p-6;
+    @apply m-5 p-1;
 }
 
 .payment-container {
@@ -7,7 +7,7 @@
 }
 
 .payment-form {
-    @apply flex flex-col space-y-4 p-4;
+    @apply flex flex-col space-y-4 pt-2 ;
 }
 
 .payment-exp-group {
@@ -24,4 +24,7 @@
 
 .payment-savecard-disabled {
     @apply flex items-center gap-2 opacity-50 cursor-not-allowed;
+}
+.payment-button-group {
+    @apply flex gap-2;
 }

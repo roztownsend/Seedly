@@ -79,7 +79,7 @@ main {
 
   .button-primary {
       @apply border border-green-800 bg-green-800 text-yellow-50 font-semibold
-        flex justify-center items-center p-4 hover:bg-blue-900 hover:border-blue-900;
+        flex justify-center items-center p-4 hover:bg-stone-700 hover:border-stone-700;
   }
 
   .button-secondary {

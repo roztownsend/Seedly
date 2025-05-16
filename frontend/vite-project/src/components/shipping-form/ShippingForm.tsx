@@ -4,42 +4,42 @@ const ShippingForm = () => {
   const { formData, updateFormField } = useShippingStore();
 
   return (
-    <section className="p-6 border max-w-lg border-black">
-
-    <form
-        className="max-w-md h-full flex flex-col justify-between p-4 space-y-4"
+    <section className="p-4 sm:p-6 max-w-lg mx-auto">
+      <form
+        className="w-full flex flex-col justify-between space-y-4"
         onSubmit={(e) => {
-            e.preventDefault();
-            console.log("Shipping form submitted", formData);
+          e.preventDefault();
+          console.log("Shipping form submitted", formData);
         }}
-    >
-        {/* Name Fields */}
-        <div className="flex flex-col justify-between">
-            <p className="text-lg mb-4">Shipping Information</p>
-                <div className="flex justify-between">
-                    <input
-                        className="border border-black w-48 h-10 pl-4"
-                        type="text"
-                        id="firstName"
-                        value={formData.firstName}
-                        onChange={(e) => updateFormField("firstName", e.target.value)}
-                        placeholder="First name"
-                    />
-                    <input
-                        className="border border-black w-48 h-10 pl-4"
-                        type="text"
-                        id="lastName"
-                        value={formData.lastName}
-                        onChange={(e) => updateFormField("lastName", e.target.value)}
-                        placeholder="Last name"
-                    />
-                </div>
+      >
+        <div className="flex flex-col">
+          <p className="text-lg font-medium mb-2">Shipping Information</p>
+
+          {/* Name Fields */}
+          <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
+            <input
+              className="flex-1 border border-black text-black p-3 placeholder:text-gray-400 text-sm font-normal"
+              type="text"
+              id="firstName"
+              value={formData.firstName}
+              onChange={(e) => updateFormField("firstName", e.target.value)}
+              placeholder="First name"
+            />
+            <input
+              className="flex-1 border border-black text-black p-3 placeholder:text-gray-400 text-sm font-normal"
+              type="text"
+              id="lastName"
+              value={formData.lastName}
+              onChange={(e) => updateFormField("lastName", e.target.value)}
+              placeholder="Last name"
+            />
+          </div>
         </div>
 
         {/* Address Fields */}
         <div className="flex flex-col">
           <input
-            className="border border-black w-full h-10 pl-4 mb-3"
+            className="border border-black text-black p-3 placeholder:text-gray-400 text-sm font-normal mb-3"
             type="text"
             id="address"
             value={formData.address}
@@ -47,7 +47,7 @@ const ShippingForm = () => {
             placeholder="Address"
           />
           <input
-            className="border border-black w-full h-10 pl-4"
+            className="border border-black text-black p-3 placeholder:text-gray-400 text-sm font-normal"
             type="text"
             id="apartment"
             value={formData.apartment || ""}
@@ -57,9 +57,9 @@ const ShippingForm = () => {
         </div>
 
         {/* Postal Code & City */}
-        <div className="flex justify-between">
+        <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
           <input
-            className="border border-black w-48 h-10 pl-4"
+            className="flex-1 border border-black text-black p-3 placeholder:text-gray-400 text-sm font-normal"
             type="text"
             id="postalCode"
             value={formData.postalCode}
@@ -67,7 +67,7 @@ const ShippingForm = () => {
             placeholder="Postal Code"
           />
           <input
-            className="border border-black w-48 h-10 pl-4"
+            className="flex-1 border border-black text-black p-3 placeholder:text-gray-400 text-sm font-normal"
             type="text"
             id="city"
             value={formData.city}
@@ -83,18 +83,21 @@ const ShippingForm = () => {
             id="saveContact"
             checked={formData.saveContact}
             onChange={(e) => updateFormField("saveContact", e.target.checked)}
+            className="w-5 h-5 rounded-none cursor-pointer"
           />
-          <label htmlFor="saveContact" className="text-sm">Save contact information</label>
+          <label
+            htmlFor="saveContact"
+            className="text-gray-400 font-normal text-sm leading-4 tracking-tighter"
+          >
+            Save contact information
+          </label>
         </div>
 
         {/* Submit */}
         <div>
-            <button
-                type="submit"
-                className="button-primary px-4 py-2 rounded w-full"
-            >
-                Submit
-            </button>
+          <button type="submit" className="button-primary w-full">
+            Submit
+          </button>
         </div>
       </form>
     </section>

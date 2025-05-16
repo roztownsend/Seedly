@@ -20,7 +20,7 @@ nav {
 }
 
 main {
-  @apply flex justify-center;
+  @apply flex justify-center bg-green-50;
 }
 
 /* Global */

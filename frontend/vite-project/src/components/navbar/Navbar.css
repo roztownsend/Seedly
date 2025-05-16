@@ -40,11 +40,11 @@
 }
 
 .navbar-search-icon {
-    @apply w-5 h-5 text-yellow-600;
+    @apply w-5 h-5 text-yellow-700;
 }
 
 .navbar-search-input {
-    @apply bg-yellow-50 px-4 py-2 text-sm placeholder-yellow-600 text-black w-full shadow-sm flex flex-grow;
+    @apply bg-yellow-50 px-4 py-2 text-sm placeholder-yellow-700 text-black w-full font-semibold flex flex-grow;
 }
 
 .navbar-right {

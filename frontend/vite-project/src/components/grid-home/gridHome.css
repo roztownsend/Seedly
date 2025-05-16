@@ -1,5 +1,5 @@
 .grid-home {
-  @apply bg-gray-100 py-8;
+  @apply py-8;
 }
 
 .cards-container {

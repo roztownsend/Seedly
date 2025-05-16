@@ -1,5 +1,7 @@
+
+
 .footer {
-    @apply w-full bg-gray-200 text-black p-5 shadow-sm;
+    @apply w-full bg-green-800 text-yellow-50 p-5 shadow-sm;
 }
 
 .footer-container {
@@ -8,10 +10,6 @@
 
 .footer-links {
     @apply flex flex-col items-start gap-2;
-}
-
-.footer-link {
-    @apply text-black hover:text-green-700;
 }
 
 .footer-logo {

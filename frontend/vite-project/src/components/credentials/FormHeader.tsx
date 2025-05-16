@@ -6,11 +6,11 @@ function FormHeader({ formType }: { formType: FormHeaderProps }) {
       <h4 className="credential-form-header">
         {formType === "signup" ? "Welcome!" : "Welcome back"}
       </h4>
-      <p className="credential-form-subheader">
+      <h5 className="credential-form-subheader">
         {formType === "signup"
           ? "Create an account with us"
           : "Login with email"}
-      </p>
+      </h5>
     </>
   );
 }

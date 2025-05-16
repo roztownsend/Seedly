@@ -7,7 +7,7 @@
 }
 
 .shipping__figure--next-step {
-    @apply text-gray-700;
+    @apply text-yellow-700;
 }
 
 .total {

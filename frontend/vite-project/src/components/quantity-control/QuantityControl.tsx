@@ -1,3 +1,5 @@
+import "./QuantityControl.css";
+
 interface QuantityControlProps {
     counter: number;
     onIncrement: () => void;
@@ -12,7 +14,7 @@ interface QuantityControlProps {
     disableDecrement = false,
   }) => {
     return (
-      <div className="flex gap-3 items-center justify-between border border-black px-3 py-1">
+      <div className="quantity-control">
         <button onClick={onDecrement} disabled={disableDecrement}>-</button>
         <span>{counter}</span>
         <button onClick={onIncrement}>+</button>

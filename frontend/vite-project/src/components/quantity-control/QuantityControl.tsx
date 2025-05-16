@@ -1,3 +1,5 @@
+import "./QuantityControl.css";
+
 interface QuantityControlProps {
     counter: number;
     onIncrement: () => void;

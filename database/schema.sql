@@ -18,17 +18,17 @@ CREATE TABLE IF NOT EXISTS users (
 -- PLANTS 
 -- ============================ 
 CREATE TABLE IF NOT EXISTS plants ( 
-id UUID PRIMARY KEY DEFAULT gen_random_uuid(), 
-product_name VARCHAR(100) NOT NULL, 
-price NUMERIC(10, 2) NOT NULL, 
-description TEXT, 
-cycle VARCHAR(50), -- Consider ENUM if values are limited 
-image_url TEXT, 
-created_at TIMESTAMP DEFAULT NOW(), 
-updated_at TIMESTAMP DEFAULT NOW(), 
-isEdible BOOLEAN, 
-Sunlight VARCHAR(50) 
-); 
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(), 
+  product_name VARCHAR(100) NOT NULL, 
+  price NUMERIC(10, 2) NOT NULL, 
+  description TEXT, 
+  cycle VARCHAR(50), -- Consider ENUM if values are limited 
+  image_url TEXT, 
+  created_at TIMESTAMP DEFAULT NOW(), 
+  updated_at TIMESTAMP DEFAULT NOW(), 
+  isEdible BOOLEAN, 
+  Sunlight VARCHAR(50) 
+  ); 
 
 -- Add indexes for common search/filter fields
 CREATE INDEX IF NOT EXISTS idx_plants_name ON plants(product_name);
@@ -45,6 +45,23 @@ CREATE TABLE IF NOT EXISTS purchases (
   total_amount NUMERIC(10, 2) NOT NULL,
   purchase_date TIMESTAMP DEFAULT NOW()
 );
+
+-- ============================
+-- SHIPPING INFORMATION
+-- ============================
+CREATE TABLE IF NOT EXISTS shipping_info (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  customer_name VARCHAR(150),
+  email VARCHAR(100) NOT NULL,
+  street VARCHAR(100) NOT NULL,
+  apartment VARCHAR(50),
+  postcode INTEGER NOT NULL,
+  city VARCHAR(100) NOT NULL
+  shipping_option VARCHAR(50) NOT NULL
+);
+
+
 
 -- ============================
 -- PURCHASE ITEMS

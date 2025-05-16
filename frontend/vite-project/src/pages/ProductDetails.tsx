@@ -62,7 +62,7 @@ const ProductDetails: React.FC = () => {
             </div>
             <div className="product-info">
                 <div className="title-price">
-                    <h1 className="h2 product-title">{plant.product_name}</h1>
+                    <h1 className="h2 product-title" autoFocus>{plant.product_name}</h1>
                     <h3 className="product-price">{plant.price} kr</h3>
                 </div>
                 <div className="desc-actions">

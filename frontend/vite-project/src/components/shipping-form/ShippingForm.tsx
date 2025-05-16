@@ -1,4 +1,4 @@
-import { useShippingStore } from "../../stores/shippingStore";
+import { useFormData,useShippingActions } from "../../stores/shippingStore";
 import './shippingForm.css'
 
 const ShippingForm = () => {

@@ -16,12 +16,15 @@ export const useShippingStore = create<ShippingState>((set) => ({
     city: '',
     saveContact: false,
   },
-  setFormData: (data) => set({ formData: data }),
+  actions:{
+   setFormData: (data) => set({ formData: data }),
   updateFormField: (key, value) =>
     set((state) => ({
       formData: {
         ...state.formData,
         [key]: value,
       },
+  }
+ 
     })),
 }));

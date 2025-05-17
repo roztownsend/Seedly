@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { usePaymentStore } from "../../stores/paymentStore";
+import { useFormData, usePaymentActions } from "../../stores/paymentStore";
 import { ValidationRule } from "../../types/paymentFormTypes";
 import swishIcon from '../../assets/image/swish.svg';
 import klarnaIcon from '../../assets/image/klarna.svg';
 import "../payment-form/PaymentForm.css";
 
 const PaymentForm = () => {
-    const { formData, updateFormField } = usePaymentStore();
+    const formData = useFormData();
+    const { updateFormField } = usePaymentActions();
     const [errors, setErrors] = useState<Record<string, string>>({});
 
     // Format card number with spaces (e.g., 1234 5678 9012 3456)
@@ -57,7 +58,7 @@ const PaymentForm = () => {
         } catch (error) {
             console.error("Payment submission failed:", error);
         }
-      };
+    };
 
     // Allow only numeric input with a max length
     const handleNumericInput = (value: string, maxLength: number) =>
@@ -73,9 +74,11 @@ const PaymentForm = () => {
                 <form className="payment-form" onSubmit={handleSubmit}>
                     {/* Cardholder Name */}
                     <div>
+                        {/* <label htmlFor="cardHolderName" className="sr-only">Cardholder Name</label> */}
                         <input
                             className="payment-input"
                             type="text"
+                            id="cardHolderName"
                             placeholder="Cardholder Name"
                             value={formData.cardholderName}
                             onChange={(e) => updateFormField("cardholderName", e.target.value)}
@@ -85,9 +88,11 @@ const PaymentForm = () => {
 
                     {/* Card Number */}
                     <div>
+                        <label htmlFor="cardNumber" className="sr-only">Card Number</label>
                         <input
                             className="payment-input"
                             type="text"
+                            id="cardNumber"
                             inputMode="numeric"
                             placeholder="Card Number"
                             value={formData.cardNumber}
@@ -100,8 +105,10 @@ const PaymentForm = () => {
                     <div className="payment-exp-group">
                         {/* Exp Month */}
                         <div className="w-1/3">
+                            <label htmlFor="expMonth" className="sr-only"> Exp. Date</label>
                             <select
                                 className="payment-input"
+                                id="expMonth"
                                 value={formData.expMonth}
                                 onChange={(e) => updateFormField("expMonth", e.target.value)}
                             >
@@ -115,8 +122,10 @@ const PaymentForm = () => {
 
                         {/* Exp Year */}
                         <div className="w-1/3">
+                            <label htmlFor="expYear" className="sr-only"> Exp. Year</label>
                             <select
                                 className="payment-input"
+                                id="expYear"
                                 value={formData.expYear}
                                 onChange={(e) => updateFormField("expYear", e.target.value)}
                             >
@@ -131,9 +140,11 @@ const PaymentForm = () => {
 
                         {/* CVC */}
                         <div className="w-1/3">
+                            <label htmlFor="cvc" className="sr-only">CVC</label>
                             <input
                                 className="payment-input"
                                 type="text"
+                                id="cvc"
                                 inputMode="numeric"
                                 pattern="\d*"
                                 placeholder="CVC"
@@ -146,6 +157,7 @@ const PaymentForm = () => {
 
                     {/* Save card (disabled for now) */}
                     <div className="payment-savecard-disabled" title="This option will be available soon.">
+                        <label htmlFor="savecard" className="sr-only"></label>
                         <input
                             type="checkbox"
                             id="saveCard"

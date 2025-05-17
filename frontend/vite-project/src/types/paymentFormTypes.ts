@@ -14,12 +14,14 @@ export type ValidationRule = [
     (value: string) => boolean,
     string
 ];
-
-export interface PaymentState { 
-    formData: PaymentFormTypes;
+export interface PaymentActions {
     setFormData: (data: PaymentFormTypes) => void;
     updateFormField: <K extends keyof PaymentFormTypes>(
         key: K,
         value: PaymentFormTypes[K]
     ) => void;
-  }
+}
+export interface PaymentState {
+    formData: PaymentFormTypes;
+    actions: PaymentActions
+}

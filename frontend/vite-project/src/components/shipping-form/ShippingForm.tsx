@@ -101,7 +101,7 @@ const ShippingForm = () => {
           <input
             type="checkbox"
             id="saveContact"
-            checked={formData.saveContact}
+            aria-checked={formData.saveContact}
             onChange={(e) => updateFormField("saveContact", e.target.checked)}
             className="checkbox-input"
           />

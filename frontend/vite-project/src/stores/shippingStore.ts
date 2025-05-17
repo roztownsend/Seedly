@@ -1,32 +1,28 @@
 import { create } from 'zustand';
-import { ShippingFormTypes } from '../types/shippingFormTypes'
+import { ShippingFormTypes } from '../types/shippingFormTypes';
 
 interface ShippingState {
   formData: ShippingFormTypes;
-  actions: ShippingActions
+  setFormData: (data: ShippingFormTypes) => void;
+  updateFormField: <K extends keyof ShippingFormTypes>(key: K, value: ShippingFormTypes[K]) => void;
 }
 
-const useShippingStore = create<ShippingState>((set) => ({
+export const useShippingStore = create<ShippingState>((set) => ({
   formData: {
     name: '',
-    email: '',
+    email:'',
     address: '',
     apartment: '',
     postalCode: '',
     city: '',
     saveContact: false,
   },
-  actions:{
-   setFormData: (data) => set({ formData: data }),
+  setFormData: (data) => set({ formData: data }),
   updateFormField: (key, value) =>
     set((state) => ({
       formData: {
         ...state.formData,
         [key]: value,
       },
-  }
- 
     })),
 }));
-export const useFormData = () => useShippingStore((state) => state.formData);
-export const useShippingActions = () => useShippingStore((state) => state.actions);

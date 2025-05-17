@@ -1,5 +1,5 @@
 .section-wrapper {
-  @apply p-4 sm:p-6 max-w-lg mx-auto;
+  @apply p-4 max-w-lg mx-auto;
 }
 
 .shipping-form {
@@ -16,6 +16,10 @@
 
 .input-group {
   @apply flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0;
+}
+
+.label-input{
+  @apply flex flex-col w-full;
 }
 
 .text-input {

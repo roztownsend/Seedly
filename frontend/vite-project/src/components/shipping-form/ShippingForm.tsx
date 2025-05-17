@@ -1,10 +1,8 @@
-import { useFormData,useShippingActions } from "../../stores/shippingStore";
+import { useShippingStore } from "../../stores/shippingStore";
 import './shippingForm.css'
 
 const ShippingForm = () => {
-  const formData = useFormData();
-  const {updateFormField} = useShippingActions()
-  console.log(formData)
+  const { formData, updateFormField } = useShippingStore();
 
   return (
     <section className="section-wrapper">
@@ -19,66 +17,84 @@ const ShippingForm = () => {
           <p className="section-title">Shipping Information</p>
 
           <div className="input-group">
-            <input
-              className="text-input"
-              type="text"
-              id="name"
-              value={formData.name}
-              onChange={(e) => updateFormField("name", e.target.value)}
-              placeholder="Tom Seedly"
-              required
-            />
-            <input
-              className="text-input"
-              type="email"
-              id="email"
-              value={formData.email}
-              onChange={(e) => updateFormField("email", e.target.value)}
-              placeholder="tom@seedly.se"
-              required
-            />
+              <div className="label-input">
+                <label htmlFor="name">Name</label>
+                <input
+                  className="text-input"
+                  type="text"
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => updateFormField("name", e.target.value)}
+                  placeholder="Tom Seedly"
+                  required
+                />
+              </div>
+              <div className="label-input">
+                <label htmlFor="email">Email</label>
+                <input
+                  className="text-input"
+                  type="email"
+                  id="email"
+                  value={formData.email}
+                  onChange={(e) => updateFormField("email", e.target.value)}
+                  placeholder="tom@seedly.se"
+                  required
+                />
+              </div>
           </div>
         </div>
 
         <div className="input-container-flex-col">
-          <input
-            className="full-width-input"
-            type="text"
-            id="address"
-            value={formData.address}
-            onChange={(e) => updateFormField("address", e.target.value)}
-            placeholder="Address"
-            required
-          />
-          <input
-            className="text-input"
-            type="text"
-            id="apartment"
-            value={formData.apartment || ""}
-            onChange={(e) => updateFormField("apartment", e.target.value)}
-            placeholder="Apartment, Suite, optional"
-          />
+          <div className="label-input">
+            <label htmlFor="address">Address</label>
+            <input
+              className="full-width-input"
+              type="text"
+              id="address"
+              value={formData.address}
+              onChange={(e) => updateFormField("address", e.target.value)}
+              placeholder="Address"
+              required
+            />
+          </div>
+          <div className="label-input">
+            <label htmlFor="apartment">Apartment</label>
+            <input
+              className="text-input"
+              type="text"
+              id="apartment"
+              value={formData.apartment || ""}
+              onChange={(e) => updateFormField("apartment", e.target.value)}
+              placeholder="Apartment, Suite, optional"
+            />
+          </div>
         </div>
 
         <div className="input-group">
-          <input
-            className="text-input"
-            type="text"
-            id="postalCode"
-            value={formData.postalCode}
-            onChange={(e) => updateFormField("postalCode", e.target.value)}
-            placeholder="Postal Code"
-            required
-          />
-          <input
-            className="text-input"
-            type="text"
-            id="city"
-            value={formData.city}
-            onChange={(e) => updateFormField("city", e.target.value)}
-            placeholder="City"
-            required
-          />
+          <div className="label-input">
+            <label htmlFor="postal code">Postal code</label>
+            <input
+              className="text-input"
+              type="text"
+              id="postalCode"
+              value={formData.postalCode}
+              onChange={(e) => updateFormField("postalCode", e.target.value)}
+              placeholder="Postal Code"
+              required
+            />
+          </div>
+          <div className="label-input">
+            <label htmlFor="City">City</label>
+            <input
+              className="text-input"
+              type="text"
+              id="city"
+              value={formData.city}
+              onChange={(e) => updateFormField("city", e.target.value)}
+              placeholder="City"
+              required
+            />
+          </div>
         </div>
 
         <div className="checkbox-container">

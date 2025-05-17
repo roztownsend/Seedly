@@ -18,6 +18,30 @@ router.get('/', async (_req: Request, res: Response): Promise<void> => {
   }
 });
 
+//plants:id
+router.get("/:id", async (req: Request, res: Response): Promise<void> => {
+
+  const id = req.params.id;
+
+  try {
+    // Query the plant by id, using parameterized query to avoid SQL injection
+    const result = await pool.query(`SELECT * FROM plants WHERE id = $1`, [id]);
+
+    if (result.rows.length === 0) {
+      //No plant found with specific id
+      res.status(404).send("Plant not found"); 
+      return;
+    }
+
+    //Send back plant with specific id
+    res.json(result.rows[0]);
+  } catch (error) {
+    //Handle errors during the query
+    res.status(500).json({ error: "Failed to fetch plants by id", message: error });
+  }
+});
+
+
 //search w parameters, needs to be add timeline later, mb.
 router.get('/search', async (req: Request, res: Response): Promise<void> => {
   const schema = z.object({

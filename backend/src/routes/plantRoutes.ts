@@ -3,6 +3,7 @@
 import { Router, Request, Response } from 'express';
 import { pool } from '../config/dbConnection';
 import { z } from 'zod';
+import { idSchema, seedSchema } from '../zod/schema'
 
 const router = Router();
 
@@ -20,26 +21,51 @@ router.get('/', async (_req: Request, res: Response): Promise<void> => {
 
 //plants:id
 router.get("/:id", async (req: Request, res: Response): Promise<void> => {
-
   const id = req.params.id;
+  const parseId = idSchema.safeParse(id);
+
+  //Validate Id
+  if (!parseId.success) {
+    console.error("Validation failed for ID:", parseId.error.format());
+    res.status(400).json({
+      error: "Invalid Id",
+      details: parseId.error.format()
+    });
+    return;
+  }
 
   try {
-    // Query the plant by id, using parameterized query to avoid SQL injection
     const result = await pool.query(`SELECT * FROM plants WHERE id = $1`, [id]);
 
     if (result.rows.length === 0) {
-      //No plant found with specific id
-      res.status(404).send("Plant not found"); 
+      res.status(404).send("Plant not found");
       return;
     }
 
-    //Send back plant with specific id
-    res.json(result.rows[0]);
+    const plant = result.rows[0];
+
+    //Validate the data using Zod
+    const parseResult = seedSchema.safeParse(plant);
+
+    if (!parseResult.success) {
+      res.status(500).json({
+        error: "Invalid plant data structure from DB",
+        details: parseResult.error.format()
+      });
+      return;
+    }
+
+    //Send back validated data
+    res.json(parseResult.data);
+
   } catch (error) {
-    //Handle errors during the query
-    res.status(500).json({ error: "Failed to fetch plants by id", message: error });
+    res.status(500).json({
+      error: "Failed to fetch plant by id",
+      message: (error as Error).message
+    });
   }
 });
+
 
 
 //search w parameters, needs to be add timeline later, mb.

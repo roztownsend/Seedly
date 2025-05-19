@@ -7,49 +7,46 @@ import {
   Sequelize,
   ForeignKey,
 } from "sequelize";
-
+import { Purchase } from "./purchase.model";
 export class Payment extends Model<
   InferAttributes<Payment>,
   InferCreationAttributes<Payment>
 > {
   declare id: CreationOptional<string>;
   declare purchase_id: ForeignKey<string>;
-  declare cardnumber: string;
-  declare expiry_date: Date;
-  declare cvv_number: string;
-}
+  declare payment_method: string;
 
-export function initPaymentModel(sequelize: Sequelize) {
-  Payment.init(
-    {
-      id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
-        primaryKey: true,
+  static initModel(sequelize: Sequelize): typeof Payment {
+    return Payment.init(
+      {
+        id: {
+          type: DataTypes.UUID,
+          defaultValue: DataTypes.UUIDV4,
+          allowNull: false,
+          primaryKey: true,
+        },
+        purchase_id: {
+          type: DataTypes.UUID,
+          allowNull: false,
+        },
+        payment_method: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
       },
-      purchase_id: {
-        type: DataTypes.UUID,
-        allowNull: false,
-      },
-      cardnumber: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      expiry_date: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
-      cvv_number: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-    },
-    {
-      sequelize,
-      tableName: "Payments",
-      modelName: "Payment",
-      timestamps: false,
-    }
-  );
+      {
+        sequelize,
+        tableName: "Payments",
+        modelName: "Payment",
+        timestamps: false,
+      }
+    );
+  }
+  static associate(models: { Purchase: typeof Purchase }) {
+    Payment.belongsTo(models.Purchase, {
+      foreignKey: "purchase_id",
+      as: "purchase",
+      onDelete: "CASCADE",
+    });
+  }
 }

@@ -9,8 +9,7 @@ import path from "path";
 import sequelize from "./config/sequelizeConnect";
 import { initModels } from "./models/initModels";
 import plantRoutes from "./routes/plantRoutes";
-import { types } from "pg";
-
+import { Purchase } from "./models/purchase.model";
 //testing server startup
 
 sequelize

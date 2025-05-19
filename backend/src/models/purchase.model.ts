@@ -6,9 +6,12 @@ import {
   ForeignKey,
   DataTypes,
   Sequelize,
+  HasManyGetAssociationsMixin,
+  HasOneGetAssociationMixin,
 } from "sequelize";
-import { User } from "./user.model";
-
+import { PurchaseItem } from "./purchaseItem.model";
+import { Payment } from "./payment.model";
+import { ShippingInfo } from "./shippingInfo.model";
 export class Purchase extends Model<
   InferAttributes<Purchase>,
   InferCreationAttributes<Purchase>
@@ -25,8 +28,12 @@ export class Purchase extends Model<
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
+  declare getItems: HasManyGetAssociationsMixin<PurchaseItem>;
+  declare getPayment: HasOneGetAssociationMixin<Payment>;
+  declare getShippingInfo: HasOneGetAssociationMixin<ShippingInfo>;
+
   static initModel(sequelize: Sequelize): typeof Purchase {
-    Purchase.init(
+    return Purchase.init(
       {
         id: {
           type: DataTypes.UUID,
@@ -34,7 +41,7 @@ export class Purchase extends Model<
           allowNull: false,
           primaryKey: true,
         },
-        // No need to declare user_id in init – it's set up via association
+
         total_items: {
           type: DataTypes.INTEGER,
           allowNull: false,
@@ -61,11 +68,27 @@ export class Purchase extends Model<
       {
         sequelize,
         modelName: "Purchase",
-        tableName: "Purchases", // use your actual table name if needed
+        tableName: "Purchases",
         timestamps: true,
       }
     );
-
-    return Purchase;
+  }
+  static associate(models: {
+    PurchaseItem: typeof PurchaseItem;
+    Payment: typeof Payment;
+    ShippingInfo: typeof ShippingInfo;
+  }) {
+    Purchase.hasMany(models.PurchaseItem, {
+      foreignKey: "purchase_id",
+      as: "purchaseItems",
+    });
+    Purchase.hasOne(models.Payment, {
+      foreignKey: "purchase_id",
+      as: "payment",
+    });
+    Purchase.hasOne(models.ShippingInfo, {
+      foreignKey: "purchase_id",
+      as: "shipping_info",
+    });
   }
 }

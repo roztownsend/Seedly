@@ -5,7 +5,10 @@ import {
   CreationOptional,
   DataTypes,
   Sequelize,
+  HasManyGetAssociationsMixin,
 } from "sequelize";
+
+import { PurchaseItem } from "./purchaseItem.model";
 
 export class Plant extends Model<
   InferAttributes<Plant>,
@@ -24,64 +27,71 @@ export class Plant extends Model<
     | "Partial shade to full shade";
   declare created_at: CreationOptional<Date>;
   declare updated_at: CreationOptional<Date>;
-}
 
-export function initPlantModel(sequelize: Sequelize) {
-  Plant.init(
-    {
-      id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true,
-      },
-      product_name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      price: {
-        type: DataTypes.DECIMAL,
-        allowNull: false,
-        get() {
-          const rawValue = this.getDataValue("price");
-          return rawValue === null ? null : parseFloat(rawValue);
+  declare getPurchaseItems: HasManyGetAssociationsMixin<PurchaseItem>;
+  static initModel(sequelize: Sequelize): typeof Plant {
+    return Plant.init(
+      {
+        id: {
+          type: DataTypes.UUID,
+          defaultValue: DataTypes.UUIDV4,
+          primaryKey: true,
+        },
+        product_name: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
+        price: {
+          type: DataTypes.DECIMAL,
+          allowNull: false,
+          get() {
+            const rawValue = this.getDataValue("price");
+            return rawValue === null ? null : parseFloat(rawValue);
+          },
+        },
+        description: {
+          type: DataTypes.STRING,
+          defaultValue: "More info coming soon.",
+          allowNull: false,
+        },
+        cycle: {
+          type: DataTypes.ENUM("Annual", "Biennial", "Perennial"),
+        },
+        image_url: {
+          type: DataTypes.TEXT,
+          allowNull: true,
+        },
+        isedible: {
+          type: DataTypes.BOOLEAN,
+          allowNull: true,
+        },
+        sunlight: {
+          type: DataTypes.ENUM(
+            "Full",
+            "Full to part shade",
+            "Partial shade to full shade"
+          ),
+        },
+        created_at: {
+          type: DataTypes.DATE,
+          defaultValue: DataTypes.NOW,
+        },
+        updated_at: {
+          type: DataTypes.DATE,
+          defaultValue: DataTypes.NOW,
         },
       },
-      description: {
-        type: DataTypes.STRING,
-        defaultValue: "More info coming soon.",
-        allowNull: false,
-      },
-      cycle: {
-        type: DataTypes.ENUM("Annual", "Biennial", "Perennial"),
-      },
-      image_url: {
-        type: DataTypes.TEXT,
-        allowNull: true,
-      },
-      isedible: {
-        type: DataTypes.BOOLEAN,
-        allowNull: true,
-      },
-      sunlight: {
-        type: DataTypes.ENUM(
-          "Full",
-          "Full to part shade",
-          "Partial shade to full shade"
-        ),
-      },
-      created_at: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-      },
-      updated_at: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-      },
-    },
-    {
-      sequelize,
-      tableName: "plants",
-      timestamps: false,
-    }
-  );
+      {
+        sequelize,
+        tableName: "plants",
+        timestamps: false,
+      }
+    );
+  }
+  static associate(models: { PurchaseItem: typeof PurchaseItem }) {
+    Plant.hasMany(models.PurchaseItem, {
+      foreignKey: "plant_id",
+      as: "purchaseItems",
+    });
+  }
 }

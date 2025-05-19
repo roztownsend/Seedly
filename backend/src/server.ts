@@ -1,6 +1,7 @@
 import cors from "cors";
 import express from "express";
 import dotenv from "dotenv";
+import chalk from "chalk";
 dotenv.config();
 
 import swaggerUi from "swagger-ui-express";
@@ -15,10 +16,10 @@ import { Purchase } from "./models/purchase.model";
 sequelize
   .authenticate()
   .then(() => {
-    console.log("PostgreSQL Connected via Sequelize");
+    console.log(chalk.green("Connected to Supabase via Sequelize"));
     initModels(sequelize);
   })
-  .catch((err) => console.error("Sequelize connection error:", err));
+  .catch((err) => console.error(chalk.red("Sequelize connection error:", err)));
 
 const app = express();
 const PORT = process.env.PORT || 3000;

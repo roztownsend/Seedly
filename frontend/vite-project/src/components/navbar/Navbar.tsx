@@ -49,7 +49,7 @@ export default function Navbar() {
             <Link to="/cart" className="navbar-auth">
               <div className="navbar-cart">
                 <ShoppingBag className="navbar-icons" />
-                <span className="text-black">{cartUniqueItems}</span>
+                {cartUniqueItems}
               </div>
             </Link>
             <Link to="/login" className="navbar-auth">

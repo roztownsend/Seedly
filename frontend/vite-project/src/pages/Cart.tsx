@@ -43,8 +43,8 @@ const Cart: React.FC = () => {
             <div className="cart-items__list">
               {cartItemsIds.map((id) => {
                 return (
-                  <div className="list-wrapper">
-                    <ProductCardCart key={id} id={id} />
+                  <div key={id} className="list-wrapper">
+                    <ProductCardCart id={id} />
                   </div>
                 );
               })}

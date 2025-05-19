@@ -7,13 +7,18 @@ import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 import path from "path";
 import sequelize from "./config/sequelizeConnect";
+import { initModels } from "./models/initModels";
 import plantRoutes from "./routes/plantRoutes";
 import { types } from "pg";
 
 //testing server startup
+
 sequelize
   .authenticate()
-  .then(() => console.log("PostgreSQL Connected via Sequelize"))
+  .then(() => {
+    console.log("PostgreSQL Connected via Sequelize");
+    initModels(sequelize);
+  })
   .catch((err) => console.error("Sequelize connection error:", err));
 
 const app = express();
@@ -24,11 +29,6 @@ app.use("/plants", plantRoutes);
 
 const swaggerDocument = YAML.load(
   path.join(__dirname, "../swagger/swagger.yaml")
-);
-
-const pgTypes = types;
-pgTypes.setTypeParser(types.builtins.NUMERIC, (value: any) =>
-  parseFloat(value)
 );
 
 // basic route, look /routes folder for actual ones

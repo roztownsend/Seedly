@@ -3,15 +3,16 @@
 import { Router, Request, Response } from "express";
 import { pool } from "../config/dbConnection";
 import { z } from "zod";
-import { Plant } from "../sequelizeDefinitions";
+import { Plant } from "../models/plant.model";
 const router = Router();
 
 //get all plants
 router.get("/", async (_req: Request, res: Response): Promise<void> => {
   console.log("GET /plants triggered");
   try {
-    const plants = await Plant.findAll({ raw: true });
-    console.log(plants[0]);
+    const plants = await Plant.findAll();
+    const firstValue = plants[0].price;
+    console.log(typeof firstValue);
     res.json(plants);
   } catch (err) {
     console.error(err);

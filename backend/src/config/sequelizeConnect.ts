@@ -11,6 +11,12 @@ const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
   dialect: "postgres",
   host: dbHost,
   port: dbPort,
+  pool: {
+    max: 12,
+    min: 0,
+    acquire: 30000,
+    idle: 10000,
+  },
 });
 
 export default sequelize;

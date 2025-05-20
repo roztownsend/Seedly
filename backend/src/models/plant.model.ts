@@ -16,19 +16,19 @@ export class Plant extends Model<
   InferCreationAttributes<Plant>
 > {
   declare id: CreationOptional<string>;
-  declare productName: string;
+  declare product_name: string;
   declare price: string;
   declare description: string;
   declare cycle: ("Annual" | "Biennial" | "Perennial")[];
 
-  declare imageUrl: string | null;
+  declare image_url: string | null;
   declare isedible: boolean | null;
   declare sunlight:
     | "Full"
     | "Full to part shade"
     | "Partial shade to full shade";
-  declare createdAt: CreationOptional<Date>;
-  declare updatedAt: CreationOptional<Date>;
+  declare created_at: CreationOptional<Date>;
+  declare updated_at: CreationOptional<Date>;
 
   declare getPurchaseItems: HasManyGetAssociationsMixin<PurchaseItem>;
   static initModel(sequelize: Sequelize): typeof Plant {
@@ -39,7 +39,7 @@ export class Plant extends Model<
           defaultValue: DataTypes.UUIDV4,
           primaryKey: true,
         },
-        productName: {
+        product_name: {
           type: DataTypes.STRING,
           allowNull: false,
         },
@@ -60,7 +60,7 @@ export class Plant extends Model<
             DataTypes.ENUM("Annual", "Biennial", "Perennial")
           ),
         },
-        imageUrl: {
+        image_url: {
           type: DataTypes.TEXT,
           allowNull: true,
         },
@@ -75,11 +75,11 @@ export class Plant extends Model<
             "Partial shade to full shade"
           ),
         },
-        createdAt: {
+        created_at: {
           type: DataTypes.DATE,
           defaultValue: DataTypes.NOW,
         },
-        updatedAt: {
+        updated_at: {
           type: DataTypes.DATE,
           defaultValue: DataTypes.NOW,
         },

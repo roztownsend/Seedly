@@ -15,12 +15,12 @@ export class UserTask extends Model<
   InferCreationAttributes<UserTask>
 > {
   declare id: CreationOptional<string>;
-  declare userId: ForeignKey<string>;
-  declare taskId: ForeignKey<string>;
-  declare isCompleted: CreationOptional<boolean>;
+  declare user_id: ForeignKey<string>;
+  declare task_id: ForeignKey<string>;
+  declare is_completed: CreationOptional<boolean>;
 
-  declare createdAt: CreationOptional<Date>;
-  declare updatedAt: CreationOptional<Date>;
+  declare created_at: CreationOptional<Date>;
+  declare updated_at: CreationOptional<Date>;
 
   static initModel(sequelize: Sequelize): typeof UserTask {
     return UserTask.init(
@@ -31,17 +31,17 @@ export class UserTask extends Model<
           allowNull: false,
           primaryKey: true,
         },
-        isCompleted: {
+        is_completed: {
           type: DataTypes.BOOLEAN,
           allowNull: false,
           defaultValue: false,
         },
-        createdAt: {
+        created_at: {
           type: DataTypes.DATE,
           allowNull: true,
           defaultValue: DataTypes.NOW,
         },
-        updatedAt: {
+        updated_at: {
           type: DataTypes.DATE,
           allowNull: true,
           defaultValue: DataTypes.NOW,

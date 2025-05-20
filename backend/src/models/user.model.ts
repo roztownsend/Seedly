@@ -17,8 +17,8 @@ export class User extends Model<
   declare email: string;
   declare password: string;
   declare role: CreationOptional<string>;
-  declare createdAt: CreationOptional<Date>;
-  declare updatedAt: CreationOptional<Date>;
+  declare created_at: CreationOptional<Date>;
+  declare updated_at: CreationOptional<Date>;
 
   static initModel(sequelize: Sequelize): typeof User {
     return User.init(
@@ -42,12 +42,12 @@ export class User extends Model<
           defaultValue: "customer",
           allowNull: false,
         },
-        createdAt: {
+        created_at: {
           type: DataTypes.DATE,
           allowNull: true,
           defaultValue: DataTypes.NOW,
         },
-        updatedAt: {
+        updated_at: {
           type: DataTypes.DATE,
           allowNull: true,
           defaultValue: DataTypes.NOW,
@@ -66,7 +66,7 @@ export class User extends Model<
   static associate(models: { UserTask: typeof UserTask }) {
     User.hasMany(models.UserTask, {
       foreignKey: "user_id",
-      as: "userTasks",
+      as: "user_tasks",
     });
   }
 }

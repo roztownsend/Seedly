@@ -34,7 +34,8 @@ export class Payment extends Model<
         sequelize,
         tableName: "payments",
         modelName: "Payment",
-        timestamps: false,
+        underscored: true,
+        timestamps: true,
       }
     );
   }

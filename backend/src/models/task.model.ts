@@ -14,13 +14,13 @@ export class Task extends Model<
   InferCreationAttributes<Task>
 > {
   declare id: CreationOptional<string>;
-  declare plantId: ForeignKey<Plant>;
+  declare plant_id: ForeignKey<Plant>;
   declare description: string | null;
-  declare startMonth: number;
-  declare endMonth: number;
+  declare start_month: number;
+  declare end_month: number;
 
-  declare createdAt: CreationOptional<Date>;
-  declare updatedAt: CreationOptional<Date>;
+  declare created_at: CreationOptional<Date>;
+  declare updated_at: CreationOptional<Date>;
 
   static initModel(sequelize: Sequelize): typeof Task {
     return Task.init(
@@ -35,7 +35,7 @@ export class Task extends Model<
           type: DataTypes.TEXT,
           allowNull: false,
         },
-        startMonth: {
+        start_month: {
           type: DataTypes.INTEGER,
           allowNull: false,
           validate: {
@@ -43,7 +43,7 @@ export class Task extends Model<
             max: 12,
           },
         },
-        endMonth: {
+        end_month: {
           type: DataTypes.INTEGER,
           allowNull: false,
           validate: {
@@ -51,12 +51,12 @@ export class Task extends Model<
             max: 12,
           },
         },
-        createdAt: {
+        created_at: {
           type: DataTypes.DATE,
           allowNull: true,
           defaultValue: DataTypes.NOW,
         },
-        updatedAt: {
+        updated_at: {
           type: DataTypes.DATE,
           allowNull: true,
           defaultValue: DataTypes.NOW,

@@ -19,14 +19,14 @@ export class Purchase extends Model<
   declare id: CreationOptional<string>;
   declare user_id: ForeignKey<string> | null;
 
-  declare totalItems: number;
-  declare shippingSelection: string;
-  declare shippingPrice: number;
-  declare totalAmount: number;
-  declare purchaseDate: CreationOptional<Date>;
+  declare total_items: number;
+  declare shipping_selection: string;
+  declare shipping_price: number;
+  declare total_amount: number;
+  declare purchase_date: CreationOptional<Date>;
 
-  declare createdAt: CreationOptional<Date>;
-  declare updatedAt: CreationOptional<Date>;
+  declare created_at: CreationOptional<Date>;
+  declare updated_at: CreationOptional<Date>;
 
   declare getItems: HasManyGetAssociationsMixin<PurchaseItem>;
   declare getPayment: HasOneGetAssociationMixin<Payment>;
@@ -42,28 +42,28 @@ export class Purchase extends Model<
           primaryKey: true,
         },
 
-        totalItems: {
+        total_items: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        shippingSelection: {
+        shipping_selection: {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        shippingPrice: {
+        shipping_price: {
           type: DataTypes.DECIMAL,
           allowNull: false,
         },
-        totalAmount: {
+        total_amount: {
           type: DataTypes.DECIMAL,
           allowNull: false,
         },
-        purchaseDate: {
+        purchase_date: {
           type: DataTypes.DATE,
           defaultValue: DataTypes.NOW,
         },
-        createdAt: DataTypes.DATE,
-        updatedAt: DataTypes.DATE,
+        created_at: DataTypes.DATE,
+        updated_at: DataTypes.DATE,
       },
       {
         sequelize,
@@ -81,7 +81,7 @@ export class Purchase extends Model<
   }) {
     Purchase.hasMany(models.PurchaseItem, {
       foreignKey: "purchase_id",
-      as: "purchaseItems",
+      as: "purchase_items",
     });
     Purchase.hasOne(models.Payment, {
       foreignKey: "purchase_id",

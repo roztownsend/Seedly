@@ -63,7 +63,7 @@ export class ShippingInfo extends Model<
       {
         sequelize,
         tableName: "shipping_infos",
-        modelName: "ShippingInfo",
+        modelName: "Shipping_info",
         timestamps: false,
       }
     );

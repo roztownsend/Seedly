@@ -25,8 +25,8 @@ export class Purchase extends Model<
   declare total_amount: number;
   declare purchase_date: CreationOptional<Date>;
 
-  declare created_at: CreationOptional<Date>;
-  declare updated_at: CreationOptional<Date>;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
 
   declare getItems: HasManyGetAssociationsMixin<PurchaseItem>;
   declare getPayment: HasOneGetAssociationMixin<Payment>;
@@ -62,8 +62,14 @@ export class Purchase extends Model<
           type: DataTypes.DATE,
           defaultValue: DataTypes.NOW,
         },
-        created_at: DataTypes.DATE,
-        updated_at: DataTypes.DATE,
+        createdAt: {
+          type: DataTypes.DATE,
+          defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+          type: DataTypes.DATE,
+          defaultValue: DataTypes.NOW,
+        },
       },
       {
         sequelize,

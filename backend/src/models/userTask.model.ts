@@ -19,8 +19,8 @@ export class UserTask extends Model<
   declare task_id: ForeignKey<string>;
   declare is_completed: CreationOptional<boolean>;
 
-  declare created_at: CreationOptional<Date>;
-  declare updated_at: CreationOptional<Date>;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
 
   static initModel(sequelize: Sequelize): typeof UserTask {
     return UserTask.init(
@@ -36,12 +36,12 @@ export class UserTask extends Model<
           allowNull: false,
           defaultValue: false,
         },
-        created_at: {
+        createdAt: {
           type: DataTypes.DATE,
           allowNull: true,
           defaultValue: DataTypes.NOW,
         },
-        updated_at: {
+        updatedAt: {
           type: DataTypes.DATE,
           allowNull: true,
           defaultValue: DataTypes.NOW,

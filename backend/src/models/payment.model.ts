@@ -15,6 +15,8 @@ export class Payment extends Model<
   declare id: CreationOptional<string>;
   declare purchase_id: ForeignKey<string>;
   declare payment_method: string;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
 
   static initModel(sequelize: Sequelize): typeof Payment {
     return Payment.init(
@@ -28,6 +30,14 @@ export class Payment extends Model<
         payment_method: {
           type: DataTypes.STRING,
           allowNull: false,
+        },
+        createdAt: {
+          type: DataTypes.DATE,
+          defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+          type: DataTypes.DATE,
+          defaultValue: DataTypes.NOW,
         },
       },
       {

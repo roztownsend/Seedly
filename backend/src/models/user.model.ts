@@ -17,8 +17,8 @@ export class User extends Model<
   declare email: string;
   declare password: string;
   declare role: CreationOptional<string>;
-  declare created_at: CreationOptional<Date>;
-  declare updated_at: CreationOptional<Date>;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
 
   static initModel(sequelize: Sequelize): typeof User {
     return User.init(
@@ -42,12 +42,12 @@ export class User extends Model<
           defaultValue: "customer",
           allowNull: false,
         },
-        created_at: {
+        createdAt: {
           type: DataTypes.DATE,
           allowNull: true,
           defaultValue: DataTypes.NOW,
         },
-        updated_at: {
+        updatedAt: {
           type: DataTypes.DATE,
           allowNull: true,
           defaultValue: DataTypes.NOW,

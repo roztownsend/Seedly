@@ -27,8 +27,8 @@ export class Plant extends Model<
     | "Full"
     | "Full to part shade"
     | "Partial shade to full shade";
-  declare created_at: CreationOptional<Date>;
-  declare updated_at: CreationOptional<Date>;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
 
   declare getPurchaseItems: HasManyGetAssociationsMixin<PurchaseItem>;
   static initModel(sequelize: Sequelize): typeof Plant {
@@ -75,11 +75,11 @@ export class Plant extends Model<
             "Partial shade to full shade"
           ),
         },
-        created_at: {
+        createdAt: {
           type: DataTypes.DATE,
           defaultValue: DataTypes.NOW,
         },
-        updated_at: {
+        updatedAt: {
           type: DataTypes.DATE,
           defaultValue: DataTypes.NOW,
         },

@@ -19,8 +19,8 @@ export class Task extends Model<
   declare start_month: number;
   declare end_month: number;
 
-  declare created_at: CreationOptional<Date>;
-  declare updated_at: CreationOptional<Date>;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
 
   static initModel(sequelize: Sequelize): typeof Task {
     return Task.init(
@@ -51,14 +51,12 @@ export class Task extends Model<
             max: 12,
           },
         },
-        created_at: {
+        createdAt: {
           type: DataTypes.DATE,
-          allowNull: true,
           defaultValue: DataTypes.NOW,
         },
-        updated_at: {
+        updatedAt: {
           type: DataTypes.DATE,
-          allowNull: true,
           defaultValue: DataTypes.NOW,
         },
       },

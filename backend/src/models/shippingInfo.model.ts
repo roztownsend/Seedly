@@ -22,6 +22,9 @@ export class ShippingInfo extends Model<
   declare city: string;
   declare shipping_option: "PostNord Snigelpost" | "Bootbee Box";
 
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
+
   static initModel(sequelize: Sequelize): typeof ShippingInfo {
     return ShippingInfo.init(
       {
@@ -58,6 +61,14 @@ export class ShippingInfo extends Model<
         shipping_option: {
           type: DataTypes.ENUM("PostNord Snigelpost", "Bootbee Box"),
           allowNull: false,
+        },
+        createdAt: {
+          type: DataTypes.DATE,
+          defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+          type: DataTypes.DATE,
+          defaultValue: DataTypes.NOW,
         },
       },
       {

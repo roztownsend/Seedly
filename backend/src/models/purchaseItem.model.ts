@@ -18,8 +18,8 @@ export class PurchaseItem extends Model<
   declare plant_id: ForeignKey<string>;
   declare quantity: CreationOptional<number>;
 
-  declare created_at: CreationOptional<Date>;
-  declare updated_at: CreationOptional<Date>;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
 
   static initModel(sequelize: Sequelize): typeof PurchaseItem {
     return PurchaseItem.init(
@@ -34,11 +34,11 @@ export class PurchaseItem extends Model<
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        created_at: {
+        createdAt: {
           type: DataTypes.DATE,
           defaultValue: DataTypes.NOW,
         },
-        updated_at: {
+        updatedAt: {
           type: DataTypes.DATE,
           defaultValue: DataTypes.NOW,
         },

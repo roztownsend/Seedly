@@ -19,7 +19,8 @@ export class Plant extends Model<
   declare productName: string;
   declare price: string;
   declare description: string;
-  declare cycle: "Annual" | "Biennial" | "Perennial";
+  declare cycle: ("Annual" | "Biennial" | "Perennial")[];
+
   declare imageUrl: string | null;
   declare isedible: boolean | null;
   declare sunlight:
@@ -55,7 +56,9 @@ export class Plant extends Model<
           allowNull: false,
         },
         cycle: {
-          type: DataTypes.ENUM("Annual", "Biennial", "Perennial"),
+          type: DataTypes.ARRAY(
+            DataTypes.ENUM("Annual", "Biennial", "Perennial")
+          ),
         },
         imageUrl: {
           type: DataTypes.TEXT,
@@ -84,6 +87,7 @@ export class Plant extends Model<
       {
         sequelize,
         tableName: "plants",
+        modelName: "Plant",
         timestamps: true,
         underscored: true,
       }

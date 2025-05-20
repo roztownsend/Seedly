@@ -45,7 +45,7 @@ export class PurchaseItem extends Model<
       },
       {
         sequelize,
-        tableName: "purchaseItems",
+        tableName: "purchase_items",
         modelName: "PurchaseItem",
         timestamps: true,
         underscored: true,

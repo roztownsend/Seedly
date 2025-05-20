@@ -32,7 +32,7 @@ export class Payment extends Model<
       },
       {
         sequelize,
-        tableName: "Payments",
+        tableName: "payments",
         modelName: "Payment",
         timestamps: false,
       }

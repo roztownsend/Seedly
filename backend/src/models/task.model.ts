@@ -31,10 +31,6 @@ export class Task extends Model<
           allowNull: false,
           primaryKey: true,
         },
-        plantId: {
-          type: DataTypes.UUID,
-          allowNull: false,
-        },
         description: {
           type: DataTypes.TEXT,
           allowNull: false,

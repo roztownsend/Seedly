@@ -10,7 +10,7 @@ const router = Router();
 router.get("/", async (_req: Request, res: Response): Promise<void> => {
   console.log("GET /plants triggered");
   try {
-    const plants = await Plant.findAll({ raw: true });
+    const plants = await Plant.findAll();
     const firstValue = plants[0];
     console.log(firstValue);
     res.json(plants);

@@ -19,11 +19,11 @@ export class Purchase extends Model<
   declare id: CreationOptional<string>;
   declare user_id: ForeignKey<string> | null;
 
-  declare total_items: number;
-  declare shipping_selection: string;
-  declare shipping_price: number;
-  declare total_amount: number;
-  declare purchase_date: CreationOptional<Date>;
+  declare totalItems: number;
+  declare shippingSelection: string;
+  declare shippingPrice: number;
+  declare totalAmount: number;
+  declare purchaseDate: CreationOptional<Date>;
 
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
@@ -42,23 +42,23 @@ export class Purchase extends Model<
           primaryKey: true,
         },
 
-        total_items: {
+        totalItems: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        shipping_selection: {
+        shippingSelection: {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        shipping_price: {
+        shippingPrice: {
           type: DataTypes.DECIMAL,
           allowNull: false,
         },
-        total_amount: {
+        totalAmount: {
           type: DataTypes.DECIMAL,
           allowNull: false,
         },
-        purchase_date: {
+        purchaseDate: {
           type: DataTypes.DATE,
           defaultValue: DataTypes.NOW,
         },
@@ -70,6 +70,7 @@ export class Purchase extends Model<
         modelName: "Purchase",
         tableName: "Purchases",
         timestamps: true,
+        underscored: true,
       }
     );
   }

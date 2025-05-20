@@ -7,17 +7,17 @@ import {
   DataTypes,
   Sequelize,
 } from "sequelize";
-import { User } from "./user.model";
+import { Plant } from "./plant.model";
 
 export class Task extends Model<
   InferAttributes<Task>,
   InferCreationAttributes<Task>
 > {
   declare id: CreationOptional<string>;
-  declare user_id: ForeignKey<string>;
-  declare title: string;
+  declare plantId: ForeignKey<Plant>;
   declare description: string | null;
-  declare is_completed: CreationOptional<boolean>;
+  declare startMonth: number;
+  declare endMonth: number;
 
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
@@ -31,27 +31,38 @@ export class Task extends Model<
           allowNull: false,
           primaryKey: true,
         },
-        title: {
-          type: DataTypes.STRING(100),
+        plantId: {
+          type: DataTypes.UUID,
           allowNull: false,
         },
         description: {
           type: DataTypes.TEXT,
-          allowNull: true,
-        },
-        is_completed: {
-          type: DataTypes.BOOLEAN,
           allowNull: false,
-          defaultValue: false,
+        },
+        startMonth: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          validate: {
+            min: 1,
+            max: 12,
+          },
+        },
+        endMonth: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          validate: {
+            min: 1,
+            max: 12,
+          },
         },
         createdAt: {
           type: DataTypes.DATE,
-          allowNull: false,
+          allowNull: true,
           defaultValue: DataTypes.NOW,
         },
         updatedAt: {
           type: DataTypes.DATE,
-          allowNull: false,
+          allowNull: true,
           defaultValue: DataTypes.NOW,
         },
       },
@@ -59,16 +70,16 @@ export class Task extends Model<
         sequelize,
         tableName: "tasks",
         modelName: "Task",
-        timestamps: false,
+        timestamps: true,
+        underscored: true,
       }
     );
   }
 
-  static associate(models: { User: typeof User }) {
-    Task.belongsTo(models.User, {
-      foreignKey: "user_id",
-      as: "user",
-      onDelete: "CASCADE",
+  static associate(models: { Plant: typeof Plant }) {
+    Task.belongsTo(models.Plant, {
+      foreignKey: "plant_id",
+      as: "plant",
     });
   }
 }

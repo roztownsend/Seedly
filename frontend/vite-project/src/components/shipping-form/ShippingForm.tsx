@@ -65,7 +65,7 @@ const ShippingForm = () => {
               id="apartment"
               value={formData.apartment || ""}
               onChange={(e) => updateFormField("apartment", e.target.value)}
-              placeholder="Apartment, Suite, optional"
+              placeholder="Apartment, Suite (optional)"
             />
           </div>
         </div>

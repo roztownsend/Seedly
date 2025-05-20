@@ -1,0 +1,30 @@
+.payment-section {
+    @apply m-5 p-1;
+}
+
+.payment-container {
+    @apply max-w-md mx-auto;
+}
+
+.payment-form {
+    @apply flex flex-col space-y-4 pt-2 ;
+}
+
+.payment-exp-group {
+    @apply flex justify-between gap-2;
+}
+
+.payment-input {
+    @apply border border-black w-full h-10 pl-4;
+}
+
+.payment-error {
+    @apply text-sm text-red-600;
+}
+
+.payment-savecard-disabled {
+    @apply flex items-center gap-2 opacity-50 cursor-not-allowed;
+}
+.payment-button-group {
+    @apply flex gap-2;
+}

@@ -7,6 +7,8 @@ import {
   Sequelize,
 } from "sequelize";
 
+import { UserTask } from "./userTask.model";
+
 export class User extends Model<
   InferAttributes<User>,
   InferCreationAttributes<User>
@@ -15,10 +17,10 @@ export class User extends Model<
   declare email: string;
   declare password: string;
   declare role: CreationOptional<string>;
-  declare created_at: CreationOptional<Date>;
-  declare updated_at: CreationOptional<Date>;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
 
-  static initUserModel(sequelize: Sequelize): typeof User {
+  static initModel(sequelize: Sequelize): typeof User {
     return User.init(
       {
         id: {
@@ -40,21 +42,31 @@ export class User extends Model<
           defaultValue: "customer",
           allowNull: false,
         },
-        created_at: {
+        createdAt: {
           type: DataTypes.DATE,
+          allowNull: true,
           defaultValue: DataTypes.NOW,
         },
-        updated_at: {
+        updatedAt: {
           type: DataTypes.DATE,
+          allowNull: true,
           defaultValue: DataTypes.NOW,
         },
       },
       {
         sequelize,
-        tableName: "Users",
+        tableName: "users",
         modelName: "User",
-        timestamps: false,
+        timestamps: true,
+        underscored: true,
       }
     );
+  }
+
+  static associate(models: { UserTask: typeof UserTask }) {
+    User.hasMany(models.UserTask, {
+      foreignKey: "user_id",
+      as: "userTasks",
+    });
   }
 }

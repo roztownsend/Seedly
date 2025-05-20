@@ -39,10 +39,8 @@ router.post('/payment', async (req: Request, res: Response): Promise<void> => {
 
     const {
         cardholderName,
-        cardNumber,
         expMonth,
         expYear,
-        cvc,
         saveCard = false,
         userId = null,
     } = parsed.data;
@@ -50,17 +48,16 @@ router.post('/payment', async (req: Request, res: Response): Promise<void> => {
     try {
         await pool.query(
             `INSERT INTO payments (
-          user_id, cardholder_name, card_number,
-          exp_month, exp_year, cvc, save_card, created_at
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())`,
-            [userId, cardholderName, cardNumber, expMonth, expYear, cvc, saveCard]
+            user_id, cardholder_name, exp_month, exp_year, save_card, created_at
+          ) VALUES ($1, $2, $3, $4, $5, NOW())`,
+            [userId, cardholderName, expMonth, expYear, saveCard]
         );
-        res.status(200).json({ message: 'Payment stored successfully' });
 
+        res.status(200).json({ message: 'Payment stored (no sensitive data)' });
     } catch (error) {
         console.error('Database insert error:', error);
         res.status(500).json({ error: 'Internal server error' });
-    }
+      }
 });
 
 export default router; 

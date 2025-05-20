@@ -27,14 +27,6 @@ export class PurchaseItem extends Model<
           allowNull: false,
           primaryKey: true,
         },
-        purchase_id: {
-          type: DataTypes.UUID,
-          allowNull: false,
-        },
-        plant_id: {
-          type: DataTypes.UUID,
-          allowNull: false,
-        },
         quantity: {
           type: DataTypes.INTEGER,
           allowNull: false,

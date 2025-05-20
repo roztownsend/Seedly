@@ -25,10 +25,6 @@ export class Payment extends Model<
           allowNull: false,
           primaryKey: true,
         },
-        purchase_id: {
-          type: DataTypes.UUID,
-          allowNull: false,
-        },
         payment_method: {
           type: DataTypes.STRING,
           allowNull: false,

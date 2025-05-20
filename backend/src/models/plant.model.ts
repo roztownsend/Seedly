@@ -51,7 +51,6 @@ export class Plant extends Model<
         },
         description: {
           type: DataTypes.STRING,
-          defaultValue: "More info coming soon.",
           allowNull: false,
         },
         cycle: {

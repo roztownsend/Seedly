@@ -31,10 +31,6 @@ export class ShippingInfo extends Model<
           allowNull: false,
           primaryKey: true,
         },
-        purchase_id: {
-          type: DataTypes.UUID,
-          allowNull: false,
-        },
         customer_name: {
           type: DataTypes.TEXT,
           allowNull: false,

@@ -52,7 +52,7 @@ export class Plant extends Model<
           },
         },
         description: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
           allowNull: false,
         },
         cycle: {

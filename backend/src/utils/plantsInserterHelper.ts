@@ -11,7 +11,73 @@ interface PlantType {
 }
 
 const plantsInserter = async () => {
+  const tinyPlantsData: PlantType[] = [
+    {
+      productName: "Kale 'Lerchenzungen'",
+      price: "42",
+      description:
+        "This variety of kale has green leaves and curly bits. The plant is usually grown as an annual, but if grown as a perennial, it will form seeds in the second year. It can be grown as baby salad greens or for bunching adult leaves. Leaves are sweeter after a frost and delicious eaten raw, added to salads, sautéed, or added to stews and casseroles.",
+      cycle: ["Annual", "Biennial"],
+      imageUrl: "https://roztownsend.net/seedly-assets/Kale-Lerchenzungen.webp",
+      isedible: true,
+      sunlight: "Full",
+    },
+    {
+      productName: "Salsify 'Sandwich Island'",
+      price: "36",
+      description:
+        "Salsify is a perennial plant grown as an annual for it''s edible root and leaves. It does well in cool weather and is cultivated similarly to carrots and parsnips. The leaves look like a clump of coarse grass with starry pink to purple flowers. The greens and flowers can be used in salads. The taproot has an oyster-like taste that can be eaten boiled or mashed. Take extra care not to break the roots while harvesting.",
+      cycle: ["Annual", "Perennial"],
+      imageUrl:
+        "https://roztownsend.net/seedly-assets/Salsify-Sandwich-Island.webp",
+      isedible: true,
+      sunlight: "Full",
+    },
+  ];
   const plantsData: PlantType[] = [
+    {
+      productName: "Pumpkin 'Baby Bear'",
+      price: "48",
+      description:
+        "Baby bear pumpkins have slender, sturdy, easy to grip handles. Decorative for autumn, but also great for pies. Stores really well.",
+      cycle: ["Annual"],
+      imageUrl: "https://roztownsend.net/seedly-assets/Pumpkin-Baby-Bear.webp",
+      isedible: true,
+      sunlight: "Full",
+    },
+
+    {
+      productName: "Beet 'Choggia'",
+      price: "35",
+      description:
+        "Typically grown for its taproot, the leaves of the beet are also edible. The Leaves resemble Swiss chard (but smaller) and are good sautéed. The choggia variety has nice stripes.",
+      cycle: ["Annual", "Biennial"],
+      imageUrl: "https://roztownsend.net/seedly-assets/Beets.webp",
+      isedible: true,
+      sunlight: "Full to part shade",
+    },
+
+    {
+      productName: "Onion 'Alisa Craig'",
+      price: "27",
+      description:
+        "White onions tend to have a sharper, more pungent flavor than yellow onions, and thinner, papery skin. They can be eaten cooked or raw - mince and add to salsas and chutneys. It's one of the most versatile veggies around, and easy to grow.",
+      cycle: ["Annual"],
+      imageUrl: "https://roztownsend.net/seedly-assets/Onion-Alisa-Craig.webp",
+      isedible: true,
+      sunlight: "Full",
+    },
+
+    {
+      productName: "Carrot 'Touchon'",
+      price: "56",
+      description:
+        "Touchon is a classic orange carrot great raw or cooked. Sweet and crunchy!",
+      cycle: ["Annual"],
+      imageUrl: "https://roztownsend.net/seedly-assets/Carrot-Touchon.webp",
+      isedible: true,
+      sunlight: "Full",
+    },
     {
       productName: "Kale 'Lerchenzungen'",
       price: "42",

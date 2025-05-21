@@ -30,7 +30,7 @@ type CartState = {
   actions: CartActions;
 };
 
-export const useCartStore = create<CartState>((set, get) => ({
+const useCartStore = create<CartState>((set, get) => ({
   cartItems: [],
   actions: {
     addItem: (item) =>

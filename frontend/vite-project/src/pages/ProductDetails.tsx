@@ -3,23 +3,25 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { FaHourglassHalf, FaRegSadTear } from "react-icons/fa";
 import { useCartStore } from "../stores/cartStore";
-import { FetchAllPlantsResponse, ProductItem } from "../stores/productsStore";
+import { ProductItem } from "../stores/productsStore";
 import "./page-styles/ProductDetails.css";
 
 const ProductDetails: React.FC = () => {
-    const { id } = useParams(); // get the product ID via route
+    const { id } = useParams<{ id: string }>();// get the product ID via route
     const [plant, setPlant] = useState<ProductItem | null>(null);
     const [loading, setLoading] = useState(true);
+    const [tasks, setTasks] = useState<{ id: string; description: string }[]>([]);
     const { addItem, updateQuantity, cartItems } = useCartStore();
     const existingItem = cartItems.find((cartItem) => cartItem.id === id);
+
 
     useEffect(() => {
         const fetchPlant = async () => {
             try {
-                const res = await axios.get<FetchAllPlantsResponse>("http://localhost:5000/plants"); // fetch all plants but if you're using a different port, adjust the URL accordingly
-                const data = res.data.data;
+                const res = await axios.get<ProductItem[]>("http://localhost:5001/plants"); // fetch all plants but if you're using a different port, adjust the URL accordingly
+                const data = res.data;
                 const found = data.find((p: ProductItem) => p.id === id);
-                setPlant(found || null); // defines the product found
+                setPlant(found || null);
             } catch (err) {
                 console.error("Error fetching plant data", err);
             } finally {
@@ -27,6 +29,20 @@ const ProductDetails: React.FC = () => {
             }
         };
         fetchPlant();
+    }, [id]);
+
+    useEffect(() => {
+        if (!id) return;
+        const fetchTasks = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5001/plants/${id}/tasks`);
+                setTasks(res.data);
+            } catch (err) {
+                setTasks([]);
+                console.error("Error fetching tasks", err);
+            }
+        };
+        fetchTasks();
     }, [id]);
 
     // add item to cart or update quantity
@@ -66,16 +82,20 @@ const ProductDetails: React.FC = () => {
                     <h3 className="product-price">{plant.price} kr</h3>
                 </div>
                 <div className="desc-actions">
-                        <p className="product-description">{plant.description}</p>
-                        <p className="product-details"><strong>Cycle:</strong> {plant.cycle}<br />
+                    <p className="product-description">{plant.description}</p>
+                    <p className="product-details"><strong>Cycle:</strong> {plant.cycle}<br />
                         <strong>Sunlight:</strong> {plant.sunlight}</p>
-                        <div className="product-tasks">
-                            <h4 className="product-tasks-heading">Tasks for {plant.product_name}</h4>
-                            <ul className="product-tasks__items">
-                                <li><strong>Task:</strong> This is some placeholder text to test styling.</li>
-                                <li><strong>Another Task:</strong> This is some more placeholder text.</li>
-                                <li><strong>One More Task:</strong> This is one last placeholder text to test styling.</li>
-                            </ul>
+                    <div className="product-tasks">
+                        <h4 className="product-tasks-heading">Tasks for {plant.product_name}</h4>
+                        <ul className="product-tasks__items">
+                            {tasks.length > 0 ? (
+                                tasks.map((task) => (
+                                    <li key={task.id}><strong>Task:</strong> {task.description}</li>
+                                ))
+                            ) : (
+                                <li>There are no tasks for this plant at the moment!</li>
+                            )}
+                        </ul>
                     </div>
                     <div className="product-actions">
                         {existingItem?.quantity ? (

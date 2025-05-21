@@ -18,7 +18,8 @@
     @apply flex md:flex-col w-full justify-between items-baseline;
 }
 
-.product-title, h4 {
+.product-title,
+h4 {
     @apply text-yellow-800;
 }
 
@@ -31,7 +32,8 @@
     @apply text-base leading-relaxed;
 }
 
-.product-tasks-heading {
+.product-tasks-heading,
+.product-tasks__items {
     @apply pt-3;
 }
 
@@ -62,5 +64,5 @@
 }
 
 .state-message {
-    @apply w-1/2;
+    @apply w-full text-center;
 }

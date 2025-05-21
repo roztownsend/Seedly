@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "pg": "^8.15.6",
+    "pg-hstore": "^2.3.4",
     "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.22"
+    "sequelize": "^6.37.7"
   }
 }

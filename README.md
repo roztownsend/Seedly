@@ -75,7 +75,7 @@ Swagger (for API documentation)
 Database:
 
 For PostgreSQL:  
-`npm install pg` (plus optional ORM like typeorm or prisma)
+`npm install pg` 
 
 CORS  
 `npm install cors`

@@ -1,20 +1,27 @@
 import cors from "cors";
 import express from "express";
 import dotenv from "dotenv";
+import chalk from "chalk";
 dotenv.config();
 
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 import path from "path";
-import { pool } from "./config/dbConnection";
+import sequelize from "./config/sequelizeConnect";
+import { initModels } from "./models/initModels";
 import plantRoutes from "./routes/plantRoutes";
-import { types } from "pg";
-
+import { Purchase } from "./models/purchase.model";
+import { Plant } from "./models/plant.model";
+import plantsInserter from "./utils/plantsInserterHelper";
 //testing server startup
-pool
-  .query("SELECT NOW()")
-  .then((res) => console.log("PostgreSQL Connected:", res.rows[0]))
-  .catch((err) => console.error("Connection Error:", err));
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log(chalk.green("Connected to Supabase via Sequelize"));
+    initModels(sequelize);
+  })
+  .catch((err) => console.error(chalk.red("Sequelize connection error:", err)));
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,31 +33,12 @@ const swaggerDocument = YAML.load(
   path.join(__dirname, "../swagger/swagger.yaml")
 );
 
-const pgTypes = types;
-pgTypes.setTypeParser(types.builtins.NUMERIC, (value: any) =>
-  parseFloat(value)
-);
-
 // basic route, look /routes folder for actual ones
 app.get("/", (_req, res) => {
   res.send("API is running");
 });
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-//testing/debug
-app.get("/health/db", async (_req, res) => {
-  try {
-    const result = await pool.query("SELECT NOW()");
-    res.status(200).json({
-      message: "Database connected",
-      time: result.rows[0].now,
-    });
-  } catch (err) {
-    console.error("DB health check failed:", err);
-    res.status(500).json({ message: "Database connection failed" });
-  }
-});
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

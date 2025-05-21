@@ -16,15 +16,15 @@ export const ShippingSelector: React.FC = () => {
             {allShippingOptions.map((option) => (
 
                 <div className={`shipping-options__option 
-                    ${selection.label === option.label ? "selection" : ""}`} key={option.label}>
+                    ${selection === option.id ? "selection" : ""}`} key={option.id}>
                     <div className="shipping-options__check-and-details">
                         <div className="radio-box">
                             <input 
                                 type="radio"
                                 className="radio-box__input"
                                 value={option.label}
-                                checked={selection.label === option.label}
-                                onChange={() => setSelectionData(option)}
+                                checked={selection === option.id}
+                                onChange={() => setSelectionData(option.id)}
                                 name="shipping-option" />
                         </div>
                     <div className="details">
@@ -35,7 +35,7 @@ export const ShippingSelector: React.FC = () => {
                         </div>
 
                         <div className="option--details">
-                            {option.timeframe} business days - <strong>{option.price}</strong>
+                            {option.min_days}-{option.max_days} business days - <strong>{option.price} kr</strong>
                         </div>
                     </div>
                     </div>

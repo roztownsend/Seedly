@@ -20,6 +20,9 @@ sequelize
   .then(() => {
     console.log(chalk.green("Connected to Supabase via Sequelize"));
     initModels(sequelize);
+    plantsInserter()
+      .then(() => console.log("yes"))
+      .catch(() => console.log("no"));
   })
   .catch((err) => console.error(chalk.red("Sequelize connection error:", err)));
 

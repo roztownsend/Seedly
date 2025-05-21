@@ -22,7 +22,6 @@ export class ShippingInfo extends Model<
   declare apartment: string | null;
   declare postcode: string;
   declare city: string;
-  declare shipping_option: "PostNord Snigelpost" | "Bootbee Box";
 
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
@@ -58,10 +57,6 @@ export class ShippingInfo extends Model<
         },
         city: {
           type: DataTypes.STRING,
-          allowNull: false,
-        },
-        shipping_option: {
-          type: DataTypes.ENUM("PostNord Snigelpost", "Bootbee Box"),
           allowNull: false,
         },
         createdAt: {

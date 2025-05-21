@@ -1,21 +1,14 @@
 import { ProductCardProps } from "../../types/types";
 import "./productCard.css";
-import { useCartStore } from "../../stores/cartStore";
+import { useCartActions } from "../../stores/cartStore";
+import { QuantityControl } from "../quantity-control/QuantityControl";
+import { memo } from "react";
 
 const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
   const { image_url, product_name, price, id } = item;
 
-  const { addItem, cartItems, updateQuantity, removeItem } = useCartStore();
+  const { addItem } = useCartActions();
 
-  const existingItem = cartItems.find((cartItem) => cartItem.id === id);
-
-  const handleDecrement = () => {
-    if (existingItem?.quantity && existingItem?.quantity - 1 <= 0) {
-      removeItem(id);
-      return;
-    }
-    updateQuantity(id, 1, "decrement");
-  };
   const handleAddToCart = () => {
     const tempItem = { ...item, quantity: 1 };
     addItem(tempItem);
@@ -24,35 +17,29 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
   return (
     <section className="product-card">
       <div className="product-card__image-box">
-        <img
-          src={image_url}
-          alt={product_name}
-          className="product-card__img"
-        />
+        <img src={image_url} alt={product_name} className="product-card__img" />
       </div>
       <div className="product-card__details">
         <div className="name-price">
           <h5>{product_name}</h5>
           <p className="product-card__price">{price.toFixed(2)}Kr</p>
-      </div>
-      <div className="product-card__actions">
-        {existingItem?.quantity ? (
-          <div className="product-card__quantity">
-            <button onClick={() => handleDecrement()}>-</button>
-            <span>{existingItem?.quantity}</span>
-            <button onClick={() => updateQuantity(id, 1, "increment")}>
-              +
-            </button>
-          </div>
-        ) : (
-          <button className="button-primary" onClick={() => handleAddToCart()}>
-            Add to Cart
-          </button>
-        )}
-      </div>
         </div>
+        <div className="product-card__actions">
+          <QuantityControl
+            cartId={id}
+            fallbackButton={
+              <button
+                className="button-primary"
+                onClick={() => handleAddToCart()}
+              >
+                Add to Cart
+              </button>
+            }
+          />
+        </div>
+      </div>
     </section>
   );
 };
 
-export default ProductCard;
+export default memo(ProductCard);

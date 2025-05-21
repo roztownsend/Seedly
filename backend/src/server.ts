@@ -13,6 +13,7 @@ import plantRoutes from "./routes/plantRoutes";
 import { Purchase } from "./models/purchase.model";
 import { Plant } from "./models/plant.model";
 import plantsInserter from "./utils/plantsInserterHelper";
+import { error } from "console";
 //testing server startup
 
 sequelize

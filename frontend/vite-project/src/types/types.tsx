@@ -6,6 +6,8 @@ export interface ProductCardProps {
 
 export type ProductCardCartProps = {
   item: CartItem;
+  showQuantity?: boolean;
+  showRemove?: boolean;
 };
 
 export interface HeroProps {

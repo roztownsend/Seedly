@@ -8,19 +8,20 @@ import {
   ForeignKey,
 } from "sequelize";
 import { Purchase } from "./purchase.model";
+import { ShippingOption } from "./shippingOption.model";
 export class ShippingInfo extends Model<
   InferAttributes<ShippingInfo>,
   InferCreationAttributes<ShippingInfo>
 > {
   declare id: CreationOptional<string>;
   declare purchase_id: ForeignKey<string>;
+  declare shipping_option_id: ForeignKey<string>;
   declare customer_name: string;
   declare email: string;
   declare address: string;
   declare apartment: string | null;
   declare postcode: string;
   declare city: string;
-  declare shipping_option: "PostNord Snigelpost" | "Bootbee Box" | "DB Stinker Ombud";
 
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
@@ -58,10 +59,6 @@ export class ShippingInfo extends Model<
           type: DataTypes.STRING,
           allowNull: false,
         },
-        shipping_option: {
-          type: DataTypes.ENUM("PostNord Snigelpost", "Bootbee Box", "DB Stinker Ombud"),
-          allowNull: false,
-        },
         createdAt: {
           type: DataTypes.DATE,
           defaultValue: DataTypes.NOW,
@@ -79,10 +76,18 @@ export class ShippingInfo extends Model<
       }
     );
   }
-  static associate(models: { Purchase: typeof Purchase }) {
+  static associate(models: {
+    Purchase: typeof Purchase;
+    ShippingOption: typeof ShippingOption;
+  }) {
     ShippingInfo.belongsTo(models.Purchase, {
       foreignKey: "purchase_id",
       as: "purchase",
+      onDelete: "CASCADE",
+    });
+    ShippingInfo.belongsTo(models.ShippingOption, {
+      foreignKey: "shipping_option_id",
+      as: "shipping_option",
       onDelete: "CASCADE",
     });
   }

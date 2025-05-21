@@ -583,7 +583,42 @@ const taskInserter = async () => {
       end_month: 10,
     },
   ];
+  const allTasks: TaskType[] = [
+    ...BasilGenovese,
+    ...LavanderLovelySky,
+    ...TomatoPaola,
+    ...alpineStawberryRegina,
+    ...beetChoggiaTasks,
+    ...bogMyrtle,
+    ...borage,
+    ...cabbageSunta,
+    ...calendula,
+    ...carrotTouchonTasks,
+    ...chessFlower,
+    ...cornSweetNuggetTasks,
+    ...cucumberMax,
+    ...dillComoTasks,
+    ...kaleLerchenzungenTasks,
+    ...lingonBerry,
+    ...nasturtium,
+    ...onionAlisaCraigTasks,
+    ...pepperCaliforniaWonder,
+    ...pepperChocobell,
+    ...petuniaNightSky,
+    ...poppyLadyBird,
+    ...pumpkinBabyBearTasks,
+    ...raddishRedCelebration,
+    ...rampsWildGarlic,
+    ...salsifySandwichIslandTasks,
+    ...squashWalthamButternut,
+    ...stawBerryMerlanTasks,
+    ...sunflowerRingOfFire,
+    ...whiteMulberryTasks,
+    ...zinnia,
+  ];
   try {
+    const tasks = await Task.bulkCreate(allTasks);
+    console.log(tasks[0] instanceof Task);
   } catch (error) {
     console.log("Failed to bulk add Tasks", error);
   }

@@ -63,7 +63,11 @@ const ProductDetails: React.FC = () => {
         return (
             <div className="not-found-state">
                 <FaRegSadTear className="state-icon" />
-                <div className="status-text state-message">We couldn't find that product. Please try again in a few minutes. If you still get this error, please contact us and we can assist you further. Thanks for your patience!</div>
+                <div className="status-text state-message">
+                    <p>We couldn't find that product. Please try again in a few minutes.</p>
+                    <p>If you still get this error, please contact us and we can assist you further.</p>
+                    <p>Thanks for your patience!</p>
+                </div>
             </div>
         );
 

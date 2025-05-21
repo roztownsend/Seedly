@@ -1,4 +1,4 @@
-# Final Project - Gardening App
+# Final Project - Seedly
 
 //project description
 

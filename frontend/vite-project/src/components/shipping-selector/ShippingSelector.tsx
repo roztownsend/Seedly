@@ -1,35 +1,30 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import './shippingSelector.css';
-
-//to be processed from backend
-const shippingOptions = [
-    {label: "PostNord SnigelPost", price: "49 kr", timeframe: "4-197"},
-    {label: "BootBee Box", price: "59 kr", timeframe: "10-21"},
-    {label: "DB Stinker Ombud", price: "79 kr", timeframe: "7-19"}
-];
+import { useAllShippingOptionsStore, useShippingSelectionState } from "../../stores/shippingOptionStore";
 
 export const ShippingSelector: React.FC = () => {
-    const [isSelected, setIsSelected] = useState("");
+    const { allShippingOptions, fetchAllOptions } = useAllShippingOptionsStore();
+    const { selection, setSelectionData } = useShippingSelectionState();
 
-    const handleSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setIsSelected(event.target.value)
-    };
 
+    useEffect(() => {
+        fetchAllOptions();
+    }, [fetchAllOptions]);
 
     return (
         <form className="shipping-options">
-            {shippingOptions.map((option) => (
+            {allShippingOptions.map((option) => (
 
                 <div className={`shipping-options__option 
-                    ${isSelected === option.label ? "selection" : ""}`} key={option.label}>
+                    ${selection.label === option.label ? "selection" : ""}`} key={option.label}>
                     <div className="shipping-options__check-and-details">
                         <div className="radio-box">
                             <input 
                                 type="radio"
                                 className="radio-box__input"
                                 value={option.label}
-                                checked={isSelected === option.label}
-                                onChange={handleSelection}
+                                checked={selection.label === option.label}
+                                onChange={() => setSelectionData(option)}
                                 name="shipping-option" />
                         </div>
                     <div className="details">

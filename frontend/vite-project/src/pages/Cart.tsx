@@ -6,6 +6,7 @@ import { OrderSummary } from "../components/order-summary/OrderSummary";
 import { LoginCta } from "../components/login-cta/LoginCta";
 import { useProductsStore } from "../stores/productsStore";
 import { useCartStore } from "../stores/cartStore";
+import { ShippingSelector } from "../components/shipping-selector/ShippingSelector";
 import "./page-styles/cart.css";
 
 const Cart: React.FC = () => {
@@ -20,12 +21,14 @@ const Cart: React.FC = () => {
     return (
       <div className="cart-header--nothing">
       <h1 className="h3">Your Cart</h1>
-      <div className="cart-header--nothing__no-items">
+      <ShippingSelector />
+      
+      {/* <div className="cart-header--nothing__no-items">
         <p className="no-items">You currently have no items in your cart.</p>
         <p className="no-items">
         Why not <Link to="/seeds" className="text-link-primary">check out our selection of seeds</Link> and add something?
         </p>
-      </div>
+      </div> */}
       </div>
     )}
   else {    

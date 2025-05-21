@@ -17,7 +17,7 @@ export class Plant extends Model<
 > {
   declare id: CreationOptional<string>;
   declare product_name: string;
-  declare price: string;
+  declare price: number;
   declare description: string;
   declare cycle: ("Annual" | "Biennial" | "Perennial")[];
 
@@ -48,7 +48,9 @@ export class Plant extends Model<
           allowNull: false,
           get() {
             const rawValue = this.getDataValue("price");
-            return rawValue === null ? null : parseFloat(rawValue);
+            return typeof rawValue === "string"
+              ? parseFloat(rawValue)
+              : rawValue;
           },
         },
         description: {

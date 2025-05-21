@@ -8,12 +8,14 @@ import {
   ForeignKey,
 } from "sequelize";
 import { Purchase } from "./purchase.model";
+import { ShippingOption } from "./shippingOption.model";
 export class ShippingInfo extends Model<
   InferAttributes<ShippingInfo>,
   InferCreationAttributes<ShippingInfo>
 > {
   declare id: CreationOptional<string>;
   declare purchase_id: ForeignKey<string>;
+  declare shipping_option_id: ForeignKey<string>;
   declare customer_name: string;
   declare email: string;
   declare address: string;
@@ -79,10 +81,18 @@ export class ShippingInfo extends Model<
       }
     );
   }
-  static associate(models: { Purchase: typeof Purchase }) {
+  static associate(models: {
+    Purchase: typeof Purchase;
+    ShippingOption: typeof ShippingOption;
+  }) {
     ShippingInfo.belongsTo(models.Purchase, {
       foreignKey: "purchase_id",
       as: "purchase",
+      onDelete: "CASCADE",
+    });
+    ShippingInfo.belongsTo(models.ShippingOption, {
+      foreignKey: "shipping_option_id",
+      as: "shipping_option",
       onDelete: "CASCADE",
     });
   }

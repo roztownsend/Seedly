@@ -28,7 +28,8 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ showLink = true }) =
             </div>
             {showLink && <Link to="/cart/shippingForm" className="button-primary continue">Continue to checkout</Link>}
         </div>
-
-    )
-}
-
+        {/* todo: logic to show shipping based on stage of flow */}
+      </div>
+    </div>
+  );
+};

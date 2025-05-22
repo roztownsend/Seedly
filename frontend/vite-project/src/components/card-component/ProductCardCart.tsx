@@ -44,4 +44,4 @@ const ProductCardCart: React.FC<ProductCardCartProps> = ({ item, showQuantity = 
   );
 };
 
-export default ProductCardCart;
+export default memo(ProductCardCart);

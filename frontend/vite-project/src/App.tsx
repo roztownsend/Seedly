@@ -13,12 +13,6 @@ import { useProductsStore } from "./stores/productsStore";
 import CheckoutPayment from "./pages/CheckoutPayment";
 import ShippingForm from "./components/shipping-form/ShippingForm";
 function App() {
-  const { fetchAllPlants } = useProductsStore();
-
-  useEffect(() => {
-    fetchAllPlants();
-  }, []);
-
   return (
     <BrowserRouter>
       <div className="layout">

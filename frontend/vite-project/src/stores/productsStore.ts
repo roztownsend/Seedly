@@ -5,6 +5,10 @@ export type FetchAllPlantsResponse = {
   data: ProductItem[];
 };
 
+type ProductActions = {
+  fetchAllPlants: () => void;
+};
+
 export type ProductItem = {
   id: string;
   product_name: string;
@@ -18,19 +22,26 @@ export type ProductItem = {
   sunlight?: string;
 };
 
-type ProductList = { productList: ProductItem[] };
-
 type ProductState = {
-  fetchAllPlants: () => void;
+  productList: ProductItem[];
+  actions: ProductActions;
 };
 
-export const useProductsStore = create<ProductState & ProductList>((set) => ({
+const useProductsStore = create<ProductState>((set) => ({
   productList: [],
-  fetchAllPlants: async () => {
-    const response = await axios.get("http://localhost:5000/plants");
-    console.log(response.data);
-    set({
-      productList: response.data,
-    });
+  actions: {
+    fetchAllPlants: async () => {
+      const response = await axios.get("http://localhost:5000/plants");
+      console.log(response.data);
+      set({
+        productList: response.data,
+      });
+    },
   },
 }));
+
+export const useProductList = () =>
+  useProductsStore((state) => state.productList);
+
+export const useProductActions = () =>
+  useProductsStore((state) => state.actions);

@@ -1,16 +1,12 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ShoppingBag, Search, Menu, X, User2 } from "lucide-react";
 import "../navbar/Navbar.css";
 import { useCartStore } from "../../stores/cartStore";
-
 export default function Navbar() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const location = useLocation();
-  const isCheckoutPage = location.pathname === "/cart/checkoutPayment";
-
 
   const { cartItems } = useCartStore();
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,14 +45,12 @@ export default function Navbar() {
           </div>
 
           <div className="navbar-right">
-            {!isCheckoutPage && (
-              <Link to="/cart" className="navbar-auth">
-                <div className="navbar-cart">
-                  <ShoppingBag className="navbar-icons" />
-                  {cartItems.length}
-                </div>
-              </Link>
-            )}
+            <Link to="/cart" className="navbar-auth">
+              <div className="navbar-cart">
+                <ShoppingBag className="navbar-icons" />
+                {cartItems.length}
+            </div>
+            </Link>
             <Link to="/login" className="navbar-auth">
               Login
             </Link>
@@ -74,12 +68,10 @@ export default function Navbar() {
             Seedly
           </Link>
           <div className="navbar-mobile-icons">
-            {!isCheckoutPage && (
-              <div className="navbar-cart">
-                <ShoppingBag className="navbar-icons" />
-                {cartItems.length}
-              </div>
-            )}
+            <div className="navbar-cart">
+              <ShoppingBag className="navbar-icons" />
+              {cartItems.length}
+            </div>
             <div className="relative">
               <button onClick={() => setShowUserMenu(!showUserMenu)}>
                 <User2 className="navbar-icons" />

@@ -5,12 +5,12 @@ import { useAllShippingOptionsStore, useShippingSelectionState } from "../../sto
 export const ShippingSelector: React.FC = () => {
     const { allShippingOptions, fetchAllOptions } = useAllShippingOptionsStore();
     const { selection, setSelectionData } = useShippingSelectionState();
-
-
+    
+    
     useEffect(() => {
         fetchAllOptions();
     }, [fetchAllOptions]);
-
+    
     return (
         <form className="shipping-options">
             {allShippingOptions.map((option) => (
@@ -19,17 +19,18 @@ export const ShippingSelector: React.FC = () => {
                     ${selection === option.id ? "selection" : ""}`} key={option.id}>
                     <div className="shipping-options__check-and-details">
                         <div className="radio-box">
-                            <input 
-                                type="radio"
-                                className="radio-box__input"
-                                value={option.label}
-                                checked={selection === option.id}
-                                onChange={() => setSelectionData(option.id)}
-                                name="shipping-option" />
+                            <input
+                            type="radio"
+                            id={`shipping-option-${option.id}`}
+                            name="shipping-option"
+                            value={option.label}
+                            checked={selection === option.id}
+                            onChange={() => setSelectionData(option.id)}
+                            />
                         </div>
                     <div className="details">
                         <div className="option--label">
-                            <label htmlFor="shipping-option">
+                            <label htmlFor={`shipping-option-${option.id}`}>
                                 <h4>{option.label}</h4>
                             </label>
                         </div>

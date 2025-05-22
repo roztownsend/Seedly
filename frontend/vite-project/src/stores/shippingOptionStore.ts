@@ -12,11 +12,15 @@ type ShowAllOptions = {
 export const useAllShippingOptionsStore = create<ShowAllOptions>((set) => ({
   allShippingOptions: [],
   fetchAllOptions: async () => {
-    const response = await axios.get("http://localhost:5000/shipping-options");
-    console.log(response.data);
-    set({
-      allShippingOptions: response.data
-    })
+    try {
+      const response = await axios.get("http://localhost:5000/shipping-options");
+      console.log(response.data);
+      set({
+        allShippingOptions: response.data
+      });
+    } catch (error) {
+      console.error("Error searching for shipping options:", error);
+    }
   }
 }));
 

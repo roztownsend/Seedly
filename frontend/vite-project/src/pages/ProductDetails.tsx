@@ -5,6 +5,7 @@ import { FaHourglassHalf, FaRegSadTear } from "react-icons/fa";
 import { useCartActions } from "../stores/cartStore";
 import { ProductItem } from "../stores/productsStore";
 import { QuantityControl } from "../components/quantity-control/QuantityControl";
+import { Task } from "../types/types";
 import "./page-styles/ProductDetails.css";
 
 const ProductDetails: React.FC = () => {
@@ -12,13 +13,18 @@ const ProductDetails: React.FC = () => {
   const [plant, setPlant] = useState<ProductItem | null>(null);
   const [loading, setLoading] = useState(true);
   const { addItem } = useCartActions();
-  const [tasks, setTasks] = useState<{ id: string; description: string }[]>([]);
+  const [tasks, setTasks] = useState<{ id: string; description: string; start_month: number; end_month: number }[]>([]);
+
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
 
   useEffect(() => {
     const fetchPlant = async () => {
       try {
         const res = await axios.get<ProductItem[]>(
-          "http://localhost:5000/plants"
+          "http://localhost:5001/plants"
         ); // fetch all plants but if you're using a different port, adjust the URL accordingly
         const data = res.data;
         console.log(data);
@@ -37,7 +43,7 @@ const ProductDetails: React.FC = () => {
     if (!id) return;
     const fetchTasks = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/plants/${id}/tasks`);
+        const res = await axios.get(`http://localhost:5001/plants/${id}/tasks`);
         setTasks(res.data);
       } catch (err) {
         setTasks([]);
@@ -46,6 +52,18 @@ const ProductDetails: React.FC = () => {
     };
     fetchTasks();
   }, [id]);
+
+  // Function to group tasks by description and month range
+  function groupTasks(tasks: Task[]) {
+    const grouped: { [desc: string]: { months: [number, number][], description: string } } = {};
+    tasks.forEach((task) => {
+      if (!grouped[task.description]) {
+        grouped[task.description] = { months: [], description: task.description };
+      }
+      grouped[task.description].months.push([task.start_month, task.end_month]);
+    });
+    return Object.values(grouped);
+  }
 
   // add item to cart or update quantity
   const handleAddToCart = () => {
@@ -99,12 +117,19 @@ const ProductDetails: React.FC = () => {
               Tasks for {plant.product_name}
             </h4>
             <ul className="product-tasks__items">
-              {/* --- Dynamic rendering of tasks --- */}
               {tasks.length > 0 ? (
-                tasks.map((task) => (
-                  <li key={task.id} className="product-task-item">
+                groupTasks(tasks).map((group, idx) => (
+                  <li key={idx} className="product-task-item">
                     <span role="img" aria-label="task">🌱</span>
-                    <strong>Task:</strong> {task.description}
+                    <strong>
+                      {group.months
+                        .map(
+                          ([start, end]) =>
+                            months[start - 1] + (start !== end ? ` to ${months[end - 1]}` : "")
+                        )
+                        .join(", ")}
+                    </strong>
+                    {" "}{group.description}
                   </li>
                 ))
               ) : (
@@ -127,4 +152,5 @@ const ProductDetails: React.FC = () => {
     </div>
   );
 };
+
 export default ProductDetails;

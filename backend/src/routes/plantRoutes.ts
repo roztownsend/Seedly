@@ -15,7 +15,7 @@ router.get("/", async (_req: Request, res: Response): Promise<void> => {
     const plants = await Plant.findAll();
     const firstValue = plants[0];
     console.log(firstValue);
-    res.json(plants);
+    res.status(200).json(plants);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });
@@ -38,15 +38,15 @@ router.get("/:id", async (req: Request, res: Response): Promise<void> => {
   }
 
   try {
-    const result = await pool.query(`SELECT * FROM plants WHERE id = $1`, [id]);
+    const plant = await Plant.findByPk(id);
 
-    if (result.rows.length === 0) {
-      res.status(404).send("Plant not found");
+    if (!plant) {
+      res.status(404).json({ error: "Plant not found" });
       return;
     }
 
-    const plant = result.rows[0];
-
+    // We could use plant.toJSON() to get a plain object before validating with Zod just to be safe,
+    // but Zod can validate the model instance directly since it exposes all required properties.
     //Validate the data using Zod
     const parseResult = seedSchema.safeParse(plant);
 
@@ -59,7 +59,7 @@ router.get("/:id", async (req: Request, res: Response): Promise<void> => {
     }
 
     //Send back validated data
-    res.json(parseResult.data);
+    res.status(200).json(parseResult.data);
   } catch (error) {
     res.status(500).json({
       error: "Failed to fetch plant by id",

@@ -37,8 +37,12 @@ h4 {
     @apply pt-3;
 }
 
+.product-task-item {
+    @apply bg-yellow-50 px-1 py-1 flex items-center gap-2;
+}
+
 .product-actions {
-    @apply flex w-full justify-center md:justify-start py-6;
+    @apply flex w-full justify-center py-6;
 }
 
 /* to-remove */

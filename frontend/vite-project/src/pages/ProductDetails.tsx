@@ -12,6 +12,7 @@ const ProductDetails: React.FC = () => {
   const [plant, setPlant] = useState<ProductItem | null>(null);
   const [loading, setLoading] = useState(true);
   const { addItem } = useCartActions();
+  const [tasks, setTasks] = useState<{ id: string; description: string }[]>([]);
 
   useEffect(() => {
     const fetchPlant = async () => {
@@ -30,6 +31,20 @@ const ProductDetails: React.FC = () => {
       }
     };
     fetchPlant();
+  }, [id]);
+
+  useEffect(() => {
+    if (!id) return;
+    const fetchTasks = async () => {
+      try {
+        const res = await axios.get(`http://localhost:5000/plants/${id}/tasks`);
+        setTasks(res.data);
+      } catch (err) {
+        setTasks([]);
+        console.error("Error fetching tasks", err);
+      }
+    };
+    fetchTasks();
   }, [id]);
 
   // add item to cart or update quantity
@@ -51,9 +66,9 @@ const ProductDetails: React.FC = () => {
       <div className="not-found-state">
         <FaRegSadTear className="state-icon" />
         <div className="status-text state-message">
-          We couldn't find that product. Please try again in a few minutes. If
-          you still get this error, please contact us and we can assist you
-          further. Thanks for your patience!
+          <p>We couldn't find that product. Please try again in a few minutes.</p>
+          <p>If you still get this error, please contact us and we can assist you further.</p>
+          <p>Thanks for your patience!</p>
         </div>
       </div>
     );
@@ -84,18 +99,17 @@ const ProductDetails: React.FC = () => {
               Tasks for {plant.product_name}
             </h4>
             <ul className="product-tasks__items">
-              <li>
-                <strong>Task:</strong> This is some placeholder text to test
-                styling.
-              </li>
-              <li>
-                <strong>Another Task:</strong> This is some more placeholder
-                text.
-              </li>
-              <li>
-                <strong>One More Task:</strong> This is one last placeholder
-                text to test styling.
-              </li>
+              {/* --- Dynamic rendering of tasks --- */}
+              {tasks.length > 0 ? (
+                tasks.map((task) => (
+                  <li key={task.id} className="product-task-item">
+                    <span role="img" aria-label="task">🌱</span>
+                    <strong>Task:</strong> {task.description}
+                  </li>
+                ))
+              ) : (
+                <li>There are no tasks for this plant at the moment!</li>
+              )}
             </ul>
           </div>
           <div className="product-actions">

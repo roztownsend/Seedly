@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useCartStore } from "../stores/cartStore";
 import { useShippingStore } from "../stores/shippingStore";
 import { useFormData } from "../stores/paymentStore";
@@ -6,63 +6,85 @@ import ProductCardCartMobile from "../components/card-component/ProductCardCartM
 import { OrderSummary } from "../components/order-summary/OrderSummary";
 
 const CheckoutPayment = () => {
-    const { cartItems, calculateCartTotal } = useCartStore();
-    const { formData: shippingFormData } = useShippingStore();
-    const paymentFormData = useFormData();
+  const { cartItems, calculateCartTotal, clearCart } = useCartStore();
+  const { formData: shippingFormData } = useShippingStore();
+  const paymentFormData = useFormData();
 
-    useEffect(() => {
-        calculateCartTotal();
-    }, [cartItems]);
+  // Stato locale per mantenere snapshot prodotti acquistati
+  const [lastOrderItems, setLastOrderItems] = useState(cartItems);
 
-    const maskedCard = paymentFormData.cardNumber?.slice(-4) || "****";
+  useEffect(() => {
+    calculateCartTotal();
 
-    return (
-        <section className="container-wrapper">
-        {/* Confirmation Message */}
-        <div className="section-heading">
-            <h1 className="h2">Thank you for your order!</h1>
-            <p>You should receive a confirmation email shortly.</p>
+    setLastOrderItems(cartItems);
+
+    clearCart();
+  }, []);
+
+  const maskedCard = paymentFormData.cardNumber?.slice(-4) || "****";
+
+  return (
+    <section className="container-wrapper">
+      {/* Confirmation Message */}
+      <div className="section-heading">
+        <h1 className="h2">Thank you for your order!</h1>
+        <p>You should receive a confirmation email shortly.</p>
+      </div>
+
+      {/* Main Content */}
+      <div className="layout-flex">
+        {/* Order Items */}
+        <div className="content-block">
+          <h4>Order Summary</h4>
+          <div className="vertical-stack">
+            {lastOrderItems.map((item) => (
+              <div className="card-wrapper" key={item.id}>
+                <ProductCardCartMobile
+                  item={item}
+                  showQuantity={false}
+                  showRemove={false}
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Main Content */}
-        <div className="layout-flex">
-            {/* Order Items */}
-            <div className="content-block">
-            <h4>Order Summary</h4>
-            <div className="vertical-stack">
-                {cartItems.map((item) => (
-                <div className="card-wrapper" key={item.id}>
-                    <ProductCardCartMobile item={item} showQuantity={false} showRemove={false}/>
-                </div>
-                ))}
-            </div>
-            </div>
+        {/* Summary + Info */}
+        <div className="content-block">
+          <OrderSummary showLink={false} />
 
-            {/* Summary + Info */}
-            <div className="content-block">
-            <OrderSummary showLink={false} />
+          {/* Shipping Info */}
+          <div className="vertical-stack">
+            <h4>Shipping Information</h4>
+            <ul className="info-list">
+              <li>
+                <strong>Name:</strong> {shippingFormData.name}
+              </li>
+              <li>
+                <strong>Email:</strong> {shippingFormData.email}
+              </li>
+              <li>
+                <strong>Address:</strong> {shippingFormData.address}
+              </li>
+              <li>
+                <strong>Apartment:</strong> {shippingFormData.apartment}
+              </li>
+              <li>
+                <strong>City & Postal Code:</strong> {shippingFormData.city} -{" "}
+                {shippingFormData.postalCode}
+              </li>
+            </ul>
+          </div>
 
-            {/* Shipping Info */}
-            <div className="vertical-stack">
-                <h4>Shipping Information</h4>
-                <ul className="info-list">
-                <li><strong>Name:</strong> {shippingFormData.name}</li>
-                <li><strong>Email:</strong> {shippingFormData.email}</li>
-                <li><strong>Address:</strong> {shippingFormData.address}</li>
-                <li><strong>Apartment:</strong> {shippingFormData.apartment}</li>
-                <li><strong>City & Postal Code:</strong> {shippingFormData.city} - {shippingFormData.postalCode}</li>
-                </ul>
-            </div>
-
-            {/* Payment Info */}
-            <div className="vertical-stack">
-                <h4>Payment Method</h4>
-                <p>Card: **** **** **** {maskedCard}</p>
-            </div>
-            </div>
+          {/* Payment Info */}
+          <div className="vertical-stack">
+            <h4>Payment Method</h4>
+            <p>Card: **** **** **** {maskedCard}</p>
+          </div>
         </div>
-        </section>
-    );
+      </div>
+    </section>
+  );
 };
 
 export default CheckoutPayment;

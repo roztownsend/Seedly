@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useCartStore } from "../../stores/cartStore";
 import "./OrderSummary.css";
 
@@ -21,7 +22,11 @@ export const OrderSummary: React.FC = () => {
                 <div className="total__figure">{cartTotal} kr</div>
                 {/* todo: cart total + shipping */}
             </div>
-            <button className="button-primary continue">Continue to checkout</button>
+            <button className="button-primary continue">
+                <Link to="/cart/shippingForm">
+                    Continue to checkout
+                </Link>
+            </button>
         </div>
 
     )

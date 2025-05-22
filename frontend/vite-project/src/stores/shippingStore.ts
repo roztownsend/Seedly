@@ -3,21 +3,29 @@ import { ShippingFormTypes } from '../types/shippingFormTypes';
 
 interface ShippingState {
   formData: ShippingFormTypes;
+  submittedData: ShippingFormTypes | null;
   setFormData: (data: ShippingFormTypes) => void;
   updateFormField: <K extends keyof ShippingFormTypes>(key: K, value: ShippingFormTypes[K]) => void;
+  resetForm: () => void;
+  saveSubmission: () => void;
 }
 
-export const useShippingStore = create<ShippingState>((set) => ({
-  formData: {
-    name: '',
-    email:'',
-    address: '',
-    apartment: '',
-    postalCode: '',
-    city: '',
-    saveContact: false,
-  },
+const emptyForm: ShippingFormTypes = {
+  name: '',
+  email: '',
+  address: '',
+  apartment: '',
+  postalCode: '',
+  city: '',
+  saveContact: false,
+};
+
+export const useShippingStore = create<ShippingState>((set, get) => ({
+  formData: { ...emptyForm },
+  submittedData: null,
+
   setFormData: (data) => set({ formData: data }),
+
   updateFormField: (key, value) =>
     set((state) => ({
       formData: {
@@ -25,4 +33,8 @@ export const useShippingStore = create<ShippingState>((set) => ({
         [key]: value,
       },
     })),
+
+  resetForm: () => set({ formData: { ...emptyForm } }),
+
+  saveSubmission: () => set({ submittedData: get().formData }),
 }));

@@ -25,6 +25,7 @@ type CartState = {
     operation?: "decrement" | "increment"
   ) => void;
   calculateCartTotal: () => void;
+  clearCart:() => void;
 };
 
 export const useCartStore = create<CartState>((set, get) => ({
@@ -73,4 +74,5 @@ export const useCartStore = create<CartState>((set, get) => ({
     );
     set({ cartTotal: total });
   },
+  clearCart: () => set({ cartItems: [], cartTotal: 0 }),
 }));

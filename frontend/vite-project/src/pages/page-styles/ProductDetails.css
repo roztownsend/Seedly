@@ -42,7 +42,7 @@ h4 {
 }
 
 .product-actions {
-    @apply flex w-full justify-center py-6;
+    @apply flex w-full justify-center md:justify-start py-6;
 }
 
 /* to-remove */

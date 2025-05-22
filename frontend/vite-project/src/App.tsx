@@ -8,16 +8,8 @@ import Footer from "./components/footer/Footer";
 import ProductDetails from "./pages/ProductDetails";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
-import { useEffect } from "react";
-import { useProductsStore } from "./stores/productsStore";
 import ShippingForm from "./components/shipping-form/ShippingForm";
 function App() {
-  const { fetchAllPlants } = useProductsStore();
-
-  useEffect(() => {
-    fetchAllPlants();
-  }, []);
-
   return (
     <BrowserRouter>
       <div className="layout">

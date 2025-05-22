@@ -10,14 +10,11 @@ const CheckoutPayment = () => {
   const { formData: shippingFormData } = useShippingStore();
   const paymentFormData = useFormData();
 
-  // Stato locale per mantenere snapshot prodotti acquistati
   const [lastOrderItems, setLastOrderItems] = useState(cartItems);
 
   useEffect(() => {
     calculateCartTotal();
-
     setLastOrderItems(cartItems);
-
     clearCart();
   }, []);
 

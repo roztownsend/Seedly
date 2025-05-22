@@ -1,16 +1,8 @@
-import { useEffect } from "react";
-import { useCartStore } from "../stores/cartStore";
 import Hero from "../components/hero/Hero";
 import heroImg from "../assets/image/heroImg.webp";
 import GridHome from "../components/grid-home/GridHome";
-import Sample from "../components/card-component/Sample";
+
 function Home() {
-  const { cartItems, calculateCartTotal } = useCartStore();
-
-  useEffect(() => {
-    calculateCartTotal();
-  }, [cartItems]);
-
   return (
     <>
       <section>

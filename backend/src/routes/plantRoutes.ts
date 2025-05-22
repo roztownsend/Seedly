@@ -78,7 +78,8 @@ router.get("/search", async (req: Request, res: Response): Promise<void> => {
 router.get("/:id/tasks", async (req: Request, res: Response) => {
   try {
     const plantId = req.params.id;
-    const tasks = await Task.findAll({ where: { plant_id: plantId } });
+    const plant = await Plant.findByPk(plantId);
+    const tasks = await plant?.getTasks();
     res.json(tasks);
   } catch (err) {
     console.error("Error fetching tasks:", err);

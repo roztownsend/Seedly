@@ -1,11 +1,8 @@
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { CredentialsFormProps } from "../../types/credentialsFormTypes";
-function CredentialFields({
-  handlers,
-  showPassword,
-  formType,
-  errorMessage,
-}: CredentialsFormProps) {
+import { useCredentialForm } from "../../hooks/useCredentialForm";
+function CredentialFields({ formType }: CredentialsFormProps) {
+  const { handlers, showPassword, errorMessage } = useCredentialForm(formType);
   return (
     <form
       className="credential-form"

@@ -6,7 +6,9 @@ export type CredentialsInput = {
 
 export type FormType = "login" | "signup";
 
-export type CredentialsFormProps = Omit<UseCredentialsFormReturn, "formData">;
+export type CredentialsFormProps = {
+  formType: FormType;
+};
 
 export type FormHeaderProps = FormType;
 

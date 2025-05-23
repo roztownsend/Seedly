@@ -7,6 +7,7 @@ import {
   Sequelize,
 } from "sequelize";
 import { ShippingInfo } from "./shippingInfo.model";
+
 export class ShippingOption extends Model<
   InferAttributes<ShippingOption>,
   InferCreationAttributes<ShippingOption>

@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
 import ProductCardCart from "../components/card-component/ProductCardCart";
 import { OrderSummary } from "../components/order-summary/OrderSummary";
 import { LoginCta } from "../components/login-cta/LoginCta";
-
 import { useCartUniqueItems, useCartItemIds } from "../stores/cartStore";
+import { ShippingSelector } from "../components/shipping-selector/ShippingSelector";
 import "./page-styles/cart.css";
 
 const Cart: React.FC = () => {

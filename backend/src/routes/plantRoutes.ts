@@ -1,7 +1,6 @@
 //there are a few debug console.logs, shouldnt be touched
 
 import { Router, Request, Response } from "express";
-import { pool } from "../config/dbConnection";
 import { z } from "zod";
 import { Plant } from "../models/plant.model";
 import { Op } from "sequelize";
@@ -20,7 +19,7 @@ router.get("/", async (_req: Request, res: Response): Promise<void> => {
   }
 });
 
-//search for a product (plant) by name. Nice-to-have: additional search by keywords.
+//search for a product (plant) by name or description. Nice-to-have: additional search by keywords.
 router.get("/search", async (_req: Request, res: Response): Promise<void> => {
   console.log("GET search for plants triggered");
   
@@ -34,14 +33,13 @@ router.get("/search", async (_req: Request, res: Response): Promise<void> => {
     return;
   };
   const { name } = parsed.data;
-//add where desc
   try {
     console.log(name)
     const searchResult = await Plant.findAll({ 
       where: {
         [Op.or]: [
           {product_name: {[Op.iLike]: `%${name}%`}},
-          {description: {[Op.substring]: `${name}`}}
+          {description: {[Op.iLike]: `${name}`}}
         ]},
       limit: 40,
     });

@@ -27,8 +27,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
-app.use("/", plantRoutes);
-app.use("/search", plantRoutes);
+app.use("/plants", plantRoutes);
 
 const swaggerDocument = YAML.load(
   path.join(__dirname, "../swagger/swagger.yaml")

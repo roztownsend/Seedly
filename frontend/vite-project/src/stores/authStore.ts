@@ -125,7 +125,7 @@ const useAuthStore = create<AuthState>((set, get) => ({
           data: { subscription },
         } = supabase.auth.onAuthStateChange((event, eventSession) => {
           console.log(
-            `onAthStateChange - Event ${event} Session ${eventSession?.user.is_anonymous}`
+            `onAthStateChange - Event ${event} Session Email - ${eventSession?.user.email}`
           );
           set({
             user: eventSession?.user ?? null,

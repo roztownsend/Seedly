@@ -10,21 +10,26 @@ function Signup() {
 
   return (
     <>
-      <div className="credential-form-container">
-        <FormHeader formType={formType} />
+      <div className="flex flex-col w-full items-center">
+        <div className="credential-form-container">
+          <FormHeader formType={formType} />
 
-        <CredentialFields
-          showPassword={showPassword}
-          handlers={handlers}
-          formType={formType}
-          errorMessage={errorMessage}
-        />
-        <span className="form-alternative-text">Or use one of these:</span>
-        <SocialButtons />
+          <CredentialFields
+            showPassword={showPassword}
+            handlers={handlers}
+            formType={formType}
+            errorMessage={errorMessage}
+          />
+          <span className="form-alternative-text">Or use one of these:</span>
+          <SocialButtons />
+        </div>
+        <p className="mt-4">
+          Already have an account?{" "}
+          <Link className="font-bold" to="/login">
+            Sign in.
+          </Link>{" "}
+        </p>
       </div>
-      <p>
-        Already have an account? <Link to="/login">Sign in.</Link>{" "}
-      </p>
     </>
   );
 }

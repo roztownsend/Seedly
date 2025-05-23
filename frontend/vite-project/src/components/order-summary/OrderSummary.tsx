@@ -26,7 +26,7 @@ const cartTotal = useCartTotal();
                 <div className="total__figure">{cartTotal} kr</div>
                 {/* todo: cart total + shipping */}
             </div>
-            {showButton && <Link to="/cart/shippingForm" className="button-primary continue">Continue to checkout</Link>}      
+            {showButton && <Link to="/cart/shipping" className="button-primary continue">Continue to checkout</Link>}      
         </div>
     )
 }

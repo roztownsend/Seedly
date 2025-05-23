@@ -7,14 +7,14 @@ const Shipping = () => {
   const { cartItems } = useCartStore();
 
   return (
-    <div className="max-w-7xl mx-auto flex gap-8 items-start py-8">
+    <div className="w-5/6 mx-auto py-8 flex flex-col lg:flex-row gap-8">
       {/* Shipping form section */}
-      <div className="flex-1">
+      <div className="w-full lg:w-1/2">
         <ShippingForm />
       </div>
 
       {/* Cart items and order summary section */}
-      <div className="w-full space-y-6">
+      <div className="w-full lg:w-1/2 flex flex-col gap-6 max-h-[80vh] overflow-y-auto pr-2">
         {/* Cart items list */}
         <div className="space-y-4">
           {cartItems.map((item) => (
@@ -26,7 +26,7 @@ const Shipping = () => {
         <OrderSummary />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Shipping;

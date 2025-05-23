@@ -2,7 +2,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { CredentialsFormProps } from "../../types/credentialsFormTypes";
 import { useCredentialForm } from "../../hooks/useCredentialForm";
 function CredentialFields({ formType }: CredentialsFormProps) {
-  const { handlers, showPassword, errorMessage } = useCredentialForm(formType);
+  const { handlers, showPassword, errorMessage, formData } =
+    useCredentialForm(formType);
   return (
     <form
       className="credential-form"
@@ -16,6 +17,7 @@ function CredentialFields({ formType }: CredentialsFormProps) {
         placeholder="Email"
         autoComplete="email"
         onChange={(e) => handlers.handleChange(e)}
+        value={formData.email}
         required
         className="credential-form-input email-input"
       />
@@ -28,6 +30,7 @@ function CredentialFields({ formType }: CredentialsFormProps) {
           placeholder="Password"
           autoComplete="new-password"
           required
+          value={formData.password}
           onChange={(e) => handlers.handleChange(e)}
           className="credential-form-input password-input"
         />
@@ -47,6 +50,7 @@ function CredentialFields({ formType }: CredentialsFormProps) {
               type="checkbox"
               id="rememberMe"
               name="rememberMe"
+              checked={formData.rememberMe}
               onChange={(e) => handlers.handleChange(e)}
             />
             <span className="rememberme-span-text">Remember me</span>

@@ -4,6 +4,7 @@ import { Router, Request, Response } from "express";
 import { pool } from "../config/dbConnection";
 import { z } from "zod";
 import { Plant } from "../models/plant.model";
+import { Task } from "../models/task.model";
 const router = Router();
 
 //get all plants
@@ -69,6 +70,19 @@ router.get("/search", async (req: Request, res: Response): Promise<void> => {
     res.json({ data: rows });
   } catch (err) {
     console.error("Error searching plants:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// GET /plants/:id/tasks
+router.get("/:id/tasks", async (req: Request, res: Response) => {
+  try {
+    const plantId = req.params.id;
+    const plant = await Plant.findByPk(plantId);
+    const tasks = await plant?.getTasks();
+    res.json(tasks);
+  } catch (err) {
+    console.error("Error fetching tasks:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 });

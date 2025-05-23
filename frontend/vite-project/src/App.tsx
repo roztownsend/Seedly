@@ -7,6 +7,8 @@ import Cart from "./pages/Cart";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import ProductDetails from "./pages/ProductDetails";
+import TestDashboard from "./pages/TestDashboard";
+import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import CheckoutPayment from "./pages/CheckoutPayment";
@@ -34,6 +36,14 @@ function App() {
             <Route path="/checkout/payment" element={<PaymentForm />} />
             <Route path="/checkout/confirm" element={<CheckoutPayment />} />
             <Route path="/dashboard" element={<DashBoard />} />
+            <Route
+              path="/test-dashboard"
+              element={
+                <PrivateRoute>
+                  <TestDashboard />
+                </PrivateRoute>
+              }
+            ></Route>
           </Routes>
         </main>
         <Footer />

@@ -1,6 +1,6 @@
 import { useAuthStore } from "../stores/authStore";
 
-function Dashboard() {
+function TestDashboard() {
   const { user, signOutUser } = useAuthStore();
   return (
     <>
@@ -10,4 +10,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default TestDashboard;

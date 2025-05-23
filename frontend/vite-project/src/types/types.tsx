@@ -1,3 +1,4 @@
+import { CartItem } from "../stores/cartStore";
 import { ProductItem } from "../stores/productsStore";
 
 export interface ProductCardProps {
@@ -5,7 +6,8 @@ export interface ProductCardProps {
 }
 
 export type ProductCardCartProps = {
-  item: CartItem;
+  id: string;
+  item?: CartItem;
   showQuantity?: boolean;
   showRemove?: boolean;
 };

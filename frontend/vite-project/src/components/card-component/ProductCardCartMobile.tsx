@@ -1,11 +1,13 @@
 import { ProductCardCartProps } from "../../types/types";
 import "./productCardCartMobile.css";
 import { QuantityControl } from "../quantity-control/QuantityControl";
-import { useCartStore } from "../../stores/cartStore";
+import { useCartActions } from "../../stores/cartStore";
 const ProductCardCart: React.FC<ProductCardCartProps> = ({ item, showQuantity = true, showRemove = true }) => {
+  const { removeItem } = useCartActions();
+  if (!item) {
+    return null;
+  }
   const { quantity, id, image_url, price, product_name } = item;
-  const { removeItem, updateQuantity } = useCartStore();
-
   return (
     <section className="product-card-cart">
       <div className="product-card-cart__image">
@@ -21,12 +23,8 @@ const ProductCardCart: React.FC<ProductCardCartProps> = ({ item, showQuantity = 
           {(price * quantity).toFixed(2)}Kr
         </h5>
         <div className="product-card-cart__actions">
-          {showQuantity && <QuantityControl
-              counter={quantity}
-              onIncrement={() => updateQuantity(id, 1, "increment")}
-              onDecrement={() => updateQuantity(id, 1, "decrement")}
-            />
-          }
+          {showQuantity &&  <QuantityControl cartId={id} />
+        }
         </div>
         {showRemove && <button
           className="product-card-cart__remove text-link-primary"

@@ -8,6 +8,9 @@ import Footer from "./components/footer/Footer";
 import ProductDetails from "./pages/ProductDetails";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
+import { useEffect } from "react";
+import { useProductsStore } from "./stores/productsStore";
+import CheckoutPayment from "./pages/CheckoutPayment";
 import ShippingForm from "./components/shipping-form/ShippingForm";
 function App() {
   return (
@@ -22,7 +25,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path="/shippingForm" element={<ShippingForm />} />
+            <Route path="/cart/shippingForm" element={<ShippingForm />} />
+            <Route path="/cart/checkoutPayment" element={<CheckoutPayment />} />
           </Routes>
         </main>
         <Footer />

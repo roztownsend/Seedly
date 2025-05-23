@@ -63,6 +63,10 @@ main {
     @apply hover:underline;
   }
 
+  p{
+    @apply text-lg;
+  }
+
   .status-text {
     @apply text-lg font-medium text-center;
   }
@@ -96,6 +100,40 @@ main {
   }
 }
 
+/* Reusable Layout Classes */
+.container-wrapper {
+  @apply max-w-7xl w-full h-auto mx-auto px-4 lg:px-12 py-10 flex flex-col gap-12;
+}
+
+.section-heading {
+  @apply text-center space-y-2;
+}
+
+.layout-flex {
+  @apply flex flex-col lg:flex-row gap-8;
+}
+
+.content-block {
+  @apply flex-1 space-y-6;
+}
+
+.vertical-stack {
+  @apply space-y-4;
+}
+
+/* Content Styling */
+.card-wrapper {
+  @apply p-4 rounded-md shadow-sm border;
+}
+
+.info-list {
+  @apply text-lg text-gray-700 space-y-1;
+}
+
+
+.list {
+  @apply text-lg text-gray-700 space-y-1;
+}
 
 /* Animations */
 

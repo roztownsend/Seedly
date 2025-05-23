@@ -31,7 +31,7 @@ const useProductsStore = create<ProductState>((set) => ({
   productList: [],
   actions: {
     fetchAllPlants: async () => {
-      const response = await axios.get("http://localhost:5000/plants");
+      const response = await axios.get("http://localhost:5001/plants");
       console.log(response.data);
       set({
         productList: response.data,

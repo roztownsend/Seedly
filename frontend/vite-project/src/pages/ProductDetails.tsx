@@ -6,6 +6,7 @@ import { useCartActions } from "../stores/cartStore";
 import { ProductItem } from "../stores/productsStore";
 import { QuantityControl } from "../components/quantity-control/QuantityControl";
 import { Task } from "../types/types";
+import { useToast } from "../components/toast/ToastContext";
 import "./page-styles/ProductDetails.css";
 
 const ProductDetails: React.FC = () => {
@@ -14,6 +15,7 @@ const ProductDetails: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const { addItem } = useCartActions();
   const [tasks, setTasks] = useState<{ id: string; description: string; start_month: number; end_month: number }[]>([]);
+  const { showToast } = useToast();
 
   const months = [
     "January", "February", "March", "April", "May", "June",
@@ -24,7 +26,7 @@ const ProductDetails: React.FC = () => {
     const fetchPlant = async () => {
       try {
         const res = await axios.get<ProductItem[]>(
-          "http://localhost:5000/plants"
+          "http://localhost:5001/plants"
         ); // fetch all plants but if you're using a different port, adjust the URL accordingly
         const data = res.data;
         console.log(data);
@@ -43,7 +45,7 @@ const ProductDetails: React.FC = () => {
     if (!id) return;
     const fetchTasks = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/plants/${id}/tasks`);
+        const res = await axios.get(`http://localhost:5001/plants/${id}/tasks`);
         setTasks(res.data);
       } catch (err) {
         setTasks([]);
@@ -69,6 +71,7 @@ const ProductDetails: React.FC = () => {
   const handleAddToCart = () => {
     if (!plant) return;
     addItem({ ...plant, quantity: 1 });
+    showToast(`Product ${plant.product_name} was added to bag!`);
   };
 
   if (loading)
@@ -140,6 +143,7 @@ const ProductDetails: React.FC = () => {
           <div className="product-actions">
             <QuantityControl
               cartId={plant.id}
+              compact 
               fallbackButton={
                 <button className="button-primary" onClick={handleAddToCart}>
                   Add to cart

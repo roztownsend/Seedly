@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { HeroProps } from "../../types/types";
 import {
   ProductItem,
@@ -16,12 +16,15 @@ const GridHome = ({ heading, subheading }: HeroProps) => {
   const [displayedPlants, setDisplayedPlants] = useState<ProductItem[]>([]);
   const [showMore, setShowMore] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
+  const [loadingMore, setLoadingMore] = useState<boolean>(false);
 
   // Check if the screen is mobile or not
   const isMobile = useIsMobile();
 
   /* Number of pic to load based on screen size (mobile or desktop) */
   const loadStep = isMobile ? 3 : 8;
+
+  const lastItemRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,12 +41,10 @@ const GridHome = ({ heading, subheading }: HeroProps) => {
   // Set the initial displayed plants and show more button
   useEffect(() => {
     if (!loading && productList.length > 0) {
-      const initial = productList.slice(0, loadStep);
-      {
-        /* Load the first 3 or 8 plants based on screen size */
-      }
+      const minToShow = Math.max(displayedPlants.length, loadStep);
+      const initial = productList.slice(0, minToShow);
       setDisplayedPlants(initial);
-      setShowMore(productList.length > loadStep);
+      setShowMore(productList.length > initial.length);
     }
   }, [productList, loadStep, loading]);
 
@@ -51,6 +52,15 @@ const GridHome = ({ heading, subheading }: HeroProps) => {
     const next = productList.slice(0, displayedPlants.length + loadStep);
     setDisplayedPlants(next);
     setShowMore(next.length < productList.length);
+
+    setTimeout(() => {
+      if (lastItemRef.current) {
+        const rect = lastItemRef.current.getBoundingClientRect();
+        const scrollY = window.scrollY + rect.top - 100;
+        window.scrollTo({ top: scrollY, behavior: "smooth" });
+      }
+      setLoadingMore(false);
+    }, 300);
   };
 
   if (loading) return <p>Loading...</p>;
@@ -60,8 +70,12 @@ const GridHome = ({ heading, subheading }: HeroProps) => {
       <Hero heading={heading} subheading={subheading} />
       <section>
         <div className="cards-container">
-          {displayedPlants.map((plant) => (
-            <div key={plant.id} className="card-item">
+          {displayedPlants.map((plant, idx) => (
+            <div
+              key={plant.id}
+              className="card-item"
+              ref={idx === displayedPlants.length - 1 ? lastItemRef : null}
+            >
               <ProductCard item={plant} />
             </div>
           ))}
@@ -70,8 +84,12 @@ const GridHome = ({ heading, subheading }: HeroProps) => {
 
       {showMore && (
         <div className="button-container">
-          <button onClick={handleShowMore} className="button-primary">
-            Show More
+          <button
+            onClick={handleShowMore}
+            className="button-primary"
+            disabled={loadingMore} // Desabilita botão enquanto carrega
+          >
+            {loadingMore ? "Loading..." : "Show More"} {/* Feedback no botão */}
           </button>
         </div>
       )}

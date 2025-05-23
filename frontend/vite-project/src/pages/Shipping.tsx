@@ -17,13 +17,17 @@ const Shipping = () => {
       <div className="w-full lg:w-1/2 flex flex-col gap-6 max-h-[80vh] overflow-y-auto pr-2">
         {/* Cart items list */}
         <div className="space-y-4">
-          {cartItems.map((item) => (
-            <ProductCardCart key={item.id} item={item} />
-          ))}
+          {cartItems.map((item) => {
+            return (
+              <div key={item.id} className="list-wrapper">
+                <ProductCardCart id={item.id} />
+              </div>
+            );
+          })}
         </div>
 
         {/* Order summary */}
-        <OrderSummary />
+        <OrderSummary showButton={false}/>
       </div>
     </div>
   );

@@ -12,12 +12,6 @@ import { useEffect } from "react";
 import { useProductsStore } from "./stores/productsStore";
 import Shipping from "./pages/Shipping";
 function App() {
-  const { fetchAllPlants } = useProductsStore();
-
-  useEffect(() => {
-    fetchAllPlants();
-  }, []);
-
   return (
     <BrowserRouter>
       <div className="layout">

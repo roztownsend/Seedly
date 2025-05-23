@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
-import { useCartStore } from "../../stores/cartStore";
+import { useCartTotal } from "../../stores/cartStore";
 import "./OrderSummary.css";
 
-export const OrderSummary: React.FC = () => {
-    const { cartTotal } = useCartStore();
+type OrderSummaryProps = {
+  showButton?: boolean;
+};
+
+export const OrderSummary: React.FC<OrderSummaryProps> = ({ showButton = true }) => {
+const cartTotal = useCartTotal();
 
     return (
         <div className="order-summary-box">
@@ -22,13 +26,8 @@ export const OrderSummary: React.FC = () => {
                 <div className="total__figure">{cartTotal} kr</div>
                 {/* todo: cart total + shipping */}
             </div>
-            <button className="button-primary continue">
-                <Link to="/cart/shippingForm">
-                    Continue to checkout
-                </Link>
-            </button>
+            {showButton && <Link to="/cart/shippingForm" className="button-primary continue">Continue to checkout</Link>}      
         </div>
-
     )
 }
 

@@ -1,17 +1,19 @@
-import { ProductItem } from "../stores/productsStore";
 import { CartItem } from "../stores/cartStore";
+import { ProductItem } from "../stores/productsStore";
+
 export interface ProductCardProps {
   item: ProductItem;
 }
 
 export type ProductCardCartProps = {
-  item: CartItem;
+  id: string;
+  item?: CartItem;
+  showQuantity?: boolean;
+  showRemove?: boolean;
 };
 
 export interface HeroProps {
-    heading: string;
-    subheading: string;
-    imageUrl?: string;
-  }
-
-  
+  heading: string;
+  subheading: string;
+  imageUrl?: string;
+}

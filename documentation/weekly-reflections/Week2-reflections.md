@@ -84,26 +84,24 @@
 
 **Completed Tasks:**
 
-- Interacted with project partners individually to understand the workflow due to missing the first team - meeting.
-- Reviewed available documentation to gather insights about the ongoing development process.
-- Accepted a Trello card task based on my understanding of the discussion.
+- Defined the seed data schema and updated plant information accordingly.
+- Learned and implemented with project partners key GitHub features to support project collaboration.
+- Attended a group meeting to discuss and learn more about the project structure and relevant details.
+  **Challenges:**
 
-**Challenges:**
-
-- Initial misunderstanding of the Trello card task led to a stop working in progress.
-- Lack of context from the first meeting made it difficult to align with the expected workflow.
-- Adapting to the existing project structure and team coordination approach.
+- With group members debug the project and solve those.
+- with the high performance team members, expecting will be able to contribute something with the help of them.
 
 **Learning Insights:**
 
-- Gained clarity on the importance of attending team syncs or obtaining detailed recaps for alignment.
-- Understood the need for better initial task scoping before acceptance.
-- Learned to proactively communicate uncertainties to avoid blockers early on.
+- Realized the importance of participating in team syncs or accessing thorough recaps to stay aligned.
+- Recognized the value of clearly scoping tasks before accepting them.
+- Learned to communicate uncertainties early to avoid unnecessary blockers.
 
 **Personal Contributions:**
 
-- Took initiative to independently connect with team members for understanding the project flow.
-- Actively participated in clarifying documentation and workflow expectations for future tasks.
+- Connected with team members individually to understand the overall project flow.
+- Contributed as much possible with the support of team members for better task execution going forward.
 
 ---
 

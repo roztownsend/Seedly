@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuthStore } from "../stores/authStore";
+import { useAuthActions } from "../stores/authStore";
 import { useNavigate } from "react-router-dom";
 import {
   CredentialsInput,
@@ -13,7 +13,7 @@ export const useCredentialForm = (
 ): UseCredentialsFormReturn => {
   const navigate = useNavigate();
 
-  const { signUpNewUser, signInWithPassword } = useAuthStore();
+  const { signUpNewUser, signInWithPassword } = useAuthActions();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [formData, setFormData] = useState<CredentialsInput>(() => {
     const defaultData = {
@@ -56,7 +56,7 @@ export const useCredentialForm = (
 
       if (result.success) {
         console.log(result.data);
-        navigate("/dashboard");
+        navigate("/test-dashboard");
       } else if (result.error) {
         setErrorMessage(result.error.message);
       }

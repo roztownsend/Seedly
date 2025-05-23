@@ -17,7 +17,14 @@ import Shipping from "./pages/Shipping";
 import ShippingSelectorPage from "./pages/ShippingSelector";
 
 import DashBoard from "./pages/DashBoard";
+import { useAuthActions } from "./stores/authStore";
+import { useEffect } from "react";
 function App() {
+  const { initializeAuth } = useAuthActions();
+  useEffect(() => {
+    initializeAuth();
+  }, []);
+
   return (
     <BrowserRouter>
       <div className="layout">

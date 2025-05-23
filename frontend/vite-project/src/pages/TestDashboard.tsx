@@ -1,7 +1,8 @@
-import { useAuthStore } from "../stores/authStore";
+import { useAuthUser, useAuthActions } from "../stores/authStore";
 
 function TestDashboard() {
-  const { user, signOutUser } = useAuthStore();
+  const { signOutUser } = useAuthActions();
+  const user = useAuthUser();
   return (
     <>
       <h1>Welcome to the Dashboard {user?.email}</h1>

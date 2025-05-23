@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { useAuthStore } from "../../stores/authStore";
+import { useAuthLoading, useAuthUser } from "../../stores/authStore";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 type PrivateRouteProps = {
@@ -7,7 +7,8 @@ type PrivateRouteProps = {
 };
 
 function PrivateRoute({ children }: PrivateRouteProps) {
-  const { user, isLoading } = useAuthStore();
+  const user = useAuthUser();
+  const isLoading = useAuthLoading();
   const navigate = useNavigate();
 
   useEffect(() => {

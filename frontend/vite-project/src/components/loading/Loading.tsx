@@ -1,4 +1,4 @@
-import "loading.css";
+import "./loading.css";
 import { FaHourglassHalf } from "react-icons/fa";
 
 export const Loading: React.FC = () => {

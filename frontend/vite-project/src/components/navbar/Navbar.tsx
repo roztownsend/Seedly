@@ -1,23 +1,29 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ShoppingBag, Search, Menu, X, User2 } from "lucide-react";
 import "../navbar/Navbar.css";
 import { useCartUniqueItems } from "../../stores/cartStore";
-import { useSearch } from "../../stores/searchStore";
+import { useSearch, useSearchStore } from "../../stores/searchStore";
 
 
 export default function Navbar() {
   const { query, setQuery, search } = useSearch();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-
   const cartUniqueItems = useCartUniqueItems();
-    
-  
+  const navigate = useNavigate();
+
+  const handleSearch = async () => {
+    await search();
+    if (useSearchStore.getState().results.length > 0) {
+      navigate("/search");
+    }
+  };
+
   const handleKeyStroke = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      search();
+      handleSearch();
     }
   };
 

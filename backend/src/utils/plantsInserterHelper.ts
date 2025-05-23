@@ -9,32 +9,51 @@ interface PlantType {
   isedible: boolean | null;
   sunlight: "Full" | "Full to part shade" | "Partial shade to full shade";
 }
+interface TaskType {
+  description: string | null;
+  start_month: number;
+  end_month: number;
+}
 
+interface PlantWithTasks extends PlantType {
+  tasks: TaskType[];
+}
 const plantsInserter = async () => {
-  const tinyPlantsData: PlantType[] = [
+  const plantsWithTasks: PlantWithTasks[] = [
     {
-      product_name: "Kale 'Lerchenzungen'",
-      price: 42,
+      product_name: "Pumpkin 'Baby Bear'",
+      price: 48,
       description:
-        "This variety of kale has green leaves and curly bits. The plant is usually grown as an annual, but if grown as a perennial, it will form seeds in the second year. It can be grown as baby salad greens or for bunching adult leaves. Leaves are sweeter after a frost and delicious eaten raw, added to salads, sautéed, or added to stews and casseroles.",
-      cycle: ["Annual", "Biennial"],
-      image_url:
-        "https://roztownsend.net/seedly-assets/Kale-Lerchenzungen.webp",
+        "Baby bear pumpkins have slender, sturdy, easy to grip handles. Decorative for autumn, but also great for pies. Stores really well.",
+      cycle: ["Annual"],
+      image_url: "https://roztownsend.net/seedly-assets/Pumpkin-Baby-Bear.webp",
       isedible: true,
       sunlight: "Full",
-    },
-    {
-      product_name: "Salsify 'Sandwich Island'",
-      price: 36,
-      description:
-        "Salsify is a perennial plant grown as an annual for it''s edible root and leaves. It does well in cool weather and is cultivated similarly to carrots and parsnips. The leaves look like a clump of coarse grass with starry pink to purple flowers. The greens and flowers can be used in salads. The taproot has an oyster-like taste that can be eaten boiled or mashed. Take extra care not to break the roots while harvesting.",
-      cycle: ["Annual", "Perennial"],
-      image_url:
-        "https://roztownsend.net/seedly-assets/Salsify-Sandwich-Island.webp",
-      isedible: true,
-      sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 4,
+          end_month: 5,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+        {
+          description: "Pollinate",
+          start_month: 6,
+          end_month: 7,
+        },
+        {
+          description: "Harvest",
+          start_month: 9,
+          end_month: 10,
+        },
+      ],
     },
   ];
+
   const plantsData: PlantType[] = [
     {
       product_name: "Pumpkin 'Baby Bear'",

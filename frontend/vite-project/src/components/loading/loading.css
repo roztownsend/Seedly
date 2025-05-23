@@ -1,0 +1,13 @@
+
+.loading-state,
+.not-found-state {
+    @apply flex flex-col items-center justify-center h-screen gap-2;
+}
+
+.state-icon {
+    @apply text-4xl;
+}
+
+.state-message {
+    @apply w-1/2;
+}

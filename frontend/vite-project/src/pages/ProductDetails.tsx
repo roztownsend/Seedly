@@ -5,6 +5,7 @@ import { FaHourglassHalf, FaRegSadTear } from "react-icons/fa";
 import { useCartActions } from "../stores/cartStore";
 import { ProductItem } from "../stores/productsStore";
 import { QuantityControl } from "../components/quantity-control/QuantityControl";
+import { Task } from "../types/types";
 import "./page-styles/ProductDetails.css";
 
 const ProductDetails: React.FC = () => {
@@ -12,6 +13,12 @@ const ProductDetails: React.FC = () => {
   const [plant, setPlant] = useState<ProductItem | null>(null);
   const [loading, setLoading] = useState(true);
   const { addItem } = useCartActions();
+  const [tasks, setTasks] = useState<{ id: string; description: string; start_month: number; end_month: number }[]>([]);
+
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
 
   useEffect(() => {
     const fetchPlant = async () => {
@@ -32,6 +39,32 @@ const ProductDetails: React.FC = () => {
     fetchPlant();
   }, [id]);
 
+  useEffect(() => {
+    if (!id) return;
+    const fetchTasks = async () => {
+      try {
+        const res = await axios.get(`http://localhost:5000/plants/${id}/tasks`);
+        setTasks(res.data);
+      } catch (err) {
+        setTasks([]);
+        console.error("Error fetching tasks", err);
+      }
+    };
+    fetchTasks();
+  }, [id]);
+
+  // Function to group tasks by description and month range
+  function groupTasks(tasks: Task[]) {
+    const grouped: { [desc: string]: { months: [number, number][], description: string } } = {};
+    tasks.forEach((task) => {
+      if (!grouped[task.description]) {
+        grouped[task.description] = { months: [], description: task.description };
+      }
+      grouped[task.description].months.push([task.start_month, task.end_month]);
+    });
+    return Object.values(grouped);
+  }
+
   // add item to cart or update quantity
   const handleAddToCart = () => {
     if (!plant) return;
@@ -51,9 +84,9 @@ const ProductDetails: React.FC = () => {
       <div className="not-found-state">
         <FaRegSadTear className="state-icon" />
         <div className="status-text state-message">
-          We couldn't find that product. Please try again in a few minutes. If
-          you still get this error, please contact us and we can assist you
-          further. Thanks for your patience!
+          <p>We couldn't find that product. Please try again in a few minutes.</p>
+          <p>If you still get this error, please contact us and we can assist you further.</p>
+          <p>Thanks for your patience!</p>
         </div>
       </div>
     );
@@ -84,18 +117,24 @@ const ProductDetails: React.FC = () => {
               Tasks for {plant.product_name}
             </h4>
             <ul className="product-tasks__items">
-              <li>
-                <strong>Task:</strong> This is some placeholder text to test
-                styling.
-              </li>
-              <li>
-                <strong>Another Task:</strong> This is some more placeholder
-                text.
-              </li>
-              <li>
-                <strong>One More Task:</strong> This is one last placeholder
-                text to test styling.
-              </li>
+              {tasks.length > 0 ? (
+                groupTasks(tasks).map((group, idx) => (
+                  <li key={idx} className="product-task-item">
+                    <span role="img" aria-label="task">🌱</span>
+                    <strong>
+                      {group.months
+                        .map(
+                          ([start, end]) =>
+                            months[start - 1] + (start !== end ? ` to ${months[end - 1]}` : "")
+                        )
+                        .join(", ")}
+                    </strong>
+                    {" "}{group.description}
+                  </li>
+                ))
+              ) : (
+                <li>There are no tasks for this plant at the moment!</li>
+              )}
             </ul>
           </div>
           <div className="product-actions">
@@ -113,4 +152,5 @@ const ProductDetails: React.FC = () => {
     </div>
   );
 };
+
 export default ProductDetails;

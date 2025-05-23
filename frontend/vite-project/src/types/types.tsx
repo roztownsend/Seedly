@@ -17,3 +17,10 @@ export interface HeroProps {
   subheading: string;
   imageUrl?: string;
 }
+
+export type Task = {
+  id: string;
+  description: string;
+  start_month: number;
+  end_month: number;
+};

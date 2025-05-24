@@ -347,7 +347,7 @@ const plantsInserter = async () => {
       sunlight: "Full",
     },
     {
-      product_name: 'Squash "Waltham Butternut"',
+      product_name: "Squash 'Waltham Butternut'",
       price: 39,
       description:
         "Great for thick soups and stews, this is a hardy squash variety that stores well after harvesting.",
@@ -358,7 +358,7 @@ const plantsInserter = async () => {
       sunlight: "Full",
     },
     {
-      product_name: 'Eggplant "Black Beauty"',
+      product_name: "Eggplant 'Black Beauty'",
       price: 49,
       description:
         "Delicious grilled, roasted, in soups and stews, and breaded and fried. Your classic eggplant has arrived.",
@@ -369,7 +369,7 @@ const plantsInserter = async () => {
       sunlight: "Full",
     },
     {
-      product_name: 'Zucchini Squash "Keesha"',
+      product_name: "Zucchini Squash 'Keesha'",
       price: 49,
       description:
         "Look out, or you will be making zucchini bread for the next six months. This classic summer squash can get huge and plentiful if you are not careful - or if you do it intentionally! You do you.",
@@ -380,7 +380,7 @@ const plantsInserter = async () => {
       sunlight: "Full",
     },
     {
-      product_name: 'Cosmos "Exsenia"',
+      product_name: "Cosmos 'Exsenia'",
       price: 59,
       description:
         "The classic cottage garden flower with a nostalgic air, cosmos are a great ornamental addition to any garden, and easy to grow.",
@@ -390,7 +390,7 @@ const plantsInserter = async () => {
       sunlight: "Full",
     },
     {
-      product_name: 'Pak Choi "Joi Choi"',
+      product_name: "Pak Choi 'Joi Choi'",
       price: 59,
       description:
         "A dense and crunchy leafy green perfect for stir fries and soups. Get your greens in and grow in spring or autumn!",
@@ -410,7 +410,7 @@ const plantsInserter = async () => {
       sunlight: "Full",
     },
     {
-      product_name: 'Sunflower "Giganteous"',
+      product_name: "Sunflower 'Giganteous'",
       price: 20,
       description:
         "You want those huge sunflowers that look like they could fall over and kill someone? Welp, here they are. The classic sunflower for all your sunflowering needs.",
@@ -421,7 +421,7 @@ const plantsInserter = async () => {
       sunlight: "Full",
     },
     {
-      product_name: 'Marigold "Red Gem"',
+      product_name: "Marigold 'Red Gem'",
       price: 36,
       description:
         "Adds a dash of color, great for pollinators and a natural pest deterrent. What's not to love about marigolds!",
@@ -430,10 +430,220 @@ const plantsInserter = async () => {
       isedible: false,
       sunlight: "Full",
     },
+    {
+      product_name: "Chicory",
+      price: 52,
+      description:
+        "With calm blue flowers on tall stalks, chicory can be a great showpiece for a traditional cottage garden, but it really shines when you roast the roots and grind them up to use as a coffee subsitute. Delicious with notes of caramel and chocolate.",
+      cycle: ["Annual", "Perennial"],
+      image_url: "https://roztownsend.net/seedly-assets/Chicory.webp",
+      isedible: true,
+      sunlight: "Full to part shade",
+    },
+    {
+      product_name: "Brussel Sprouts",
+      price: 37,
+      description:
+        "Fun to grow with showy stalks, generates many heads - make sure to cover if the weather turns chilly.",
+      cycle: ["Annual"],
+      image_url: "https://roztownsend.net/seedly-assets/Brussel-Sprouts.webp",
+      isedible: true,
+      sunlight: "Full",
+    },
+    {
+      product_name: "Jalapeño",
+      price: 25,
+      description:
+        "Grows well and plentiful with lots of fresh, spicy peppers!",
+      cycle: ["Annual"],
+      image_url: "https://roztownsend.net/seedly-assets/Jalapeno.webp",
+      isedible: true,
+      sunlight: "Full",
+    },
+    {
+      product_name: "Evening Primrose",
+      price: 27,
+      description:
+        "Flowers long throughout summer and even into autumn - the tall stalks create visual interest even through winter.",
+      cycle: ["Perennial"],
+      image_url: "https://roztownsend.net/seedly-assets/Earthnut-Pea.webp",
+      isedible: false,
+      sunlight: "Full",
+    },
+    {
+      product_name: "Earthnut Pea",
+      price: 49,
+      description:
+        "Historically used to make perfume with the flowers, the earthnut pea is a good trailing climber to have in vacant garden spots where you need to take up a bit of space. While small in yield, the tubers can be delicious roasted.",
+      cycle: ["Perennial"],
+      image_url: "https://roztownsend.net/seedly-assets/Earthnut-Pea.webp",
+      isedible: true,
+      sunlight: "Full to part shade",
+    },
+    {
+      product_name: "Tomato 'Cherry Cascade",
+      price: 55,
+      description:
+        "Big taste, small tomato. Plentiful and makes a lovely spread of greenery as well as lots of tasty fruits.",
+      cycle: ["Annual"],
+      image_url: "https://roztownsend.net/seedly-assets/Tomato-Cherry-Cascade.webp",
+      isedible: true,
+      sunlight: "Full",
+    },
+    {
+      product_name: "Lettuce",
+      price: 38,
+      description:
+        "Classic iceberg lettuce for summer salads. Good for succession sowing and very productive. Make sure it gets plenty of water.",
+      cycle: ["Annual"],
+      image_url: "https://roztownsend.net/seedly-assets/Lettuce.webp",
+      isedible: true,
+      sunlight: "Full",
+    },
+    {
+      product_name: "Miner's Lettuce",
+      price: 48,
+      description:
+        "Traditionally foraged, miner's lettuce (also known as Winter Purslane) is a nice alternative to lettuce if you want a leafy green in your garden year-round. Spreads easily. Works great as groundcover.",
+      cycle: ["Perennial"],
+      image_url: "https://roztownsend.net/seedly-assets/Miners-Lettuce.webp",
+      isedible: true,
+      sunlight: "Full to part shade",
+    },
+    {
+      product_name: "Lovage",
+      price: 28,
+      description:
+        "Fantastic in savory dishes with a taste of intense celery, lovage can grow up to two meters tall and will last for years.",
+      cycle: ["Perennial"],
+      image_url: "https://roztownsend.net/seedly-assets/Lovage.webp",
+      isedible: true,
+      sunlight: "Full to part shade",
+    },
+    {
+      product_name: "Oregano",
+      price: 37,
+      description:
+        "Fragrant and bee-friendly. Dry or use fresh for culinary use. Likes to spread.",
+      cycle: ["Perennial"],
+      image_url: "https://roztownsend.net/seedly-assets/Oregano.webp",
+      isedible: true,
+      sunlight: "Full",
+    },
+    {
+      product_name: "Marjoram",
+      price: 28,
+      description:
+        "Traditional culinary herb. Can be cold sensitive depending on planting location and climate. Cover in winter if necessary.",
+      cycle: ["Annual", "Perennial"],
+      image_url: "https://roztownsend.net/seedly-assets/Marjoram.webp",
+      isedible: true,
+      sunlight: "Full",
+    },
+    {
+      product_name: "Peppermint",
+      price: 36,
+      description:
+        "The stronger cousin of spearmint. Intensely refreshing. Be prepared to let it spread if you put it in the ground.",
+      cycle: ["Perennial"],
+      image_url: "https://roztownsend.net/seedly-assets/Peppermint.webp",
+      isedible: true,
+      sunlight: "Full to part shade",
+    },
+    {
+      product_name: "Spearmint",
+      price: 36,
+      description:
+        "Basic spearmint. Good for drinks, desserts, and cooked dishes. Plant it in a pot and keep it nearby, or plant it in the ground to curse generations to come!",
+      cycle: ["Perennial"],
+      image_url: "https://roztownsend.net/seedly-assets/Spearmint.webp",
+      isedible: true,
+      sunlight: "Full to part shade",
+    },
+    {
+      product_name: "Chamomile",
+      price: 21,
+      description:
+        "Easy to sow (throw it in disturbed soil) and easy to grow (sow it and forget it). Harvest and dry in late summer to turn into tea - and sleep well throughout the rest of the year.",
+      cycle: ["Annual"],
+      image_url: "https://roztownsend.net/seedly-assets/Chamomile.webp",
+      isedible: true,
+      sunlight: "Full",
+    },
+    {
+      product_name: "Broccoli 'Ramoso Calabrese'",
+      price: 38,
+      description:
+        "A rich heritage variety. Grows well and easily if protected from pests. Rich flavor.",
+      cycle: ["Annual"],
+      image_url: "https://roztownsend.net/seedly-assets/Broccoli-Ramoso-Calabrese.webp",
+      isedible: true,
+      sunlight: "Full",
+    },
+    {
+      product_name: "Cauliflower 'Bola de Neve'",
+      price: 48,
+      description:
+        "A sturdy heritage variety of cauliflower that is tolerant of most types of summer weather. Great raw or cooked.",
+      cycle: ["Annual"],
+      image_url: "https://roztownsend.net/seedly-assets/Cauliflower-Bola-de-Neve.webp",
+      isedible: true,
+      sunlight: "Full",
+    },
+    {
+      product_name: "Peas 'Sugar Snap'",
+      price: 25,
+      description:
+        "Throw them into stir-frys or salads, if they get that far! You might just eat them all off of the vine. Sugar snap is a classic, productive variety.",
+      cycle: ["Annual"],
+      image_url: "https://roztownsend.net/seedly-assets/Peas-Sugar-Snap.webp",
+      isedible: true,
+      sunlight: "Full",
+    },
+    {
+      product_name: "Freesia 'Magdalena'",
+      price: 52,
+      description:
+        "Floofy, lovely ornamental and great-smelling. Particularlly nice addition to boquets.",
+      cycle: ["Annual"],
+      image_url: "https://roztownsend.net/seedly-assets/Freesia-Magdalena.webp",
+      isedible: false,
+      sunlight: "Full to part shade",
+    },
+    {
+      product_name: "Peony 'Opera White'",
+      price: 23,
+      description:
+        "A robust and perennial with big, intricate white blossoms. Divide every few years for better yields.",
+      cycle: ["Perennial"],
+      image_url: "https://roztownsend.net/seedly-assets/Peony-Opera-White.webp",
+      isedible: false,
+      sunlight: "Full to part shade",
+    },
+    {
+      product_name: "Aster 'Blaubox'",
+      price: 59,
+      description:
+        "A classic aster with cute purple flowers.",
+      cycle: ["Annual"],
+      image_url: "https://roztownsend.net/seedly-assets/Aster-Baubox.webp",
+      isedible: false,
+      sunlight: "Full",
+    },
+    {
+      product_name: "Catnip",
+      price: 39,
+      description:
+        "Makes a great soothing tea for humans, but drives cats wild! Best to plant in a hanging pot and snip off the occasional stem for kitty use.",
+      cycle: ["Perennial"],
+      image_url: "https://roztownsend.net/seedly-assets/Catnip.webp",
+      isedible: true,
+      sunlight: "Full to part shade",
+    },
   ];
   try {
     const plants = await Plant.bulkCreate(plantsData);
-    console.log(plants.length);
+    console.log(plants.length, "plants added.");
     console.log(plants[0] instanceof Plant);
   } catch (error) {
     console.error("Failed to bulk insert plants", error);

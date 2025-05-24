@@ -1,6 +1,6 @@
 import { Plant } from "../models/plant.model";
 
-interface PlantType {
+export interface PlantType {
   product_name: string;
   price: number;
   description: string;
@@ -10,8 +10,20 @@ interface PlantType {
   sunlight: "Full" | "Full to part shade" | "Partial shade to full shade";
 }
 
+
 const plantsInserter = async () => {
   const tinyPlantsData: PlantType[] = [
+      {
+      product_name: "Thyme",
+      price: 42,
+      description:
+          "Wintergreen and tasty. Plant in sunny spots where you want a large chunk of something fresh-smelling.",
+      cycle: ["Annual", "Biennial"],
+      image_url:
+          "https://roztownsend.net/seedly-assets/Kale-Lerchenzungen.webp",
+      isedible: true,
+      sunlight: "Full"
+    },
     {
       product_name: "Kale 'Lerchenzungen'",
       price: 42,
@@ -642,7 +654,7 @@ const plantsInserter = async () => {
     },
   ];
   try {
-    const plants = await Plant.bulkCreate(plantsData);
+    const plants = await Plant.bulkCreate(plantsData, { ignoreDuplicates: true });
     console.log(plants.length, "plants added.");
     console.log(plants[0] instanceof Plant);
   } catch (error) {

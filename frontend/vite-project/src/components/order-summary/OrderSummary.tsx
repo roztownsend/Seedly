@@ -4,9 +4,10 @@ import "./OrderSummary.css";
 
 type OrderSummaryProps = {
   showButton?: boolean;
+  refTotal?: number;
 };
 
-export const OrderSummary: React.FC<OrderSummaryProps> = ({ showButton = true }) => {
+export const OrderSummary: React.FC<OrderSummaryProps> = ({ showButton = true, refTotal }) => {
   const cartTotal = useCartTotal();
 
   return (
@@ -25,7 +26,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ showButton = true })
       </div>
       <div className="total">
         <div className="total__label">Subtotal</div>
-        <div className="total__figure">{cartTotal} kr</div>
+        <div className="total__figure">{cartTotal ? cartTotal : refTotal} kr</div>
         {/* todo: cart total + shipping */}
       </div>
       {showButton && <Link to="/cart/shippingForm" className="button-primary continue">Continue to checkout</Link>}

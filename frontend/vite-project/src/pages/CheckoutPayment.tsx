@@ -1,18 +1,23 @@
 import { useEffect, useRef } from "react";
-import { useCartStore } from "../stores/cartStore";
+import {
+  useCartItems,
+  useCartActions,
+  useCartTotal,
+} from "../stores/cartStore";
 import { useShippingStore } from "../stores/shippingStore";
 import { useFormData } from "../stores/paymentStore";
 import ProductCardCartMobile from "../components/card-component/ProductCardCartMobile";
 import { OrderSummary } from "../components/order-summary/OrderSummary";
 
 const CheckoutPayment = () => {
-  const { cartItems, actions } = useCartStore();
-  const { clearCart } = actions;
+  const cartItems = useCartItems();
+  const { clearCart } = useCartActions();
+  const cartTotal = useCartTotal();
   const { formData: shippingFormData } = useShippingStore();
   const paymentFormData = useFormData();
 
   const lastOrderItemsRef = useRef(cartItems);
-
+const lastOrderTotal = useRef(cartTotal);
   useEffect(() => {
     clearCart();
   }, []);
@@ -44,7 +49,7 @@ const CheckoutPayment = () => {
         </div>
 
         <div className="content-block">
-          <OrderSummary showButton={false}/>
+          <OrderSummary showButton={false} refTotal={lastOrderTotal.current} />
           <div className="vertical-stack">
             <h4>Shipping Information</h4>
             <ul className="info-list">

@@ -10,8 +10,9 @@ import ProductCardCartMobile from "../components/card-component/ProductCardCartM
 import { OrderSummary } from "../components/order-summary/OrderSummary";
 
 const CheckoutPayment = () => {
-  const { cartItems, actions } = useCartStore();
-  const { clearCart } = actions;
+  const cartItems = useCartItems();
+  const { clearCart } = useCartActions();
+  const cartTotal = useCartTotal();
   const { formData: shippingFormData } = useShippingStore();
   const paymentFormData = useFormData();
 

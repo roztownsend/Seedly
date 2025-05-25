@@ -7,7 +7,7 @@ type OrderSummaryProps = {
   refTotal?: number;
 };
 
-export const OrderSummary: React.FC<OrderSummaryProps> = ({ showButton = true }) => {
+export const OrderSummary: React.FC<OrderSummaryProps> = ({ showButton = true, refTotal }) => {
   const cartTotal = useCartTotal();
 
   return (

@@ -42,7 +42,10 @@ export class Purchase extends Model<
           allowNull: false,
           primaryKey: true,
         },
-
+        user_id: {
+          type: DataTypes.UUID,
+          allowNull: true,
+        },
         total_items: {
           type: DataTypes.INTEGER,
           allowNull: false,
@@ -85,6 +88,7 @@ export class Purchase extends Model<
     PurchaseItem: typeof PurchaseItem;
     Payment: typeof Payment;
     ShippingInfo: typeof ShippingInfo;
+    User: typeof User;
   }) {
     Purchase.hasMany(models.PurchaseItem, {
       foreignKey: "purchase_id",
@@ -97,6 +101,10 @@ export class Purchase extends Model<
     Purchase.hasOne(models.ShippingInfo, {
       foreignKey: "purchase_id",
       as: "shipping_info",
+    });
+    Purchase.belongsTo(models.User, {
+      foreignKey: "user_id",
+      as: "user",
     });
   }
 }

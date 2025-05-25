@@ -9,7 +9,7 @@ import {
 } from "sequelize";
 
 import { UserTask } from "./userTask.model";
-
+import { Purchase } from "./purchase.model";
 export class User extends Model<
   InferAttributes<User>,
   InferCreationAttributes<User>
@@ -58,10 +58,17 @@ export class User extends Model<
     );
   }
 
-  static associate(models: { UserTask: typeof UserTask }) {
+  static associate(models: {
+    UserTask: typeof UserTask;
+    Purchase: typeof Purchase;
+  }) {
     User.hasMany(models.UserTask, {
       foreignKey: "user_id",
       as: "user_tasks",
+    });
+    User.hasMany(models.Purchase, {
+      foreignKey: "user_id",
+      as: "purchases",
     });
   }
 }

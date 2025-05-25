@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuthActions } from "../stores/authStore";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 import {
   CredentialsInput,
   FormType,
@@ -14,7 +15,7 @@ export const useCredentialForm = (
 ): UseCredentialsFormReturn => {
   const navigate = useNavigate();
 
-  const { signUpNewUser, signInWithPassword } = useAuthActions();
+  const { signUpNewUser, signInWithPassword, signOutUser } = useAuthActions();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [formData, setFormData] = useState<CredentialsInput>(() => {
     const defaultData = {
@@ -38,6 +39,7 @@ export const useCredentialForm = (
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    console.log(formType);
     e.preventDefault();
     setErrorMessage("");
     try {
@@ -56,23 +58,26 @@ export const useCredentialForm = (
       const result = await action(email, password);
 
       if (result.success) {
-        console.log(result.data);
-        const response = await axios.post(
-          "http://localhost:5000/auth-test/",
-          {},
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${result.data?.session?.access_token}`,
-            },
-          }
-        );
-        console.log(response.data);
-        navigate("/test-dashboard");
-      } else if (result.error) {
-        setErrorMessage(result.error.message);
+        if (formType === "signup") {
+          console.log(result.data);
+          const response = await axios.post(
+            "http://localhost:5000/auth-test/complete-signup",
+            {},
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${result.data?.session?.access_token}`,
+              },
+            }
+          );
+          console.log(response.data);
+          navigate("/test-dashboard");
+        } else if (result.error) {
+          setErrorMessage(result.error.message);
+        }
       }
     } catch (error) {
+      await signOutUser();
       console.error("Unexpected error in useCredentialForm", error);
       setErrorMessage("Something went wrong. Please try again.");
     }

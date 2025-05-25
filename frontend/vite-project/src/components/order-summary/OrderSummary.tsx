@@ -4,6 +4,7 @@ import "./OrderSummary.css";
 
 type OrderSummaryProps = {
   showButton?: boolean;
+  refTotal?: number;
 };
 
 export const OrderSummary: React.FC<OrderSummaryProps> = ({ showButton = true }) => {

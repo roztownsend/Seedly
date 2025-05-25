@@ -5,6 +5,7 @@ import {
   CreationOptional,
   DataTypes,
   Sequelize,
+  ForeignKey,
 } from "sequelize";
 
 import { UserTask } from "./userTask.model";
@@ -13,9 +14,8 @@ export class User extends Model<
   InferAttributes<User>,
   InferCreationAttributes<User>
 > {
-  declare id: CreationOptional<string>;
+  declare id: ForeignKey<string>;
   declare email: string;
-  declare password: string;
   declare role: CreationOptional<string>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
@@ -25,16 +25,11 @@ export class User extends Model<
       {
         id: {
           type: DataTypes.UUID,
-          defaultValue: DataTypes.UUIDV4,
           allowNull: false,
           primaryKey: true,
         },
         email: {
           type: DataTypes.STRING,
-          allowNull: false,
-        },
-        password: {
-          type: DataTypes.TEXT,
           allowNull: false,
         },
         role: {

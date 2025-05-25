@@ -113,7 +113,7 @@ const ShippingForm = () => {
 
         <div>
           <button type="submit" className="button-primary submit-button">
-            <Link to="/cart/checkoutPayment">Continue to shipping</Link>
+            <Link to="/cart/shippingForm/payment-form">Continue to payment</Link>
           </button>
         </div>
       </form>

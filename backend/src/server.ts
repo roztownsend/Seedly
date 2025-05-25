@@ -16,6 +16,7 @@ import { Plant } from "./models/plant.model";
 import { ShippingOption } from "./models/shippingOption.model";
 import plantsInserter from "./utils/plantsInserterHelper";
 import optionsInserter from "./utils/optionsInserterHelper";
+
 //testing server startup
 
 sequelize

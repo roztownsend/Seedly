@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuthActions } from "../stores/authStore";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
   CredentialsInput,
@@ -56,6 +57,17 @@ export const useCredentialForm = (
 
       if (result.success) {
         console.log(result.data);
+        const response = await axios.post(
+          "http://localhost:5000/auth-test/",
+          {},
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${result.data?.session?.access_token}`,
+            },
+          }
+        );
+        console.log(response.data);
         navigate("/test-dashboard");
       } else if (result.error) {
         setErrorMessage(result.error.message);

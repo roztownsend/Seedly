@@ -54,6 +54,7 @@ const useAuthStore = create<AuthState>((set, get) => ({
           console.error("There was a problem signing up ", error);
           return { success: false, error };
         }
+
         return { success: true, data };
       } catch (error) {
         console.error("Unexpected error: ", error);

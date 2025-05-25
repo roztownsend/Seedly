@@ -1,5 +1,9 @@
 import { useEffect, useRef } from "react";
-import { useCartStore } from "../stores/cartStore";
+import {
+  useCartItems,
+  useCartActions,
+  useCartTotal,
+} from "../stores/cartStore";
 import { useShippingStore } from "../stores/shippingStore";
 import { useFormData } from "../stores/paymentStore";
 import ProductCardCartMobile from "../components/card-component/ProductCardCartMobile";

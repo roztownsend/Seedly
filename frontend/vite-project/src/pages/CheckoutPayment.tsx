@@ -49,7 +49,7 @@ const lastOrderTotal = useRef(cartTotal);
         </div>
 
         <div className="content-block">
-          <OrderSummary showButton={false}/>
+          <OrderSummary showButton={false} refTotal={lastOrderTotal.current} />
           <div className="vertical-stack">
             <h4>Shipping Information</h4>
             <ul className="info-list">

@@ -17,7 +17,7 @@ const CheckoutPayment = () => {
   const paymentFormData = useFormData();
 
   const lastOrderItemsRef = useRef(cartItems);
-
+const lastOrderTotal = useRef(cartTotal);
   useEffect(() => {
     clearCart();
   }, []);

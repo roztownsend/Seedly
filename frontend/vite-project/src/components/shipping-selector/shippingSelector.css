@@ -1,0 +1,27 @@
+.shipping-options {
+    @apply flex flex-col gap-6 p-4;
+}
+
+.shipping-options__option {
+    @apply bg-yellow-50 p-4 border-4 border-yellow-50;
+}
+
+.shipping-options__check-and-details {
+    @apply flex gap-6 items-start p-4;
+}
+
+.radio-box {
+    @apply py-2 h-full;
+}
+
+.radio-box__input {
+    @apply w-6 h-6 focus:ring-yellow-800 focus:border-yellow-600 focus:border-8 cursor-pointer;
+}
+
+.details {
+    @apply flex flex-col h-full items-start gap-2;
+}
+
+.selection {
+    @apply border-4 border-yellow-600;
+}

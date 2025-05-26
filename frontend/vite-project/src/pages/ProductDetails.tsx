@@ -6,7 +6,7 @@ import { useCartActions } from "../stores/cartStore";
 import { ProductItem } from "../stores/productsStore";
 import { QuantityControl } from "../components/quantity-control/QuantityControl";
 import { Task } from "../types/types";
-import { useToast } from "../components/toast/ToastContext";
+import { toast } from "react-hot-toast";
 import "./page-styles/ProductDetails.css";
 
 const ProductDetails: React.FC = () => {
@@ -15,8 +15,6 @@ const ProductDetails: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const { addItem } = useCartActions();
   const [tasks, setTasks] = useState<{ id: string; description: string; start_month: number; end_month: number }[]>([]);
-  const { showToast } = useToast();
-
   const months = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -71,7 +69,7 @@ const ProductDetails: React.FC = () => {
   const handleAddToCart = () => {
     if (!plant) return;
     addItem({ ...plant, quantity: 1 });
-    showToast(`Product ${plant.product_name} was added to bag!`);
+    toast.success(`Product ${plant.product_name} was added to bag!`);
   };
 
   if (loading)

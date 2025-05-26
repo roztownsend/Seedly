@@ -1,15 +1,16 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { ToastProvider } from "./components/toast/ToastContext";
-import "./components/toast/toast.css";
 import './index.css'
 import App from './App.tsx'
-
+import { Toaster } from 'react-hot-toast'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ToastProvider>
     <App />
-    </ToastProvider>
+    <Toaster position="top-right"
+    toastOptions={{
+    className: 'toast',
+    style: {}, // Deixe vazio para usar só Tailwind
+  }} />
   </StrictMode>,
 )

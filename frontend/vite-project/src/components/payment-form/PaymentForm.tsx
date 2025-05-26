@@ -173,7 +173,7 @@ const PaymentForm = () => {
 
                     {/* Submit button */}
                     <button type="submit" className="button-primary w-full">
-                        <Link to="/cart/shippingForm/payment-form/checkout">Pay with card</Link>
+                        <Link to="/checkout/confirm">Pay with card</Link>
                     </button>
                     <div className="payment-button-group ">
                         <button className="button-secondary__payment flex-1">

@@ -26,9 +26,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/products/:id/:slug" element={<ProductDetails />} />
-            <Route path="/cart/shippingForm" element={<ShippingForm />} />
-            <Route path="/cart/shippingForm/payment-form" element={<PaymentForm />} />
-            <Route path="/cart/shippingForm/payment-form/checkout" element={<CheckoutPayment />} />
+            <Route path="/checkout/shipping" element={<ShippingForm />} />
+            <Route path="/checkout/payment" element={<PaymentForm />} />
+            <Route path="/checkout/confirm" element={<CheckoutPayment />} />
           </Routes>
         </main>
         <Footer />

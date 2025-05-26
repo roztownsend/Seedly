@@ -29,7 +29,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ showButton = true, r
         <div className="total__figure">{cartTotal ? cartTotal : refTotal} kr</div>
         {/* todo: cart total + shipping */}
       </div>
-      {showButton && <Link to="/cart/shippingForm" className="button-primary continue">Continue to checkout</Link>}
+      {showButton && <Link to="/checkout/shipping" className="button-primary continue">Continue to checkout</Link>}
     </div>
   );
 };

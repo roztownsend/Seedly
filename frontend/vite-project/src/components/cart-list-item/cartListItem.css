@@ -1,0 +1,7 @@
+.cart-items-list {
+    @apply flex flex-col gap-3 max-h-[70vh] overflow-y-auto pr-2;
+}
+
+.list-wrapper {
+    @apply py-3 mb-3 border-b-2;
+}

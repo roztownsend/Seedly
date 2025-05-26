@@ -9,6 +9,7 @@ type CartActions = {
     quantity: number,
     operation?: "decrement" | "increment"
   ) => void;
+  clearCart: () => void;
 };
 
 export type CartItem = {
@@ -30,7 +31,7 @@ type CartState = {
   actions: CartActions;
 };
 
-const useCartStore = create<CartState>((set, get) => ({
+export const useCartStore = create<CartState>((set, get) => ({
   cartItems: [],
   actions: {
     addItem: (item) =>
@@ -64,6 +65,7 @@ const useCartStore = create<CartState>((set, get) => ({
           .filter((item) => item !== null);
         return { cartItems: updatedCartItems };
       }),
+      clearCart: () => set({ cartItems: [] }),
   },
 }));
 

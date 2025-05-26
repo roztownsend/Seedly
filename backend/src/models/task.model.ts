@@ -14,7 +14,7 @@ export class Task extends Model<
   InferCreationAttributes<Task>
 > {
   declare id: CreationOptional<string>;
-  declare plant_id: ForeignKey<string>;
+  declare plant_id: ForeignKey<Plant["id"]>;
   declare description: string | null;
   declare start_month: number;
   declare end_month: number;

@@ -10,10 +10,7 @@ import path from "path";
 import sequelize from "./config/sequelizeConnect";
 import { initModels } from "./models/initModels";
 import plantRoutes from "./routes/plantRoutes";
-import { Purchase } from "./models/purchase.model";
-import { Plant } from "./models/plant.model";
 import plantsInserter from "./utils/plantsInserterHelper";
-import taskInserter from "./utils/taskInserter";
 
 //testing server startup
 

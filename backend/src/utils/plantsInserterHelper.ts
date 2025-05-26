@@ -1544,11 +1544,6 @@ const plantsInserter = async () => {
             description: taskData.description,
             start_month: taskData.start_month,
             end_month: taskData.end_month,
-            /* Temporarily update `plant_id` in task.model.ts:
-               Change `declare plant_id: ForeignKey<Plant>;`
-               to `declare plant_id: ForeignKey<string>;` for data insertion. 
-               Revert it back to `Plant` once insertion is complete.
-            */
             plant_id: newPlant.id,
           },
           { transaction: t }

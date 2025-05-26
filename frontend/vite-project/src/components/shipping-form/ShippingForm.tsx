@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useShippingStore } from "../../stores/shippingStore";
 import './shippingForm.css'
 
@@ -119,7 +120,7 @@ const ShippingForm = () => {
 
         <div>
           <button type="submit" className="button-primary submit-button">
-            Continue to shipping
+            <Link to="/checkout/payment">Continue to payment</Link>
           </button>
         </div>
       </form>

@@ -66,7 +66,9 @@ export const linkUserTasks = async (
     where: { user_id: userId },
     transaction,
   });
-  const existingTaskIds = new Set(existingUserTasks.map((ut) => ut.task_id));
+  const existingTaskIds = new Set<string>(
+    existingUserTasks.map((ut) => ut.task_id)
+  );
 
   const tasksToAdd = uniqueTasks.filter(
     (task) => !existingTaskIds.has(task.id)

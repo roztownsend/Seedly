@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuthActions } from "../stores/authStore";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -92,7 +92,9 @@ export const useCredentialForm = (
       }
     } catch (error) {
       await signOutUser();
-      console.error("Unexpected error in useCredentialForm", error);
+      if (axios.isAxiosError(error)) {
+        console.error(error.response?.data.message);
+      }
       setErrorMessage("Something went wrong. Please try again.");
     }
   };

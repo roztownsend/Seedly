@@ -11,7 +11,8 @@ import { UserTask } from "../models/userTask.model";
 import {
   AuthenticatedRequest,
   authenticateUser,
-} from "../middleware/authMiddleware";
+} from "../middleware/authenticateUser";
+import { authenticateAdmin } from "../middleware/authenticateAdmin";
 import sequelize from "../config/sequelizeConnect";
 import { Transaction } from "sequelize";
 import { assignOrphanedPurchasesToUser } from "../services/assignOrphanedPurchase";
@@ -25,6 +26,7 @@ const router = Router();
 router.post(
   "/link-tasks",
   authenticateUser,
+  authenticateAdmin,
   async (req: AuthenticatedRequest, res: Response) => {
     const t: Transaction = await sequelize.transaction();
     try {
@@ -32,12 +34,12 @@ router.post(
         throw new Error("Missing user ID");
       }
 
-      const orphPurchases = await assignOrphanedPurchasesToUser(
+      const orphanedPurchases = await assignOrphanedPurchasesToUser(
         req.user.id,
         req.user.email,
         t
       );
-      if (orphPurchases.length > 0) {
+      if (orphanedPurchases.length > 0) {
         await linkUserTasks(req.user.id, t);
       }
 

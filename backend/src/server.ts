@@ -10,7 +10,13 @@ import path from "path";
 import sequelize from "./config/sequelizeConnect";
 import { initModels } from "./models/initModels";
 import plantRoutes from "./routes/plantRoutes";
+
+import shippingRoutes from "./routes/shippingRoutes";
+import { Purchase } from "./models/purchase.model";
+import { Plant } from "./models/plant.model";
+import { ShippingOption } from "./models/shippingOption.model";
 import plantsInserter from "./utils/plantsInserterHelper";
+import optionsInserter from "./utils/optionsInserterHelper";
 
 //testing server startup
 
@@ -27,6 +33,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use("/plants", plantRoutes);
+app.use("/shipping-options", shippingRoutes)
 
 const swaggerDocument = YAML.load(
   path.join(__dirname, "../swagger/swagger.yaml")

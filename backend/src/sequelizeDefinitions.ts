@@ -185,6 +185,31 @@ const ShippingInfo = sequelize.define("ShippingInfo", {
   },
 });
 
+const ShippingOption = sequelize.define("Shipping Option", {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    allowNull: false,
+    primaryKey: true,
+  },
+  label: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  price: {
+    type: DataTypes.NUMBER,
+    allowNull: false,
+  },
+  min_days: {
+    type: DataTypes.NUMBER,
+    allowNull: false,
+  },
+  max_days: {
+    type: DataTypes.NUMBER,
+    allowNull: false,
+  } 
+});
+
 const Payment = sequelize.define("Payment", {
   id: {
     type: DataTypes.UUID,

@@ -1,0 +1,24 @@
+.step-header-container {
+  @apply px-6 py-4;
+}
+
+.step-header-title {
+  @apply mb-6;
+}
+
+.step-header-wrapper {
+  @apply w-full flex items-center justify-between text-sm text-gray-600 gap-4;
+}
+
+.step-label {
+  @apply text-lg text-gray-400;
+}
+
+.step-label-active {
+  @apply font-bold text-black;
+}
+
+.step-line {
+  @apply w-24 h-0.5 bg-gray-300;
+}
+

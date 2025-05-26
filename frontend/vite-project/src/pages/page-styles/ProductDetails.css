@@ -7,7 +7,7 @@
 }
 
 .product-image img {
-    @apply w-full h-full object-cover;
+    @apply w-full h-full object-cover rounded-md;
 }
 
 .product-info {

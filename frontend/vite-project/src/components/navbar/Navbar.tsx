@@ -1,17 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingBag, Search, Menu, X, User2 } from "lucide-react";
 import "../navbar/Navbar.css";
 import { useCartUniqueItems } from "../../stores/cartStore";
+
 export default function Navbar() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [animateCart, setAnimateCart] = useState(false);
 
   const cartUniqueItems = useCartUniqueItems();
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
+
+  useEffect(() => {
+    if (cartUniqueItems === 0) return;
+    setAnimateCart(true);
+    const timeout = setTimeout(() => setAnimateCart(false), 300);
+    return () => clearTimeout(timeout);
+  }, [cartUniqueItems]);
 
   return (
     <>
@@ -47,7 +57,7 @@ export default function Navbar() {
           <div className="navbar-right">
             <Link to="/cart" className="navbar-auth">
               <div className="navbar-cart">
-                <ShoppingBag className="navbar-icons" />
+                <ShoppingBag className={`navbar-icons ${animateCart ? "pop" : ""}`} />
                 {cartUniqueItems}
               </div>
             </Link>
@@ -68,19 +78,18 @@ export default function Navbar() {
             Seedly
           </Link>
           <div className="navbar-mobile-icons">
-            <div className="navbar-cart">
-              <ShoppingBag className="navbar-icons" />
+            <Link to="/cart" className="navbar-cart">
+              <ShoppingBag className={`navbar-icons ${animateCart ? "pop" : ""}`} />
               {cartUniqueItems}
-            </div>
+            </Link>
             <div className="relative">
               <button onClick={() => setShowUserMenu(!showUserMenu)}>
                 <User2 className="navbar-icons" />
               </button>
 
               <div
-                className={`user-menu ${
-                  showUserMenu ? "user-menu-open" : "user-menu-closed"
-                }`}
+                className={`user-menu ${showUserMenu ? "user-menu-open" : "user-menu-closed"
+                  }`}
               >
                 <Link
                   to="/login"

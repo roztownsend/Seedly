@@ -26,7 +26,7 @@ const ProductDetails: React.FC = () => {
     const fetchPlant = async () => {
       try {
         const res = await axios.get<ProductItem[]>(
-          "http://localhost:5001/plants"
+          "http://localhost:5000/plants"
         ); // fetch all plants but if you're using a different port, adjust the URL accordingly
         const data = res.data;
         console.log(data);
@@ -45,7 +45,7 @@ const ProductDetails: React.FC = () => {
     if (!id) return;
     const fetchTasks = async () => {
       try {
-        const res = await axios.get(`http://localhost:5001/plants/${id}/tasks`);
+        const res = await axios.get(`http://localhost:5000/plants/${id}/tasks`);
         setTasks(res.data);
       } catch (err) {
         setTasks([]);

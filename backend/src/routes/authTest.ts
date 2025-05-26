@@ -8,12 +8,9 @@ import {
   AuthenticatedRequest,
   authenticateUser,
 } from "../middleware/authMiddleware";
-import { sequelize } from "sequelizeDefinitions";
+import sequelize from "../config/sequelizeConnect";
 import { Transaction } from "sequelize";
-interface UserType {
-  id: string;
-  email: string;
-}
+
 const router = Router();
 
 router.post(

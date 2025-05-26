@@ -7,12 +7,18 @@ import { ShippingInfo } from "../models/shippingInfo.model";
 import { PurchaseItem } from "../models/purchaseItem.model";
 import { Plant } from "../models/plant.model";
 import { Task } from "../models/task.model";
+import { UserTask } from "../models/userTask.model";
 import {
   AuthenticatedRequest,
   authenticateUser,
 } from "../middleware/authMiddleware";
 import sequelize from "../config/sequelizeConnect";
 import { Transaction } from "sequelize";
+
+interface UserTaskType {
+  user_id: string;
+  task_id: string;
+}
 
 const router = Router();
 router.post(
@@ -46,8 +52,39 @@ router.post(
         ],
         transaction: t,
       });
-      console.log(userPurchasesWithTasks);
+      const allTasks: Task[] = [];
+      for (const purchase of userPurchasesWithTasks) {
+        console.log(`Purchase ID: ${purchase.id}`);
+        for (const item of purchase.purchase_items || []) {
+          const plantId = item.plant_id;
+          console.log(`Plant ID: ${plantId}`);
+          if (item.plant?.tasks) {
+            for (const task of item.plant.tasks) {
+              allTasks.push(task);
+              console.log(
+                `Task ID - ${task.id}, Task description - ${task.description}`
+              );
+            }
+          }
+        }
+      }
+      try {
+        await Promise.all(
+          allTasks.map((task) => {
+            const newTask: UserTaskType = {
+              task_id: task.id,
+              user_id: req.user!.id,
+            };
+            return UserTask.create(newTask, { transaction: t });
+          })
+        );
+      } catch (error) {
+        console.log("Error mapping and creating tasks");
+        throw new Error("Failed to create task");
+      }
+
       await t.commit();
+      res.json({ message: "success" });
     } catch (error) {
       console.error("Transaction failed", error);
       await t.rollback();
@@ -59,7 +96,6 @@ router.post(
   "/complete-signup",
   authenticateUser,
   async (req: AuthenticatedRequest, res: Response) => {
-    console.log(req);
     console.log("User id - ", req.user?.id);
     console.log("User email - ", req.user?.email);
     const t: Transaction = await sequelize.transaction();

@@ -72,6 +72,20 @@ export const useCredentialForm = (
           );
           console.log(response.data);
           navigate("/test-dashboard");
+        } else if (formType === "login") {
+          console.log(result.data);
+          const response = await axios.post(
+            "http://localhost:5000/auth-test/link-tasks",
+            {},
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${result.data?.session?.access_token}`,
+              },
+            }
+          );
+          console.log(response.data);
+          navigate("/test-dashboard");
         } else if (result.error) {
           setErrorMessage(result.error.message);
         }

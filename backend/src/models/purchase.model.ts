@@ -13,6 +13,7 @@ import { PurchaseItem } from "./purchaseItem.model";
 import { Payment } from "./payment.model";
 import { ShippingInfo } from "./shippingInfo.model";
 import { User } from "./user.model";
+import { Plant } from "./plant.model";
 export class Purchase extends Model<
   InferAttributes<Purchase>,
   InferCreationAttributes<Purchase>
@@ -29,6 +30,8 @@ export class Purchase extends Model<
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
+  declare purchase_items?: PurchaseItem[];
+  declare plant?: Plant;
   declare getItems: HasManyGetAssociationsMixin<PurchaseItem>;
   declare getPayment: HasOneGetAssociationMixin<Payment>;
   declare getShippingInfo: HasOneGetAssociationMixin<ShippingInfo>;

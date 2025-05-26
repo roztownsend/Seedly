@@ -30,6 +30,8 @@ export class Plant extends Model<
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
+  declare tasks?: Task[];
+
   declare getPurchaseItems: HasManyGetAssociationsMixin<PurchaseItem>;
   declare getTasks: HasManyGetAssociationsMixin<Task>;
   static initModel(sequelize: Sequelize): typeof Plant {

@@ -14,7 +14,8 @@ import {
 } from "../middleware/authMiddleware";
 import sequelize from "../config/sequelizeConnect";
 import { Transaction } from "sequelize";
-
+import { assignOrphanedPurchasesToUser } from "../services/assignOrphanedPurchase";
+import { linkUserTasks } from "../services/taskService";
 interface UserTaskType {
   user_id: string;
   task_id: string;
@@ -27,60 +28,17 @@ router.post(
   async (req: AuthenticatedRequest, res: Response) => {
     const t: Transaction = await sequelize.transaction();
     try {
-      if (!req.user?.id) {
+      if (!req.user?.id || !req.user.email) {
         throw new Error("Missing user ID");
       }
-      const userPurchasesWithTasks = await Purchase.findAll({
-        where: { user_id: req.user.id },
-        include: [
-          {
-            model: PurchaseItem,
-            as: "purchase_items",
-            include: [
-              {
-                model: Plant,
-                as: "plant",
-                include: [
-                  {
-                    model: Task,
-                    as: "tasks",
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-        transaction: t,
-      });
-      const allTasks: Task[] = [];
-      for (const purchase of userPurchasesWithTasks) {
-        console.log(`Purchase ID: ${purchase.id}`);
-        for (const item of purchase.purchase_items || []) {
-          const plantId = item.plant_id;
-          console.log(`Plant ID: ${plantId}`);
-          if (item.plant?.tasks) {
-            for (const task of item.plant.tasks) {
-              allTasks.push(task);
-              console.log(
-                `Task ID - ${task.id}, Task description - ${task.description}`
-              );
-            }
-          }
-        }
-      }
-      try {
-        await Promise.all(
-          allTasks.map((task) => {
-            const newTask: UserTaskType = {
-              task_id: task.id,
-              user_id: req.user!.id,
-            };
-            return UserTask.create(newTask, { transaction: t });
-          })
-        );
-      } catch (error) {
-        console.log("Error mapping and creating tasks");
-        throw new Error("Failed to create task");
+
+      const orphPurchases = await assignOrphanedPurchasesToUser(
+        req.user.id,
+        req.user.email,
+        t
+      );
+      if (orphPurchases.length > 0) {
+        await linkUserTasks(req.user.id, t);
       }
 
       await t.commit();
@@ -113,32 +71,14 @@ router.post(
       if (!newUser) {
         throw new Error("User creation failed");
       }
-      const purchases = await Purchase.findAll({
-        where: {
-          user_id: null,
-        },
-        include: [
-          {
-            model: ShippingInfo,
-            as: "shipping_info",
-            where: { email: req.user.email },
-          },
-        ],
-        transaction: t,
-      });
-      for (const purchase of purchases) {
-        try {
-          purchase.user_id = req.user.id;
-          await purchase.save({ transaction: t });
-          console.log("updated purchase");
-        } catch (error) {
-          console.error("Failed to update purchase", error);
-          throw new Error("Failed to update purchase");
-        }
-      }
+      const orphPurchases = await assignOrphanedPurchasesToUser(
+        req.user.id,
+        req.user.email,
+        t
+      );
 
       await t.commit();
-      res.json({ data: req.user?.email });
+      res.json({ data: req.user.email });
     } catch (error) {
       console.error("Transaction failed", error);
       await t.rollback();

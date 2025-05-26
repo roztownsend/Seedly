@@ -4,6 +4,7 @@ import { ValidationRule } from "../../types/paymentFormTypes";
 import swishIcon from '../../assets/image/swish.svg';
 import klarnaIcon from '../../assets/image/klarna.svg';
 import "../payment-form/PaymentForm.css";
+import { Link } from "react-router-dom";
 
 const PaymentForm = () => {
     const formData = useFormData();
@@ -172,7 +173,7 @@ const PaymentForm = () => {
 
                     {/* Submit button */}
                     <button type="submit" className="button-primary w-full">
-                        Pay with card
+                        <Link to="/cart/shippingForm/payment-form/checkout">Pay with card</Link>
                     </button>
                     <div className="payment-button-group ">
                         <button className="button-secondary__payment flex-1">

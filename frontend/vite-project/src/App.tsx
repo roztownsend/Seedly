@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { useProductsStore } from "./stores/productsStore";
 import CheckoutPayment from "./pages/CheckoutPayment";
 import ShippingForm from "./components/shipping-form/ShippingForm";
+import PaymentForm from "./components/payment-form/PaymentForm";
 function App() {
   return (
     <BrowserRouter>
@@ -26,7 +27,8 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/products/:id/:slug" element={<ProductDetails />} />
             <Route path="/cart/shippingForm" element={<ShippingForm />} />
-            <Route path="/cart/shippingForm/payment-form/checkoutPayment" element={<CheckoutPayment />} />
+            <Route path="/cart/shippingForm/payment-form" element={<PaymentForm />} />
+            <Route path="/cart/shippingForm/payment-form/checkout" element={<CheckoutPayment />} />
           </Routes>
         </main>
         <Footer />

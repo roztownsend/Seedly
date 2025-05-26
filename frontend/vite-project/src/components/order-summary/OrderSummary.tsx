@@ -15,7 +15,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ showButton = true, r
       <h4>Order Summary</h4>
       <div className="subtotal">
         <div className="subtotal__label">Subtotal</div>
-        <div className="subtotal__figure">{cartTotal} kr</div>
+        <div className="subtotal__figure">{cartTotal ? cartTotal : refTotal} kr</div>
       </div>
       <div className="shipping">
         <div className="shipping__label">Shipping</div>

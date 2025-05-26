@@ -4,7 +4,7 @@ import { useSearchQuery, useSearchActions } from "../stores/searchStore";
 
 export const useSyncedQuery = () => {
     const [params] = useSearchParams();
-    const urlQuery = params.get("name") || "";
+    const urlQuery = params.get("query") || "";
     const query = useSearchQuery();
     const { setQuery, search } = useSearchActions();
 
@@ -12,7 +12,7 @@ export const useSyncedQuery = () => {
         if (urlQuery && urlQuery !== query) {
             setQuery(urlQuery);
             search();
-        }
-    }, [urlQuery, query, setQuery, search]);
+        };
+    }, [urlQuery]);
+    
 };
-

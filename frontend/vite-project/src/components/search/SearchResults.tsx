@@ -1,11 +1,9 @@
-import { useEffect } from "react";
 import { useSearchQuery, useSearchLoading, useSearchResults } from "../../stores/searchStore";
 import ProductGrid from "../product-grid/ProductGrid"
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaRegSadTear } from "react-icons/fa";
 import { Loading } from "../../components/loading/Loading";
 import { useSyncedQuery } from "../../hooks/useSyncedQuery";
-import { useSearchActions } from "../../stores/searchStore";
 import "./searchResults.css";
 
 export const SearchResults: React.FC = () => {
@@ -13,18 +11,6 @@ export const SearchResults: React.FC = () => {
     const query = useSearchQuery();
     const loading = useSearchLoading();
     const results = useSearchResults();
-    const { setQuery, search } = useSearchActions();
-    const navigate = useNavigate();
-    const [params] = useSearchParams();
-    const urlQuery = params.get("name") || "";
-
-    useEffect(() => {
-        console.log("Search Results from component:", query, results); 
-        if (!query && urlQuery) {
-            setQuery(urlQuery);
-            search(); 
-        }
-    }, [results, loading, navigate]);
 
     if (loading) return <Loading />;
     if (!results.length) 

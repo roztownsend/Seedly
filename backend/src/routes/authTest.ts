@@ -8,6 +8,8 @@ import {
   AuthenticatedRequest,
   authenticateUser,
 } from "../middleware/authMiddleware";
+import { sequelize } from "sequelizeDefinitions";
+import { Transaction } from "sequelize";
 interface UserType {
   id: string;
   email: string;
@@ -21,11 +23,21 @@ router.post(
     console.log(req);
     console.log("User id - ", req.user?.id);
     console.log("User email - ", req.user?.email);
-    if (req.user?.id && req.user.email) {
-      const newUser = await User.create({
-        id: req.user?.id,
-        email: req.user?.email,
-      });
+    const t: Transaction = await sequelize.transaction();
+    try {
+      if (!req.user?.id || !req.user.email) {
+        throw new Error("Missing user ID or email");
+      }
+      const newUser = await User.create(
+        {
+          id: req.user?.id,
+          email: req.user?.email,
+        },
+        { transaction: t }
+      );
+      if (!newUser) {
+        throw new Error("User creation failed");
+      }
       const purchases = await Purchase.findAll({
         include: [
           {
@@ -34,22 +46,26 @@ router.post(
             where: { email: req.user.email },
           },
         ],
+        transaction: t,
       });
       for (const purchase of purchases) {
         try {
           purchase.user_id = req.user.id;
-          await purchase.save();
+          await purchase.save({ transaction: t });
           console.log("updated purchase");
         } catch (error) {
           console.error("Failed to update purchase", error);
+          throw new Error("Failed to update purchase");
         }
       }
       console.log(newUser instanceof User);
-    } else {
-      res.json({ message: "Error creating new user" });
+      await t.commit();
+      res.json({ data: req.user?.email });
+    } catch (error) {
+      console.error("Transaction failed", error);
+      await t.rollback();
+      res.status(500).json({ message: "Internal server error" });
     }
-
-    res.json({ data: req.user?.email });
   }
 );
 

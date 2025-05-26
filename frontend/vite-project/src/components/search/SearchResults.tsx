@@ -1,4 +1,4 @@
-import { useSearchQuery, useSearchLoading, useSearchResults } from "../../stores/searchStore";
+import { useSubmittedQuery, useSearchLoading, useSearchResults } from "../../stores/searchStore";
 import ProductGrid from "../product-grid/ProductGrid"
 import { Link } from "react-router-dom";
 import { FaRegSadTear } from "react-icons/fa";
@@ -8,11 +8,12 @@ import "./searchResults.css";
 
 export const SearchResults: React.FC = () => {
     useSyncedQuery();
-    const query = useSearchQuery();
+    const query = useSubmittedQuery();
     const loading = useSearchLoading();
     const results = useSearchResults();
 
     if (loading) return <Loading />;
+    if (!loading && !results.length && !query.trim()) return null;
     if (!results.length) 
         return (
             <section className="search-results not-found-state">
@@ -24,6 +25,7 @@ export const SearchResults: React.FC = () => {
 
     return (
         <section className="search-results">
+            <h1>Results for {query}</h1>
             <ProductGrid products={results} />
             <div className="search-results__end">
                 That's all for <strong>{query}</strong>. Check out our <Link to="/seeds" className="text-link-primary">assortment of seeds</Link>{" "} for more.

@@ -4,6 +4,7 @@ import { ProductItem } from "./productsStore";
 
 type SearchState = {
     query: string;
+    submittedQuery: string;
     results: ProductItem[];
     loading: boolean;
     actions: SearchActions;
@@ -17,6 +18,7 @@ type SearchActions = {
 
 export const useSearchStore = create<SearchState>((set, get) => ({
     query: "",
+    submittedQuery: "",
     results: [],
     loading: false,
     actions: {
@@ -24,7 +26,7 @@ export const useSearchStore = create<SearchState>((set, get) => ({
         search: async () => {
             const { query } = get();
             if (!query) return [];
-            set({ loading: true });
+            set({ loading: true, submittedQuery: query });
             try {
                 const response = await axios.get(`http://localhost:5000/plants/search?name=${encodeURIComponent(query)}`);
                 const data = response.data.data;
@@ -43,6 +45,8 @@ export const useSearchStore = create<SearchState>((set, get) => ({
 
 
 export const useSearchQuery = () => useSearchStore((state) => state.query);
+
+export const useSubmittedQuery = () => useSearchStore((state) => state.submittedQuery);
 
 export const useSearchLoading = () => useSearchStore((state) => state.loading);
 

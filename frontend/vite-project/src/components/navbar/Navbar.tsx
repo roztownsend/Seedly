@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ShoppingBag, Search, Menu, X, User2 } from "lucide-react";
 import "../navbar/Navbar.css";
 import { useCartUniqueItems } from "../../stores/cartStore";
@@ -13,6 +13,7 @@ export default function Navbar() {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const cartUniqueItems = useCartUniqueItems();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSearch = async () => {
     if (!query.trim()) return;
@@ -30,6 +31,12 @@ export default function Navbar() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
+
+  useEffect(() => {
+    if (!location.pathname.startsWith("/search")) {
+      setQuery("");   
+    }
+  }, [location.pathname]);
 
   return (
     <>

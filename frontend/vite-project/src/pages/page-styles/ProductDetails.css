@@ -18,8 +18,7 @@
     @apply flex md:flex-col w-full justify-between items-baseline;
 }
 
-.product-title,
-h4 {
+.product-title, h4, h5 {
     @apply text-yellow-800;
 }
 

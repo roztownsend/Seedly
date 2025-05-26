@@ -46,7 +46,7 @@ router.get("/search", async (_req: Request, res: Response): Promise<void> => {
     });
     console.log(`Found ${searchResult.length} products.`)
     if (searchResult.length === 0) {
-      res.json({ message: `No products found for query: ${name}.` })
+      res.json({ data: [], message: `No products found for query: ${name}.`})
     } else 
     res.json({ data: searchResult });
   } catch (error) {

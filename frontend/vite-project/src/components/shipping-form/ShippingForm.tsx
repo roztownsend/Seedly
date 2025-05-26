@@ -2,7 +2,12 @@ import { useShippingStore } from "../../stores/shippingStore";
 import './shippingForm.css'
 
 const ShippingForm = () => {
-  const { formData, updateFormField } = useShippingStore();
+  const {
+  formData,
+  updateFormField,
+  resetForm,
+  saveSubmission,
+} = useShippingStore();
 
   return (
     <section className="section-wrapper">
@@ -11,6 +16,8 @@ const ShippingForm = () => {
         onSubmit={(e) => {
           e.preventDefault();
           console.log("Shipping form submitted", formData);
+          saveSubmission();
+          resetForm();
         }}
       >
         <div className="input-container-flex-col">

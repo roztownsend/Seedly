@@ -14,6 +14,7 @@ import CheckoutPayment from "./pages/CheckoutPayment";
 import PaymentForm from "./components/payment-form/PaymentForm";
 import Shipping from "./pages/Shipping";
 
+import DashBoard from "./pages/DashBoard";
 function App() {
   return (
     <BrowserRouter>
@@ -30,6 +31,7 @@ function App() {
             <Route path="/checkout/shipping" element={<Shipping />} />
             <Route path="/checkout/payment" element={<PaymentForm />} />
             <Route path="/checkout/confirm" element={<CheckoutPayment />} />
+            <Route path="/dashboard" element={<DashBoard />} />
           </Routes>
         </main>
         <Footer />

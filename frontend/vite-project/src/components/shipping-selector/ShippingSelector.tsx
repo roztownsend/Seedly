@@ -19,9 +19,12 @@ export const ShippingSelector: React.FC = () => {
       {allShippingOptions.map((option) => (
         <ShippingOptionCard key={option.id} option={option} />
       ))}
-      <div>
+      <div className="flex flex-col gap-2">
           <button type="submit" className="button-primary submit-button">
             <Link to="/checkout/payment">Continue to payment</Link>
+          </button>
+          <button type="submit" className="button-primary submit-button">
+            <Link to="/cart">Back to cart</Link>
           </button>
       </div>
     </form>

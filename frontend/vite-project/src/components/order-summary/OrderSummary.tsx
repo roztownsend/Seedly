@@ -1,7 +1,13 @@
+import { Link } from "react-router-dom";
 import { useCartTotal } from "../../stores/cartStore";
 import "./OrderSummary.css";
 
-export const OrderSummary: React.FC = () => {
+type OrderSummaryProps = {
+  showButton?: boolean;
+  refTotal?: number;
+};
+
+export const OrderSummary: React.FC<OrderSummaryProps> = ({ showButton = true, refTotal }) => {
   const cartTotal = useCartTotal();
 
   return (
@@ -9,7 +15,7 @@ export const OrderSummary: React.FC = () => {
       <h4>Order Summary</h4>
       <div className="subtotal">
         <div className="subtotal__label">Subtotal</div>
-        <div className="subtotal__figure">{cartTotal} kr</div>
+        <div className="subtotal__figure">{cartTotal ? cartTotal : refTotal} kr</div>
       </div>
       <div className="shipping">
         <div className="shipping__label">Shipping</div>
@@ -20,10 +26,10 @@ export const OrderSummary: React.FC = () => {
       </div>
       <div className="total">
         <div className="total__label">Subtotal</div>
-        <div className="total__figure">{cartTotal} kr</div>
+        <div className="total__figure">{cartTotal ? cartTotal : refTotal} kr</div>
         {/* todo: cart total + shipping */}
       </div>
-      <button className="button-primary continue">Continue to checkout</button>
+      {showButton && <Link to="/checkout/shipping" className="button-primary continue">Continue to checkout</Link>}
     </div>
   );
 };

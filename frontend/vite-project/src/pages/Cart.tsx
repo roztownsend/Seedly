@@ -5,6 +5,7 @@ import { LoginCta } from "../components/login-cta/LoginCta";
 import { useCartUniqueItems, useCartItemIds } from "../stores/cartStore";
 import { ShippingSelector } from "../components/shipping-selector/ShippingSelector";
 import "./page-styles/cart.css";
+import CartItemList from "../components/cart-list-item/CartListItem";
 
 const Cart: React.FC = () => {
   const cartUniqueItems = useCartUniqueItems();
@@ -41,15 +42,7 @@ const Cart: React.FC = () => {
             </div>
           </div>
           <section className="cart-items">
-            <div className="cart-items__list">
-              {cartItemsIds.map((id) => {
-                return (
-                  <div key={id} className="list-wrapper">
-                    <ProductCardCart id={id} />
-                  </div>
-                );
-              })}
-            </div>
+            <CartItemList />
           </section>
           <section className="order-summary">
             <OrderSummary />

@@ -478,7 +478,7 @@ const plantsInserter = async () => {
       description:
         "Flowers long throughout summer and even into autumn - the tall stalks create visual interest even through winter.",
       cycle: ["Perennial"],
-      image_url: "https://roztownsend.net/seedly-assets/Earthnut-Pea.webp",
+      image_url: "https://roztownsend.net/seedly-assets/Evening-Primrose.webp",
       isedible: false,
       sunlight: "Full",
     },
@@ -638,7 +638,7 @@ const plantsInserter = async () => {
       description:
         "A classic aster with cute purple flowers.",
       cycle: ["Annual"],
-      image_url: "https://roztownsend.net/seedly-assets/Aster-Baubox.webp",
+      image_url: "https://roztownsend.net/seedly-assets/Aster-Blaubox.webp",
       isedible: false,
       sunlight: "Full",
     },

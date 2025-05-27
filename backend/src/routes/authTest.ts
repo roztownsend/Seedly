@@ -17,10 +17,6 @@ import sequelize from "../config/sequelizeConnect";
 import { Transaction } from "sequelize";
 import { assignOrphanedPurchasesToUser } from "../services/assignOrphanedPurchase";
 import { linkUserTasks } from "../services/taskService";
-interface UserTaskType {
-  user_id: string;
-  task_id: string;
-}
 
 const router = Router();
 router.post(

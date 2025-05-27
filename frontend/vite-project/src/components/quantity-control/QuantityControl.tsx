@@ -32,7 +32,7 @@ export const QuantityControl: React.FC<QuantityControlProps> = ({
   return (
     <div className={`quantity-control${compact ? " quantity-control--compact" : ""}`}>
       <button className="quantity-btn" onClick={() => updateQuantity(cartId, 1, "decrement")}>-</button>
-      <span className={`quantity-value${animate ? " animate-pop" : ""}`}>{cartItem?.quantity}</span>
+      <span className={`quantity-value${animate ? " pop" : ""}`}>{cartItem?.quantity}</span>
       <button className="quantity-btn" onClick={() => updateQuantity(cartId, 1, "increment")}>+</button>
     </div>
   );

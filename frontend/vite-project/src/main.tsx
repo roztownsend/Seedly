@@ -10,7 +10,7 @@ createRoot(document.getElementById('root')!).render(
     <Toaster position="top-right"
     toastOptions={{
     className: 'toast',
-    style: {}, // Deixe vazio para usar só Tailwind
+    style: {},
   }} />
   </StrictMode>,
 )

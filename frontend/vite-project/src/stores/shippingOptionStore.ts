@@ -17,6 +17,9 @@ type ShippingOptionsState = {
   actions: ShippingOptionsActions;
 };
 
+export const useSelectedShippingOption = () =>
+  useShippingOptionsStore((state) => state.selection);
+
 const useShippingOptionsStore = create<ShippingOptionsState>((set) => ({
   allShippingOptions: [],
   selection: null,

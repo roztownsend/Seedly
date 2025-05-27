@@ -94,24 +94,26 @@
 
 **Completed Tasks:**
 
-- Defined the seed data schema and updated plant information accordingly.
-- Learned and implemented with project partners key GitHub features to support project collaboration.
-- Attended a group meeting to discuss and learn more about the project structure and relevant details.
+- Working on the PurchasedSeeds component to update the information in dashboard.
+- Learned and implemented key GitHub features with project partners to support collaboration.
+- Attended a group meeting to discuss and understand the project structure and related components
+- also attended individual members meeting to learn and increase the contribution in the project more.
+
   **Challenges:**
 
-- With group members debug the project and solve those.
-- with the high performance team members, expecting will be able to contribute something with the help of them.
+- Collaborated with group members to debug the project and resolve existing issues.
+- Encountered difficulties due to the complexity of the tasks but remain optimistic about contributing effectively with guidance from high-performing team members.
 
 **Learning Insights:**
 
-- Realized the importance of participating in team syncs or accessing thorough recaps to stay aligned.
-- Recognized the value of clearly scoping tasks before accepting them.
-- Learned to communicate uncertainties early to avoid unnecessary blockers.
+- Realized the critical value of attending team syncs or reviewing comprehensive meeting summaries to maintain alignment.
+- Understood the importance of clearly defining the scope of tasks before taking them on.
+- Learned to communicate uncertainties early to reduce potential blockers and improve workflow.
 
 **Personal Contributions:**
 
-- Connected with team members individually to understand the overall project flow.
-- Contributed as much possible with the support of team members for better task execution going forward.
+- Reached out to team members individually to grasp the full context of the project and how each component connects.
+- Made meaningful contributions with strong support from peers, aiming to improve task efficiency and execution moving forward.
 
 ---
 

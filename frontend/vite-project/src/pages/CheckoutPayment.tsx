@@ -17,10 +17,13 @@ const CheckoutPayment = () => {
   const paymentFormData = useFormData();
 
   const lastOrderItemsRef = useRef(cartItems);
-const lastOrderTotal = useRef(cartTotal);
+  const lastOrderTotal = useRef(cartTotal);
   useEffect(() => {
     clearCart();
   }, []);
+
+  // Exemplo: supondo que você salva o método no store
+  const paymentMethod = paymentFormData.paymentMethod || "card"; 
 
   const maskedCard = paymentFormData.cardNumber?.slice(-4) || "****";
 
@@ -66,7 +69,15 @@ const lastOrderTotal = useRef(cartTotal);
 
           <div className="vertical-stack">
             <h4>Payment Method</h4>
-            <p>Card: **** **** **** {maskedCard}</p>
+            {paymentMethod === "card" && (
+              <p>Card: **** **** **** {maskedCard}</p>
+            )}
+            {paymentMethod === "swish" && (
+              <p>Swish</p>
+            )}
+            {paymentMethod === "klarna" && (
+              <p>Klarna</p>
+            )}
           </div>
         </div>
       </div>

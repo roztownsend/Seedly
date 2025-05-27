@@ -5,6 +5,7 @@ export interface PaymentFormTypes {
     expYear: string;
     cvc: string;
     saveCard: boolean;
+    paymentMethod?: "card" | "swish" | "klarna";
 }
 
 export type StringKeys = Exclude<keyof PaymentFormTypes, "saveCard">;

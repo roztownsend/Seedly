@@ -13,6 +13,7 @@ import { useProductsStore } from "./stores/productsStore";
 import CheckoutPayment from "./pages/CheckoutPayment";
 import PaymentForm from "./components/payment-form/PaymentForm";
 import Shipping from "./pages/Shipping";
+import Payment from "./pages/Payment";
 
 import DashBoard from "./pages/DashBoard";
 function App() {
@@ -29,7 +30,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/products/:slug" element={<ProductDetails />} />
             <Route path="/checkout/shipping" element={<Shipping />} />
-            <Route path="/checkout/payment" element={<PaymentForm />} />
+            <Route path="/checkout/payment" element={<Payment />} />
             <Route path="/checkout/confirm" element={<CheckoutPayment />} />
             <Route path="/dashboard" element={<DashBoard />} />
           </Routes>

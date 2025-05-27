@@ -23,7 +23,7 @@ const useShippingOptionsStore = create<ShippingOptionsState>((set) => ({
     fetchAllOptions: async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/shipping-options"
+          "http://localhost:5001/shipping-options"
         );
         console.log(response.data);
         set({

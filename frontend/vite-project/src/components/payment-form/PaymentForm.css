@@ -2,7 +2,7 @@
     @apply m-5 p-1;
 }
 
-.payment-container {
+.payment-form-container {
     @apply max-w-md mx-auto;
 }
 

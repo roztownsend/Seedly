@@ -4,12 +4,14 @@ import { ValidationRule } from "../../types/paymentFormTypes";
 import swishIcon from '../../assets/image/swish.svg';
 import klarnaIcon from '../../assets/image/klarna.svg';
 import "../payment-form/PaymentForm.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast';
 
 const PaymentForm = () => {
     const formData = useFormData();
     const { updateFormField } = usePaymentActions();
     const [errors, setErrors] = useState<Record<string, string>>({});
+    const navigate = useNavigate();
 
     // Format card number with spaces (e.g., 1234 5678 9012 3456)
     const formatCardNumber = (value: string) => {
@@ -40,34 +42,56 @@ const PaymentForm = () => {
         return Object.keys(newErrors).length === 0;
     };
 
-    // Handle form submission - idea for the future
+    // Handle form submission
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!validate()) return;
 
+        // Navigate to the next step, the data is already in the store
+        navigate("/checkout/confirm");
+
+        // --- If it is necessary to make the individual POST in the future ---
+        /*
         try {
-            const response = await fetch("name_endpoint", { // Replace with the actual endpoint
+            const { cardholderName, expMonth, expYear, saveCard } = formData;
+            await fetch("http://localhost:5001/payment", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    cardholderName,
+                    expMonth,
+                    expYear,
+                    saveCard,
+                }),
             });
 
-            const result = await response.json();
-            console.log("Server response:", result);
+            navigate("/checkout/confirm"); // Navigate only if everything is fine!
         } catch (error) {
             console.error("Payment submission failed:", error);
         }
+        */
     };
 
     // Allow only numeric input with a max length
     const handleNumericInput = (value: string, maxLength: number) =>
         value.replace(/\D/g, "").slice(0, maxLength);
 
+    // Dummy handlers for Swish and Klarna
+    const handleSwish = () => {
+        updateFormField("paymentMethod", "swish");
+        toast.success("Swish payment simulated!");
+        navigate("/checkout/confirm");
+    };
+
+    const handleKlarna = () => {
+        updateFormField("paymentMethod", "klarna");
+        toast.success("Klarna payment simulated!");
+        navigate("/checkout/confirm");
+    };
+
     return (
         <section className="payment-section">
-            <div className="payment-container">
+            <div className="payment-form-container">
                 {/* Title */}
                 <h1 className="h4">Payment Details</h1>
 
@@ -75,7 +99,7 @@ const PaymentForm = () => {
                 <form className="payment-form" onSubmit={handleSubmit}>
                     {/* Cardholder Name */}
                     <div>
-                        {/* <label htmlFor="cardHolderName" className="sr-only">Cardholder Name</label> */}
+                        <label htmlFor="cardHolderName" className="sr-only">Cardholder Name</label>
                         <input
                             className="payment-input"
                             type="text"
@@ -173,13 +197,21 @@ const PaymentForm = () => {
 
                     {/* Submit button */}
                     <button type="submit" className="button-primary w-full">
-                        <Link to="/checkout/confirm">Pay with card</Link>
+                        Pay with card
                     </button>
                     <div className="payment-button-group ">
-                        <button className="button-secondary__payment flex-1">
+                        <button
+                            className="button-secondary__payment flex-1"
+                            type="button"
+                            onClick={handleSwish}
+                        >
                             <img src={swishIcon} alt="Swish" className="h-8 w-auto" />
                         </button>
-                        <button className="button-secondary__payment flex-1">
+                        <button
+                            className="button-secondary__payment flex-1"
+                            type="button"
+                            onClick={handleKlarna}
+                        >
                             <img src={klarnaIcon} alt="Klarna" className="h-8 w-auto" />
                         </button>
                     </div>

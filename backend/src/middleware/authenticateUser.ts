@@ -1,9 +1,17 @@
 import { Response, Request, NextFunction } from "express";
-import { User } from "@supabase/supabase-js";
+import { User, UserAppMetadata } from "@supabase/supabase-js";
 import { supabaseAdmin } from "../config/supabaseClient";
 
+export interface CustomAppMetaData extends UserAppMetadata {
+  role?: "admin";
+}
+
+export interface CustomAuthUser extends Omit<User, "app_metadata"> {
+  app_metadata: CustomAppMetaData;
+}
+
 export interface AuthenticatedRequest extends Request {
-  user?: User | null;
+  user?: CustomAuthUser | null;
 }
 
 export const authenticateUser = async (

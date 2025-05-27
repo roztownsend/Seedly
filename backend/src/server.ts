@@ -17,6 +17,7 @@ import { ShippingOption } from "./models/shippingOption.model";
 import plantsInserter from "./utils/plantsInserterHelper";
 import optionsInserter from "./utils/optionsInserterHelper";
 import authTest from "./routes/authTest";
+import { makeUserAdmin } from "./services/makeUserAdmin";
 //testing server startup
 
 sequelize

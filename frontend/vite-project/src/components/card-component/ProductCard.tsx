@@ -23,7 +23,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
 
   return (
     <section className="product-card">
-      <Link to={`/products/${id}/${slugify(product_name)}`}>
+      <Link
+        to={`/products/${slugify(product_name)}`}
+        state={{ id }}
+      >
       <div className="product-card__image-box">
         <img src={image_url} alt={product_name} className="product-card__img" />
       </div>

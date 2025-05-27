@@ -3,15 +3,15 @@
 }
 
 .step-header-title {
-  @apply mb-6;
+  @apply mb-6 text-2xl font-semibold;
 }
 
 .step-header-wrapper {
-  @apply w-full flex items-center justify-between text-sm text-gray-600 gap-4;
+  @apply flex flex-row items-center justify-start gap-4 text-sm text-gray-600;
 }
 
 .step-label {
-  @apply text-lg text-gray-400;
+  @apply text-lg text-gray-400 whitespace-nowrap;
 }
 
 .step-label-active {
@@ -19,6 +19,5 @@
 }
 
 .step-line {
-  @apply w-24 h-0.5 bg-gray-300;
+  @apply w-6 h-0.5 bg-gray-300 inline-block align-middle;
 }
-

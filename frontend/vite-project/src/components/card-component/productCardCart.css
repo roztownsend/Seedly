@@ -18,6 +18,9 @@
   @apply flex w-full lg:flex-wrap;
 }
 
+.product-card-cart__actions {
+  @apply flex flex-col gap-2 w-full;
+}
 .product-card-cart__details {
   @apply flex w-full justify-between items-start flex-col;
 }

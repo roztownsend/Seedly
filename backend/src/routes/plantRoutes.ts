@@ -5,6 +5,7 @@ import { z } from "zod";
 import { Plant } from "../models/plant.model";
 import { Op } from "sequelize";
 import { Task } from "../models/task.model";
+import { idSchema, seedSchema } from "../schemas/schema";
 const router = Router();
 
 //get all plants
@@ -81,4 +82,48 @@ router.get("/:id/tasks", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/:id", async (req: Request, res: Response): Promise<void> => {
+  const id = req.params.id;
+  const parseId = idSchema.safeParse(id);
+
+  //Validate Id
+  if (!parseId.success) {
+    console.error("Validation failed for ID:", parseId.error.format());
+    res.status(400).json({
+      error: "Invalid Id",
+      details: parseId.error.format(),
+    });
+    return;
+  }
+
+  try {
+    const plant = await Plant.findByPk(id);
+
+    if (!plant) {
+      res.status(404).json({ error: "Plant not found" });
+      return;
+    }
+
+    // We could use plant.toJSON() to get a plain object before validating with Zod just to be safe,
+    // but Zod can validate the model instance directly since it exposes all required properties.
+    //Validate the data using Zod
+    const parseResult = seedSchema.safeParse(plant);
+
+    if (!parseResult.success) {
+      res.status(500).json({
+        error: "Invalid plant data structure from DB",
+        details: parseResult.error.format(),
+      });
+      return;
+    }
+
+    //Send back validated data
+    res.status(200).json(parseResult.data);
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to fetch plant by id",
+      message: (error as Error).message,
+    });
+  }
+});
 export default router;

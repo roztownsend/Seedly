@@ -192,3 +192,12 @@ export const useAuthError = () => useAuthStore((state) => state.error);
 export const useAuthSubscription = () =>
   useAuthStore((state) => state.authSubscription);
 export const useAuthActions = () => useAuthStore((state) => state.actions);
+export const useIsAdmin = (): boolean => {
+  const user = useAuthStore((state) => state.user);
+
+  if (!user) {
+    return false;
+  }
+
+  return user.app_metadata?.role === "admin";
+};

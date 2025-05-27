@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuthActions } from "../stores/authStore";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -8,6 +8,7 @@ import {
   FormType,
   UseCredentialsFormReturn,
 } from "../types/credentialsFormTypes";
+import { User } from "lucide-react";
 
 // useCredentialForm expects a 'formType' argument, which can either be 'login' or 'signup'.
 export const useCredentialForm = (
@@ -85,7 +86,11 @@ export const useCredentialForm = (
             }
           );
           console.log(response.data);
-          navigate("/test-dashboard");
+          if (result.data?.user?.app_metadata.role === "admin") {
+            navigate("/admin/test-dashboard");
+          } else {
+            navigate("/test-dashboard");
+          }
         } else if (result.error) {
           setErrorMessage(result.error.message);
         }

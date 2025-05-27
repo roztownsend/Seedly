@@ -6,7 +6,7 @@ type PrivateRouteProps = {
   children: ReactNode;
 };
 
-function PrivateRoute({ children }: PrivateRouteProps) {
+function AdminRoute({ children }: PrivateRouteProps) {
   const user = useAuthUser();
   const isLoading = useAuthLoading();
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ function PrivateRoute({ children }: PrivateRouteProps) {
       console.log("PrivateRoute: auth state is loading", isLoading);
       return;
     }
-    if (!user || user?.is_anonymous) {
+    if (user?.app_metadata.role !== "admin") {
       console.log(
         "PrivateRoute: No user found and loading completed redirecting to /login"
       );
@@ -29,10 +29,10 @@ function PrivateRoute({ children }: PrivateRouteProps) {
     return <div>Loading...</div>;
   }
 
-  if (user) {
+  if (user && user.app_metadata.role === "admin") {
     return <>{children}</>;
   }
   return null;
 }
 
-export default PrivateRoute;
+export default AdminRoute;

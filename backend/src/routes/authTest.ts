@@ -22,7 +22,6 @@ const router = Router();
 router.post(
   "/link-tasks",
   authenticateUser,
-  authenticateAdmin,
   async (req: AuthenticatedRequest, res: Response) => {
     const t: Transaction = await sequelize.transaction();
     try {

@@ -8,7 +8,9 @@ import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import ProductDetails from "./pages/ProductDetails";
 import TestDashboard from "./pages/TestDashboard";
+import TestAdminDashboard from "./pages/TestAdminDashboard";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
+import AdminRoute from "./components/privateRoute/AdminRoute";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import CheckoutPayment from "./pages/CheckoutPayment";
@@ -49,6 +51,14 @@ function App() {
                 <PrivateRoute>
                   <TestDashboard />
                 </PrivateRoute>
+              }
+            ></Route>
+            <Route
+              path="/admin/test-dashboard"
+              element={
+                <AdminRoute>
+                  <TestAdminDashboard />
+                </AdminRoute>
               }
             ></Route>
           </Routes>

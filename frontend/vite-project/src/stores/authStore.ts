@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { supabase } from "../helper/supabaseClient";
-import { AuthError, Session, Subscription, User } from "@supabase/supabase-js";
-import { CustomAuthUser, CustomAppMetaData } from "../types/authTypes";
+import { AuthError, Session, Subscription } from "@supabase/supabase-js";
+import { CustomAuthUser } from "../types/authTypes";
 
 type ClientSession = {
   access_token: string;

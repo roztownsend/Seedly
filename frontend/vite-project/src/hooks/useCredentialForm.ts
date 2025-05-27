@@ -8,7 +8,6 @@ import {
   FormType,
   UseCredentialsFormReturn,
 } from "../types/credentialsFormTypes";
-import { User } from "lucide-react";
 
 // useCredentialForm expects a 'formType' argument, which can either be 'login' or 'signup'.
 export const useCredentialForm = (

@@ -13,7 +13,16 @@ const CheckoutPayment = () => {
   const cartItems = useCartItems();
   const { clearCart } = useCartActions();
   const cartTotal = useCartTotal();
-  const { formData: shippingFormData } = useShippingStore();
+  const { formData: shippingFormData, resetForm } = useShippingStore();
+
+const lastShippingRef = useRef(shippingFormData);
+
+  useEffect(() => {
+    lastShippingRef.current = shippingFormData;
+    clearCart();
+    resetForm(); 
+  }, []);
+
   const paymentFormData = useFormData();
 
   const lastOrderItemsRef = useRef(cartItems);
@@ -53,13 +62,13 @@ const lastOrderTotal = useRef(cartTotal);
           <div className="vertical-stack">
             <h4>Shipping Information</h4>
             <ul className="info-list">
-              <li><strong>Name:</strong> {shippingFormData.name}</li>
-              <li><strong>Email:</strong> {shippingFormData.email}</li>
-              <li><strong>Address:</strong> {shippingFormData.address}</li>
-              <li><strong>Apartment:</strong> {shippingFormData.apartment}</li>
+              <li><strong>Name:</strong> {lastShippingRef.current.name}</li>
+              <li><strong>Email:</strong> {lastShippingRef.current.email}</li>
+              <li><strong>Address:</strong> {lastShippingRef.current.address}</li>
+              <li><strong>Apartment:</strong> {lastShippingRef.current.apartment}</li>
               <li>
                 <strong>City & Postal Code:</strong>{" "}
-                {shippingFormData.city} - {shippingFormData.postalCode}
+                {lastShippingRef.current.city} - {lastShippingRef.current.postalCode}
               </li>
             </ul>
           </div>

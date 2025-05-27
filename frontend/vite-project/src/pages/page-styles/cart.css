@@ -1,5 +1,5 @@
 .cart-sections {
-    @apply lg:grid lg:grid-cols-10 lg:gap-4 overflow-y-scroll;
+    @apply lg:grid lg:grid-cols-10 lg:gap-4;
 }
 
 .cart-header, .cart-header--nothing {
@@ -20,14 +20,6 @@
 
 .cart-items {
     @apply overflow-y-scroll;
-}
-
-.cart-items__list {
-    @apply flex flex-col gap-3;
-}
-
-.list-wrapper {
-    @apply py-3 mb-3 border-b-2;
 }
 
 .order-summary {

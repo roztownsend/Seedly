@@ -8,8 +8,7 @@ import "./PurchasedSeeds.css";
 const PurchasedSeeds: React.FC = () => {
   return (
     <>
-      <Navbar />
-
+     
       <header className="dashboard-header">
         <h1>Welcome to your dashboard!</h1>
         <p>You've got some stuff to do.</p>

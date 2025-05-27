@@ -53,4 +53,4 @@ const ProductGrid = ({ products }: ProductGridProps) => {
   );
 };
 
-export default ProductGrid;
+export default memo(ProductGrid);

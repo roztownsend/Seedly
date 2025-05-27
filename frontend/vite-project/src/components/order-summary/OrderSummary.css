@@ -6,6 +6,10 @@
     @apply flex justify-between py-2;
 }
 
+.subtotal__figure{
+    @apply font-semibold text-gray-800;
+}
+
 .shipping__figure--next-step {
     @apply text-yellow-700;
 }

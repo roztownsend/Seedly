@@ -15,13 +15,13 @@ const PurchasedSeeds: React.FC = () => {
         <a className="update-info" href="#">Update my user information</a>
       </header>
 
-      <main className="dashboard-container">
-        <section className="seeds-grid">
+      <section className="dashboard-container">
+        <div className="seeds-grid">
           {[1, 2, 3, 4].map((i) => (
             <SeedCard key={i} name="Pumpkin ‘Sugar Pie’" purchaseDate="2025/03/14" />
           ))}
-        </section>
-      </main>
+        </div>
+      </section>
 
       
     </>

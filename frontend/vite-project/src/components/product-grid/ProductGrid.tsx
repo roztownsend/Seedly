@@ -3,7 +3,7 @@ import ProductCard from "../card-component/ProductCard";
 import useIsMobile from "../../hooks/useIsMobile";
 import "./productGrid.css";
 import { ProductItem } from "../../stores/productsStore";
-
+import { memo } from "react";
 type ProductGridProps = {
     products: ProductItem[];
 }

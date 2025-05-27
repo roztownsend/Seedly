@@ -20,7 +20,7 @@ const plantsInserter = async () => {
           "Wintergreen and tasty. Plant in sunny spots where you want a large chunk of something fresh-smelling.",
       cycle: ["Annual", "Biennial"],
       image_url:
-          "https://roztownsend.net/seedly-assets/Kale-Lerchenzungen.webp",
+          "https://roztownsend.net/seedly-assets/Thyme.webp",
       isedible: true,
       sunlight: "Full"
     },

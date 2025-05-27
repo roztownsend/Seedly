@@ -1,0 +1,111 @@
+/* Container layout */
+.dashboard-container {
+  padding: 1rem 1.5rem;
+  font-family: Arial, sans-serif;
+}
+
+/* Header styling at top */
+.dashboard-header {
+  padding: 1rem 1.5rem;
+  background-color: #f9f9f9;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.dashboard-header h1 {
+  font-size: 1.3rem;
+  margin: 0 0 0.3rem 0;
+}
+
+.dashboard-header p {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.update-info {
+  text-decoration: none;
+  color: #0056b3;
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+/* Grid layout for cards */
+.seeds-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.2rem;
+  margin-top: 1.5rem;
+}
+
+/* Individual seed card */
+.seed-card {
+  border-top: 1px solid #ccc;
+  padding: 1rem 1rem 1.2rem;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top part with image and info */
+.top-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+/* Seed image */
+.seed-image-placeholder {
+  width: 70px;
+  height: 70px;
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+/* Text details */
+.seed-info h2 {
+  margin: 0 0 0.2rem 0;
+  font-size: 1rem;
+}
+
+.seed-info p {
+  font-size: 0.85rem;
+  color: #555;
+  margin: 0.2rem 0;
+}
+
+.repurchase-link {
+  font-size: 0.8rem;
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* Task checklist */
+.seed-task-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.seed-task-table th,
+.seed-task-table td {
+  padding: 0.25rem 0.4rem;
+  font-size: 0.85rem;
+  vertical-align: middle;
+}
+
+.seed-task-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* Center checkbox */
+.seed-task-table input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  display: block;
+  margin: 0 auto;
+}

@@ -57,7 +57,7 @@ export const useCredentialForm = (
       }
 
       const result = await action(email, password);
-
+      //temporary api calls.
       if (result.success) {
         if (formType === "signup") {
           console.log(result.data);

@@ -19,7 +19,7 @@ const Cart: React.FC = () => {
           <p className="no-items">You currently have no items in your cart.</p>
           <p className="no-items">
             Why not{" "}
-            <Link to="/seeds" className="text-link-primary">
+            <Link to="/shop" className="text-link-primary">
               check out our selection of seeds
             </Link>{" "}
             and add something?
@@ -35,7 +35,7 @@ const Cart: React.FC = () => {
             <h1 className="h3">Your Cart</h1>
             <div className="cart-header__not-ready">
               Not ready to checkout?{" "}
-              <Link to="/seeds" className="text-link-primary">
+              <Link to="/shop" className="text-link-primary">
                 Continue shopping
               </Link>
               .

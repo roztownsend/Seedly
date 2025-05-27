@@ -130,10 +130,16 @@ main {
   @apply text-lg text-gray-700 space-y-1;
 }
 
-
 .list {
   @apply text-lg text-gray-700 space-y-1;
 }
+
+/* Forms */
+
+.dropdown {
+    @apply border border-yellow-800 font-semibold bg-yellow-50 h-10 pl-4;
+}
+
 
 /* Animations */
 

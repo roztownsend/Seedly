@@ -49,7 +49,7 @@ export default function Navbar() {
             </Link>
             <div className="navbar-links-search">
               <div className="navbar-links">
-                <Link to="/seeds" className="navbar-link">
+                <Link to="/shop" className="navbar-link">
                   Seeds
                 </Link>
                 <Link to="/contact" className="navbar-link">
@@ -150,7 +150,7 @@ export default function Navbar() {
       </nav>
       {isMenuOpen && (
         <div className="mobile-menu animate-fadeIn relative">
-          <Link to="/seeds" className="mobile-link">
+          <Link to="/shop" className="mobile-link">
             Seeds
           </Link>
           <Link to="/contact" className="mobile-link">

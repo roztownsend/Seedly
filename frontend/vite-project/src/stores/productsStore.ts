@@ -25,16 +25,20 @@ export type ProductItem = {
 type ProductState = {
   productList: ProductItem[];
   actions: ProductActions;
+  loading: boolean;
 };
 
 const useProductsStore = create<ProductState>((set) => ({
   productList: [],
+  loading: false,
   actions: {
     fetchAllPlants: async () => {
+      set({ loading: true })
       const response = await axios.get("http://localhost:5000/plants");
       console.log(response.data);
       set({
         productList: response.data,
+        loading: false
       });
     },
   },
@@ -42,6 +46,9 @@ const useProductsStore = create<ProductState>((set) => ({
 
 export const useProductList = () =>
   useProductsStore((state) => state.productList);
+
+export const useProductLoading = () =>
+  useProductsStore((state) => state.loading);
 
 export const useProductActions = () =>
   useProductsStore((state) => state.actions);

@@ -13,6 +13,7 @@ import { useProductsStore } from "./stores/productsStore";
 import CheckoutPayment from "./pages/CheckoutPayment";
 import PaymentForm from "./components/payment-form/PaymentForm";
 import Shipping from "./pages/Shipping";
+import ShippingSelectorPage from "./pages/ShippingSelector";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/products/:id/:slug" element={<ProductDetails />} />
             <Route path="/checkout/shipping" element={<Shipping />} />
+            <Route path="/checkout/select-shipping" element={<ShippingSelectorPage />} />
             <Route path="/checkout/payment" element={<PaymentForm />} />
             <Route path="/checkout/confirm" element={<CheckoutPayment />} />
           </Routes>

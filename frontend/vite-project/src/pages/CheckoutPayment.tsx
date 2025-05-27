@@ -16,13 +16,21 @@ const CheckoutPayment = () => {
   const { formData: shippingFormData } = useShippingStore();
   const paymentFormData = useFormData();
 
-  const lastOrderItemsRef = useRef(cartItems);
-const lastOrderTotal = useRef(cartTotal);
+  const lastOrderTotal = useRef(0);
+  const lastOrderItemsRef = useRef<typeof cartItems>([]);
+
   useEffect(() => {
-    clearCart();
-  }, []);
+    if (cartItems.length > 0) {
+      lastOrderTotal.current = cartTotal;
+      lastOrderItemsRef.current = cartItems;
+      clearCart();
+    }
+  }, [cartItems, cartTotal]);
+
 
   const maskedCard = paymentFormData.cardNumber?.slice(-4) || "****";
+
+  console.log("Last order total:", lastOrderTotal.current);
 
   return (
     <section className="container-wrapper">

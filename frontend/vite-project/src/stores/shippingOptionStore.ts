@@ -7,18 +7,19 @@ import { useShallow } from "zustand/shallow";
 
 type ShippingOptionsActions = {
   fetchAllOptions: () => void;
-  setSelectionData: (shippingOption: string) => void;
+  setSelectionData: (shippingOption: GetAllOptions[number]) => void;
+  reset: () => void;
 };
 
 type ShippingOptionsState = {
   allShippingOptions: GetAllOptions;
-  selection: string;
+  selection: GetAllOptions[number] | null;
   actions: ShippingOptionsActions;
 };
 
 const useShippingOptionsStore = create<ShippingOptionsState>((set) => ({
   allShippingOptions: [],
-  selection: "",
+  selection: null,
   actions: {
     fetchAllOptions: async () => {
       try {
@@ -33,8 +34,12 @@ const useShippingOptionsStore = create<ShippingOptionsState>((set) => ({
         console.error("Unexpected error fetching shipping options", error);
       }
     },
-    setSelectionData: (shippingOption) => set({ selection: shippingOption }),
+    setSelectionData: (shippingOption: GetAllOptions[number]) => set({ selection: shippingOption }),
+    reset: function (): void {
+      throw new Error("Function not implemented.");
+    }
   },
+  reset: () => set({ selection: null }),
 }));
 
 //Save user selection (ID only) for purchase flow.
@@ -49,4 +54,4 @@ export const useShippingOptionsActions = () =>
   useShippingOptionsStore((state) => state.actions);
 
 export const useIsSelected = (optionId: string): boolean =>
-  useShippingOptionsStore((state) => state.selection === optionId);
+  useShippingOptionsStore((state) => state.selection?.id === optionId);

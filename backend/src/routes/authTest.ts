@@ -1,18 +1,9 @@
-//there are a few debug console.logs, shouldnt be touched
-
-import { Router, Request, Response } from "express";
+import { Router, Response } from "express";
 import { User } from "../models/user.model";
-import { Purchase } from "../models/purchase.model";
-import { ShippingInfo } from "../models/shippingInfo.model";
-import { PurchaseItem } from "../models/purchaseItem.model";
-import { Plant } from "../models/plant.model";
-import { Task } from "../models/task.model";
-import { UserTask } from "../models/userTask.model";
 import {
   AuthenticatedRequest,
   authenticateUser,
 } from "../middleware/authenticateUser";
-import { authenticateAdmin } from "../middleware/authenticateAdmin";
 import sequelize from "../config/sequelizeConnect";
 import { Transaction } from "sequelize";
 import { assignOrphanedPurchasesToUser } from "../services/assignOrphanedPurchase";

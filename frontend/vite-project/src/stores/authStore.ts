@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { supabase } from "../helper/supabaseClient";
 import { AuthError, Session, Subscription, User } from "@supabase/supabase-js";
+import { CustomAuthUser, CustomAppMetaData } from "../types/authTypes";
 
 type ClientSession = {
   access_token: string;
@@ -10,7 +11,7 @@ type ClientSession = {
 type AuthResponse = {
   success: boolean;
   data?: {
-    user: User | null;
+    user: CustomAuthUser | null;
     session: Session | null;
   };
   error?: AuthError | null;
@@ -27,7 +28,7 @@ type AuthActions = {
 };
 
 type AuthState = {
-  user: User | null;
+  user: CustomAuthUser | null;
   session: ClientSession;
   isLoading: boolean;
   error: AuthError | null;
@@ -55,7 +56,13 @@ const useAuthStore = create<AuthState>((set, get) => ({
           return { success: false, error };
         }
 
-        return { success: true, data };
+        return {
+          success: true,
+          data: {
+            user: data.user as CustomAuthUser | null,
+            session: data.session,
+          },
+        };
       } catch (error) {
         console.error("Unexpected error: ", error);
         return { success: false, error: error as AuthError };
@@ -73,7 +80,13 @@ const useAuthStore = create<AuthState>((set, get) => ({
           console.error("There was a problem signing up ", error);
           return { success: false, error };
         }
-        return { success: true, data };
+        return {
+          success: true,
+          data: {
+            user: data.user as CustomAuthUser | null,
+            session: data.session,
+          },
+        };
       } catch (error) {
         console.error("Unexpected error: ", error);
         return { success: false, error: error as AuthError };
@@ -105,6 +118,8 @@ const useAuthStore = create<AuthState>((set, get) => ({
           set({
             error: error,
             isLoading: false,
+            user: null,
+            session: null,
           });
           return;
         }
@@ -112,7 +127,7 @@ const useAuthStore = create<AuthState>((set, get) => ({
 
         // Update state with session and user data.
         set({
-          user: activeSession?.user ?? null,
+          user: (activeSession?.user as CustomAuthUser) ?? null,
           session: activeSession
             ? {
                 access_token: activeSession.access_token,
@@ -129,7 +144,7 @@ const useAuthStore = create<AuthState>((set, get) => ({
             `onAthStateChange - Event ${event} Session Email - ${eventSession?.user.email}`
           );
           set({
-            user: eventSession?.user ?? null,
+            user: (eventSession?.user as CustomAuthUser) ?? null,
             session: eventSession
               ? {
                   access_token: eventSession.access_token,
@@ -149,6 +164,8 @@ const useAuthStore = create<AuthState>((set, get) => ({
         set({
           error: error as AuthError,
           isLoading: false,
+          user: null,
+          session: null,
         });
       }
     },

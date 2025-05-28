@@ -23,7 +23,7 @@ const ShippingForm = () => {
 
     console.log("Shipping form submitted", formData);
     saveSubmission();
-    navigate("/checkout/payment");
+    navigate("/checkout/select-shipping");
   };
 
   return (

@@ -10,25 +10,40 @@ interface UserTaskType {
   user_id: string;
   task_id: string;
 }
-
+interface PurchaseWithTaskRow {
+  purchase_items?: {
+    plant?: {
+      tasks?: {
+        id: string;
+      };
+    };
+  };
+}
 export const linkUserTasks = async (
   userId: string,
   transaction: Transaction
 ): Promise<void> => {
-  const userPurchasesWithTasks = await Purchase.findAll({
+  const userPurchasesWithTasks = (await Purchase.findAll({
     where: { user_id: userId },
+    attributes: [],
     include: [
       {
         model: PurchaseItem,
         as: "purchase_items",
+        attributes: [],
+        required: true,
         include: [
           {
             model: Plant,
             as: "plant",
+            attributes: [],
+            required: true,
             include: [
               {
                 model: Task,
                 as: "tasks",
+                attributes: ["id"],
+                required: true,
               },
             ],
           },
@@ -36,57 +51,35 @@ export const linkUserTasks = async (
       },
     ],
     transaction,
-  });
-  const allTasks: Task[] = [];
-  for (const purchase of userPurchasesWithTasks) {
-    console.log(`Purchase ID: ${purchase.id}`);
-    for (const item of purchase.purchase_items || []) {
-      const plantId = item.plant_id;
-      console.log(`Plant ID: ${plantId}`);
-      if (item.plant?.tasks) {
-        for (const task of item.plant.tasks) {
-          allTasks.push(task);
-          console.log(
-            `Task ID - ${task.id}, Task description - ${task.description}`
-          );
-        }
+    raw: true,
+    nest: true,
+  })) as PurchaseWithTaskRow[];
+  console.log(JSON.stringify(userPurchasesWithTasks, null, 2));
+  const uniqueTaskIds = new Set<string>();
+  for (const row of userPurchasesWithTasks) {
+    const taskId = row.purchase_items?.plant?.tasks?.id;
+    if (taskId) {
+      {
+        uniqueTaskIds.add(taskId);
       }
     }
   }
 
-  const uniqueTasksMap = new Map<string, Task>();
+  const allTaskIds = Array.from(uniqueTaskIds);
 
-  for (const task of allTasks) {
-    uniqueTasksMap.set(task.id, task);
-  }
-
-  const uniqueTasks = Array.from(uniqueTasksMap.values());
-
-  const existingUserTasks = await UserTask.findAll({
-    where: { user_id: userId },
-    transaction,
-  });
-  const existingTaskIds = new Set<string>(
-    existingUserTasks.map((ut) => ut.task_id)
-  );
-
-  const tasksToAdd = uniqueTasks.filter(
-    (task) => !existingTaskIds.has(task.id)
-  );
+  const tasksToAdd: UserTaskType[] = allTaskIds.map((taskId) => ({
+    user_id: userId,
+    task_id: taskId,
+  }));
 
   try {
-    await Promise.all(
-      tasksToAdd.map((task) => {
-        const newTask: UserTaskType = {
-          user_id: userId,
-          task_id: task.id,
-        };
-        console.log(`new task added ${task.id}`);
-        return UserTask.create(newTask, { transaction });
-      })
-    );
+    await UserTask.bulkCreate(tasksToAdd, {
+      transaction,
+      ignoreDuplicates: true,
+    });
+    console.log(`UserTasks successfully linked for user ID ${userId}`);
   } catch (error) {
-    console.log("Error mapping and creating tasks");
+    console.error("Error during bulk creation of UserTasks");
     throw error;
   }
 };

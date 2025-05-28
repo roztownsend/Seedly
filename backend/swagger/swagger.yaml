@@ -39,12 +39,12 @@ paths:
           schema:
             type: string
           description: Filter by plant name or description
-            name: edible
-            in: query
-            required: false
-            schema:
-              type: boolean
-            description: Filter by edibility
+        - name: edible
+          in: query
+          required: false
+          schema:
+            type: boolean
+          description: Filter by edibility
       responses:
         '200':
           description: Filtered list of plants
@@ -147,6 +147,79 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  
+  /payment:
+    post:
+      summary: Store a payment record
+      description: >
+        Accepts payment details, validates them, and stores the payment record
+        without sensitive card data.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - cardholderName
+                - expMonth
+                - expYear
+              properties:
+                cardholderName:
+                  type: string
+                  description: Name on the card
+                  example: "John Doe"
+                expMonth:
+                  type: integer
+                  description: Expiration month of the card (1-12)
+                  example: 12
+                expYear:
+                  type: integer
+                  description: Expiration year of the card (e.g., 2026)
+                  example: 2026
+                saveCard:
+                  type: boolean
+                  description: Whether to save the card info (no sensitive data stored)
+                  default: false
+                userId:
+                  type: string
+                  nullable: true
+                  description: User ID associated with the payment, if any
+                  example: "12345"
+      responses:
+        '200':
+          description: Payment stored successfully (no sensitive data saved)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Payment stored (no sensitive data)
+        '400':
+          description: Invalid payment data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Invalid payment data
+                  details:
+                    type: object
+                    description: Validation error details
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal server error
 
 components:
   schemas:
@@ -210,3 +283,5 @@ components:
         error:
           type: string
           example: Internal server error
+
+

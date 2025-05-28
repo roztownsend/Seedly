@@ -1,5 +1,9 @@
+.cart{
+    @apply w-11/12 border;
+}
+
 .cart-sections {
-    @apply lg:grid lg:grid-cols-10 lg:gap-4;
+    @apply w-full lg:grid lg:grid-cols-10 lg:gap-4;
 }
 
 .cart-header, .cart-header--nothing {
@@ -15,11 +19,7 @@
 }
 
 .cart-items {
-    @apply lg:col-start-2 lg:col-end-5;
-}
-
-.cart-items {
-    @apply overflow-y-scroll;
+    @apply lg:col-start-2 lg:col-end-6 overflow-y-scroll;
 }
 
 .order-summary {

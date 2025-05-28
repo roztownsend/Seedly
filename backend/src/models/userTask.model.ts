@@ -15,8 +15,8 @@ export class UserTask extends Model<
   InferCreationAttributes<UserTask>
 > {
   declare id: CreationOptional<string>;
-  declare user_id: ForeignKey<string>;
-  declare task_id: ForeignKey<string>;
+  declare user_id: ForeignKey<User["id"]>;
+  declare task_id: ForeignKey<Task["id"]>;
   declare is_completed: CreationOptional<boolean>;
 
   declare createdAt: CreationOptional<Date>;

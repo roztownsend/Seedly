@@ -12,12 +12,13 @@ import {
 import { PurchaseItem } from "./purchaseItem.model";
 import { Payment } from "./payment.model";
 import { ShippingInfo } from "./shippingInfo.model";
+import { User } from "./user.model";
 export class Purchase extends Model<
   InferAttributes<Purchase>,
   InferCreationAttributes<Purchase>
 > {
   declare id: CreationOptional<string>;
-  declare user_id: ForeignKey<string> | null;
+  declare user_id: ForeignKey<User["id"]> | null;
 
   declare total_items: number;
   declare shipping_selection: string;

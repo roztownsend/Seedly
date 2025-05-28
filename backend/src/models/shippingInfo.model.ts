@@ -14,8 +14,8 @@ export class ShippingInfo extends Model<
   InferCreationAttributes<ShippingInfo>
 > {
   declare id: CreationOptional<string>;
-  declare purchase_id: ForeignKey<string>;
-  declare shipping_option_id: ForeignKey<string>;
+  declare purchase_id: ForeignKey<Purchase["id"]>;
+  declare shipping_option_id: ForeignKey<ShippingOption["id"]>;
   declare customer_name: string;
   declare email: string;
   declare address: string;

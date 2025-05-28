@@ -20,30 +20,32 @@ type ShippingOptionsState = {
 export const useSelectedShippingOption = () =>
   useShippingOptionsStore((state) => state.selection);
 
-const useShippingOptionsStore = create<ShippingOptionsState>((set) => ({
-  allShippingOptions: [],
-  selection: null,
-  actions: {
-    fetchAllOptions: async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:5000/shipping-options"
-        );
-        console.log(response.data);
-        set({
-          allShippingOptions: response.data,
-        });
-      } catch (error) {
-        console.error("Unexpected error fetching shipping options", error);
-      }
-    },
-    setSelectionData: (shippingOption: GetAllOptions[number]) => set({ selection: shippingOption }),
-    reset: function (): void {
-      throw new Error("Function not implemented.");
+const useShippingOptionsStore = create<ShippingOptionsState>((set) => {
+  const fetchAllOptions = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/shipping-options");
+      set({ allShippingOptions: response.data });
+    } catch (error) {
+      console.error(error);
     }
-  },
-  reset: () => set({ selection: null }),
-}));
+  };
+
+  const setSelectionData = (shippingOption: GetAllOptions[number]) => {
+    set({ selection: shippingOption });
+  };
+
+  const reset = () => set({ selection: null });
+
+  return {
+    allShippingOptions: [],
+    selection: null,
+    actions: {
+      fetchAllOptions,
+      setSelectionData,
+      reset,
+    },
+  };
+});
 
 //Save user selection (ID only) for purchase flow.
 

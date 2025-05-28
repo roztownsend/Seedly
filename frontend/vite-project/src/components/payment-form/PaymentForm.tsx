@@ -47,7 +47,8 @@ const PaymentForm = () => {
         e.preventDefault();
         if (!validate()) return;
 
-        // Navigate to the next step, the data is already in the store
+        updateFormField("paymentMethod", "card"); // <-- Corrige o método
+
         navigate("/checkout/confirm");
 
         // --- If it is necessary to make the individual POST in the future ---

@@ -3,5 +3,5 @@
 }
 
 .assortment-controls {
-    @apply flex justify-between;
+    @apply flex justify-between items-center;
 }

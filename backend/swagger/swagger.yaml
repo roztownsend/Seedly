@@ -20,29 +20,193 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
+                  $ref: '#/components/schemas/Plant'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /plants/search:
     get:
-      summary: Search plants with filters
-      description: Returns filtered plant data based on query parameters
+      summary: Search plants by name
+      description: Returns filtered plant data based on a search term
       parameters:
         - name: name
           in: query
+          required: true
           schema:
             type: string
-          description: Filter by plant name
-        - name: edible
-          in: query
-          schema:
-            type: boolean
-          description: Filter by edibility
+          description: Filter by plant name or description
+            name: edible
+            in: query
+            required: false
+            schema:
+              type: boolean
+            description: Filter by edibility
       responses:
         '200':
-          description: A filtered list of plants
+          description: Filtered list of plants
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Plant'
+                  message:
+                    type: string
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /plants/{id}:
+    get:
+      summary: Get a plant by ID
+      description: Returns plant details for the given ID. Validates input and output data.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique plant ID
+      responses:
+        '200':
+          description: Plant found and returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plant'
+        '400':
+          description: Invalid ID format
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Invalid Id
+                  details:
+                    type: object
+        '404':
+          description: Plant not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error or invalid plant data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /plants/{id}/tasks:
+    get:
+      summary: Get tasks for a specific plant
+      description: Retrieves all tasks associated with a plant
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the plant
+      responses:
+        '200':
+          description: A list of tasks
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  type: object
+                  $ref: '#/components/schemas/Task'
+        '404':
+          description: Plant not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    Plant:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d59f951a-cd68-4166-bb5e-3d942ad65c1d
+        product_name:
+          type: string
+          example: "Pumpkin 'Baby Bear'"
+        description:
+          type: string
+          example: "Baby bear pumpkins have slender, sturdy, easy to grip handles..."
+        price:
+          type: number
+          example: 48
+        cycle:
+          type: array
+          items:
+            type: string
+          example: ["Annual"]
+        image_url:
+          type: string
+          format: uri
+          example: "https://roztownsend.net/seedly-assets/Pumpkin-Baby-Bear.webp"
+        isedible:
+          type: boolean
+          example: true
+        sunlight:
+          type: string
+          example: Full
+        createdAt:
+          type: string
+          format: date-time
+          example: "2025-05-26T10:41:01.982Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2025-05-26T10:41:01.983Z"
+
+    Task:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        description:
+          type: string
+          example: Water the plant
+        dueDate:
+          type: string
+          format: date
+          example: '2025-06-01'
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Internal server error

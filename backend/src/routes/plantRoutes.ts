@@ -69,18 +69,6 @@ router.get("/:id/tasks", async (req: Request, res: Response) => {
   }
 });
 
-// GET /plants/:id/tasks
-router.get("/:id/tasks", async (req: Request, res: Response) => {
-  try {
-    const plantId = req.params.id;
-    const plant = await Plant.findByPk(plantId);
-    const tasks = await plant?.getTasks();
-    res.json(tasks);
-  } catch (err) {
-    console.error("Error fetching tasks:", err);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
 
 router.get("/:id", async (req: Request, res: Response): Promise<void> => {
   const id = req.params.id;

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useShippingStore } from "../../stores/shippingStore";
 import './shippingForm.css'
 
@@ -10,16 +10,27 @@ const ShippingForm = () => {
   saveSubmission,
 } = useShippingStore();
 
+ const navigate = useNavigate();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    console.log("Shipping form submitted", formData);
+    saveSubmission();
+    navigate("/checkout/payment");
+  };
+
   return (
     <section className="section-wrapper">
       <form
-        className="shipping-form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          console.log("Shipping form submitted", formData);
-          saveSubmission();
-          resetForm();
-        }}
+        className="shipping-form" 
+        onSubmit={handleSubmit}
       >
         <div className="input-container-flex-col">
           <p className="section-title">Shipping Information</p>
@@ -120,7 +131,7 @@ const ShippingForm = () => {
 
         <div>
           <button type="submit" className="button-primary submit-button">
-            <Link to="/checkout/select-shipping">Continue to shipping</Link>
+            Continue to payment
           </button>
         </div>
       </form>

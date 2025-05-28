@@ -43,7 +43,7 @@ export class Plant extends Model<
           primaryKey: true,
         },
         product_name: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
           allowNull: false,
         },
         price: {

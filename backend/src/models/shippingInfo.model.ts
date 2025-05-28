@@ -40,7 +40,7 @@ export class ShippingInfo extends Model<
           allowNull: false,
         },
         email: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
           allowNull: false,
         },
         address: {
@@ -48,15 +48,15 @@ export class ShippingInfo extends Model<
           allowNull: false,
         },
         apartment: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
           allowNull: true,
         },
         postcode: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
           allowNull: false,
         },
         city: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
           allowNull: false,
         },
         createdAt: {

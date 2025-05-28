@@ -22,7 +22,6 @@ export class Purchase extends Model<
   declare user_id: ForeignKey<User["id"]> | null;
 
   declare total_items: number;
-  declare shipping_selection: string;
   declare shipping_price: number;
   declare total_amount: number;
   declare purchase_date: CreationOptional<Date>;
@@ -51,10 +50,6 @@ export class Purchase extends Model<
         },
         total_items: {
           type: DataTypes.INTEGER,
-          allowNull: false,
-        },
-        shipping_selection: {
-          type: DataTypes.STRING,
           allowNull: false,
         },
         shipping_price: {

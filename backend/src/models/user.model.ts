@@ -29,11 +29,12 @@ export class User extends Model<
           primaryKey: true,
         },
         email: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
           allowNull: false,
+          unique: true,
         },
         role: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
           defaultValue: "customer",
           allowNull: false,
         },

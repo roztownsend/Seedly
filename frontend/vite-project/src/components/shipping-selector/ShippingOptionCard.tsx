@@ -29,7 +29,7 @@ function ShippingOptionCard({ option }: ShippingOptionCardProps) {
             name="shipping-option"
             value={option.label}
             checked={isSelected}
-            onChange={() => setSelectionData(option.id)}
+            onChange={() => setSelectionData(option)}
           />
         </div>
         <div className="details">

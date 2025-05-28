@@ -3,6 +3,7 @@ import heroImg from "../assets/image/heroImg.webp";
 import GridHome from "../components/grid-home/GridHome";
 
 function Home() {
+  
   return (
     <>
       <section>

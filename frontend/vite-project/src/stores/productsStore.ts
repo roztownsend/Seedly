@@ -7,6 +7,7 @@ export type FetchAllPlantsResponse = {
 
 type ProductActions = {
   fetchAllPlants: () => void;
+  updateProductList: (sorted: ProductItem[]) => void;
 };
 
 export type ProductItem = {
@@ -41,7 +42,11 @@ const useProductsStore = create<ProductState>((set) => ({
         loading: false
       });
     },
-  },
+    updateProductList: (sorted) => {
+      console.log("Sorted store!")
+      set({ productList: sorted })
+    }
+  }
 }));
 
 export const useProductList = () =>

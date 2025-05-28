@@ -25,14 +25,13 @@ const Shop: React.FC = () => {
   
   if (loading) return <Loading />;
   
-  console.log(productList);
   return (
   <section className="seeds-assortment">
     <div className="shop-heading">
       <h3>Our Assortment of Seeds</h3>
       </div>
     <div className="assortment-controls">
-      <div className="assortment-controls__sorter"><ProductSorter /></div>
+      <div className="assortment-controls__sorter"><ProductSorter data={productList} /></div>
       <div className="assortment-controls__count">Showing {productList.length} products</div>
     </div>
     <ProductGrid products={productList} />

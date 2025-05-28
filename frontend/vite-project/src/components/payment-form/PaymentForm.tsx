@@ -5,12 +5,14 @@ import swishIcon from '../../assets/image/swish.svg';
 import klarnaIcon from '../../assets/image/klarna.svg';
 import "../payment-form/PaymentForm.css";
 import { useNavigate } from "react-router-dom";
-import toast from 'react-hot-toast';
+import valid from "card-validator";
+
 
 const PaymentForm = () => {
     const formData = useFormData();
     const { updateFormField } = usePaymentActions();
     const [errors, setErrors] = useState<Record<string, string>>({});
+    const [cardBrand, setCardBrand] = useState<string>("");
     const navigate = useNavigate();
 
     // Format card number with spaces (e.g., 1234 5678 9012 3456)
@@ -25,10 +27,10 @@ const PaymentForm = () => {
     // Validation rules for each input field
     const validationRules: ValidationRule[] = [
         ["cardholderName", (v) => !!v.trim(), "Cardholder name is required."],
-        ["cardNumber", (v) => /^\d{16}$/.test(v.replace(/\s/g, "")), "Card number must be 16 digits."],
+        ["cardNumber", (v) => valid.number(v).isValid, "Card number is invalid."],
         ["expMonth", (v) => !!v, "Month required."],
         ["expYear", (v) => !!v, "Year required."],
-        ["cvc", (v) => /^\d{3,4}$/.test(v), "CVC must be 3 or 4 digits."],
+        ["cvc", (v) => valid.cvv(v).isValid, "CVC is invalid."],
     ];
 
     // Run all validations and set errors
@@ -46,31 +48,8 @@ const PaymentForm = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!validate()) return;
-
-        updateFormField("paymentMethod", "card"); // <-- Corrige o método
-
+        updateFormField("paymentMethod", "card");
         navigate("/checkout/confirm");
-
-        // --- If it is necessary to make the individual POST in the future ---
-        /*
-        try {
-            const { cardholderName, expMonth, expYear, saveCard } = formData;
-            await fetch("http://localhost:5001/payment", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    cardholderName,
-                    expMonth,
-                    expYear,
-                    saveCard,
-                }),
-            });
-
-            navigate("/checkout/confirm"); // Navigate only if everything is fine!
-        } catch (error) {
-            console.error("Payment submission failed:", error);
-        }
-        */
     };
 
     // Allow only numeric input with a max length
@@ -80,14 +59,20 @@ const PaymentForm = () => {
     // Dummy handlers for Swish and Klarna
     const handleSwish = () => {
         updateFormField("paymentMethod", "swish");
-        toast.success("Swish payment simulated!");
         navigate("/checkout/confirm");
     };
 
     const handleKlarna = () => {
         updateFormField("paymentMethod", "klarna");
-        toast.success("Klarna payment simulated!");
         navigate("/checkout/confirm");
+    };
+
+    // Detect card brand on input change
+    const handleCardNumberChange = (value: string) => {
+        const formatted = formatCardNumber(value);
+        updateFormField("cardNumber", formatted);
+        const result = valid.number(formatted);
+        setCardBrand(result.card ? result.card.niceType : "");
     };
 
     return (
@@ -112,18 +97,23 @@ const PaymentForm = () => {
                         {errors.cardholderName && <p className="payment-error">{errors.cardholderName}</p>}
                     </div>
 
-                    {/* Card Number */}
-                    <div>
+                    {/* Card Number + Brand */}
+                    <div className="card-number-container">
                         <label htmlFor="cardNumber" className="sr-only">Card Number</label>
                         <input
-                            className="payment-input"
+                            className="payment-input pr-20"
                             type="text"
                             id="cardNumber"
                             inputMode="numeric"
                             placeholder="Card Number"
                             value={formData.cardNumber}
-                            onChange={(e) => updateFormField("cardNumber", formatCardNumber(e.target.value))}
+                            onChange={(e) => handleCardNumberChange(e.target.value)}
                         />
+                        {cardBrand && (
+                            <span className="card-brand-badge">
+                                {cardBrand}
+                            </span>
+                        )}
                         {errors.cardNumber && <p className="payment-error">{errors.cardNumber}</p>}
                     </div>
 
@@ -200,20 +190,25 @@ const PaymentForm = () => {
                     <button type="submit" className="button-primary w-full">
                         Pay with card
                     </button>
-                    <div className="payment-button-group ">
+
+                    <div className="payment-divider">
+                        <span className="payment-divider-text">or pay with:</span>
+                    </div>
+
+                    <div className="payment-button-group">
                         <button
                             className="button-secondary__payment flex-1"
                             type="button"
                             onClick={handleSwish}
                         >
-                            <img src={swishIcon} alt="Swish" className="h-8 w-auto" />
+                            <img src={swishIcon} alt="Swish" className="h-8 w-auto mx-auto" />
                         </button>
                         <button
                             className="button-secondary__payment flex-1"
                             type="button"
                             onClick={handleKlarna}
                         >
-                            <img src={klarnaIcon} alt="Klarna" className="h-8 w-auto" />
+                            <img src={klarnaIcon} alt="Klarna" className="h-8 w-auto mx-auto" />
                         </button>
                     </div>
                 </form>

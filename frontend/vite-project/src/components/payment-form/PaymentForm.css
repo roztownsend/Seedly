@@ -28,3 +28,22 @@
 .payment-button-group {
     @apply flex gap-2;
 }
+.payment-divider {
+    @apply flex items-center my-4;
+}
+.payment-divider-text {
+    @apply mx-2 text-center text-gray-600 text-sm;
+}
+.payment-divider::before,
+.payment-divider::after {
+    content: "";
+    @apply flex-1 border-t border-gray-300;
+}
+.card-number-container {
+    @apply relative;
+}
+
+.card-brand-badge {
+    @apply absolute right-4 top-1/2 bg-white px-1 text-sm text-gray-600 pointer-events-none;
+    transform: translateY(-50%);
+}

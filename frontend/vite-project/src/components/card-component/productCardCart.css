@@ -19,6 +19,9 @@
   @apply flex flex-col gap-2 w-full;
 }
 
+.product-card-cart__actions {
+  @apply flex flex-col gap-2 w-full;
+}
 .product-card-cart__details {
   @apply w-full h-full flex flex-col justify-between;
 }

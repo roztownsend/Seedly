@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import { FaHourglassHalf, FaRegSadTear } from "react-icons/fa";
+import { useLocation, useParams } from "react-router-dom";
+import { FaHourglassHalf, FaRegSadTear, FaSun, FaRecycle, FaSeedling } from "react-icons/fa";
 import { useCartActions } from "../stores/cartStore";
 import { ProductItem } from "../stores/productsStore";
 import { QuantityControl } from "../components/quantity-control/QuantityControl";
@@ -9,7 +9,9 @@ import { Task } from "../types/types";
 import "./page-styles/ProductDetails.css";
 
 const ProductDetails: React.FC = () => {
-  const { id } = useParams(); // get the product ID via route
+  const { slug } = useParams();
+  const location = useLocation();
+  const id = location.state?.id;
   const [plant, setPlant] = useState<ProductItem | null>(null);
   const [loading, setLoading] = useState(true);
   const { addItem } = useCartActions();
@@ -40,18 +42,20 @@ const ProductDetails: React.FC = () => {
   }, [id]);
 
   useEffect(() => {
-    if (!id) return;
+    if (!plant?.id) return;
+
     const fetchTasks = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/plants/${id}/tasks`);
+        const res = await axios.get(`http://localhost:5000/plants/${plant.id}/tasks`);
         setTasks(res.data);
       } catch (err) {
         setTasks([]);
         console.error("Error fetching tasks", err);
       }
     };
+
     fetchTasks();
-  }, [id]);
+  }, [plant]);
 
   // Function to group tasks by description and month range
   function groupTasks(tasks: Task[]) {
@@ -107,11 +111,36 @@ const ProductDetails: React.FC = () => {
         </div>
         <div className="desc-actions">
           <p className="product-description">{plant.description}</p>
-          <p className="product-details">
-            <strong>Cycle:</strong> {plant.cycle}
-            <br />
-            <strong>Sunlight:</strong> {plant.sunlight}
-          </p>
+          <div className="product-cycles">
+            <h5 className="product-tasks-heading h5">
+              Cycle types
+            </h5>
+            <ul className="product-tasks__items">
+              {Array.isArray(plant.cycle) && plant.cycle.length > 0 ? (
+                plant.cycle.map((cycle, idx) => (
+                  <li key={idx} className="product-task-item">
+                    <span role="img" aria-label="cycle"><FaRecycle /></span> {cycle}
+                  </li>
+                ))
+              ) : (
+                <li>No cycle information available.</li>
+              )}
+            </ul>
+          </div>
+          <div className="product-sunlight">
+            <h5 className="product-tasks-heading">
+              Sunlight Exposure
+            </h5>
+            <ul className="product-tasks__items">
+              {plant.sunlight ? (
+                <li className="product-task-item">
+                  <span role="img" aria-label="sun"><FaSun /></span> {plant.sunlight}
+                </li>
+              ) : (
+                <li>No sunlight data available.</li>
+              )}
+            </ul>
+          </div>
           <div className="product-tasks">
             <h4 className="product-tasks-heading">
               Tasks for {plant.product_name}
@@ -120,7 +149,7 @@ const ProductDetails: React.FC = () => {
               {tasks.length > 0 ? (
                 groupTasks(tasks).map((group, idx) => (
                   <li key={idx} className="product-task-item">
-                    <span role="img" aria-label="task">🌱</span>
+                    <span role="img" aria-label="task"><FaSeedling /> </span>
                     <strong>
                       {group.months
                         .map(

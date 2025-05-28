@@ -5,12 +5,12 @@ const ProductSorter = ({ data }: FetchAllPlantsResponse) => {
 
 
     const lowHigh: () => void = () => {
-        const sortedLow: ProductItem[] = data.sort((a, b) => a.price - b.price);
+        const sortedLow: ProductItem[] = data.sort((a, b) => b.price - a.price);
         updateProductList([...sortedLow]);
     };
 
     const highLow: () => void = () => {
-        const sortedHigh: ProductItem[] = data.sort((a, b) => b.price - a.price);
+        const sortedHigh: ProductItem[] = data.sort((a, b) => a.price - b.price);
         updateProductList([...sortedHigh]);
     };
 
@@ -37,6 +37,7 @@ const ProductSorter = ({ data }: FetchAllPlantsResponse) => {
 }
     return (
         <select className="dropdown" onChange={handleChange} name="sorter" id="sorter">
+            <option value="default">Sort by</option>
             <option value="price-low">Price (low to high)</option>
             <option value="price-high">Price (high to low)</option>
             <option value="alphabetical">Product Name (A-Z)</option>

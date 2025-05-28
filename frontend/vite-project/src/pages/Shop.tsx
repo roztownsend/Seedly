@@ -16,7 +16,7 @@ const Shop: React.FC = () => {
         try {
           await fetchAllPlants();
         } catch (error) {
-          console.log("Error fetching produccts")
+          console.log("Error fetching products")
         }
       }
       fetchData();

@@ -1,33 +1,48 @@
 import { Purchase } from "../models/purchase.model";
 import { ShippingInfo } from "../models/shippingInfo.model";
 
-import { Transaction } from "sequelize";
+import { Transaction, Op } from "sequelize";
+
+interface PurchaseIdObject {
+  id: string;
+}
 
 export const assignOrphanedPurchasesToUser = async (
   userId: string,
   userEmail: string,
   transaction: Transaction
-): Promise<Purchase[]> => {
-  const purchases = await Purchase.findAll({
+): Promise<number> => {
+  const purchaseIdObjects: PurchaseIdObject[] = await Purchase.findAll({
     where: { user_id: null },
+    attributes: ["id"],
     include: [
       {
         model: ShippingInfo,
         as: "shipping_info",
+        attributes: [],
         where: { email: userEmail },
       },
     ],
+    raw: true,
     transaction,
   });
-  for (const purchase of purchases) {
-    try {
-      purchase.user_id = userId;
-      await purchase.save({ transaction });
-      console.log("updated purchase");
-    } catch (error) {
-      console.error("Failed to update purchase", error);
-      throw error;
-    }
+
+  const purchaseIdsToUpdate: string[] = purchaseIdObjects.map(
+    (purchase) => purchase.id
+  );
+
+  if (purchaseIdsToUpdate.length <= 0) {
+    return 0;
   }
-  return purchases;
+
+  const [numberOfAffectedRows] = await Purchase.update(
+    { user_id: userId },
+    {
+      where: {
+        id: { [Op.in]: purchaseIdsToUpdate },
+      },
+      transaction,
+    }
+  );
+  return numberOfAffectedRows;
 };

@@ -73,6 +73,13 @@ export class ShippingInfo extends Model<
         tableName: "shipping_infos",
         modelName: "Shipping_info",
         timestamps: false,
+        indexes: [
+          { name: "idx_shipping_infos_purchase_id", fields: ["purchase_id"] },
+          {
+            name: "idx_shipping_infos_email_purchase_id",
+            fields: ["email", "purchase_id"],
+          },
+        ],
       }
     );
   }

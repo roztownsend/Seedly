@@ -79,6 +79,7 @@ export class Purchase extends Model<
         tableName: "purchases",
         timestamps: true,
         underscored: true,
+        indexes: [{ name: "idx_purchases_user_id", fields: ["user_id"] }],
       }
     );
   }

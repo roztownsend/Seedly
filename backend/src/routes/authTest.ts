@@ -25,7 +25,8 @@ router.post(
         req.user.email,
         t
       );
-      if (orphanedPurchases.length > 0) {
+      console.log(orphanedPurchases);
+      if (orphanedPurchases > 0) {
         await linkUserTasks(req.user.id, t);
       }
 

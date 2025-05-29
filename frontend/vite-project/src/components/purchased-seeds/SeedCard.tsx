@@ -35,6 +35,8 @@ const SeedCard = ({
 }) => {
   const session = useAuthSession();
   const [userTasks, setUserTasks] = useState<UserTask[]>(tasks);
+  const [isLoadingSaveChanges, setIsLoadingSaveChanges] =
+    useState<boolean>(false);
   const originalTasksRef = useRef(tasks);
   const hasChanges =
     JSON.stringify(userTasks) !== JSON.stringify(originalTasksRef.current);
@@ -67,6 +69,7 @@ const SeedCard = ({
   const saveChanges = async () => {
     const tasksToUpdate = getChangedTasks();
 
+    setIsLoadingSaveChanges(true);
     try {
       const response = await axios.put(
         "http://localhost:5000/user-tasks/update",
@@ -79,13 +82,13 @@ const SeedCard = ({
         }
       );
       console.log(response.data);
+      originalTasksRef.current = [...userTasks];
+      setIsLoadingSaveChanges(false);
     } catch (error) {
       console.error("Failed to update tasks", error);
     }
-    console.log(tasksToUpdate);
   };
 
-  console.log(userTasks);
   return (
     <div className="seed-card">
       <div className="top-section">
@@ -127,6 +130,7 @@ const SeedCard = ({
               <td>
                 <input
                   type="checkbox"
+                  disabled={isLoadingSaveChanges}
                   checked={task.is_completed}
                   onChange={() => toggleTaskCompletion(task.task_id)}
                 />
@@ -138,6 +142,7 @@ const SeedCard = ({
       {hasChanges && (
         <button
           onClick={saveChanges}
+          disabled={isLoadingSaveChanges}
           className="bg-green-800 text-white text-base mt-3 p-2"
         >
           Save changes

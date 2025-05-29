@@ -31,7 +31,7 @@ router.post(
       }
 
       await t.commit();
-      res.json({ message: "success" });
+      res.status(200).json({ message: "success" });
     } catch (error) {
       console.error("Transaction failed", error);
       await t.rollback();

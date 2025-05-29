@@ -5,8 +5,9 @@ import {
   authenticateUser,
 } from "../middleware/authenticateUser";
 import sequelize from "../config/sequelizeConnect";
-import { Transaction, where } from "sequelize";
+import { Transaction } from "sequelize";
 import { UserTask } from "../models/userTask.model";
+import { getUserTasks } from "../services/getUserTasksService";
 
 const router = Router();
 
@@ -19,10 +20,8 @@ router.get(
       if (!req.user?.id) {
         throw new Error("Missing user ID");
       }
-      const userTasks = await UserTask.findAll({
-        where: { user_id: req.user.id },
-      });
-      res.json({ data: userTasks });
+      const userTasks = await getUserTasks(req.user.id, t);
+      res.json(userTasks);
     } catch (error) {}
   }
 );

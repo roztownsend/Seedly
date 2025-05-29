@@ -4,9 +4,6 @@ import {
   AuthenticatedRequest,
   authenticateUser,
 } from "../middleware/authenticateUser";
-import sequelize from "../config/sequelizeConnect";
-import { Transaction } from "sequelize";
-import { UserTask } from "../models/userTask.model";
 import { getUserTasks } from "../services/getUserTasksService";
 
 const router = Router();
@@ -15,14 +12,16 @@ router.get(
   "/",
   authenticateUser,
   async (req: AuthenticatedRequest, res: Response) => {
-    const t: Transaction = await sequelize.transaction();
     try {
       if (!req.user?.id) {
         throw new Error("Missing user ID");
       }
-      const userTasks = await getUserTasks(req.user.id, t);
-      res.json(userTasks);
-    } catch (error) {}
+      const userTasks = await getUserTasks(req.user.id);
+      res.status(200).json(userTasks);
+    } catch (error) {
+      console.error("Unexpected error occured");
+      res.status(500).json({ message: "Unexpected error occured" });
+    }
   }
 );
 

@@ -84,20 +84,11 @@ export const useCredentialForm = (
               },
             }
           );
-          const taskResponse = await axios.get(
-            "http://localhost:5000/user-tasks",
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${result.data?.session?.access_token}`,
-              },
-            }
-          );
-          console.log(taskResponse.data);
+
           if (result.data?.user?.app_metadata.role === "admin") {
             navigate("/admin/test-dashboard");
           } else {
-            navigate("/test-dashboard");
+            navigate("/dashboard");
           }
         } else if (result.error) {
           setErrorMessage(result.error.message);

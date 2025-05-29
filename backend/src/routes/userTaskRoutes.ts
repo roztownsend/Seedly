@@ -17,7 +17,7 @@ router.get(
         throw new Error("Missing user ID");
       }
       const userTasks = await getUserTasks(req.user.id);
-      res.status(200).json(userTasks);
+      res.status(200).json({ tasks: userTasks });
     } catch (error) {
       console.error("Unexpected error occured");
       res.status(500).json({ message: "Unexpected error occured" });

@@ -33,13 +33,13 @@ export class Task extends Model<
         },
         description: {
           type: DataTypes.TEXT,
-          allowNull: false,
+          allowNull: true,
         },
         plant_id: {
           type: DataTypes.UUID,
           allowNull: false,
           references: {
-            model: "Plant",
+            model: Plant,
             key: "id",
           },
         },

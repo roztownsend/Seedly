@@ -63,7 +63,7 @@ export class UserTask extends Model<
         underscored: true,
         indexes: [
           {
-            name: "user_tasks_user_id_task_id_unique_key",
+            name: "idx_user_tasks_user_id_task_id_unique_key",
             unique: true,
             fields: ["user_id", "task_id"],
           },

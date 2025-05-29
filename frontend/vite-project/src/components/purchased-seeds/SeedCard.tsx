@@ -47,7 +47,7 @@ const SeedCard = ({
     );
   };
   const getChangedTasks = () => {
-    return userTasks.filter((currentTask) => {
+    const updatedTasks = userTasks.filter((currentTask) => {
       const originalTask = originalTasksRef.current.find(
         (task) => task.user_task_id === currentTask.user_task_id
       );
@@ -55,10 +55,15 @@ const SeedCard = ({
         originalTask && originalTask.is_completed !== currentTask.is_completed
       );
     });
+    return updatedTasks.map((task) => ({
+      user_task_id: task.user_task_id,
+      is_completed: task.is_completed,
+    }));
   };
 
   const saveChanges = () => {
     const tasksToUpdate = getChangedTasks();
+
     console.log(tasksToUpdate);
   };
 

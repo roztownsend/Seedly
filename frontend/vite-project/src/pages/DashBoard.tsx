@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import PurchasedSeeds from "../components/purchased-seeds/PurchasedSeeds";
 import axios from "axios";
-import { useAuthSession, useAuthLoading } from "../stores/authStore";
+import {
+  useAuthSession,
+  useAuthLoading,
+  useAuthActions,
+} from "../stores/authStore";
 import { UserTaskData, UserTasksResponse } from "../types/userTaskTypes";
 
 function DashBoard() {
+  const { signOutUser } = useAuthActions();
   const session = useAuthSession();
   const isLoading = useAuthLoading();
   const [userTasks, setUserTask] = useState<UserTaskData[]>([]);
@@ -33,7 +38,7 @@ function DashBoard() {
   }, [isLoading, session?.access_token]);
   return (
     <div>
-      <PurchasedSeeds />
+      <button onClick={signOutUser}>Logout</button>
       <button onClick={() => console.log(userTasks)}>LOG TASKS</button>
     </div>
   );

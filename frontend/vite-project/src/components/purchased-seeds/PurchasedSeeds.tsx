@@ -1,29 +1,35 @@
 import React from "react";
-import Navbar from "../navbar/Navbar";
-import Footer from "../footer/Footer";
 import SeedCard from "./SeedCard";
-
+import { UserTaskData } from "../../types/userTaskTypes";
 import "./PurchasedSeeds.css";
 
-const PurchasedSeeds: React.FC = () => {
+type PurchasedSeedsProps = {
+  userTasks: UserTaskData[];
+};
+
+const PurchasedSeeds: React.FC<PurchasedSeedsProps> = ({ userTasks }) => {
   return (
     <>
-     
       <header className="dashboard-header">
         <h1>Welcome to your dashboard!</h1>
         <p>You've got some stuff to do.</p>
-        <a className="update-info" href="#">Update my user information</a>
+        <a className="update-info" href="#">
+          Update my user information
+        </a>
       </header>
 
       <section className="dashboard-container">
         <div className="seeds-grid">
-          {[1, 2, 3, 4].map((i) => (
-            <SeedCard key={i} name="Pumpkin ‘Sugar Pie’" purchaseDate="2025/03/14" />
+          {userTasks.map((task) => (
+            <SeedCard
+              key={task.user_task_data.id}
+              name={task.user_task_data.plant_data.product_name}
+              purchaseDate={task.user_task_data.purchase_data.purchase_date}
+              imageUrl={task.user_task_data.plant_data.image_url}
+            />
           ))}
         </div>
       </section>
-
-      
     </>
   );
 };

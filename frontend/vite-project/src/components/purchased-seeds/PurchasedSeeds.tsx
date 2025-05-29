@@ -22,10 +22,12 @@ const PurchasedSeeds: React.FC<PurchasedSeedsProps> = ({ userTasks }) => {
         <div className="seeds-grid">
           {userTasks.map((task) => (
             <SeedCard
-              key={task.user_task_data.id}
-              name={task.user_task_data.plant_data.product_name}
-              purchaseDate={task.user_task_data.purchase_data.purchase_date}
-              imageUrl={task.user_task_data.plant_data.image_url}
+              key={task.plant_data.id}
+              name={task.plant_data.product_name}
+              plantId={task.plant_data.id}
+              purchaseDate={task.purchase_data.purchase_date}
+              imageUrl={task.plant_data.image_url}
+              tasks={task.tasks}
             />
           ))}
         </div>

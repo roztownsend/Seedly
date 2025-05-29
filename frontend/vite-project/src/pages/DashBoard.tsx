@@ -38,6 +38,7 @@ function DashBoard() {
   }, [isLoading, session?.access_token]);
   return (
     <div>
+      <PurchasedSeeds userTasks={userTasks} />
       <button onClick={signOutUser}>Logout</button>
       <button onClick={() => console.log(userTasks)}>LOG TASKS</button>
     </div>

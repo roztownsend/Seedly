@@ -27,7 +27,7 @@ interface UserTaskData {
 }
 
 interface Tasks {
-  id: string;
+  user_task_id: string;
   task_id: string;
   is_completed: boolean;
   description: string;
@@ -115,7 +115,7 @@ export const getUserTasks = async (userId: string) => {
       const currentGroup = groupedData.get(groupKey);
 
       currentGroup?.tasks.push({
-        id: userTask.id,
+        user_task_id: userTask.id,
         task_id: userTask.task.id,
         is_completed: userTask.is_completed,
         description: userTask.task.description,

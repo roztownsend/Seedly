@@ -20,7 +20,7 @@ export class PurchaseItem extends Model<
 
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
-
+  declare plant?: Plant;
   static initModel(sequelize: Sequelize): typeof PurchaseItem {
     return PurchaseItem.init(
       {

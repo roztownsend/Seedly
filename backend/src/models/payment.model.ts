@@ -28,7 +28,7 @@ export class Payment extends Model<
           primaryKey: true,
         },
         payment_method: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
           allowNull: false,
         },
         createdAt: {

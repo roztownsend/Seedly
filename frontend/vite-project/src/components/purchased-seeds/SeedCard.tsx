@@ -1,6 +1,7 @@
 import { UserTask } from "../../types/userTaskTypes";
 import { Link } from "react-router-dom";
 import { slugify } from "../../utils/slugify";
+import { formatPurchaseDate } from "../../utils/formatPurchaseDate";
 
 const months = [
   "January",
@@ -36,7 +37,7 @@ const SeedCard = ({
       </div>
       <div className="seed-info">
         <h2>{name}</h2>
-        <p>Purchased: {purchaseDate}</p>
+        <p>Purchased: {formatPurchaseDate(purchaseDate)}</p>
         <Link
           to={`/products/${slugify(name)}`}
           state={{ id: plantId }}

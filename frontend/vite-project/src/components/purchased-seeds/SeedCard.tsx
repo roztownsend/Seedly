@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { slugify } from "../../utils/slugify";
 import { formatPurchaseDate } from "../../utils/formatPurchaseDate";
 import { useState, useRef } from "react";
+import axios from "axios";
+import { useAuthSession } from "../../stores/authStore";
 
 const months = [
   "January",
@@ -31,6 +33,7 @@ const SeedCard = ({
   imageUrl: string;
   tasks: UserTask[];
 }) => {
+  const session = useAuthSession();
   const [userTasks, setUserTasks] = useState<UserTask[]>(tasks);
   const originalTasksRef = useRef(tasks);
   const hasChanges =
@@ -61,9 +64,24 @@ const SeedCard = ({
     }));
   };
 
-  const saveChanges = () => {
+  const saveChanges = async () => {
     const tasksToUpdate = getChangedTasks();
 
+    try {
+      const response = await axios.put(
+        "http://localhost:5000/user-tasks/update",
+        tasksToUpdate,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.access_token}`,
+          },
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("Failed to update tasks", error);
+    }
     console.log(tasksToUpdate);
   };
 

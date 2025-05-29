@@ -7,15 +7,18 @@ import {
   useAuthActions,
 } from "../stores/authStore";
 import { UserTaskData, UserTasksResponse } from "../types/userTaskTypes";
+import { Loading } from "../components/loading/Loading";
 
 function DashBoard() {
   const { signOutUser } = useAuthActions();
   const session = useAuthSession();
   const isLoading = useAuthLoading();
   const [userTasks, setUserTask] = useState<UserTaskData[]>([]);
+  const [isFetchingTasks, setIsFetchingTasks] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchUserTasks = async () => {
+      setIsFetchingTasks(true);
       try {
         const response = await axios.get<UserTasksResponse>(
           "http://localhost:5000/user-tasks",
@@ -29,6 +32,8 @@ function DashBoard() {
         setUserTask(response.data.tasks);
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsFetchingTasks(false);
       }
     };
 
@@ -36,11 +41,20 @@ function DashBoard() {
       fetchUserTasks();
     }
   }, [isLoading, session?.access_token]);
+
+  if (isFetchingTasks) {
+    return <Loading />;
+  }
+
   return (
     <div>
       <PurchasedSeeds userTasks={userTasks} />
-      <button onClick={signOutUser}>Logout</button>
-      <button onClick={() => console.log(userTasks)}>LOG TASKS</button>
+      <button
+        className="bg-blue-800 font-bold rounded-lg text-white p-4 mb-3"
+        onClick={signOutUser}
+      >
+        Logout
+      </button>
     </div>
   );
 }

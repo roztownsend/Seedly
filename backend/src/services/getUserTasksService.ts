@@ -85,7 +85,6 @@ export const getUserTasks = async (userId: string) => {
       raw: true,
       nest: true,
     })) as unknown as UserTaskData[];
-    console.log(JSON.stringify(userTaskObjects, null, 2));
 
     if (userTaskObjects.length <= 0) {
       return [];

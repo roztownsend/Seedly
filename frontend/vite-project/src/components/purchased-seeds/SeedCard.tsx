@@ -1,18 +1,33 @@
-const seedTasks = [
-  { period: "April-May", task: "Sow indoors" },
-  { period: "May-June", task: "Plant outdoors" },
-  { period: "June-August", task: "Pollinate" },
-  { period: "September-October", task: "Harvest" },
-];
+import { UserTask } from "../../types/userTaskTypes";
+import { Link } from "react-router-dom";
+import { slugify } from "../../utils/slugify";
 
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 const SeedCard = ({
   name,
+  plantId,
   purchaseDate,
   imageUrl,
+  tasks,
 }: {
   name: string;
+  plantId: string;
   purchaseDate: string;
   imageUrl: string;
+  tasks: UserTask[];
 }) => (
   <div className="seed-card">
     <div className="top-section">
@@ -22,9 +37,13 @@ const SeedCard = ({
       <div className="seed-info">
         <h2>{name}</h2>
         <p>Purchased: {purchaseDate}</p>
-        <a href="#" className="repurchase-link">
+        <Link
+          to={`/products/${slugify(name)}`}
+          state={{ id: plantId }}
+          className="repurchase-link"
+        >
           Re-purchase
-        </a>
+        </Link>
       </div>
     </div>
 
@@ -36,10 +55,11 @@ const SeedCard = ({
         </tr>
       </thead>
       <tbody>
-        {seedTasks.map((task, index) => (
+        {tasks.map((task, index) => (
           <tr key={index}>
             <td>
-              <strong>{task.period}:</strong> {task.task}
+              <strong>{months[task.start_month]} to </strong>
+              <strong>{months[task.end_month]}</strong> - {task.description}
             </td>
             <td>
               <input type="checkbox" />

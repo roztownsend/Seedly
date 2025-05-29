@@ -17,6 +17,7 @@ export const useCredentialForm = (
 
   const { signUpNewUser, signInWithPassword, signOutUser } = useAuthActions();
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [formData, setFormData] = useState<CredentialsInput>(() => {
     const defaultData = {
       email: "",
@@ -41,6 +42,8 @@ export const useCredentialForm = (
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     console.log(formType);
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     setErrorMessage("");
     try {
       const { email, password } = formData;
@@ -100,6 +103,8 @@ export const useCredentialForm = (
         console.error(error.response?.data.message);
       }
       setErrorMessage("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -110,6 +115,7 @@ export const useCredentialForm = (
     formData,
     showPassword,
     errorMessage,
+    isSubmitting,
     handlers: {
       handleChange,
       handleSubmit,

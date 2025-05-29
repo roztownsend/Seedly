@@ -26,6 +26,28 @@ interface UserTaskData {
   };
 }
 
+interface Tasks {
+  id: string;
+  task_id: string;
+  is_completed: boolean;
+  description: string;
+  start_month: number;
+  end_month: number;
+}
+
+interface GroupedTaskData {
+  plant_data: {
+    id: string;
+    image_url: string;
+    product_name: string;
+  };
+  purchase_data: {
+    id: string;
+    purchase_date: string;
+  };
+  tasks: Tasks[];
+}
+
 export const getUserTasks = async (userId: string) => {
   try {
     const userTaskObjects = (await UserTask.findAll({
@@ -64,27 +86,45 @@ export const getUserTasks = async (userId: string) => {
       nest: true,
     })) as unknown as UserTaskData[];
     console.log(JSON.stringify(userTaskObjects, null, 2));
-    const formattedTasks = userTaskObjects.map((task) => ({
-      user_task_data: {
-        id: task.id,
-        is_completed: task.is_completed,
-        task_data: {
-          id: task.task.id,
-          description: task.task.description,
-          start_month: task.task.start_month,
-          end_month: task.task.end_month,
-        },
-        plant_data: {
-          id: task.task.plant.id,
-          image_url: task.task.plant.image_url,
-          product_name: task.task.plant.product_name,
-        },
-        purchase_data: {
-          id: task.user.purchases.id,
-          purchase_date: task.user.purchases.purchase_date,
-        },
-      },
-    }));
+
+    if (userTaskObjects.length <= 0) {
+      return [];
+    }
+
+    const groupedData = new Map<string, GroupedTaskData>();
+
+    for (const userTask of userTaskObjects) {
+      const plantId = userTask.task.plant.id;
+
+      const groupKey = plantId;
+
+      if (!groupedData.has(groupKey)) {
+        groupedData.set(groupKey, {
+          plant_data: {
+            id: userTask.task.plant.id,
+            image_url: userTask.task.plant.image_url,
+            product_name: userTask.task.plant.product_name,
+          },
+          purchase_data: {
+            id: userTask.user.purchases.id,
+            purchase_date: userTask.user.purchases.purchase_date,
+          },
+          tasks: [],
+        });
+      }
+      const currentGroup = groupedData.get(groupKey);
+
+      currentGroup?.tasks.push({
+        id: userTask.id,
+        task_id: userTask.task.id,
+        is_completed: userTask.is_completed,
+        description: userTask.task.description,
+        start_month: userTask.task.start_month,
+        end_month: userTask.task.end_month,
+      });
+    }
+
+    const formattedTasks = Array.from(groupedData.values());
     return formattedTasks;
   } catch (error) {
     console.error(`Error fetching tasks for user ${userId}`);

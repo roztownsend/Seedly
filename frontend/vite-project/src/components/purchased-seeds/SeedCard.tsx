@@ -1,5 +1,3 @@
-import React from "react";
-
 const seedTasks = [
   { period: "April-May", task: "Sow indoors" },
   { period: "May-June", task: "Plant outdoors" },
@@ -7,14 +5,26 @@ const seedTasks = [
   { period: "September-October", task: "Harvest" },
 ];
 
-const SeedCard = ({ name, purchaseDate }: { name: string; purchaseDate: string }) => (
+const SeedCard = ({
+  name,
+  purchaseDate,
+  imageUrl,
+}: {
+  name: string;
+  purchaseDate: string;
+  imageUrl: string;
+}) => (
   <div className="seed-card">
     <div className="top-section">
-      <div className="seed-image-placeholder" />
+      <div className="seed-image-placeholder">
+        <img src={imageUrl} alt={name} className="object-cover w-full h-full" />
+      </div>
       <div className="seed-info">
         <h2>{name}</h2>
         <p>Purchased: {purchaseDate}</p>
-        <a href="#" className="repurchase-link">Re-purchase</a>
+        <a href="#" className="repurchase-link">
+          Re-purchase
+        </a>
       </div>
     </div>
 
@@ -28,8 +38,12 @@ const SeedCard = ({ name, purchaseDate }: { name: string; purchaseDate: string }
       <tbody>
         {seedTasks.map((task, index) => (
           <tr key={index}>
-            <td><strong>{task.period}:</strong> {task.task}</td>
-            <td><input type="checkbox" /></td>
+            <td>
+              <strong>{task.period}:</strong> {task.task}
+            </td>
+            <td>
+              <input type="checkbox" />
+            </td>
           </tr>
         ))}
       </tbody>

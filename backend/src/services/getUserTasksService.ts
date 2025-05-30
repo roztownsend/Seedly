@@ -91,10 +91,17 @@ export const getUserTasks = async (userId: string) => {
           ],
         },
       ],
-      order: [["purchase_date", "DESC"]],
+      order: [
+        ["purchase_date", "DESC"],
+        [
+          { model: UserTask, as: "user_tasks" },
+          { model: Task, as: "task" },
+          "start_month",
+          "ASC",
+        ],
+      ],
     });
 
-    console.log(JSON.stringify(userTaskObjects, null, 2));
     if (userTaskObjects.length <= 0) {
       return [];
     }

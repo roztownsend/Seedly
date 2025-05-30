@@ -44,7 +44,7 @@ const CheckoutPayment = () => {
   return (
     <section className="container-wrapper">
       <div className="section-heading">
-        <h1>Thank you for your order!</h1>
+        <h1 className="animate-fadeIn">Thank you for your order!</h1>
         <p>You should receive a confirmation email shortly.</p>
         <div>
           <img src={orderConfirmationImg} alt="Cat with bag of seeds!" />

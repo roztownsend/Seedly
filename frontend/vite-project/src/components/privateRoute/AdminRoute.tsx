@@ -22,7 +22,7 @@ function AdminRoute({ children }: PrivateRouteProps) {
   }
 
   if (!isAdmin) {
-    return <Navigate to="/test-dashboard" replace={true} />;
+    return <Navigate to="/dashboard" replace={true} />;
   }
 
   return <>{children}</>;

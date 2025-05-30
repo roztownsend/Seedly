@@ -90,13 +90,14 @@ export const useCredentialForm = (
           }
         );
 
-        if (result.data?.user?.app_metadata.role === "admin") {
-          navigate("/admin/test-dashboard");
-        } else {
-          navigate("/dashboard");
+          if (result.data?.user?.app_metadata.role === "admin") {
+            navigate("/admin/dashboard");
+          } else {
+            navigate("/dashboard");
+          }
+        } else if (result.error) {
+          setErrorMessage(result.error.message);
         }
-      } else if (result.error) {
-        setErrorMessage(result.error.message);
       }
     } catch (error) {
       await signOutUser();

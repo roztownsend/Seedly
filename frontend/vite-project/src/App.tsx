@@ -7,7 +7,7 @@ import Cart from "./pages/Cart";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import ProductDetails from "./pages/ProductDetails";
-import TestAdminDashboard from "./pages/TestAdminDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import AdminRoute from "./components/privateRoute/AdminRoute";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -55,10 +55,10 @@ function App() {
               }
             ></Route>
             <Route
-              path="/admin/test-dashboard"
+              path="/admin/dashboard"
               element={
                 <AdminRoute>
-                  <TestAdminDashboard />
+                  <AdminDashboard />
                 </AdminRoute>
               }
             ></Route>

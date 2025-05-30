@@ -1,6 +1,6 @@
 import { useAuthUser, useAuthActions } from "../stores/authStore";
 
-function TestAdminDashboard() {
+function AdminDashboard() {
   const { signOutUser } = useAuthActions();
   const user = useAuthUser();
   return (
@@ -11,4 +11,4 @@ function TestAdminDashboard() {
   );
 }
 
-export default TestAdminDashboard;
+export default AdminDashboard;

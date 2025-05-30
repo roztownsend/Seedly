@@ -18,7 +18,7 @@ export class UserTask extends Model<
   declare id: CreationOptional<string>;
   declare user_id: ForeignKey<User["id"]>;
   declare task_id: ForeignKey<Task["id"]>;
-  declare purchase_id: ForeignKey<["id"]>;
+  declare purchase_id: ForeignKey<string>;
   declare is_completed: CreationOptional<boolean>;
 
   declare user?: User;

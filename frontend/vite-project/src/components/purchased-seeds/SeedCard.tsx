@@ -40,7 +40,6 @@ const SeedCard = ({
   const originalTasksRef = useRef(tasks);
   const hasChanges =
     JSON.stringify(userTasks) !== JSON.stringify(originalTasksRef.current);
-  console.log(hasChanges);
 
   const toggleTaskCompletion = (taskId: string) => {
     setUserTasks((prevState) =>

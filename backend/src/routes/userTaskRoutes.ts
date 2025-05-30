@@ -25,6 +25,7 @@ router.get(
         return;
       }
       const userTasks = await getUserTasks(req.user.id);
+      console.log("DONE FETCHING TASKS!");
       res.status(200).json({ tasks: userTasks });
     } catch (error) {
       console.error("Unexpected error occured");
@@ -55,11 +56,9 @@ router.put(
         throw new Error("No tasks were updated");
       }
       await t.commit();
-      res
-        .status(200)
-        .json({
-          message: `${amountOfUpdatedTasks} task(s) successfully updated`,
-        });
+      res.status(200).json({
+        message: `${amountOfUpdatedTasks} task(s) successfully updated`,
+      });
     } catch (error) {
       await t.rollback();
       console.error("Unexpected error occured");

@@ -14,6 +14,7 @@ import { Payment } from "./payment.model";
 import { ShippingInfo } from "./shippingInfo.model";
 import { User } from "./user.model";
 import { Plant } from "./plant.model";
+import { UserTask } from "./userTask.model";
 export class Purchase extends Model<
   InferAttributes<Purchase>,
   InferCreationAttributes<Purchase>
@@ -88,6 +89,7 @@ export class Purchase extends Model<
     Payment: typeof Payment;
     ShippingInfo: typeof ShippingInfo;
     User: typeof User;
+    UserTask: typeof UserTask;
   }) {
     Purchase.hasMany(models.PurchaseItem, {
       foreignKey: "purchase_id",
@@ -104,6 +106,10 @@ export class Purchase extends Model<
     Purchase.belongsTo(models.User, {
       foreignKey: "user_id",
       as: "user",
+    });
+    Purchase.hasMany(models.UserTask, {
+      foreignKey: "purchase_id",
+      as: "user_tasks",
     });
   }
 }

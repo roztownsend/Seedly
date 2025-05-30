@@ -71,15 +71,4 @@ export const linkUserTasks = async (
     user_id: userId,
     task_id: taskId,
   }));
-
-  try {
-    await UserTask.bulkCreate(tasksToAdd, {
-      transaction,
-      ignoreDuplicates: true,
-    });
-    console.log(`UserTasks successfully linked for user ID ${userId}`);
-  } catch (error) {
-    console.error("Error during bulk creation of UserTasks");
-    throw error;
-  }
 };

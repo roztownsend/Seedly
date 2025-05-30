@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import PurchasedSeeds from "../components/purchased-seeds/PurchasedSeeds";
 import axios from "axios";
 import {
@@ -15,6 +15,7 @@ function DashBoard() {
   const isLoading = useAuthLoading();
   const [userTasks, setUserTask] = useState<UserTaskData[]>([]);
   const [isFetchingTasks, setIsFetchingTasks] = useState<boolean>(false);
+  const hasFetchedInitiallyRef = useRef(false);
 
   useEffect(() => {
     const fetchUserTasks = async () => {
@@ -29,7 +30,9 @@ function DashBoard() {
             },
           }
         );
+        console.log("FETCHING TRIGGERD");
         setUserTask(response.data.tasks);
+        console.log(response.data.tasks);
       } catch (error) {
         console.error(error);
       } finally {
@@ -37,7 +40,12 @@ function DashBoard() {
       }
     };
 
-    if (!isLoading && session?.access_token) {
+    if (
+      !isLoading &&
+      session?.access_token &&
+      !hasFetchedInitiallyRef.current
+    ) {
+      hasFetchedInitiallyRef.current = true;
       fetchUserTasks();
     }
   }, [isLoading, session?.access_token]);

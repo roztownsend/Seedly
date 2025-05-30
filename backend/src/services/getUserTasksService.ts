@@ -94,8 +94,8 @@ export const getUserTasks = async (userId: string) => {
 
     for (const userTask of userTaskObjects) {
       const plantId = userTask.task.plant.id;
-
-      const groupKey = plantId;
+      const purchaseId = userTask.user.purchases.id;
+      const groupKey = `${plantId}_${purchaseId}`;
 
       if (!groupedData.has(groupKey)) {
         groupedData.set(groupKey, {

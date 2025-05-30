@@ -1,8 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { ShoppingBag, Search, Menu, X, User2 } from "lucide-react";
-import "../navbar/Navbar.css";
-import { useCartUniqueItems } from "../../stores/cartStore";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ShoppingBag, Search, Menu, X, User2 } from "lucide-react";
 import "../navbar/Navbar.css";
@@ -18,20 +14,12 @@ export default function Navbar() {
   const [animateCart, setAnimateCart] = useState(false);
 
   const cartUniqueItems = useCartUniqueItems();
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  };
-
-  useEffect(() => {
-    if (cartUniqueItems === 0) return;
-    setAnimateCart(true);
-    const timeout = setTimeout(() => setAnimateCart(false), 300);
-    return () => clearTimeout(timeout);
-  }, [cartUniqueItems]);
-  const cartUniqueItems = useCartUniqueItems();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+  };
 
   const handleSearch = async () => {
     if (!query.trim()) return;
@@ -46,9 +34,12 @@ export default function Navbar() {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-  };
+  useEffect(() => {
+    if (cartUniqueItems === 0) return;
+    setAnimateCart(true);
+    const timeout = setTimeout(() => setAnimateCart(false), 300);
+    return () => clearTimeout(timeout);
+  }, [cartUniqueItems]);
 
   useEffect(() => {
     if (!location.pathname.startsWith("/search")) {

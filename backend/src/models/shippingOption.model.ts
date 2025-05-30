@@ -30,7 +30,7 @@ export class ShippingOption extends Model<
           primaryKey: true,
         },
         label: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
           allowNull: false,
         },
         price: {

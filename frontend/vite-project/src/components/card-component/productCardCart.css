@@ -1,9 +1,9 @@
 .product-card-cart {
-  @apply w-96 flex gap-3;
+  @apply w-full flex gap-3;
 }
 
 .product-card-cart__image-box {
-  @apply w-1/2 overflow-hidden;
+  @apply w-24 h-24 shrink-0;
 }
 
 .product-card-cart__image {
@@ -15,16 +15,28 @@
 }
 
 .product-card-cart__actions-wrapper {
-  @apply flex w-full lg:flex-wrap;
+ @apply w-full flex-1;
+}
+
+.product-card-cart__actions {
+  @apply flex flex-col gap-2 w-full;
 }
 
 .product-card-cart__actions {
   @apply flex flex-col gap-2 w-full;
 }
 .product-card-cart__details {
-  @apply flex w-full justify-between items-start flex-col;
+  @apply w-full h-full flex flex-col justify-between;
+}
+
+.product-card-cart__title-container{
+  @apply w-96;
+}
+
+.product-card-cart__title {
+  @apply text-lg w-full;
 }
 
 .product-card-cart__quantity {
-  @apply flex items-center justify-between border border-black;
+  @apply flex items-center justify-between;
 }

@@ -9,6 +9,7 @@ const usePaymentStore = create<PaymentState>((set) => ({
         expYear: '',
         cvc: '',
         saveCard: false,
+        paymentMethod: 'card',
     },
     actions: {
         setFormData: (data) => set({ formData: data }),

@@ -16,6 +16,8 @@ import { Plant } from "./models/plant.model";
 import { ShippingOption } from "./models/shippingOption.model";
 import plantsInserter from "./utils/plantsInserterHelper";
 import optionsInserter from "./utils/optionsInserterHelper";
+import authTest from "./routes/authTest";
+import { makeUserAdmin } from "./services/makeUserAdmin";
 //testing server startup
 
 sequelize
@@ -31,7 +33,8 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use("/plants", plantRoutes);
-app.use("/shipping-options", shippingRoutes)
+app.use("/shipping-options", shippingRoutes);
+app.use("/auth-test", authTest);
 
 const swaggerDocument = YAML.load(
   path.join(__dirname, "../swagger/swagger.yaml")

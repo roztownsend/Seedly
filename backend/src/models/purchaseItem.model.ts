@@ -14,13 +14,13 @@ export class PurchaseItem extends Model<
   InferCreationAttributes<PurchaseItem>
 > {
   declare id: CreationOptional<string>;
-  declare purchase_id: ForeignKey<string>;
-  declare plant_id: ForeignKey<string>;
+  declare purchase_id: ForeignKey<Purchase["id"]>;
+  declare plant_id: ForeignKey<Plant["id"]>;
   declare quantity: CreationOptional<number>;
 
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
-
+  declare plant?: Plant;
   static initModel(sequelize: Sequelize): typeof PurchaseItem {
     return PurchaseItem.init(
       {

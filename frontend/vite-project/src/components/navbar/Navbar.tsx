@@ -3,9 +3,16 @@ import { Link } from "react-router-dom";
 import { ShoppingBag, Search, Menu, X, User2 } from "lucide-react";
 import "../navbar/Navbar.css";
 import { useCartUniqueItems } from "../../stores/cartStore";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { ShoppingBag, Search, Menu, X, User2 } from "lucide-react";
+import "../navbar/Navbar.css";
+import { useCartUniqueItems } from "../../stores/cartStore";
+import { useSearchActions, useSearchQuery } from "../../stores/searchStore";
+
 
 export default function Navbar() {
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const query = useSearchQuery();
+  const { setQuery, search } = useSearchActions();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [animateCart, setAnimateCart] = useState(false);
@@ -22,6 +29,32 @@ export default function Navbar() {
     const timeout = setTimeout(() => setAnimateCart(false), 300);
     return () => clearTimeout(timeout);
   }, [cartUniqueItems]);
+  const cartUniqueItems = useCartUniqueItems();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleSearch = async () => {
+    if (!query.trim()) return;
+    await search();
+    navigate(`/search?query=${encodeURIComponent(query)}`);
+  };
+
+  const handleKeyStroke = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSearch();
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+  };
+
+  useEffect(() => {
+    if (!location.pathname.startsWith("/search")) {
+      setQuery("");   
+    }
+  }, [location.pathname]);
 
   return (
     <>
@@ -47,7 +80,8 @@ export default function Navbar() {
                   type="text"
                   placeholder="Search Seeds!"
                   className="navbar-search-input"
-                  value={searchTerm}
+                  value={query}
+                  onKeyDown={handleKeyStroke}
                   onChange={handleInputChange}
                 />
               </div>
@@ -120,13 +154,14 @@ export default function Navbar() {
         <div className="mobile-search-wrapper">
           <div className="navbar-search">
             <Search className="navbar-search-icon" />
-            <input
-              type="text"
-              placeholder="Search seeds!"
-              className="navbar-search-input"
-              value={searchTerm}
-              onChange={handleInputChange}
-            />
+                <input
+                  type="text"
+                  placeholder="Search Seeds!"
+                  className="navbar-search-input"
+                  value={query}
+                  onKeyDown={handleKeyStroke}
+                  onChange={handleInputChange}
+                />
           </div>
         </div>
       </nav>

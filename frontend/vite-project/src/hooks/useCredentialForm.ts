@@ -74,7 +74,7 @@ export const useCredentialForm = (
             }
           );
           console.log(response.data);
-          navigate("/test-dashboard");
+          navigate("/dashboard");
         } else if (formType === "login") {
           console.log(result.data);
           const response = await axios.post(

@@ -1,9 +1,11 @@
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { CredentialsFormProps } from "../../types/credentialsFormTypes";
 import { useCredentialForm } from "../../hooks/useCredentialForm";
+
 function CredentialFields({ formType }: CredentialsFormProps) {
-  const { handlers, showPassword, errorMessage, formData } =
+  const { handlers, showPassword, errorMessage, formData, isSubmitting } =
     useCredentialForm(formType);
+
   return (
     <form
       className="credential-form"
@@ -60,7 +62,11 @@ function CredentialFields({ formType }: CredentialsFormProps) {
           </a>
         </div>
       )}
-      <button type="submit" className="credential-submit-btn"></button>
+      <button
+        disabled={isSubmitting}
+        type="submit"
+        className="credential-submit-btn"
+      ></button>
     </form>
   );
 }

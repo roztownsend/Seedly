@@ -16,6 +16,7 @@ export type UseCredentialsFormReturn = {
   formData: CredentialsInput;
   showPassword: boolean;
   formType: FormType;
+  isSubmitting: boolean;
   errorMessage: string;
   handlers: {
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

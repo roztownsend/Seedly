@@ -36,7 +36,7 @@
 }
 
 .navbar-search {
-    @apply flex items-center w-full pl-4 bg-yellow-50;
+    @apply flex items-center w-full pl-4 bg-yellow-50 rounded-lg;
 }
 
 .navbar-search-icon {
@@ -44,7 +44,7 @@
 }
 
 .navbar-search-input {
-    @apply bg-yellow-50 px-4 py-2 text-sm placeholder-yellow-700 text-black w-full font-semibold flex flex-grow;
+    @apply bg-yellow-50 px-4 py-2 text-sm placeholder-yellow-700 text-black w-full font-semibold flex flex-grow rounded-lg;
 }
 
 .navbar-right {

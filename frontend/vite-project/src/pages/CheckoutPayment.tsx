@@ -8,6 +8,8 @@ import { useShippingStore } from "../stores/shippingStore";
 import { useFormData } from "../stores/paymentStore";
 import ProductCardCartMobile from "../components/card-component/ProductCardCartMobile";
 import { OrderSummary } from "../components/order-summary/OrderSummary";
+import orderConfirmationImg from "../assets/image/order-confirmation.png";
+import "./page-styles/CheckoutPayment.css"; // Importa o CSS customizado
 
 const CheckoutPayment = () => {
   const cartItems = useCartItems();
@@ -15,12 +17,12 @@ const CheckoutPayment = () => {
   const cartTotal = useCartTotal();
   const { formData: shippingFormData, resetForm } = useShippingStore();
 
-const lastShippingRef = useRef(shippingFormData);
+  const lastShippingRef = useRef(shippingFormData);
 
   useEffect(() => {
     lastShippingRef.current = shippingFormData;
     clearCart();
-    resetForm(); 
+    resetForm();
   }, []);
 
   const paymentFormData = useFormData();
@@ -37,16 +39,16 @@ const lastShippingRef = useRef(shippingFormData);
     }
   }, [cartItems, cartTotal]);
 
-
   const maskedCard = paymentFormData.cardNumber?.slice(-4) || "****";
-
-  console.log("Last order total:", lastOrderTotal.current);
 
   return (
     <section className="container-wrapper">
       <div className="section-heading">
-        <h1 className="h2">Thank you for your order!</h1>
+        <h1>Thank you for your order!</h1>
         <p>You should receive a confirmation email shortly.</p>
+        <div>
+          <img src={orderConfirmationImg} alt="Cat with bag of seeds!" />
+        </div>
       </div>
 
       <div className="layout-flex">

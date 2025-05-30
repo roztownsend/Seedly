@@ -6,13 +6,14 @@ interface QuantityControlProps {
   cartId: string;
   fallbackButton?: React.ReactNode;
   compact?: boolean;
-
+  compactCart?: boolean; 
 }
 
 export const QuantityControl: React.FC<QuantityControlProps> = ({
   cartId,
   fallbackButton,
   compact = false,
+  compactCart = false,
 }) => {
   const cartItem = useCartItem(cartId);
   const { updateQuantity } = useCartActions();
@@ -30,7 +31,9 @@ export const QuantityControl: React.FC<QuantityControlProps> = ({
 
   if (!cartItem) return fallbackButton ?? null;
   return (
-    <div className={`quantity-control${compact ? " quantity-control--compact" : ""}`}>
+    <div className={
+      `quantity-control${compact ? " quantity-control--compact" : ""}${compactCart ? " quantity-control--cart" : ""}`
+    }>
       <button className="quantity-btn" onClick={() => updateQuantity(cartId, 1, "decrement")}>-</button>
       <span className={`quantity-value${animate ? " pop" : ""}`}>{cartItem?.quantity}</span>
       <button className="quantity-btn" onClick={() => updateQuantity(cartId, 1, "increment")}>+</button>

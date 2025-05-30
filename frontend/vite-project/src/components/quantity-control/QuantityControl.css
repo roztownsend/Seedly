@@ -11,7 +11,7 @@
 }
 
 .quantity-control--compact {
-    @apply max-w-[16rem] h-12 w-full;
+    @apply max-w-[16rem] h-12 w-[30%];
 }
 
 .quantity-control--compact .quantity-btn {
@@ -20,4 +20,16 @@
 
 .quantity-control--compact .quantity-value {
     @apply text-xl px-2;
+}
+
+.quantity-control--cart {
+    @apply max-w-[10rem] h-9 w-[60%];
+}
+
+.quantity-control--cart .quantity-btn {
+    @apply h-9 w-9 text-lg;
+}
+
+.quantity-control--cart .quantity-value {
+    @apply text-lg px-1;
 }

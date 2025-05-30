@@ -60,12 +60,15 @@ router.post(
       if (!newUser) {
         throw new Error("User creation failed");
       }
-      const orphPurchases = await assignOrphanedPurchasesToUser(
+      const orphanedPurchases = await assignOrphanedPurchasesToUser(
         req.user.id,
         req.user.email,
         t
       );
 
+      if (orphanedPurchases > 0) {
+        await linkUserTasks(req.user.id, t);
+      }
       await t.commit();
       res.json({ data: req.user.email });
     } catch (error) {

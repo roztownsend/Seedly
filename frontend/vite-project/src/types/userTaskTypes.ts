@@ -1,29 +1,23 @@
 export type UserTaskData = {
-  id: string;
-  purchase_date: string;
-  purchase_items: UserTaskPurchaseItems[];
-  user_tasks: UserTask[];
-};
-export type UserTaskPurchaseItems = {
-  id: string;
-  plant: UserTaskPlant;
+  plant_data: {
+    id: string;
+    image_url: string;
+    product_name: string;
+  };
+  purchase_data: {
+    id: string;
+    purchase_date: string;
+  };
+  tasks: UserTask[];
 };
 export type UserTask = {
-  id: string;
+  user_task_id: string;
   is_completed: boolean;
-  task: OriginalTask;
-};
-export type UserTasksResponse = {
-  tasks: UserTaskData[];
-};
-export type OriginalTask = {
-  id: string;
+  task_id: string;
   description: string;
   start_month: number;
   end_month: number;
 };
-export type UserTaskPlant = {
-  id: string;
-  image_url: string;
-  product_name: string;
+export type UserTasksResponse = {
+  tasks: UserTaskData[];
 };

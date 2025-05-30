@@ -31,6 +31,7 @@ export class Purchase extends Model<
   declare updatedAt: CreationOptional<Date>;
 
   declare purchase_items?: PurchaseItem[];
+  declare user_tasks?: UserTask[];
   declare plant?: Plant;
   declare getItems: HasManyGetAssociationsMixin<PurchaseItem>;
   declare getPayment: HasOneGetAssociationMixin<Payment>;

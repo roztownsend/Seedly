@@ -28,7 +28,7 @@ export const useSearchStore = create<SearchState>((set, get) => ({
             if (!query) return [];
             set({ loading: true, submittedQuery: query });
             try {
-                const response = await axios.get(`http://localhost:5000/plants/search?name=${encodeURIComponent(query)}`);
+                const response = await axios.get(`http://localhost:5001/plants/search?name=${encodeURIComponent(query)}`);
                 const data = response.data.data;
                 set({ results: data, loading: false });
                 console.log("New search Zustand Store:", response.data.data);

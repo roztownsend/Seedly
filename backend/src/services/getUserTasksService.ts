@@ -3,6 +3,8 @@ import { Task } from "../models/task.model";
 import { Plant } from "../models/plant.model";
 import { User } from "../models/user.model";
 import { Purchase } from "../models/purchase.model";
+import { PurchaseItem } from "../models/purchaseItem.model";
+import { CreationAttributes } from "sequelize";
 
 interface UserTaskData {
   id: string;
@@ -37,9 +39,9 @@ interface Tasks {
 
 interface GroupedTaskData {
   plant_data: {
-    id: string;
-    image_url: string;
-    product_name: string;
+    id: string | undefined;
+    image_url: string | null | undefined;
+    product_name: string | undefined;
   };
   purchase_data: {
     id: string;
@@ -50,81 +52,93 @@ interface GroupedTaskData {
 
 export const getUserTasks = async (userId: string) => {
   try {
-    const userTaskObjects = (await UserTask.findAll({
+    const userTaskObjects = await Purchase.findAll({
       where: { user_id: userId },
-      attributes: ["id", "is_completed"],
+      attributes: ["id", "purchase_date"],
       include: [
         {
-          model: Task,
-          as: "task",
+          model: PurchaseItem,
+          as: "purchase_items",
+          attributes: ["id"],
           required: true,
-          attributes: ["id", "description", "start_month", "end_month"],
           include: [
             {
               model: Plant,
               as: "plant",
-              required: false,
               attributes: ["id", "product_name", "image_url"],
+              required: true,
             },
           ],
         },
         {
-          model: User,
-          as: "user",
-          attributes: [],
-          required: true,
+          model: UserTask,
+          as: "user_tasks",
+          required: false,
+          attributes: ["id", "is_completed"],
           include: [
             {
-              model: Purchase,
-              as: "purchases",
-              attributes: ["id", "purchase_date"],
+              model: Task,
+              as: "task",
+              required: true,
+              attributes: [
+                "id",
+                "description",
+                "start_month",
+                "end_month",
+                "plant_id",
+              ],
             },
           ],
         },
       ],
-      raw: true,
-      nest: true,
-    })) as unknown as UserTaskData[];
+      order: [["purchase_date", "DESC"]],
+    });
 
+    console.log(JSON.stringify(userTaskObjects, null, 2));
     if (userTaskObjects.length <= 0) {
       return [];
     }
 
-    const groupedData = new Map<string, GroupedTaskData>();
+    const groupedTaskData: GroupedTaskData[] = [];
 
-    for (const userTask of userTaskObjects) {
-      const plantId = userTask.task.plant.id;
-      const purchaseId = userTask.user.purchases.id;
-      const groupKey = `${plantId}_${purchaseId}`;
+    for (const purchase of userTaskObjects) {
+      if (purchase.purchase_items && purchase.purchase_items.length > 0) {
+        for (const item of purchase.purchase_items) {
+          const plantData = {
+            id: item.plant?.id,
+            image_url: item.plant?.image_url,
+            product_name: item.plant?.product_name,
+          };
+          const purchaseData = {
+            id: purchase.id,
+            purchase_date: purchase.purchase_date.toISOString(),
+          };
+          const tasksForThisPlantInThisPurchase: Tasks[] = [];
 
-      if (!groupedData.has(groupKey)) {
-        groupedData.set(groupKey, {
-          plant_data: {
-            id: userTask.task.plant.id,
-            image_url: userTask.task.plant.image_url,
-            product_name: userTask.task.plant.product_name,
-          },
-          purchase_data: {
-            id: userTask.user.purchases.id,
-            purchase_date: userTask.user.purchases.purchase_date,
-          },
-          tasks: [],
-        });
+          if (purchase.user_tasks && purchase.user_tasks.length > 0) {
+            for (const userTask of purchase.user_tasks) {
+              if (userTask.task && userTask.task.plant_id === item.plant?.id) {
+                tasksForThisPlantInThisPurchase.push({
+                  user_task_id: userTask.id,
+                  task_id: userTask.task.id,
+                  is_completed: userTask.is_completed,
+                  description: userTask.task.description!,
+                  start_month: userTask.task.start_month,
+                  end_month: userTask.task.end_month,
+                });
+              }
+            }
+          }
+          groupedTaskData.push({
+            plant_data: plantData,
+            purchase_data: purchaseData,
+            tasks: tasksForThisPlantInThisPurchase,
+          });
+        }
       }
-      const currentGroup = groupedData.get(groupKey);
-
-      currentGroup?.tasks.push({
-        user_task_id: userTask.id,
-        task_id: userTask.task.id,
-        is_completed: userTask.is_completed,
-        description: userTask.task.description,
-        start_month: userTask.task.start_month,
-        end_month: userTask.task.end_month,
-      });
     }
 
-    const formattedTasks = Array.from(groupedData.values());
-    return formattedTasks;
+    return groupedTaskData;
   } catch (error) {
     console.error(`Error fetching tasks for user ${userId}`);
     throw error;

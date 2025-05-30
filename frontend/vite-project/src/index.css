@@ -20,7 +20,7 @@ nav {
 }
 
 main {
-  @apply flex justify-center bg-white;
+  @apply flex justify-center bg-white p-6;
 }
 
 /* Global */
@@ -130,7 +130,6 @@ main {
   @apply text-lg text-gray-700 space-y-1;
 }
 
-
 .list {
   @apply text-lg text-gray-700 space-y-1;
 }
@@ -138,6 +137,10 @@ main {
 /* Toast Styles */
 .toast {
   @apply bg-yellow-50 text-gray-800 border border-yellow-400 px-8 py-4 rounded-lg shadow font-medium min-w-[220px] transition-all duration-300 ease-out opacity-0 translate-x-4;
+/* Forms */
+
+.dropdown {
+    @apply border border-yellow-800 font-semibold bg-yellow-50 h-10 pl-4;
 }
 
 
@@ -192,4 +195,3 @@ main {
 .pop {
   animation: pop 0.3s;
 }
-

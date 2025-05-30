@@ -1,0 +1,7 @@
+.seeds-assortment {
+    @apply flex flex-col gap-6 p-4;
+}
+
+.assortment-controls {
+    @apply flex justify-between items-center;
+}

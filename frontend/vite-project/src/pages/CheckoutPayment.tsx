@@ -24,6 +24,7 @@ const lastShippingRef = useRef(shippingFormData);
   }, []);
 
   const paymentFormData = useFormData();
+  const paymentMethod = paymentFormData.paymentMethod;
 
   const lastOrderTotal = useRef(0);
   const lastOrderItemsRef = useRef<typeof cartItems>([]);
@@ -83,7 +84,15 @@ const lastShippingRef = useRef(shippingFormData);
 
           <div className="vertical-stack">
             <h4>Payment Method</h4>
-            <p>Card: **** **** **** {maskedCard}</p>
+            {paymentMethod === "card" && (
+              <p>Card: **** **** **** {maskedCard}</p>
+            )}
+            {paymentMethod === "swish" && (
+              <p>Swish</p>
+            )}
+            {paymentMethod === "klarna" && (
+              <p>Klarna</p>
+            )}
           </div>
         </div>
       </div>

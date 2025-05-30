@@ -40,7 +40,7 @@ export class ShippingInfo extends Model<
           allowNull: false,
         },
         email: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
           allowNull: false,
         },
         address: {
@@ -48,15 +48,15 @@ export class ShippingInfo extends Model<
           allowNull: false,
         },
         apartment: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
           allowNull: true,
         },
         postcode: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
           allowNull: false,
         },
         city: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
           allowNull: false,
         },
         createdAt: {
@@ -73,6 +73,13 @@ export class ShippingInfo extends Model<
         tableName: "shipping_infos",
         modelName: "Shipping_info",
         timestamps: false,
+        indexes: [
+          { name: "idx_shipping_infos_purchase_id", fields: ["purchase_id"] },
+          {
+            name: "idx_shipping_infos_email_purchase_id",
+            fields: ["email", "purchase_id"],
+          },
+        ],
       }
     );
   }

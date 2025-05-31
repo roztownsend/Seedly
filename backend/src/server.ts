@@ -11,6 +11,7 @@ import { initModels } from "./models/initModels";
 import plantRoutes from "./routes/plantRoutes";
 import shippingRoutes from "./routes/shippingRoutes";
 import userTaskRoutes from "./routes/userTaskRoutes";
+import adminRoutes from "./routes/adminRoutes";
 import { Purchase } from "./models/purchase.model";
 import { Plant } from "./models/plant.model";
 import { ShippingOption } from "./models/shippingOption.model";
@@ -46,6 +47,7 @@ app.use("/plants", plantRoutes);
 app.use("/shipping-options", shippingRoutes);
 app.use("/auth-test", authTest);
 app.use("/user-tasks", userTaskRoutes);
+app.use("/admin", adminRoutes);
 app.use("/purchase", purchaseRoutes);
 
 const swaggerDocument = YAML.load(

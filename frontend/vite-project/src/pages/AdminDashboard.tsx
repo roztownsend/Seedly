@@ -1,8 +1,9 @@
 import { useAuthUser, useAuthActions } from "../stores/authStore";
-
+import { useAdminDashboard } from "../hooks/useAdminDashboard";
 function AdminDashboard() {
   const { signOutUser } = useAuthActions();
   const user = useAuthUser();
+  const { getSales } = useAdminDashboard();
   return (
     <>
       <div className="flex flex-col">
@@ -10,7 +11,10 @@ function AdminDashboard() {
           <h3>Welcome to the Seedly Admin Dashboard </h3>
           <h4>{user?.email}</h4>
           <div className="flex gap-4 mb-3">
-            <button className="bg-green-600 text-white p-2 w-32 rounded-lg font-bold">
+            <button
+              onClick={getSales}
+              className="bg-green-600 text-white p-2 w-32 rounded-lg font-bold"
+            >
               Sales
             </button>
             <button className="bg-white w-32 rounded-lg p-2 font-bold">

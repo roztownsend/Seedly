@@ -1,7 +1,7 @@
 import { supabase } from "../helper/supabaseClient";
 
 export const handleFacebookLogin = async () => {
-  const { data, error } = await supabase.auth.signInWithOAuth({
+  const { error } = await supabase.auth.signInWithOAuth({
     provider: "facebook",
     options: {
       redirectTo: "http://localhost:5173/dashboard",

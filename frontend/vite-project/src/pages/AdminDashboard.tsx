@@ -5,8 +5,30 @@ function AdminDashboard() {
   const user = useAuthUser();
   return (
     <>
-      <h1>Welcome to the Admin Dashboard {user?.email}</h1>
-      <button onClick={signOutUser}>Logout</button>
+      <div className="flex flex-col">
+        <div className="flex flex-col items-center">
+          <h3>Welcome to the Seedly Admin Dashboard </h3>
+          <h4>{user?.email}</h4>
+          <div className="flex gap-4 mb-3">
+            <button className="bg-green-600 text-white p-2 w-32 rounded-lg font-bold">
+              Sales
+            </button>
+            <button className="bg-white w-32 rounded-lg p-2 font-bold">
+              Users
+            </button>
+          </div>
+          <div className="flex gap-4">
+            <button className="bg-green-600 text-white p-2 w-32 rounded-lg font-bold">
+              Today
+            </button>
+            <button className="bg-white w-32 rounded-lg p-2 font-bold">
+              This week
+            </button>
+          </div>
+        </div>
+
+        <button onClick={signOutUser}>Logout</button>
+      </div>
     </>
   );
 }

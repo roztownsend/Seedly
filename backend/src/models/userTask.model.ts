@@ -9,6 +9,7 @@ import {
 } from "sequelize";
 import { User } from "./user.model";
 import { Task } from "./task.model";
+import { Purchase } from "./purchase.model";
 
 export class UserTask extends Model<
   InferAttributes<UserTask>,
@@ -17,7 +18,12 @@ export class UserTask extends Model<
   declare id: CreationOptional<string>;
   declare user_id: ForeignKey<User["id"]>;
   declare task_id: ForeignKey<Task["id"]>;
+  declare purchase_id: ForeignKey<string>;
   declare is_completed: CreationOptional<boolean>;
+
+  declare user?: User;
+  declare task?: Task;
+  declare purchase?: Purchase;
 
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
@@ -44,6 +50,10 @@ export class UserTask extends Model<
           type: DataTypes.UUID,
           allowNull: false,
         },
+        purchase_id: {
+          type: DataTypes.UUID,
+          allowNull: false,
+        },
         createdAt: {
           type: DataTypes.DATE,
           allowNull: true,
@@ -63,16 +73,20 @@ export class UserTask extends Model<
         underscored: true,
         indexes: [
           {
-            name: "idx_user_tasks_user_id_task_id_unique_key",
+            name: "idx_user_task_purchase_unique",
             unique: true,
-            fields: ["user_id", "task_id"],
+            fields: ["user_id", "task_id", "purchase_id"],
           },
         ],
       }
     );
   }
 
-  static associate(models: { User: typeof User; Task: typeof Task }) {
+  static associate(models: {
+    User: typeof User;
+    Task: typeof Task;
+    Purchase: typeof Purchase;
+  }) {
     UserTask.belongsTo(models.User, {
       foreignKey: "user_id",
       as: "user",
@@ -82,6 +96,11 @@ export class UserTask extends Model<
     UserTask.belongsTo(models.Task, {
       foreignKey: "task_id",
       as: "task",
+      onDelete: "CASCADE",
+    });
+    UserTask.belongsTo(models.Purchase, {
+      foreignKey: "purchase_id",
+      as: "purchase",
       onDelete: "CASCADE",
     });
   }

@@ -104,7 +104,7 @@ export class Plant extends Model<
   }) {
     Plant.hasMany(models.PurchaseItem, {
       foreignKey: "plant_id",
-      as: "purchaseItems",
+      as: "purchase_items",
     });
     Plant.hasMany(models.Task, {
       foreignKey: "plant_id",

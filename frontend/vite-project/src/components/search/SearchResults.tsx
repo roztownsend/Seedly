@@ -19,7 +19,7 @@ export const SearchResults: React.FC = () => {
             <section className="search-results not-found-state">
                 <FaRegSadTear className="state-icon" />
                 <p className="status-text">No results for <strong>{query}</strong>. <br />
-                Try changing your query and searching again, or check out our <Link to="/seeds" className="text-link-primary">assortment of seeds</Link>{" "} instead.</p>
+                Try changing your query and searching again, or check out our <Link to="/shop" className="text-link-primary">assortment of seeds</Link>{" "} instead.</p>
             </section>
     );
 
@@ -28,7 +28,7 @@ export const SearchResults: React.FC = () => {
             <h1>Results for {query}</h1>
             <ProductGrid products={results} />
             <div className="search-results__end">
-                That's all for <strong>{query}</strong>. Check out our <Link to="/seeds" className="text-link-primary">assortment of seeds</Link>{" "} for more.
+                That's all for <strong>{query}</strong>. Check out our <Link to="/shop" className="text-link-primary">assortment of seeds</Link>{" "} for more.
             </div>
         </section>
     )

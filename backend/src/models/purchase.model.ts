@@ -12,15 +12,16 @@ import {
 import { PurchaseItem } from "./purchaseItem.model";
 import { Payment } from "./payment.model";
 import { ShippingInfo } from "./shippingInfo.model";
+import { User } from "./user.model";
+import { Plant } from "./plant.model";
 export class Purchase extends Model<
   InferAttributes<Purchase>,
   InferCreationAttributes<Purchase>
 > {
   declare id: CreationOptional<string>;
-  declare user_id: ForeignKey<string> | null;
+  declare user_id: ForeignKey<User["id"]> | null;
 
   declare total_items: number;
-  declare shipping_selection: string;
   declare shipping_price: number;
   declare total_amount: number;
   declare purchase_date: CreationOptional<Date>;
@@ -28,6 +29,8 @@ export class Purchase extends Model<
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
+  declare purchase_items?: PurchaseItem[];
+  declare plant?: Plant;
   declare getItems: HasManyGetAssociationsMixin<PurchaseItem>;
   declare getPayment: HasOneGetAssociationMixin<Payment>;
   declare getShippingInfo: HasOneGetAssociationMixin<ShippingInfo>;
@@ -41,13 +44,12 @@ export class Purchase extends Model<
           allowNull: false,
           primaryKey: true,
         },
-
+        user_id: {
+          type: DataTypes.UUID,
+          allowNull: true,
+        },
         total_items: {
           type: DataTypes.INTEGER,
-          allowNull: false,
-        },
-        shipping_selection: {
-          type: DataTypes.STRING,
           allowNull: false,
         },
         shipping_price: {
@@ -77,6 +79,7 @@ export class Purchase extends Model<
         tableName: "purchases",
         timestamps: true,
         underscored: true,
+        indexes: [{ name: "idx_purchases_user_id", fields: ["user_id"] }],
       }
     );
   }
@@ -84,6 +87,7 @@ export class Purchase extends Model<
     PurchaseItem: typeof PurchaseItem;
     Payment: typeof Payment;
     ShippingInfo: typeof ShippingInfo;
+    User: typeof User;
   }) {
     Purchase.hasMany(models.PurchaseItem, {
       foreignKey: "purchase_id",
@@ -96,6 +100,10 @@ export class Purchase extends Model<
     Purchase.hasOne(models.ShippingInfo, {
       foreignKey: "purchase_id",
       as: "shipping_info",
+    });
+    Purchase.belongsTo(models.User, {
+      foreignKey: "user_id",
+      as: "user",
     });
   }
 }

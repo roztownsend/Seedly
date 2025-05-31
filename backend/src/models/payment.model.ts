@@ -13,7 +13,7 @@ export class Payment extends Model<
   InferCreationAttributes<Payment>
 > {
   declare id: CreationOptional<string>;
-  declare purchase_id: ForeignKey<string>;
+  declare purchase_id: ForeignKey<Purchase["id"]>;
   declare payment_method: string;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
@@ -28,7 +28,7 @@ export class Payment extends Model<
           primaryKey: true,
         },
         payment_method: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
           allowNull: false,
         },
         createdAt: {

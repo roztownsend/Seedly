@@ -5,17 +5,17 @@ import {
   CreationOptional,
   DataTypes,
   Sequelize,
+  ForeignKey,
 } from "sequelize";
 
 import { UserTask } from "./userTask.model";
-
+import { Purchase } from "./purchase.model";
 export class User extends Model<
   InferAttributes<User>,
   InferCreationAttributes<User>
 > {
-  declare id: CreationOptional<string>;
+  declare id: ForeignKey<string>;
   declare email: string;
-  declare password: string;
   declare role: CreationOptional<string>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
@@ -25,20 +25,16 @@ export class User extends Model<
       {
         id: {
           type: DataTypes.UUID,
-          defaultValue: DataTypes.UUIDV4,
           allowNull: false,
           primaryKey: true,
         },
         email: {
-          type: DataTypes.STRING,
-          allowNull: false,
-        },
-        password: {
           type: DataTypes.TEXT,
           allowNull: false,
+          unique: true,
         },
         role: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
           defaultValue: "customer",
           allowNull: false,
         },
@@ -63,10 +59,17 @@ export class User extends Model<
     );
   }
 
-  static associate(models: { UserTask: typeof UserTask }) {
+  static associate(models: {
+    UserTask: typeof UserTask;
+    Purchase: typeof Purchase;
+  }) {
     User.hasMany(models.UserTask, {
       foreignKey: "user_id",
       as: "user_tasks",
+    });
+    User.hasMany(models.Purchase, {
+      foreignKey: "user_id",
+      as: "purchases",
     });
   }
 }

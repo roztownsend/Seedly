@@ -1,5 +1,5 @@
 .cart{
-    @apply w-11/12 border;
+    @apply w-11/12 lg:w-5/6 mx-auto py-10 flex flex-col lg:flex-row gap-12;
 }
 
 .cart-sections {

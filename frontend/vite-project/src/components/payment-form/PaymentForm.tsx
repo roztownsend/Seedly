@@ -6,14 +6,22 @@ import klarnaIcon from '../../assets/image/klarna.svg';
 import "../payment-form/PaymentForm.css";
 import { useNavigate } from "react-router-dom";
 import valid from "card-validator";
-
+import { useTransactionPayload } from "../../hooks/useTransactionPayload";
+import { handleCheckout } from "../../helper/handleCheckout";
+import { supabase } from "../../helper/supabaseClient";
 
 const PaymentForm = () => {
+    const payload = useTransactionPayload();
     const formData = useFormData();
     const { updateFormField } = usePaymentActions();
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [cardBrand, setCardBrand] = useState<string>("");
     const navigate = useNavigate();
+
+    //To delete
+    const testTransactionObj = () => {
+        console.log("transaction obj", payload);
+    }
 
     // Format card number with spaces (e.g., 1234 5678 9012 3456)
     const formatCardNumber = (value: string) => {
@@ -44,12 +52,30 @@ const PaymentForm = () => {
         return Object.keys(newErrors).length === 0;
     };
 
+    const submitTransaction = async (method: "card" | "swish" | "klarna") => {
+        updateFormField("paymentMethod", method);
+      if (!payload) {
+            console.log("No transaction payload.");
+            return;
+        }
+
+        const { data: { session } } = await supabase.auth.getSession();
+        const token = session?.access_token;
+        try {
+            const result = await handleCheckout(payload, token);
+            testTransactionObj();
+            console.log("Transaction complete!")
+            navigate("/checkout/confirm");
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
+
     // Handle form submission
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!validate()) return;
-        updateFormField("paymentMethod", "card");
-        navigate("/checkout/confirm");
+        await submitTransaction("card");
     };
 
     // Allow only numeric input with a max length
@@ -58,13 +84,11 @@ const PaymentForm = () => {
 
     // Dummy handlers for Swish and Klarna
     const handleSwish = () => {
-        updateFormField("paymentMethod", "swish");
-        navigate("/checkout/confirm");
+        submitTransaction("swish");
     };
 
     const handleKlarna = () => {
-        updateFormField("paymentMethod", "klarna");
-        navigate("/checkout/confirm");
+        submitTransaction("klarna");
     };
 
     // Detect card brand on input change

@@ -87,6 +87,10 @@ main {
     @apply text-green-800;
   }
 
+  .error-message {
+    @apply text-red-600;
+  }
+
   .button-primary {
     @apply border border-green-800 bg-green-800 text-yellow-50 font-semibold flex justify-center items-center p-4 rounded transition duration-200 ease-in-out transform hover:scale-105 hover:bg-stone-700 hover:border-stone-700;
   }

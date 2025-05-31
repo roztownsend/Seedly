@@ -47,3 +47,7 @@
     @apply absolute right-4 top-1/2 bg-white px-1 text-sm text-gray-600 pointer-events-none;
     transform: translateY(-50%);
 }
+
+.payment-icons {
+    @apply h-8 w-auto mx-auto;
+}

@@ -6,10 +6,6 @@
   @apply mb-6 text-2xl font-semibold;
 }
 
-.step-header-wrapper {
-  @apply flex flex-row items-center justify-start gap-4 text-sm text-gray-600;
-}
-
 .step-label {
   @apply text-lg text-gray-400 whitespace-nowrap;
 }
@@ -19,5 +15,5 @@
 }
 
 .step-line {
-  @apply w-6 h-0.5 bg-gray-300 inline-block align-middle;
+  @apply w-6 h-0.5 bg-gray-300 inline-block align-middle mx-2;
 }

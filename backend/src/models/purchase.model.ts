@@ -8,6 +8,7 @@ import {
   Sequelize,
   HasManyGetAssociationsMixin,
   HasOneGetAssociationMixin,
+  HasManyCreateAssociationMixin,
 } from "sequelize";
 import { PurchaseItem } from "./purchaseItem.model";
 import { Payment } from "./payment.model";
@@ -36,7 +37,10 @@ export class Purchase extends Model<
   declare getItems: HasManyGetAssociationsMixin<PurchaseItem>;
   declare getPayment: HasOneGetAssociationMixin<Payment>;
   declare getShippingInfo: HasOneGetAssociationMixin<ShippingInfo>;
-
+  declare createPurchaseItem: HasManyCreateAssociationMixin<
+    PurchaseItem,
+    "purchase_id"
+  >;
   static initModel(sequelize: Sequelize): typeof Purchase {
     return Purchase.init(
       {

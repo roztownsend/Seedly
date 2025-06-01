@@ -43,6 +43,7 @@ export class Purchase extends Model<
     "purchase_id"
   >;
   declare createPayment: HasOneCreateAssociationMixin<Payment>;
+  declare createShipping_info: HasOneCreateAssociationMixin<ShippingInfo>;
 
   static initModel(sequelize: Sequelize): typeof Purchase {
     return Purchase.init(

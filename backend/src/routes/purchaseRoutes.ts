@@ -55,6 +55,20 @@ router.post(
         },
         { transaction: t }
       );
+
+      const shipping = await purchase.createShipping_info(
+        {
+          customer_name: shippingInfo.name,
+          email: shippingInfo.email,
+          address: shippingInfo.address,
+          apartment: shippingInfo.apartment,
+          postcode: shippingInfo.postalCode,
+          city: shippingInfo.city,
+          shipping_option_id: shippingInfo.shippingOptionId,
+        },
+        { transaction: t }
+      );
+
       await t.commit();
       res.status(200).json({ message: "Purchase completed successfuly" });
     } catch (err) {

@@ -12,6 +12,7 @@ export const shippingInfoSchema = z.object({
   apartment: z.string().optional(),
   postalCode: z.string(),
   city: z.string(),
+  shippingOptionId: z.string(),
 });
 
 export const checkoutSchema = z.object({

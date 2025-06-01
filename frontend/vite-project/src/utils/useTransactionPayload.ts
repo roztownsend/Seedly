@@ -39,6 +39,7 @@ export const useTransactionPayload = (): TransactionPayload | null => {
   const totalItems = useCartQuantitiesTotal();
   const shippingSelection = useSelectedShippingOption();
   const shippingPriceString = shippingSelection?.price;
+  const shippingOptionId = shippingSelection?.id;
   const shippingPrice = shippingPriceString
     ? parseFloat(shippingPriceString)
     : NaN;
@@ -68,6 +69,7 @@ export const useTransactionPayload = (): TransactionPayload | null => {
     apartment: shippingForm.apartment,
     postalCode: shippingForm.postalCode,
     city: shippingForm.city,
+    shippingOptionId: shippingOptionId,
   };
 
   if (loading || typeof paymentMethod !== "string") {

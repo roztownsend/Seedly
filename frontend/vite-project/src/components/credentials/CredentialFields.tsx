@@ -1,8 +1,9 @@
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { CredentialsFormProps } from "../../types/credentialsFormTypes";
 import { useCredentialForm } from "../../hooks/useCredentialForm";
+import { ClipLoader } from "react-spinners";
 function CredentialFields({ formType }: CredentialsFormProps) {
-  const { handlers, showPassword, errorMessage, formData } =
+  const { handlers, showPassword, errorMessage, formData, loading } =
     useCredentialForm(formType);
   return (
     <form
@@ -60,7 +61,18 @@ function CredentialFields({ formType }: CredentialsFormProps) {
           </a>
         </div>
       )}
-      <button type="submit" className="credential-submit-btn"></button>
+      {loading ? (
+        <div className="flex justify-center my-4">
+          <ClipLoader color="#22c55e" size={32} />
+        </div>
+      ) : (
+        <button
+          type="submit"
+          className="button-primary w-full mt-4"
+        >
+          {formType === "login" ? "Login" : "Sign Up"}
+        </button>
+      )}
     </form>
   );
 }

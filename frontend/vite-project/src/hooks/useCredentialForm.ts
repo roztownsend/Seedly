@@ -12,7 +12,7 @@ import {
 // useCredentialForm expects a 'formType' argument, which can either be 'login' or 'signup'.
 export const useCredentialForm = (
   formType: FormType
-): UseCredentialsFormReturn => {
+): UseCredentialsFormReturn & { loading: boolean } => {
   const navigate = useNavigate();
 
   const { signUpNewUser, signInWithPassword, signOutUser } = useAuthActions();
@@ -28,6 +28,7 @@ export const useCredentialForm = (
     return defaultData;
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -39,9 +40,9 @@ export const useCredentialForm = (
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(formType);
     e.preventDefault();
     setErrorMessage("");
+    setLoading(true);
     try {
       const { email, password } = formData;
       const action =
@@ -100,6 +101,8 @@ export const useCredentialForm = (
         console.error(error.response?.data.message);
       }
       setErrorMessage("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -115,5 +118,6 @@ export const useCredentialForm = (
       handleSubmit,
       togglePassword,
     },
+    loading,
   };
 };

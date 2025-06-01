@@ -22,4 +22,5 @@ export type UseCredentialsFormReturn = {
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
     togglePassword: () => void;
   };
+  loading: boolean;
 };

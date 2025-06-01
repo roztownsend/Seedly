@@ -16,26 +16,31 @@ const Shop: React.FC = () => {
         try {
           await fetchAllPlants();
         } catch (error) {
-          console.log("Error fetching products")
+          console.log("Error fetching products");
         }
-      }
+      };
       fetchData();
-    };
-  }, [productList, fetchAllPlants])
-  
+    }
+  }, [productList, fetchAllPlants]);
+
   if (loading) return <Loading />;
-  
+
   return (
-  <section className="seeds-assortment">
-    <div className="shop-heading">
-      <h3>Our Assortment of Seeds</h3>
+    <section className="seeds-assortment">
+      <div className="shop-heading">
+        <h3>Our Assortment of Seeds</h3>
       </div>
-    <div className="assortment-controls">
-      <div className="assortment-controls__sorter"><ProductSorter data={productList} /></div>
-      <div className="assortment-controls__count">Showing {productList.length} products</div>
-    </div>
-    <ProductGrid products={productList} />
-  </section>
-)};
+      <div className="assortment-controls">
+        <div className="assortment-controls__sorter">
+          <ProductSorter data={productList} />
+        </div>
+        <div className="assortment-controls__count">
+          Showing {productList.length} products
+        </div>
+      </div>
+      <ProductGrid products={productList} filterEdibleOnly={true} />
+    </section>
+  );
+};
 
 export default Shop;

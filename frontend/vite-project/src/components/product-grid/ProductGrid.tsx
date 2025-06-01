@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ProductCard from "../card-component/ProductCard";
 import useIsMobile from "../../hooks/useIsMobile";
 import "./productGrid.css";
@@ -7,8 +7,10 @@ import { memo } from "react";
 import { useProductGridStore } from "../../stores/productGridStore"; 
 
 type ProductGridProps = {
-    products: ProductItem[];
-}
+  products: ProductItem[];
+  filterEdibleOnly?: boolean;
+};
+
 
 const ProductGrid = ({ products }: ProductGridProps) => {
     const [displayedPlants, setDisplayedPlants] = useState<ProductItem[]>([]);
@@ -23,7 +25,10 @@ const ProductGrid = ({ products }: ProductGridProps) => {
     const { displayedCount, setDisplayedCount } = useProductGridStore();
 
     //Filter isEdible
-    const edibleProducts = products.filter(product => product.isedible === true);
+    const edibleProducts = useMemo(
+        () => products.filter(product => product.isedible === true),
+        [products]
+    );
 
     useEffect(() => {
         const initialCount = displayedCount > 0 ? displayedCount : loadStep;
@@ -31,6 +36,7 @@ const ProductGrid = ({ products }: ProductGridProps) => {
         setDisplayedPlants(initial);
         setShowMore(edibleProducts.length > initialCount);
     }, [edibleProducts, loadStep, displayedCount]);
+
 
     const handleShowMore = () => {
         const nextCount = displayedPlants.length + loadStep;

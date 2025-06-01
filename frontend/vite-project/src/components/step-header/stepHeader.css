@@ -3,11 +3,15 @@
 }
 
 .step-header-title {
-  @apply mb-6 text-2xl font-semibold;
+  @apply mb-6 text-2xl font-semibold text-yellow-800;
 }
 
 .step-label {
   @apply text-lg text-gray-400 whitespace-nowrap;
+}
+
+.steps {
+  @apply flex w-full items-center justify-center;
 }
 
 .step-label-active {

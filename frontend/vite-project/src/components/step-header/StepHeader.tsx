@@ -13,7 +13,7 @@ const StepHeader: React.FC<StepHeaderProps> = ({ currentStep }) => {
   return (
     <section className="step-header-container">
       <h3 className="step-header-title">Checkout</h3>
-      <div>
+      <div className="steps">
         {steps.map((step, index) => (
           <React.Fragment key={step}>
             <span className={`step-label ${currentStep === step ? "step-label-active" : ""}`}>

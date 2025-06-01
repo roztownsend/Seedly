@@ -91,6 +91,14 @@ main {
     @apply text-red-600;
   }
 
+  .hero-desktop-heading {
+    @apply mb-4 text-yellow-800;
+  }
+
+  .hero-desktop-subheading {
+    @apply text-black;
+  }
+
   .button-primary {
     @apply border border-green-800 bg-green-800 text-yellow-50 font-semibold flex justify-center items-center p-4 rounded transition duration-200 ease-in-out transform hover:scale-105 hover:bg-stone-700 hover:border-stone-700;
   }

@@ -1,0 +1,8 @@
+.section-heading img {
+  @apply w-36 h-36 object-contain mx-auto;
+}
+
+.section-heading h1,
+.section-heading p {
+  @apply text-yellow-800;
+}

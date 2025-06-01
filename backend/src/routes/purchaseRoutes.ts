@@ -38,6 +38,23 @@ router.post(
         },
         { transaction: t }
       );
+      const items = await Promise.all(
+        purchaseItems.map((item) => {
+          return purchase.createPurchase_item(
+            {
+              plant_id: item.plantId,
+              quantity: item.quantity,
+            },
+            { transaction: t }
+          );
+        })
+      );
+      const payment = await purchase.createPayment(
+        {
+          payment_method: paymentMethod,
+        },
+        { transaction: t }
+      );
       await t.commit();
       res.status(200).json({ message: "Purchase completed successfuly" });
     } catch (err) {

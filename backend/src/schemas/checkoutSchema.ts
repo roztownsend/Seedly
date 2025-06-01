@@ -10,14 +10,16 @@ export const shippingInfoSchema = z.object({
   email: z.string(),
   address: z.string(),
   apartment: z.string().optional(),
-  postalCode: z.number(),
+  postalCode: z.string(),
   city: z.string(),
 });
 
-export const purchaseSchema = z.object({
+export const checkoutSchema = z.object({
   userId: z.string().nullable(),
   totalItems: z.number().positive(),
   shippingPrice: z.number().positive(),
   totalAmount: z.number().positive(),
-  paymentMethod: z.string(),
+  purchaseItems: z.array(purchaseItemSchema),
+  paymentMethod: z.enum(["card", "swish", "klarna"]),
+  shippingInfo: shippingInfoSchema,
 });

@@ -1,8 +1,8 @@
 import { Router, Request, Response } from "express";
 import { pool } from "../config/dbConnection";
 import { z } from "zod";
-import { purchaseSchema } from "../schemas/purchaseSchema";
 import { paymentSchema } from "../schemas/paymentSchema";
+import { checkoutSchema } from "../schemas/checkoutSchema";
 import { Purchase } from "../models/purchase.model";
 import { PurchaseItem } from "../models/purchaseItem.model";
 import { authenticateUser } from "../middleware/authenticateUser";
@@ -14,8 +14,9 @@ router.post(
   authenticateUser,
   async (req: Request, res: Response): Promise<void> => {
     console.log("POST /purchase triggered");
+
     try {
-      const parsed = purchaseSchema.parse(req.body);
+      const parsed = checkoutSchema.parse(req.body);
       console.log(parsed);
     } catch (err) {
       if (err instanceof z.ZodError) {

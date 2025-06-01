@@ -68,7 +68,8 @@ const PaymentForm = () => {
     } = await supabase.auth.getSession();
     const token = session?.access_token;
     try {
-      const result = await handleCheckout(payload, token);
+      console.log(payload);
+      const response = await handleTransaction(payload, sessionToken);
       testTransactionObj();
       console.log("Transaction complete!");
       navigate("/checkout/confirm");

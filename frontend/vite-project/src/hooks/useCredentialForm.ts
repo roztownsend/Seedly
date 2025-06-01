@@ -17,6 +17,7 @@ export const useCredentialForm = (
 
   const { signUpNewUser, signInWithPassword, signOutUser } = useAuthActions();
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [formData, setFormData] = useState<CredentialsInput>(() => {
     const defaultData = {
       email: "",
@@ -41,6 +42,8 @@ export const useCredentialForm = (
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     setErrorMessage("");
     setLoading(true);
     try {
@@ -72,7 +75,7 @@ export const useCredentialForm = (
             }
           );
           console.log(response.data);
-          navigate("/test-dashboard");
+          navigate("/dashboard");
         } else if (formType === "login") {
           console.log(result.data);
           const response = await axios.post(
@@ -85,11 +88,11 @@ export const useCredentialForm = (
               },
             }
           );
-          console.log(response.data);
+
           if (result.data?.user?.app_metadata.role === "admin") {
             navigate("/admin/test-dashboard");
           } else {
-            navigate("/test-dashboard");
+            navigate("/dashboard");
           }
         } else if (result.error) {
           setErrorMessage(result.error.message);
@@ -103,6 +106,7 @@ export const useCredentialForm = (
       setErrorMessage("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -113,6 +117,7 @@ export const useCredentialForm = (
     formData,
     showPassword,
     errorMessage,
+    isSubmitting,
     handlers: {
       handleChange,
       handleSubmit,

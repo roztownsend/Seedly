@@ -79,4 +79,5 @@ function CredentialFields({ formType }: CredentialsFormProps) {
     </form>
   );
 }
+
 export default CredentialFields;

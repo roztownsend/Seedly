@@ -22,18 +22,21 @@ const ProductGrid = ({ products }: ProductGridProps) => {
     // Zustand store
     const { displayedCount, setDisplayedCount } = useProductGridStore();
 
+    //Filter isEdible
+    const edibleProducts = products.filter(product => product.isedible === true);
+
     useEffect(() => {
         const initialCount = displayedCount > 0 ? displayedCount : loadStep;
-        const initial = products.slice(0, initialCount);
+        const initial = edibleProducts.slice(0, initialCount);
         setDisplayedPlants(initial);
-        setShowMore(products.length > initialCount);
-    }, [products, loadStep, displayedCount]);
+        setShowMore(edibleProducts.length > initialCount);
+    }, [edibleProducts, loadStep, displayedCount]);
 
     const handleShowMore = () => {
         const nextCount = displayedPlants.length + loadStep;
-        const next = products.slice(0, nextCount);
+        const next = edibleProducts.slice(0, nextCount);
         setDisplayedPlants(next);
-        setShowMore(next.length < products.length);
+        setShowMore(next.length < edibleProducts.length);
         setDisplayedCount(next.length);
 
         setTimeout(() => {
@@ -45,30 +48,30 @@ const ProductGrid = ({ products }: ProductGridProps) => {
         }, 300);
     };
 
-    if (!products.length) return <p>No products found.</p>;
+if (!edibleProducts.length) return <p>No edible products found.</p>;
 
-    return (
-        <div className="product-grid">
-            <div className="cards-container">
-                {displayedPlants.map((plant, idx) => (
-                    <div
-                        key={plant.id}
-                        className="card-item"
-                        ref={idx === displayedPlants.length - 1 ? lastItemRef : null}
-                    >
-                        <ProductCard item={plant} />
-                    </div>
-                ))}
-            </div>
-
-            {showMore && (
-                <div className="button-container">
-                    <button onClick={handleShowMore} className="button-primary">
-                        Show More
-                    </button>
+return (
+    <div className="product-grid">
+        <div className="cards-container">
+            {displayedPlants.map((plant, idx) => (
+                <div
+                    key={plant.id}
+                    className="card-item"
+                    ref={idx === displayedPlants.length - 1 ? lastItemRef : null}
+                >
+                    <ProductCard item={plant} />
                 </div>
-            )}
+            ))}
         </div>
+
+        {showMore && (
+            <div className="button-container">
+                <button onClick={handleShowMore} className="button-primary">
+                    Show More
+                </button>
+            </div>
+        )}
+    </div>
     );
 };
 

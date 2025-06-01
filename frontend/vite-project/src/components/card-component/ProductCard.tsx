@@ -4,11 +4,11 @@ import { useCartActions } from "../../stores/cartStore";
 import { QuantityControl } from "../quantity-control/QuantityControl";
 import { memo } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast"; 
 
 const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
   const { image_url, product_name, price, id } = item;
   const { addItem } = useCartActions();
-
   // Function to create a slug from the product name
   // This function replaces spaces with dashes and removes special characters to create a URL-friendly string
   function slugify(text: string) {
@@ -18,6 +18,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
   const handleAddToCart = () => {
     const tempItem = { ...item, quantity: 1 };
     addItem(tempItem);
+    toast.success(`Product ${product_name} was added to bag!`);
   };
 
   return (

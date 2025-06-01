@@ -1,0 +1,17 @@
+.payment-container {
+  @apply w-11/12 lg:w-5/6 mx-auto py-10 flex flex-col lg:flex-row gap-12;
+}
+
+.payment-form-section {
+  @apply p-4 w-full mx-auto max-w-lg;
+}
+
+.step-header-wrapper {
+  @apply w-full lg:w-1/2 flex flex-col gap-6;
+}
+
+.cart-summary-section {
+  @apply w-full mt-20 lg:w-1/2 flex flex-col gap-6 max-h-[80vh] overflow-y-auto pr-2;
+}
+
+

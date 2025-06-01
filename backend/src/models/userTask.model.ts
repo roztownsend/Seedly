@@ -15,8 +15,8 @@ export class UserTask extends Model<
   InferCreationAttributes<UserTask>
 > {
   declare id: CreationOptional<string>;
-  declare user_id: ForeignKey<string>;
-  declare task_id: ForeignKey<string>;
+  declare user_id: ForeignKey<User["id"]>;
+  declare task_id: ForeignKey<Task["id"]>;
   declare is_completed: CreationOptional<boolean>;
 
   declare createdAt: CreationOptional<Date>;
@@ -36,6 +36,14 @@ export class UserTask extends Model<
           allowNull: false,
           defaultValue: false,
         },
+        user_id: {
+          type: DataTypes.UUID,
+          allowNull: false,
+        },
+        task_id: {
+          type: DataTypes.UUID,
+          allowNull: false,
+        },
         createdAt: {
           type: DataTypes.DATE,
           allowNull: true,
@@ -53,6 +61,13 @@ export class UserTask extends Model<
         modelName: "UserTask",
         timestamps: true,
         underscored: true,
+        indexes: [
+          {
+            name: "idx_user_tasks_user_id_task_id_unique_key",
+            unique: true,
+            fields: ["user_id", "task_id"],
+          },
+        ],
       }
     );
   }

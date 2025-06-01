@@ -11,9 +11,15 @@ export default function Navbar() {
   const { setQuery, search } = useSearchActions();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [animateCart, setAnimateCart] = useState(false);
+
   const cartUniqueItems = useCartUniqueItems();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+  };
 
   const handleSearch = async () => {
     if (!query.trim()) return;
@@ -28,9 +34,12 @@ export default function Navbar() {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-  };
+  useEffect(() => {
+    if (cartUniqueItems === 0) return;
+    setAnimateCart(true);
+    const timeout = setTimeout(() => setAnimateCart(false), 300);
+    return () => clearTimeout(timeout);
+  }, [cartUniqueItems]);
 
   useEffect(() => {
     if (!location.pathname.startsWith("/search")) {
@@ -49,7 +58,7 @@ export default function Navbar() {
             </Link>
             <div className="navbar-links-search">
               <div className="navbar-links">
-                <Link to="/seeds" className="navbar-link">
+                <Link to="/shop" className="navbar-link">
                   Seeds
                 </Link>
                 <Link to="/contact" className="navbar-link">
@@ -73,7 +82,7 @@ export default function Navbar() {
           <div className="navbar-right">
             <Link to="/cart" className="navbar-auth">
               <div className="navbar-cart">
-                <ShoppingBag className="navbar-icons" />
+                <ShoppingBag className={`navbar-icons ${animateCart ? "pop" : ""}`} />
                 {cartUniqueItems}
               </div>
             </Link>
@@ -94,19 +103,18 @@ export default function Navbar() {
             Seedly
           </Link>
           <div className="navbar-mobile-icons">
-            <div className="navbar-cart">
-              <ShoppingBag className="navbar-icons" />
+            <Link to="/cart" className="navbar-cart">
+              <ShoppingBag className={`navbar-icons ${animateCart ? "pop" : ""}`} />
               {cartUniqueItems}
-            </div>
+            </Link>
             <div className="relative">
               <button onClick={() => setShowUserMenu(!showUserMenu)}>
                 <User2 className="navbar-icons" />
               </button>
 
               <div
-                className={`user-menu ${
-                  showUserMenu ? "user-menu-open" : "user-menu-closed"
-                }`}
+                className={`user-menu ${showUserMenu ? "user-menu-open" : "user-menu-closed"
+                  }`}
               >
                 <Link
                   to="/login"
@@ -150,7 +158,7 @@ export default function Navbar() {
       </nav>
       {isMenuOpen && (
         <div className="mobile-menu animate-fadeIn relative">
-          <Link to="/seeds" className="mobile-link">
+          <Link to="/shop" className="mobile-link">
             Seeds
           </Link>
           <Link to="/contact" className="mobile-link">

@@ -21,7 +21,7 @@ const ProductCardCart: React.FC<ProductCardCartProps> = ({ id }) => {
           </div>
           <div className="product-card-cart__actions">
             <h5 className="product-card-cart__price">{(price * quantity).toFixed(2)} Kr</h5>
-            <QuantityControl cartId={id} />
+            <QuantityControl compactCart cartId={id} />
           </div>
           <button onClick={() => removeItem(id)} className="product-card-cart__remove text-link-primary">Remove</button>
         </div>

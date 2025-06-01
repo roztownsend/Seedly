@@ -1,3 +1,35 @@
 .quantity-control {
-    @apply flex gap-3 items-center justify-between border border-black px-3 py-1;
+    @apply flex w-full gap-0 items-center justify-between border border-green-800 bg-yellow-50 rounded-lg ;
+}
+
+.quantity-btn {
+    @apply button-primary rounded-none first:rounded-l-lg last:rounded-r-lg w-1/4 h-14 text-2xl flex items-center justify-center transition active:scale-95 border-0;
+}
+
+.quantity-value {
+    @apply flex-1 text-yellow-900 font-extrabold text-2xl text-center bg-transparent;
+}
+
+.quantity-control--compact {
+    @apply max-w-[16rem] h-12 w-[30%];
+}
+
+.quantity-control--compact .quantity-btn {
+    @apply h-12 w-12 text-xl;
+}
+
+.quantity-control--compact .quantity-value {
+    @apply text-xl px-2;
+}
+
+.quantity-control--cart {
+    @apply max-w-[10rem] h-9 w-[60%];
+}
+
+.quantity-control--cart .quantity-btn {
+    @apply h-9 w-9 text-lg;
+}
+
+.quantity-control--cart .quantity-value {
+    @apply text-lg px-1;
 }

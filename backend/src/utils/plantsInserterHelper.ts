@@ -1,5 +1,7 @@
+import { Task } from "../models/task.model";
 import { Plant } from "../models/plant.model";
-
+import chalk from "chalk";
+import sequelize from "../config/sequelizeConnect";
 export interface PlantType {
   product_name: string;
   price: number;
@@ -9,45 +11,20 @@ export interface PlantType {
   isedible: boolean | null;
   sunlight: "Full" | "Full to part shade" | "Partial shade to full shade";
 }
+interface TaskType {
+  description: string | null;
+  start_month: number;
+  end_month: number;
+  plant_id?: string;
+}
 
-
+interface PlantWithTasks extends PlantType {
+  tasks: TaskType[];
+}
 const plantsInserter = async () => {
-  const tinyPlantsData: PlantType[] = [
-      {
-      product_name: "Thyme",
-      price: 42,
-      description:
-          "Wintergreen and tasty. Plant in sunny spots where you want a large chunk of something fresh-smelling.",
-      cycle: ["Annual", "Biennial"],
-      image_url:
-          "https://roztownsend.net/seedly-assets/Thyme.webp",
-      isedible: true,
-      sunlight: "Full"
-    },
-    {
-      product_name: "Kale 'Lerchenzungen'",
-      price: 42,
-      description:
-        "This variety of kale has green leaves and curly bits. The plant is usually grown as an annual, but if grown as a perennial, it will form seeds in the second year. It can be grown as baby salad greens or for bunching adult leaves. Leaves are sweeter after a frost and delicious eaten raw, added to salads, sautéed, or added to stews and casseroles.",
-      cycle: ["Annual", "Biennial"],
-      image_url:
-        "https://roztownsend.net/seedly-assets/Kale-Lerchenzungen.webp",
-      isedible: true,
-      sunlight: "Full",
-    },
-    {
-      product_name: "Salsify 'Sandwich Island'",
-      price: 36,
-      description:
-        "Salsify is a perennial plant grown as an annual for it''s edible root and leaves. It does well in cool weather and is cultivated similarly to carrots and parsnips. The leaves look like a clump of coarse grass with starry pink to purple flowers. The greens and flowers can be used in salads. The taproot has an oyster-like taste that can be eaten boiled or mashed. Take extra care not to break the roots while harvesting.",
-      cycle: ["Annual", "Perennial"],
-      image_url:
-        "https://roztownsend.net/seedly-assets/Salsify-Sandwich-Island.webp",
-      isedible: true,
-      sunlight: "Full",
-    },
-  ];
-  const plantsData: PlantType[] = [
+  const t = await sequelize.transaction();
+
+  const plantsWithTasks: PlantWithTasks[] = [
     {
       product_name: "Pumpkin 'Baby Bear'",
       price: 48,
@@ -57,8 +34,29 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Pumpkin-Baby-Bear.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 4,
+          end_month: 5,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+        {
+          description: "Pollinate",
+          start_month: 6,
+          end_month: 7,
+        },
+        {
+          description: "Harvest",
+          start_month: 9,
+          end_month: 10,
+        },
+      ],
     },
-
     {
       product_name: "Beet 'Choggia'",
       price: 35,
@@ -68,8 +66,19 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Beets.webp",
       isedible: true,
       sunlight: "Full to part shade",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 4,
+          end_month: 5,
+        },
+        {
+          description: "Harvest",
+          start_month: 8,
+          end_month: 10,
+        },
+      ],
     },
-
     {
       product_name: "Onion 'Alisa Craig'",
       price: 27,
@@ -79,8 +88,25 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Onion-Alisa-Craig.webp",
       isedible: true,
       sunlight: "Full",
-    },
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 3,
+          end_month: 4,
+        },
 
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+        {
+          description: "Harvest",
+          start_month: 7,
+          end_month: 9,
+        },
+      ],
+    },
     {
       product_name: "Carrot 'Touchon'",
       price: 56,
@@ -90,6 +116,23 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Carrot-Touchon.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow outdoors",
+          start_month: 4,
+          end_month: 6,
+        },
+        {
+          description: "Harvest",
+          start_month: 7,
+          end_month: 9,
+        },
+        {
+          description: "Sow outdoors",
+          start_month: 10,
+          end_month: 11,
+        },
+      ],
     },
     {
       product_name: "Kale 'Lerchenzungen'",
@@ -101,6 +144,18 @@ const plantsInserter = async () => {
         "https://roztownsend.net/seedly-assets/Kale-Lerchenzungen.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow outdoors",
+          start_month: 4,
+          end_month: 6,
+        },
+        {
+          description: "Harvest",
+          start_month: 9,
+          end_month: 11,
+        },
+      ],
     },
     {
       product_name: "Salsify 'Sandwich Island'",
@@ -112,6 +167,28 @@ const plantsInserter = async () => {
         "https://roztownsend.net/seedly-assets/Salsify-Sandwich-Island.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow outdoors",
+          start_month: 4,
+          end_month: 5,
+        },
+        {
+          description: "Harvest",
+          start_month: 4,
+          end_month: 5,
+        },
+        {
+          description: "Sow outdoors",
+          start_month: 10,
+          end_month: 11,
+        },
+        {
+          description: "Harvest",
+          start_month: 10,
+          end_month: 11,
+        },
+      ],
     },
     {
       product_name: "Corn 'Sweet Nugget'",
@@ -122,6 +199,23 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Corn-Sweet-Nugget.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 3,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 4,
+          end_month: 4,
+        },
+        {
+          description: "Harvest",
+          start_month: 7,
+          end_month: 9,
+        },
+      ],
     },
     {
       product_name: "White Mulberry",
@@ -132,6 +226,28 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/White-Mulberry.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+        {
+          description: "Harvest",
+          start_month: 7,
+          end_month: 9,
+        },
+        {
+          description: "Sow indoors",
+          start_month: 10,
+          end_month: 11,
+        },
+      ],
     },
     {
       product_name: "Strawberry 'Merlan'",
@@ -142,6 +258,23 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Strawberry-Merlan.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 3,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 4,
+          end_month: 5,
+        },
+        {
+          description: "Harvest",
+          start_month: 6,
+          end_month: 8,
+        },
+      ],
     },
     {
       product_name: "Ramps (Wild Garlic)",
@@ -152,6 +285,23 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Ramps-Wild-Garlic.webp",
       isedible: true,
       sunlight: "Partial shade to full shade",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 1,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+        {
+          description: "Harvest",
+          start_month: 5,
+          end_month: 6,
+        },
+      ],
     },
     {
       product_name: "Dill 'Como'",
@@ -162,6 +312,18 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Dill-Como.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow outdoors",
+          start_month: 4,
+          end_month: 6,
+        },
+        {
+          description: "Harvest",
+          start_month: 8,
+          end_month: 8,
+        },
+      ],
     },
     {
       product_name: "Lavender 'Lovely Sky'",
@@ -173,6 +335,23 @@ const plantsInserter = async () => {
         "https://roztownsend.net/seedly-assets/Lavender-Lovely-Sky.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 1,
+          end_month: 3,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 4,
+          end_month: 5,
+        },
+        {
+          description: "Harvest",
+          start_month: 7,
+          end_month: 9,
+        },
+      ],
     },
     {
       product_name: "Basil 'Genovese'",
@@ -183,6 +362,23 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Basil-Genovese.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+        {
+          description: "Harvest",
+          start_month: 7,
+          end_month: 8,
+        },
+      ],
     },
     {
       product_name: "Tomato 'Paola'",
@@ -193,6 +389,23 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Tomato-Paola.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 4,
+        },
+        {
+          description: "Sow indoors",
+          start_month: 5,
+          end_month: 5,
+        },
+        {
+          description: "Harvest",
+          start_month: 7,
+          end_month: 10,
+        },
+      ],
     },
     {
       product_name: "Cucumber 'Max'",
@@ -203,6 +416,23 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Cucumber-Max.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 3,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+        {
+          description: "Harvest",
+          start_month: 7,
+          end_month: 9,
+        },
+      ],
     },
     {
       product_name: "Calendula",
@@ -213,6 +443,23 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Calendula.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow outdoors",
+          start_month: 4,
+          end_month: 5,
+        },
+        {
+          description: "Harvest",
+          start_month: 8,
+          end_month: 9,
+        },
+        {
+          description: "Sow outdoors",
+          start_month: 10,
+          end_month: 11,
+        },
+      ],
     },
     {
       product_name: "Chess Flower",
@@ -223,6 +470,18 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Chess-Flower.webp",
       isedible: false,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow outdoors",
+          start_month: 1,
+          end_month: 3,
+        },
+        {
+          description: "Sow outdoors",
+          start_month: 10,
+          end_month: 1,
+        },
+      ],
     },
     {
       product_name: "Sunflower 'Ring of Fire'",
@@ -234,6 +493,18 @@ const plantsInserter = async () => {
         "https://roztownsend.net/seedly-assets/Sunflower-Ring-of-Fire.webp",
       isedible: false,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 4,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+      ],
     },
     {
       product_name: "Nasturtium",
@@ -244,6 +515,18 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Nasturtium.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 4,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+      ],
     },
     {
       product_name: "Poppy 'Lady Bird'",
@@ -254,6 +537,18 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Poppy-Lady-Bird.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow outdoors",
+          start_month: 4,
+          end_month: 5,
+        },
+        {
+          description: "Sow outdoors",
+          start_month: 9,
+          end_month: 10,
+        },
+      ],
     },
     {
       product_name: "Zinnia",
@@ -264,6 +559,18 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Zinnia.webp",
       isedible: false,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 3,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+      ],
     },
     {
       product_name: "Petunia 'Night Sky'",
@@ -274,6 +581,18 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Petunia-Night-Sky.webp",
       isedible: false,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+      ],
     },
     {
       product_name: "Lingonberry",
@@ -284,6 +603,28 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Lingonberry.webp",
       isedible: true,
       sunlight: "Full to part shade",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 1,
+          end_month: 3,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 4,
+          end_month: 4,
+        },
+        {
+          description: "Harvest",
+          start_month: 7,
+          end_month: 8,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 9,
+          end_month: 10,
+        },
+      ],
     },
     {
       product_name: "Alpine Strawberry 'Regina'",
@@ -295,6 +636,23 @@ const plantsInserter = async () => {
         "https://roztownsend.net/seedly-assets/Alpine-Strawberry-Regina.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 1,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+        {
+          description: "Harvest",
+          start_month: 6,
+          end_month: 8,
+        },
+      ],
     },
     {
       product_name: "Bog Myrtle",
@@ -305,6 +663,18 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Bog-Myrtle.webp",
       isedible: false,
       sunlight: "Full to part shade",
+      tasks: [
+        {
+          description: "Sow outdoors",
+          start_month: 3,
+          end_month: 4,
+        },
+        {
+          description: "Sow outdoors",
+          start_month: 9,
+          end_month: 10,
+        },
+      ],
     },
     {
       product_name: "Pepper 'California Wonder'",
@@ -316,6 +686,23 @@ const plantsInserter = async () => {
         "https://roztownsend.net/seedly-assets/Pepper-California-Wonder.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 3,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+        {
+          description: "Harvest",
+          start_month: 6,
+          end_month: 9,
+        },
+      ],
     },
     {
       product_name: "Pepper 'Chocobell'",
@@ -326,6 +713,23 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Pepper-Chocobell.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 3,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+        {
+          description: "Harvest",
+          start_month: 6,
+          end_month: 9,
+        },
+      ],
     },
     {
       product_name: "Borage",
@@ -336,6 +740,13 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Borage.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow outdoors",
+          start_month: 4,
+          end_month: 6,
+        },
+      ],
     },
     {
       product_name: "Cabbage 'Sunta'",
@@ -346,6 +757,23 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Cabbage-Sunta.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow outdoors",
+          start_month: 4,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+        {
+          description: "Harvest",
+          start_month: 7,
+          end_month: 8,
+        },
+      ],
     },
     {
       product_name: "Radish 'Red Celebration'",
@@ -357,9 +785,21 @@ const plantsInserter = async () => {
         "https://roztownsend.net/seedly-assets/Radish-Red-Celebration.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow outdoors",
+          start_month: 4,
+          end_month: 9,
+        },
+        {
+          description: "Harvest",
+          start_month: 5,
+          end_month: 9,
+        },
+      ],
     },
     {
-      product_name: "Squash 'Waltham Butternut'",
+      product_name: 'Squash "Waltham Butternut"',
       price: 39,
       description:
         "Great for thick soups and stews, this is a hardy squash variety that stores well after harvesting.",
@@ -368,9 +808,31 @@ const plantsInserter = async () => {
         "https://roztownsend.net/seedly-assets/Squash-Waltham-Butternut.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 4,
+          end_month: 5,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+        {
+          description: "Pollinate",
+          start_month: 6,
+          end_month: 7,
+        },
+        {
+          description: "Harvest",
+          start_month: 9,
+          end_month: 10,
+        },
+      ],
     },
     {
-      product_name: "Eggplant 'Black Beauty'",
+      product_name: 'Eggplant "Black Beauty"',
       price: 49,
       description:
         "Delicious grilled, roasted, in soups and stews, and breaded and fried. Your classic eggplant has arrived.",
@@ -379,9 +841,26 @@ const plantsInserter = async () => {
         "https://roztownsend.net/seedly-assets/Eggplant-Black-Beauty.webp",
       isedible: true,
       sunlight: "Full",
+            tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+        {
+          description: "Harvest",
+          start_month: 7,
+          end_month: 9,
+        },
+      ],
     },
     {
-      product_name: "Zucchini Squash 'Keesha'",
+      product_name: 'Zucchini Squash "Keesha"',
       price: 49,
       description:
         "Look out, or you will be making zucchini bread for the next six months. This classic summer squash can get huge and plentiful if you are not careful - or if you do it intentionally! You do you.",
@@ -390,9 +869,21 @@ const plantsInserter = async () => {
         "https://roztownsend.net/seedly-assets/Zucchini-Squash-Keesha.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow outdoors",
+          start_month: 4,
+          end_month: 6,
+        },
+        {
+          description: "Harvest",
+          start_month: 7,
+          end_month: 9,
+        },
+      ],
     },
     {
-      product_name: "Cosmos 'Exsenia'",
+      product_name: 'Cosmos "Exsenia"',
       price: 59,
       description:
         "The classic cottage garden flower with a nostalgic air, cosmos are a great ornamental addition to any garden, and easy to grow.",
@@ -400,9 +891,21 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Cosmos-Exsenia.webp",
       isedible: false,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 3,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 6,
+        },
+      ],
     },
     {
-      product_name: "Pak Choi 'Joi Choi'",
+      product_name: 'Pak Choi "Joi Choi"',
       price: 59,
       description:
         "A dense and crunchy leafy green perfect for stir fries and soups. Get your greens in and grow in spring or autumn!",
@@ -410,6 +913,22 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Pak-Choi-Joi-Choi.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 3,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+        { description: "Harvest",
+          start_month: 7,
+          end_month: 9
+        },
+      ],
     },
     {
       product_name: "Fennel",
@@ -420,9 +939,25 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Fennel.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 3,
+          end_month: 5,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 6,
+          end_month: 6,
+        },
+        { description: "Harvest",
+          start_month: 8,
+          end_month: 9
+        },
+      ],
     },
     {
-      product_name: "Sunflower 'Giganteous'",
+      product_name: 'Sunflower "Giganteous"',
       price: 20,
       description:
         "You want those huge sunflowers that look like they could fall over and kill someone? Welp, here they are. The classic sunflower for all your sunflowering needs.",
@@ -431,9 +966,21 @@ const plantsInserter = async () => {
         "https://roztownsend.net/seedly-assets/Sunflower-Giganteous.webp",
       isedible: false,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 4,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+      ],
     },
     {
-      product_name: "Marigold 'Red Gem'",
+      product_name: 'Marigold "Red Gem"',
       price: 36,
       description:
         "Adds a dash of color, great for pollinators and a natural pest deterrent. What's not to love about marigolds!",
@@ -441,6 +988,22 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Marigold-Red-Gem.webp",
       isedible: false,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 3,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 6,
+        },
+        { description: "Sow outdoors",
+          start_month: 6,
+          end_month: 9,
+        }
+      ],
     },
     {
       product_name: "Chicory",
@@ -451,6 +1014,22 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Chicory.webp",
       isedible: true,
       sunlight: "Full to part shade",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 4,
+          end_month: 5,
+        },
+        { description: "Harvest",
+          start_month: 7,
+          end_month: 9,
+        }
+      ],
     },
     {
       product_name: "Brussel Sprouts",
@@ -461,6 +1040,18 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Brussel-Sprouts.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 9,
+          end_month: 12,
+        },
+      ],
     },
     {
       product_name: "Jalapeño",
@@ -471,6 +1062,22 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Jalapeno.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 6,
+        },
+        { description: "Harvest",
+          start_month: 7,
+          end_month: 9
+        }
+      ],
     },
     {
       product_name: "Evening Primrose",
@@ -481,6 +1088,22 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Evening-Primrose.webp",
       isedible: false,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 4,
+          end_month: 5,
+        },
+        { description: "Sow outdoors",
+          start_month: 4,
+          end_month: 5,
+        }
+      ],
     },
     {
       product_name: "Earthnut Pea",
@@ -491,6 +1114,22 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Earthnut-Pea.webp",
       isedible: true,
       sunlight: "Full to part shade",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 3,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 4,
+          end_month: 5,
+        },
+        { description: "Harvest",
+          start_month: 8,
+          end_month: 9,
+        }
+      ],
     },
     {
       product_name: "Tomato 'Cherry Cascade",
@@ -498,9 +1137,27 @@ const plantsInserter = async () => {
       description:
         "Big taste, small tomato. Plentiful and makes a lovely spread of greenery as well as lots of tasty fruits.",
       cycle: ["Annual"],
-      image_url: "https://roztownsend.net/seedly-assets/Tomato-Cherry-Cascade.webp",
+      image_url:
+        "https://roztownsend.net/seedly-assets/Tomato-Cherry-Cascade.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 4,
+        },
+        {
+          description: "Sow indoors",
+          start_month: 5,
+          end_month: 5,
+        },
+        {
+          description: "Harvest",
+          start_month: 7,
+          end_month: 10,
+        },
+      ],
     },
     {
       product_name: "Lettuce",
@@ -511,6 +1168,18 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Lettuce.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow outdoors",
+          start_month: 4,
+          end_month: 6,
+        },
+        {
+          description: "Harvest",
+          start_month: 7,
+          end_month: 9,
+        },
+      ],
     },
     {
       product_name: "Miner's Lettuce",
@@ -521,6 +1190,18 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Miners-Lettuce.webp",
       isedible: true,
       sunlight: "Full to part shade",
+      tasks: [
+        {
+          description: "Sow outdoors",
+          start_month: 4,
+          end_month: 8,
+        },
+        {
+          description: "Harvest",
+          start_month: 6,
+          end_month: 10,
+        },
+      ],
     },
     {
       product_name: "Lovage",
@@ -531,6 +1212,50 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Lovage.webp",
       isedible: true,
       sunlight: "Full to part shade",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 4,
+        },
+        {
+          description: "Harvest",
+          start_month: 7,
+          end_month: 8,
+        },
+      ],
+    },
+        {
+      product_name: "Thyme",
+      price: 37,
+      description:
+        "Fragrant and bee-friendly. Dry or use fresh for culinary use. Likes to spread.",
+      cycle: ["Perennial"],
+      image_url: "https://roztownsend.net/seedly-assets/Thyme.webp",
+      isedible: true,
+      sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 6,
+        },
+        {
+          description: "Sow outdoors",
+          start_month: 4,
+          end_month: 9,
+        },
+        {
+          description: "Harvest",
+          start_month: 6,
+          end_month: 10,
+        },        
+      ],
     },
     {
       product_name: "Oregano",
@@ -541,6 +1266,28 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Oregano.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 6,
+        },
+        {
+          description: "Sow outdoors",
+          start_month: 4,
+          end_month: 9,
+        },
+        {
+          description: "Harvest",
+          start_month: 6,
+          end_month: 10,
+        },        
+      ],
     },
     {
       product_name: "Marjoram",
@@ -551,6 +1298,28 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Marjoram.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 6,
+        },
+        {
+          description: "Sow outdoors",
+          start_month: 4,
+          end_month: 9,
+        },
+        {
+          description: "Harvest",
+          start_month: 6,
+          end_month: 10,
+        },        
+      ],
     },
     {
       product_name: "Peppermint",
@@ -561,6 +1330,28 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Peppermint.webp",
       isedible: true,
       sunlight: "Full to part shade",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 6,
+        },
+        {
+          description: "Sow outdoors",
+          start_month: 4,
+          end_month: 9,
+        },
+        {
+          description: "Harvest",
+          start_month: 6,
+          end_month: 9,
+        },        
+      ],
     },
     {
       product_name: "Spearmint",
@@ -571,6 +1362,28 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Spearmint.webp",
       isedible: true,
       sunlight: "Full to part shade",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 6,
+        },
+        {
+          description: "Sow outdoors",
+          start_month: 4,
+          end_month: 9,
+        },
+        {
+          description: "Harvest",
+          start_month: 6,
+          end_month: 9,
+        },        
+      ],
     },
     {
       product_name: "Chamomile",
@@ -581,6 +1394,18 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Chamomile.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow outdoors",
+          start_month: 4,
+          end_month: 6,
+        },
+        {
+          description: "Harvest",
+          start_month: 7,
+          end_month: 11,
+        },
+      ],
     },
     {
       product_name: "Broccoli 'Ramoso Calabrese'",
@@ -588,9 +1413,27 @@ const plantsInserter = async () => {
       description:
         "A rich heritage variety. Grows well and easily if protected from pests. Rich flavor.",
       cycle: ["Annual"],
-      image_url: "https://roztownsend.net/seedly-assets/Broccoli-Ramoso-Calabrese.webp",
+      image_url:
+        "https://roztownsend.net/seedly-assets/Broccoli-Ramoso-Calabrese.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow outdoors",
+          start_month: 3,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+        {
+          description: "Harvest",
+          start_month: 7,
+          end_month: 10,
+        },
+      ],
     },
     {
       product_name: "Cauliflower 'Bola de Neve'",
@@ -598,9 +1441,27 @@ const plantsInserter = async () => {
       description:
         "A sturdy heritage variety of cauliflower that is tolerant of most types of summer weather. Great raw or cooked.",
       cycle: ["Annual"],
-      image_url: "https://roztownsend.net/seedly-assets/Cauliflower-Bola-de-Neve.webp",
+      image_url:
+        "https://roztownsend.net/seedly-assets/Cauliflower-Bola-de-Neve.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 3,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+        {
+          description: "Harvest",
+          start_month: 7,
+          end_month: 10,
+        },
+      ],
     },
     {
       product_name: "Peas 'Sugar Snap'",
@@ -611,6 +1472,23 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Peas-Sugar-Snap.webp",
       isedible: true,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow outdoors",
+          start_month: 5,
+          end_month: 6,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 5,
+        },
+        {
+          description: "Harvest",
+          start_month: 8,
+          end_month: 9,
+        },
+      ],
     },
     {
       product_name: "Freesia 'Magdalena'",
@@ -621,26 +1499,56 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Freesia-Magdalena.webp",
       isedible: false,
       sunlight: "Full to part shade",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 6,
+        },
+      ],
     },
     {
       product_name: "Peony 'Opera White'",
       price: 23,
       description:
-        "A robust and perennial with big, intricate white blossoms. Divide every few years for better yields.",
+        "A robust and perennial with big, intricate white blossoms. Sow in autumn and be patient. Divide every few years for better yields.",
       cycle: ["Perennial"],
       image_url: "https://roztownsend.net/seedly-assets/Peony-Opera-White.webp",
       isedible: false,
       sunlight: "Full to part shade",
+      tasks: [
+        {
+          description: "Sow outdoors",
+          start_month: 9,
+          end_month: 10,
+        },
+      ]
     },
     {
       product_name: "Aster 'Blaubox'",
       price: 59,
-      description:
-        "A classic aster with cute purple flowers.",
+      description: "A classic aster with cute purple flowers.",
       cycle: ["Annual"],
       image_url: "https://roztownsend.net/seedly-assets/Aster-Blaubox.webp",
       isedible: false,
       sunlight: "Full",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 6,
+        },
+      ],
     },
     {
       product_name: "Catnip",
@@ -651,14 +1559,68 @@ const plantsInserter = async () => {
       image_url: "https://roztownsend.net/seedly-assets/Catnip.webp",
       isedible: true,
       sunlight: "Full to part shade",
+      tasks: [
+        {
+          description: "Sow indoors",
+          start_month: 2,
+          end_month: 4,
+        },
+        {
+          description: "Plant outdoors",
+          start_month: 5,
+          end_month: 6,
+        },
+        {
+          description: "Sow outdoors",
+          start_month: 4,
+          end_month: 9,
+        },
+        {
+          description: "Harvest",
+          start_month: 6,
+          end_month: 9,
+        },        
+      ],
     },
   ];
+
   try {
-    const plants = await Plant.bulkCreate(plantsData, { ignoreDuplicates: true });
-    console.log(plants.length, "plants added.");
-    console.log(plants[0] instanceof Plant);
+    let totalPlantsCreated = 0;
+    let totalTasksCreated = 0;
+    for (const plantData of plantsWithTasks) {
+      const newPlant = await Plant.create(
+        {
+          product_name: plantData.product_name,
+          price: plantData.price,
+          description: plantData.description,
+          cycle: plantData.cycle,
+          image_url: plantData.image_url,
+          isedible: plantData.isedible,
+          sunlight: plantData.sunlight,
+        },
+        { transaction: t }
+      );
+      totalPlantsCreated++;
+      for (const taskData of plantData.tasks) {
+        await Task.create(
+          {
+            description: taskData.description,
+            start_month: taskData.start_month,
+            end_month: taskData.end_month,
+            plant_id: newPlant.id,
+          },
+          { transaction: t }
+        );
+        totalTasksCreated++;
+      }
+    }
+    await t.commit();
+    console.log(chalk.green("All plants and their tasks have been inserted"));
+    console.log(chalk.blue(`Total plants created: ${totalPlantsCreated}`));
+    console.log(chalk.yellow(`Total tasks created: ${totalTasksCreated}`));
   } catch (error) {
-    console.error("Failed to bulk insert plants", error);
+    await t.rollback();
+    chalk.red(console.error("Failed to insert plants and tasks - ", error));
   }
 };
 

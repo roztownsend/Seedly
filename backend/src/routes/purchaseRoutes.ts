@@ -12,7 +12,7 @@ const router = Router();
 
 router.post(
   "/",
-
+  authenticateUser,
   async (req: Request, res: Response): Promise<void> => {
     console.log("POST /purchase triggered");
     const t: Transaction = await sequelize.transaction();
@@ -20,6 +20,10 @@ router.post(
       const parsed = checkoutSchema.parse(req.body);
 
       await processCheckout(parsed, t);
+
+      if (parsed.userId) {
+        await linkUserTasks(parsed.userId, t);
+      }
 
       await t.commit();
       res.status(200).json({ message: "Purchase completed successfuly" });

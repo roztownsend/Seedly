@@ -1,34 +1,34 @@
-import { useCartItems, useCartTotal, CartItem } from "../stores/cartStore";
-import { useShippingStore } from "../stores/shippingStore";
-import { useSelection } from "../stores/shippingOptionStore";
-import { GetAllOptions } from "../types/shippingOptionTypes";
-import { useFormData } from "../stores/paymentStore";
-import { PaymentFormTypes } from "../types/paymentFormTypes";
-import { ShippingFormTypes } from "../types/shippingFormTypes";
+import { useCartTotal, useCartQuantitiesTotal } from "../stores/cartStore";
 import { useAuthUser, useAuthLoading } from "../stores/authStore";
-import { CustomAuthUser } from "../types/authTypes";
-import { useAuthSession } from "../stores/authStore";
+import { useSelectedShippingOption } from "../stores/shippingOptionStore";
 
 export type TransactionPayload = {
-  user: CustomAuthUser;
-  cart: CartItem[];
+  userId: string;
+  totalItems: number;
+  shippingPrice: number;
   cartTotal: number;
-  shippingFormData: ShippingFormTypes;
-  shippingOption: GetAllOptions[number];
-  paymentInfo: PaymentFormTypes;
+  totalAmount: number;
 };
 
-export const useTransactionPayload = () => {
-  const user = useAuthUser();
+export const useTransactionPayload = (): TransactionPayload | null => {
   const loading = useAuthLoading();
-  const cart = useCartItems();
+  const user = useAuthUser();
+  const userId = user?.id;
+  const totalItems = useCartQuantitiesTotal();
+  const shippingSelection = useSelectedShippingOption();
+  const shippingPriceString = shippingSelection?.price;
+  const shippingPrice = shippingPriceString ? parseFloat(shippingPriceString) : NaN;
   const cartTotal = useCartTotal();
-  const { formData: shippingFormData } = useShippingStore();
-  const shippingOption = useSelection();
-  const paymentInfo = useFormData();
-  const session = useAuthSession();
+  
+  if (
+    loading || 
+    typeof userId !== "string"
+  ) { 
+    console.log("Transaction data is incomplete.")
+    return null;
+  };
 
-  if (loading || !shippingOption) return null;
+  const totalAmount = cartTotal + shippingPrice;
 
   if (!user) {
     console.log("Not signed in.");
@@ -36,12 +36,11 @@ export const useTransactionPayload = () => {
   }
 
   const transaction = {
-    user,
-    cart,
+    userId,
+    totalItems,
     cartTotal,
-    shippingFormData,
-    shippingOption,
-    paymentInfo,
+    shippingPrice,
+    totalAmount,
   };
 
   return transaction;

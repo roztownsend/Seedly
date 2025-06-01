@@ -10,6 +10,8 @@ import { ClipLoader } from "react-spinners";
 
 const PaymentForm = () => {
   const payload = useTransactionPayload();
+  const session = useAuthSession();
+  const sessionToken = session?.access_token;
   const formData = useFormData();
   const { updateFormField } = usePaymentActions();
   const [errors, setErrors] = useState<Record<string, string>>({});

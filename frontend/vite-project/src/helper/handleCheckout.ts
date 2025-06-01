@@ -1,7 +1,6 @@
 import { TransactionPayload } from "../hooks/useTransactionPayload";
 import axios from "axios";
 
-
 export const handleCheckout = (payload: TransactionPayload, token: string | undefined) => {
     const submitTransaction = async () => {
         

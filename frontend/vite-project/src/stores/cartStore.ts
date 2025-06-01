@@ -31,7 +31,7 @@ type CartState = {
   actions: CartActions;
 };
 
-export const useCartStore = create<CartState>((set, get) => ({
+export const useCartStore = create<CartState>((set) => ({
   cartItems: [],
   actions: {
     addItem: (item) =>
@@ -78,6 +78,10 @@ export const useCartTotal = () =>
       0
     )
   );
+
+export const useCartQuantitiesTotal = () => 
+  useCartStore((state) => state.cartItems.reduce((total, item) => 
+    total + item.quantity, 0)); 
 
 export const useCartActions = () => useCartStore((state) => state.actions);
 

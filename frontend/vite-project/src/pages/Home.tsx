@@ -33,14 +33,7 @@ function Home() {
           }
           imageUrl={heroImg}
         />
-
-        <Hero
-          heading={"Get ready to sow"}
-          subheading={
-            "Spring has sprong and it’s time for you to get a-plantin, buddy."
-          }
-        />
-          <ProductGrid products={productList} />
+        <ProductGrid products={productList} />
       </section>
     </>
   );

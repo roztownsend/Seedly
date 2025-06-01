@@ -11,8 +11,7 @@ type ProductGridProps = {
   filterEdibleOnly?: boolean;
 };
 
-
-const ProductGrid = ({ products }: ProductGridProps) => {
+const ProductGrid = ({ products, filterEdibleOnly }: ProductGridProps) => {
     const [displayedPlants, setDisplayedPlants] = useState<ProductItem[]>([]);
     const [showMore, setShowMore] = useState<boolean>(false);
 
@@ -25,24 +24,26 @@ const ProductGrid = ({ products }: ProductGridProps) => {
     const { displayedCount, setDisplayedCount } = useProductGridStore();
 
     //Filter isEdible
-    const edibleProducts = useMemo(
-        () => products.filter(product => product.isedible === true),
-        [products]
-    );
+    const filteredProducts = useMemo(() => {
+    return filterEdibleOnly
+        ? products.filter(product => product.isedible === true)
+        : products;
+    }, [products, filterEdibleOnly]);
 
     useEffect(() => {
-        const initialCount = displayedCount > 0 ? displayedCount : loadStep;
-        const initial = edibleProducts.slice(0, initialCount);
-        setDisplayedPlants(initial);
-        setShowMore(edibleProducts.length > initialCount);
-    }, [edibleProducts, loadStep, displayedCount]);
+    const initialCount = displayedCount > 0 ? displayedCount : loadStep;
+    const initial = filteredProducts.slice(0, initialCount);
+    setDisplayedPlants(initial);
+    setShowMore(filteredProducts.length > initialCount);
+}, [filteredProducts, loadStep, displayedCount]);
+
 
 
     const handleShowMore = () => {
         const nextCount = displayedPlants.length + loadStep;
-        const next = edibleProducts.slice(0, nextCount);
+        const next = filteredProducts.slice(0, nextCount);
         setDisplayedPlants(next);
-        setShowMore(next.length < edibleProducts.length);
+        setShowMore(next.length < filteredProducts.length);
         setDisplayedCount(next.length);
 
         setTimeout(() => {
@@ -53,8 +54,9 @@ const ProductGrid = ({ products }: ProductGridProps) => {
             }
         }, 300);
     };
+    
+    if (!filteredProducts.length) return <p>No products found.</p>;
 
-if (!edibleProducts.length) return <p>No edible products found.</p>;
 
 return (
     <div className="product-grid">

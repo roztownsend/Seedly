@@ -40,7 +40,7 @@ function Home() {
             "Spring has sprong and it’s time for you to get a-plantin, buddy."
           }
         />
-          <ProductGrid products={productList} />
+          <ProductGrid products={productList}  filterEdibleOnly={true}/>
       </section>
     </>
   );

@@ -38,7 +38,7 @@ const Shop: React.FC = () => {
           Showing {productList.length} products
         </div>
       </div>
-      <ProductGrid products={productList} filterEdibleOnly={true} />
+      <ProductGrid products={productList} />
     </section>
   );
 };

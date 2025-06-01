@@ -7,12 +7,12 @@ import { authenticateUser } from "../middleware/authenticateUser";
 import sequelize from "../config/sequelizeConnect";
 import { Transaction } from "sequelize";
 import { processCheckout } from "../services/checkoutService";
-
+import { linkUserTasks } from "../services/taskService";
 const router = Router();
 
 router.post(
   "/",
-  authenticateUser,
+
   async (req: Request, res: Response): Promise<void> => {
     console.log("POST /purchase triggered");
     const t: Transaction = await sequelize.transaction();

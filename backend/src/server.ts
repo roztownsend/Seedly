@@ -20,6 +20,7 @@ import optionsInserter from "./utils/optionsInserterHelper";
 import authTest from "./routes/authTest";
 import { makeUserAdmin } from "./services/makeUserAdmin";
 
+import purchaseRoutes from "./routes/purchaseRoutes";
 //testing server startup
 
 sequelize
@@ -41,6 +42,7 @@ app.use("/plants", plantRoutes);
 app.use("/shipping-options", shippingRoutes);
 app.use("/auth-test", authTest);
 app.use("/user-tasks", userTaskRoutes);
+app.use("/purchase", purchaseRoutes);
 
 const swaggerDocument = YAML.load(
   path.join(__dirname, "../swagger/swagger.yaml")

@@ -2,7 +2,7 @@ import { Router, Request, Response } from "express";
 import { pool } from "../config/dbConnection";
 import { z } from "zod";
 import { purchaseSchema } from "../schemas/purchaseSchema";
-import { paymentSchema } from "schemas/paymentSchema";
+import { paymentSchema } from "../schemas/paymentSchema";
 import { Purchase } from "../models/purchase.model";
 import { PurchaseItem } from "../models/purchaseItem.model";
 import { authenticateUser } from "../middleware/authenticateUser";
@@ -10,26 +10,13 @@ import { authenticateUser } from "../middleware/authenticateUser";
 const router = Router();
 
 router.post(
-  "/purchase",
+  "/",
   authenticateUser,
   async (req: Request, res: Response): Promise<void> => {
     console.log("POST /purchase triggered");
     try {
       const parsed = purchaseSchema.parse(req.body);
-
-      const purchase = await Purchase.create({
-        user_id: parsed.userId,
-        total_items: parsed.totalItems,
-        shipping_price: parsed.shippingPrice,
-        total_amount: parsed.totalAmount,
-      });
-
-      purchase.createPurchaseItem();
-
-      res.status(201).json({
-        message: "Purchase completed successfully",
-        purchaseId: (purchase as any).id,
-      });
+      console.log(parsed);
     } catch (err) {
       if (err instanceof z.ZodError) {
         res

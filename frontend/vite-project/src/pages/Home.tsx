@@ -37,7 +37,9 @@ function Home() {
         <Hero
           heading={"Get ready to sow"}
           subheading={
-            "Spring has sprong and it’s time for you to get a-plantin, buddy."
+          heading={"Tasty garden treats!"}
+          subheading={
+            "Spring has sprong and it’s time to plant some free groceries!"
           }
         />
           <ProductGrid products={productList}  filterEdibleOnly={true}/>

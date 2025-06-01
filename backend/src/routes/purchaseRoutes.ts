@@ -11,7 +11,7 @@ import { linkUserTasks } from "../services/taskService";
 const router = Router();
 
 router.post(
-  "/",
+  "/user",
   authenticateUser,
   async (req: Request, res: Response): Promise<void> => {
     console.log("POST /purchase triggered");
@@ -24,6 +24,32 @@ router.post(
       if (parsed.userId) {
         await linkUserTasks(parsed.userId, t);
       }
+
+      await t.commit();
+      res.status(200).json({ message: "Purchase completed successfuly" });
+    } catch (err) {
+      await t.rollback();
+      if (err instanceof z.ZodError) {
+        res
+          .status(400)
+          .json({ message: "Validation error", errors: err.errors });
+      } else {
+        console.error("Error in /purchase:", err);
+        res.status(500).json({ message: "Internal server error" });
+      }
+    }
+  }
+);
+
+router.post(
+  "/anon-user",
+  async (req: Request, res: Response): Promise<void> => {
+    console.log("POST /purchase triggered");
+    const t: Transaction = await sequelize.transaction();
+    try {
+      const parsed = checkoutSchema.parse(req.body);
+
+      await processCheckout(parsed, t);
 
       await t.commit();
       res.status(200).json({ message: "Purchase completed successfuly" });

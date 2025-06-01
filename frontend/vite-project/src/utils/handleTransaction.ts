@@ -10,16 +10,24 @@ export const handleTransaction = async (
     return;
   }
 
+  let endpoint: string;
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+    endpoint = "purchase/user";
+  } else {
+    endpoint = "purchase/anon-user";
+  }
+
   try {
     const response = await axios.post(
-      "http://localhost:5000/purchase",
+      `http://localhost:5000/${endpoint}`,
       payload,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+        headers,
       }
     );
     console.log("Transaction complete", response.data);

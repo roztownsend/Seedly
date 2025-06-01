@@ -22,11 +22,6 @@ const PaymentForm = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  //To delete
-  const testTransactionObj = () => {
-    console.log("transaction obj", payload);
-  };
-
   // Format card number with spaces (e.g., 1234 5678 9012 3456)
   const formatCardNumber = (value: string) => {
     return value
@@ -57,7 +52,7 @@ const PaymentForm = () => {
   };
 
   const submitTransaction = async (method: "card" | "swish" | "klarna") => {
-    updateFormField("paymentMethod", method);
+    await updateFormField("paymentMethod", method);
     if (!payload) {
       console.log("No transaction payload.");
       return;
@@ -68,9 +63,11 @@ const PaymentForm = () => {
     } = await supabase.auth.getSession();
     const token = session?.access_token;
     try {
-      console.log(payload);
-      const response = await handleTransaction(payload, sessionToken);
-      testTransactionObj();
+      const updatedPayload = {
+        ...payload,
+        paymentMethod: method,
+      };
+      const response = await handleTransaction(updatedPayload, sessionToken);
       console.log("Transaction complete!");
       navigate("/checkout/confirm");
     } catch (error) {

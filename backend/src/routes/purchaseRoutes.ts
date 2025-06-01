@@ -3,11 +3,10 @@ import { pool } from "../config/dbConnection";
 import { z } from "zod";
 import { paymentSchema } from "../schemas/paymentSchema";
 import { checkoutSchema } from "../schemas/checkoutSchema";
-import { Purchase } from "../models/purchase.model";
-import { PurchaseItem } from "../models/purchaseItem.model";
 import { authenticateUser } from "../middleware/authenticateUser";
 import sequelize from "../config/sequelizeConnect";
 import { Transaction } from "sequelize";
+import { processCheckout } from "../services/checkoutService";
 
 const router = Router();
 
@@ -19,55 +18,8 @@ router.post(
     const t: Transaction = await sequelize.transaction();
     try {
       const parsed = checkoutSchema.parse(req.body);
-      const {
-        userId,
-        paymentMethod,
-        purchaseItems,
-        shippingInfo,
-        shippingPrice,
-        totalAmount,
-        totalItems,
-      } = parsed;
 
-      const purchase = await Purchase.create(
-        {
-          user_id: userId,
-          total_items: totalItems,
-          total_amount: totalAmount,
-          shipping_price: shippingPrice,
-        },
-        { transaction: t }
-      );
-      const items = await Promise.all(
-        purchaseItems.map((item) => {
-          return purchase.createPurchase_item(
-            {
-              plant_id: item.plantId,
-              quantity: item.quantity,
-            },
-            { transaction: t }
-          );
-        })
-      );
-      const payment = await purchase.createPayment(
-        {
-          payment_method: paymentMethod,
-        },
-        { transaction: t }
-      );
-
-      const shipping = await purchase.createShipping_info(
-        {
-          customer_name: shippingInfo.name,
-          email: shippingInfo.email,
-          address: shippingInfo.address,
-          apartment: shippingInfo.apartment,
-          postcode: shippingInfo.postalCode,
-          city: shippingInfo.city,
-          shipping_option_id: shippingInfo.shippingOptionId,
-        },
-        { transaction: t }
-      );
+      await processCheckout(parsed, t);
 
       await t.commit();
       res.status(200).json({ message: "Purchase completed successfuly" });

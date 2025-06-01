@@ -8,6 +8,11 @@ import { Purchase } from "../models/purchase.model";
 
 const router = Router();
 
+interface DailyResults {
+  totalAmount: string;
+  orderCount: string;
+}
+
 router.get(
   "/sales/day",
   authenticateUser,
@@ -18,7 +23,7 @@ router.get(
     const todayEnd = new Date();
     todayStart.setHours(0, 0, 0, 0);
     todayEnd.setHours(23, 59, 59, 999);
-    const dailyResults = await Purchase.findOne({
+    const dailyResults = (await Purchase.findOne({
       attributes: [
         [sequelize.fn("SUM", sequelize.col("total_amount")), "totalAmount"],
         [sequelize.fn("COUNT", sequelize.col("id")), "orderCount"],
@@ -29,10 +34,21 @@ router.get(
         },
       },
       raw: true,
-    });
+    })) as DailyResults | null;
 
     res.json({
-      daily: dailyResults,
+      revenue: {
+        title: "Total Revenue",
+        amount: dailyResults?.totalAmount
+          ? parseFloat(dailyResults.totalAmount)
+          : 0,
+      },
+      order: {
+        title: "Number of Orders",
+        orders: dailyResults?.orderCount
+          ? parseFloat(dailyResults.orderCount)
+          : 0,
+      },
     });
   }
 );

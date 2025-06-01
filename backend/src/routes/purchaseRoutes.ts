@@ -6,6 +6,8 @@ import { checkoutSchema } from "../schemas/checkoutSchema";
 import { Purchase } from "../models/purchase.model";
 import { PurchaseItem } from "../models/purchaseItem.model";
 import { authenticateUser } from "../middleware/authenticateUser";
+import sequelize from "../config/sequelizeConnect";
+import { Transaction } from "sequelize";
 
 const router = Router();
 
@@ -14,11 +16,32 @@ router.post(
   authenticateUser,
   async (req: Request, res: Response): Promise<void> => {
     console.log("POST /purchase triggered");
-
+    const t: Transaction = await sequelize.transaction();
     try {
       const parsed = checkoutSchema.parse(req.body);
-      console.log(parsed);
+      const {
+        userId,
+        paymentMethod,
+        purchaseItems,
+        shippingInfo,
+        shippingPrice,
+        totalAmount,
+        totalItems,
+      } = parsed;
+
+      const purchase = await Purchase.create(
+        {
+          user_id: userId,
+          total_items: totalItems,
+          total_amount: totalAmount,
+          shipping_price: shippingPrice,
+        },
+        { transaction: t }
+      );
+      await t.commit();
+      res.status(200).json({ message: "Purchase completed successfuly" });
     } catch (err) {
+      await t.rollback();
       if (err instanceof z.ZodError) {
         res
           .status(400)

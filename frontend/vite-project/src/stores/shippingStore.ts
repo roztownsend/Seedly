@@ -38,3 +38,5 @@ export const useShippingStore = create<ShippingState>((set, get) => ({
 
   saveSubmission: () => set({ submittedData: get().formData }),
 }));
+
+export const useShippingFormData = () => useShippingStore((state) => state.formData);

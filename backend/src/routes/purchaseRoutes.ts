@@ -19,20 +19,12 @@ router.post(
 
       const purchase = await Purchase.create({
         user_id: parsed.userId,
-        total_items: parsed.cartItems,
+        total_items: parsed.totalItems,
+        shipping_price: parsed.shippingPrice,
+        total_amount: parsed.totalAmount,
       });
 
-      purchase.addPurchaseItem();
-      await Promise.all(
-        parsed.cartItems.map((item) =>
-          PurchaseItem.create({
-            purchaseId: (purchase as any).id,
-            ProductId: item.productId,
-            quantity: item.quantity,
-            price: item.price,
-          })
-        )
-      );
+      purchase.createPurchaseItem();
 
       res.status(201).json({
         message: "Purchase completed successfully",

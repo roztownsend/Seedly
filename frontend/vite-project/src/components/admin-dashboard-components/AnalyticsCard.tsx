@@ -22,10 +22,10 @@ function AnalyticsCard({ title, type, value }: AnalyticsCardProps) {
   return (
     <>
       <div className="w-full flex flex-col justify-center items-center gap-5 mt-4">
-        <div className="w-full flex justify-between max-w-[700px] min-h-[125px] bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 cursor-pointer group border-2 border-transparent">
+        <div className="w-full flex justify-between max-w-[800px] min-h-[125px] bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 cursor-pointer group border-2 border-transparent">
           <div className="flex flex-col">
             <p className="text-base text-gray-500">{title}</p>
-            <h5 className="font-bold text-black text-2xl">
+            <h5 className="font-bold text-black tracking-wide text-2xl">
               {value} {type === "orders" ? "" : "kr"}
             </h5>
           </div>

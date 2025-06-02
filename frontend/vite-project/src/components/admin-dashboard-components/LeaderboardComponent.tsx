@@ -4,9 +4,9 @@ import { memo } from "react";
 function LeaderBoardComponent({ topPlants }: LeaderboardProps) {
   return (
     <>
-      <div className="w-full p-4 mt-10 mb-10 max-w-[800px] min-h-[250px] bg-white/90 backdrop-blur-sm rounded-3xl  shadow-2xl hover:shadow-3xl transition-all duration-500 cursor-pointer group border-2 border-transparent">
-        <div className="flex mb-2 border-b-2 p-3">
-          <h3>Top-Selling Products</h3>
+      <div className="w-full px-4 py-6 mt-10 mb-10 max-w-[800px] min-h-[250px] bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl l  border-2 border-transparent">
+        <div className="flex mb-4 border-b-2 ">
+          <h3 className="mb-4">Top-Selling Products</h3>
         </div>
         <div className="grid grid-cols-12 gap-4 px-4 py-2 bg-gray-100 border-b">
           <div className="col-span-1 text-gray-500 text-base font-medium">
@@ -22,17 +22,16 @@ function LeaderBoardComponent({ topPlants }: LeaderboardProps) {
             REVENUE
           </div>
         </div>
-        <div className="grid grid-cols-12 gap-4 px-4 py-3 border-b border-gray-100 hover:bg-gray-50 transition-colors">
-          {topPlants.map((plant, index) => (
-            <LeaderBoardRow
-              key={index}
-              productName={plant.productName}
-              revenue={plant.revenue}
-              unitsSold={plant.unitsSold}
-              index={index}
-            />
-          ))}
-        </div>
+
+        {topPlants.map((plant, index) => (
+          <LeaderBoardRow
+            key={index}
+            productName={plant.productName}
+            revenue={plant.revenue}
+            unitsSold={plant.unitsSold}
+            index={index}
+          />
+        ))}
       </div>
     </>
   );

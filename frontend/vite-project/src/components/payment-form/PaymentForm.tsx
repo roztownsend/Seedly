@@ -201,14 +201,14 @@ const PaymentForm = () => {
                             type="button"
                             onClick={handleSwish}
                         >
-                            <img src={swishIcon} alt="Swish" className="h-8 w-auto mx-auto" />
+                            <img src={swishIcon} alt="Swish" className="payment-icons" />
                         </button>
                         <button
                             className="button-secondary__payment flex-1"
                             type="button"
                             onClick={handleKlarna}
                         >
-                            <img src={klarnaIcon} alt="Klarna" className="h-8 w-auto mx-auto" />
+                            <img src={klarnaIcon} alt="Klarna" className="payment-icons" />
                         </button>
                     </div>
                 </form>

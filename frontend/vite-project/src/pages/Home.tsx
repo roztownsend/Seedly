@@ -4,6 +4,7 @@ import ProductGrid from "../components/product-grid/ProductGrid";
 import { Loading } from "../components/loading/Loading";
 import { useProductList, useProductLoading, useProductActions } from "../stores/productsStore";
 import { useEffect } from "react";
+import "./page-styles/home.css";
 
 function Home() {
     const productList = useProductList();
@@ -24,8 +25,8 @@ function Home() {
     if (loading) return <Loading />;
     
   return (
-    <>
-      <section>
+    <div className="home">
+      <section className="hero">
         <Hero
           heading={"Spring Vibes"}
           subheading={
@@ -33,6 +34,7 @@ function Home() {
           }
           imageUrl={heroImg}
         />
+      </section>
 
         <Hero
           heading={"Tasty garden treats!"}
@@ -41,8 +43,9 @@ function Home() {
           }
         />
           <ProductGrid products={productList}  filterEdibleOnly={true}/>
+
       </section>
-    </>
+    </div>
   );
 }
 

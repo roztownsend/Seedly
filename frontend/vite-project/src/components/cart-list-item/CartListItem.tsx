@@ -6,6 +6,7 @@ const CartItemList: React.FC = () => {
 
   return (
     <div className="cart-items-list">
+      <h4>Your cart</h4>
       {cartItemsIds.map((id) => (
         <div key={id} className="list-wrapper">
           <ProductCardCart id={id} />

@@ -41,7 +41,7 @@ export const ShippingSelector: React.FC = () => {
 
         {error && <p className="error-message">{error}</p>}
 
-        <div className="flex flex-col gap-2">
+        <div className="continue-container">
           <button type="submit" className="button-primary submit-button">
             Continue to payment
           </button>

@@ -14,7 +14,7 @@ const ProductCardCart: React.FC<ProductCardCartProps> = ({ item, showQuantity = 
         <img
           src={image_url}
           alt={product_name}
-          className="object-cover w-full h-full"
+          className="product-card-cart__img"
         />
       </div>
       <div className="product-card-cart__details">

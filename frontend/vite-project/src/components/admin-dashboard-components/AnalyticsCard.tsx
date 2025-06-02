@@ -1,8 +1,10 @@
 import { MdAttachMoney } from "react-icons/md";
-import { FiTrendingUp } from "react-icons/fi";
+import { FaUserFriends, FaUser } from "react-icons/fa";
 import { MdOutlineShoppingCart } from "react-icons/md";
+import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { AnalyticsCardProps } from "../../types/adminDashboardTypes";
 import { memo } from "react";
+
 function AnalyticsCard({ title, type, value }: AnalyticsCardProps) {
   const iconMap = {
     revenue: {
@@ -17,6 +19,20 @@ function AnalyticsCard({ title, type, value }: AnalyticsCardProps) {
       icon: <MdAttachMoney size={25} className="text-blue-600" />,
       bgColor: "bg-blue-100",
     },
+    totalUsers: {
+      icon: <FaUserFriends size={25} className="text-blue-600" />,
+      bgColor: "bg-blue-100",
+    },
+    newSignups: {
+      icon: <FaUser size={25} className="text-green-600" />,
+      bgColor: "bg-green-100",
+    },
+    userCompletedTasks: {
+      icon: (
+        <IoIosCheckmarkCircleOutline size={25} className="text-purple-600" />
+      ),
+      bgColor: "bg-purple-100",
+    },
   };
   const IconConfig = iconMap[type as keyof typeof iconMap];
   return (
@@ -26,7 +42,8 @@ function AnalyticsCard({ title, type, value }: AnalyticsCardProps) {
           <div className="flex flex-col">
             <p className="text-base text-gray-500">{title}</p>
             <h5 className="font-bold text-black tracking-wide text-2xl">
-              {value} {type === "orders" ? "" : "kr"}
+              {value}{" "}
+              {type === "revenue" || type === "averageOrderValue" ? "kr" : ""}
             </h5>
           </div>
           <div

@@ -2,7 +2,10 @@ export type SalesDataResponse = {
   generalInfo: SalesData[];
   topPlants: TopPlants[];
 };
-
+export type UsersDataResponse = {
+  generalInfo: UserGeneralData[];
+  topUsers: TopUsers[];
+};
 export type SalesData = {
   type: string;
   title: string;
@@ -28,7 +31,10 @@ export type LeaderboardProps = {
 };
 
 export type AdminDashboardHomeProps = {
-  handleInitialLoad: (timeframe: "day" | "week" | "month") => void;
+  handleInitialLoad: (
+    timeframe: "day" | "week" | "month",
+    page: "users" | "sales"
+  ) => void;
 };
 
 export type SalesCachedData = {
@@ -36,8 +42,30 @@ export type SalesCachedData = {
   topPlants: TopPlants[];
 };
 
-export type SalesDataCahe = {
+export type SalesDataCache = {
   day?: SalesCachedData;
   week?: SalesCachedData;
   month?: SalesCachedData;
+};
+
+export type UsersCachedData = {
+  generalInfo: UserGeneralData[];
+  topUsers: TopUsers[];
+};
+export type UsersDataCache = {
+  day?: UsersCachedData;
+  week?: UsersCachedData;
+  month?: UsersCachedData;
+};
+export type UserGeneralData = {
+  type: string;
+  title: string;
+  value: number;
+};
+
+export type TopUsers = {
+  email: string;
+  created_at: string;
+  purchaseCount: string;
+  totalSpent: string;
 };

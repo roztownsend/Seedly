@@ -8,7 +8,7 @@ function AdminDashboardHome({ handleInitialLoad }: AdminDashboardHomeProps) {
     <>
       <div className="w-full flex flex-col justify-center items-center gap-5 mt-4">
         <div
-          onClick={() => handleInitialLoad("day")}
+          onClick={() => handleInitialLoad("day", "sales")}
           className="w-full max-w-[800px] min-h-[250px] bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 cursor-pointer group border-2 border-transparent hover:border-green-300 transform hover:-translate-y-2"
         >
           <div className="flex justify-between">
@@ -38,7 +38,10 @@ function AdminDashboardHome({ handleInitialLoad }: AdminDashboardHomeProps) {
             </div>
           </div>
         </div>
-        <div className="w-full max-w-[800px] min-h-[250px]bg-white/90 backdrop-blur-sm rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-500 cursor-pointer group border-2 border-transparent hover:border-blue-300 transform hover:-translate-y-2">
+        <div
+          onClick={() => handleInitialLoad("day", "users")}
+          className="w-full max-w-[800px] min-h-[250px]bg-white/90 backdrop-blur-sm rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-500 cursor-pointer group border-2 border-transparent hover:border-blue-300 transform hover:-translate-y-2"
+        >
           <div className="flex justify-between">
             <div className="p-5  bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl group-hover:from-blue-200 group-hover:to-blue-300 transition-all duration-300 ">
               <FiUserCheck className="text-blue-600" size={40} />

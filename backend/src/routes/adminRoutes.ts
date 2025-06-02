@@ -3,17 +3,10 @@ import { authenticateUser } from "../middleware/authenticateUser";
 import { authenticateAdmin } from "../middleware/authenticateAdmin";
 import { salesService } from "../services/salesService";
 import { topSellingPlant } from "../services/topSellingPlantsService";
-import { User } from "../models/user.model";
-import sequelize from "../config/sequelizeConnect";
-import { UserTask } from "../models/userTask.model";
-import { Op } from "sequelize";
-import { Purchase } from "../models/purchase.model";
 import { topUsers } from "../services/topUsersService";
 import { usersDataService } from "../services/usersDataService";
 const router = Router();
-type CountResult = { [totalUserCount: string]: string } | null;
-type NewUserCountResult = { [newUserCount: string]: string } | null;
-type CompletedTaskResult = { [taskCount: string]: string } | null;
+
 router.get(
   "/sales/day",
   authenticateUser,
@@ -203,7 +196,7 @@ router.get(
             value: parsedNewUserCount,
           },
           {
-            type: "UserCompletedTasks",
+            type: "userCompletedTasks",
             title: "User Completed Tasks",
             value: parsedUserTasksCompleted,
           },
@@ -261,7 +254,7 @@ router.get(
             value: parsedNewUserCount,
           },
           {
-            type: "UserCompletedTasks",
+            type: "userCompletedTasks",
             title: "User Completed Tasks",
             value: parsedUserTasksCompleted,
           },
@@ -313,7 +306,7 @@ router.get(
             value: parsedNewUserCount,
           },
           {
-            type: "UserCompletedTasks",
+            type: "userCompletedTasks",
             title: "User Completed Tasks",
             value: parsedUserTasksCompleted,
           },

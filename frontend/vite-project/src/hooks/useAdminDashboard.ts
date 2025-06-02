@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useAuthSession } from "../stores/authStore";
-import { SalesDataResponse } from "../types/adminDashboardTypes";
+import {
+  SalesDataResponse,
+  UsersDataResponse,
+} from "../types/adminDashboardTypes";
 
 export const useAdminDashboard = () => {
   const session = useAuthSession();
@@ -23,10 +26,10 @@ export const useAdminDashboard = () => {
     }
   };
 
-  const getUsers = async () => {
+  const getUsers = async (timeframe: "day" | "week" | "month") => {
     try {
-      const response = await axios.get<SalesDataResponse>(
-        `http://localhost:5000/admin/users/month`,
+      const response = await axios.get<UsersDataResponse>(
+        `http://localhost:5000/admin/users/${timeframe}`,
         {
           headers: {
             "Content-Type": "application/json",

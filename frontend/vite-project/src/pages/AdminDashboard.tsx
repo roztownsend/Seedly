@@ -2,33 +2,69 @@ import { useAuthActions } from "../stores/authStore";
 import { useAdminDashboard } from "../hooks/useAdminDashboard";
 import { useState } from "react";
 import { IoMdRefresh } from "react-icons/io";
-import { SalesDataCahe } from "../types/adminDashboardTypes";
+import { SalesDataCache } from "../types/adminDashboardTypes";
+import { UsersDataCache } from "../types/adminDashboardTypes";
 import { ClipLoader } from "react-spinners";
 import AnalyticsCard from "../components/admin-dashboard-components/AnalyticsCard";
 import TimeFrameButtons from "../components/admin-dashboard-components/TimeFrameButtonContainer";
 import AdminDashboardHome from "../components/admin-dashboard-components/AdminDashboardHome";
 import LeaderBoardComponent from "../components/admin-dashboard-components/LeaderboardComponent";
 import logoImage from "../assets/image/order-confirmation.png";
+import { AwardIcon } from "lucide-react";
+
 function AdminDashboard() {
   const { signOutUser } = useAuthActions();
   const { getSales, getUsers } = useAdminDashboard();
-  const [dataCache, setDataCahe] = useState<SalesDataCahe>({});
+  const [salesDataCache, setSalesDataCache] = useState<SalesDataCache>({});
+  const [userDataCache, setUserDataCache] = useState<UsersDataCache>({});
   const [timeFrame, setTimeFrame] = useState<string>("day");
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const currentData = dataCache[timeFrame as keyof SalesDataCahe];
+  const [page, setPage] = useState<"sales" | "users" | "">("");
 
-  const handleUsersData = async () => {
-    const userData = await getUsers();
-    console.log(userData);
+  const currentSalesData = salesDataCache[timeFrame as keyof SalesDataCache];
+  const currentUsersData = userDataCache[timeFrame as keyof UsersDataCache];
+
+  const hasData = currentSalesData || currentUsersData;
+  const handleUsersData = async (
+    timeframePara: "day" | "week" | "month",
+    forceRefresh: boolean = false
+  ) => {
+    if (userDataCache[timeframePara] && !forceRefresh) {
+      return;
+    }
+
+    if (forceRefresh) {
+      setIsRefreshing(true);
+    } else {
+      setIsLoading(true);
+    }
+    try {
+      const data = await getUsers(timeframePara);
+      if (data) {
+        setUserDataCache((prevState) => ({
+          ...prevState,
+          [timeframePara]: {
+            generalInfo: data.generalInfo,
+            topUsers: data.topUsers,
+          },
+        }));
+      }
+    } catch (error) {
+      console.error("Failed to fetch sales data:", error);
+    } finally {
+      setIsLoading(false);
+      setIsRefreshing(false);
+      console.log(salesDataCache);
+    }
   };
 
   const handleSalesData = async (
     timeframePara: "day" | "week" | "month",
     forceRefresh: boolean = false
   ) => {
-    if (dataCache[timeframePara] && !forceRefresh) {
+    if (salesDataCache[timeframePara] && !forceRefresh) {
       return;
     }
 
@@ -40,7 +76,7 @@ function AdminDashboard() {
     try {
       const data = await getSales(timeframePara);
       if (data) {
-        setDataCahe((prevState) => ({
+        setSalesDataCache((prevState) => ({
           ...prevState,
           [timeframePara]: {
             generalInfo: data.generalInfo,
@@ -53,7 +89,7 @@ function AdminDashboard() {
     } finally {
       setIsLoading(false);
       setIsRefreshing(false);
-      console.log(dataCache);
+      console.log(salesDataCache);
     }
   };
   const handleTimeFrameChange = async (timeframe: "day" | "week" | "month") => {
@@ -61,9 +97,16 @@ function AdminDashboard() {
     await handleSalesData(timeframe);
   };
 
-  const handleInitialLoad = async (timeframe: "day" | "week" | "month") => {
+  const handleInitialLoad = async (
+    timeframe: "day" | "week" | "month",
+    page: "sales" | "users"
+  ) => {
     setTimeFrame(timeframe);
-    await handleSalesData(timeframe);
+    if (page === "sales") {
+      await handleSalesData(timeframe);
+    } else if (page === "users") {
+      await handleUsersData(timeframe);
+    }
   };
   const handleRefresh = async () => {
     await handleSalesData(timeFrame as "day" | "week" | "month", true);
@@ -85,7 +128,7 @@ function AdminDashboard() {
             </h2>
           </div>
         </div>
-        {currentData && (
+        {hasData && (
           <div className="flex items-center gap-4 mb-4">
             <TimeFrameButtons
               timeFrame={timeFrame}
@@ -108,11 +151,11 @@ function AdminDashboard() {
           </div>
         )}
 
-        {!currentData && !isLoading && (
+        {!hasData && !isLoading && (
           <AdminDashboardHome handleInitialLoad={handleInitialLoad} />
         )}
-        {currentData &&
-          currentData.generalInfo.map((data, index) => (
+        {currentUsersData &&
+          currentUsersData.generalInfo.map((data, index) => (
             <AnalyticsCard
               key={index}
               title={data.title}
@@ -120,10 +163,19 @@ function AdminDashboard() {
               value={data.value}
             />
           ))}
-        {currentData && currentData.topPlants && (
-          <LeaderBoardComponent topPlants={currentData.topPlants} />
+        {currentSalesData &&
+          currentSalesData.generalInfo.map((data, index) => (
+            <AnalyticsCard
+              key={index}
+              title={data.title}
+              type={data.type}
+              value={data.value}
+            />
+          ))}
+        {currentSalesData && currentSalesData.topPlants && (
+          <LeaderBoardComponent topPlants={currentSalesData.topPlants} />
         )}
-        {isLoading && !currentData && (
+        {isLoading && !hasData && (
           <div className="flex items-center flex-col gap-4 py-12">
             <h2 className="text-xl font-semibold text-gray-700 tracking-wide">
               Loading Sales...
@@ -131,7 +183,8 @@ function AdminDashboard() {
             <ClipLoader color="#22c55e" size={32} />
           </div>
         )}
-        <button onClick={handleUsersData}>Log user data</button>
+
+        <button onClick={() => handleUsersData("day")}>LOG USER DATA</button>
         <button onClick={signOutUser}>Logout</button>
       </section>
     </>

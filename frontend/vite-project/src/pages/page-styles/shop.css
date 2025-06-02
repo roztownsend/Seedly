@@ -1,0 +1,15 @@
+.seeds-assortment {
+    @apply flex flex-col gap-6 p-4;
+}
+
+.assortment-controls {
+    @apply flex gap-3 justify-between items-center;
+}
+
+.assortment-controls__count {
+    @apply text-sm text-center;
+}
+
+.dropdown {
+    @apply w-5/6;
+}

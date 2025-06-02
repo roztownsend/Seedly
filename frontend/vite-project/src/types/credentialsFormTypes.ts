@@ -6,7 +6,9 @@ export type CredentialsInput = {
 
 export type FormType = "login" | "signup";
 
-export type CredentialsFormProps = Omit<UseCredentialsFormReturn, "formData">;
+export type CredentialsFormProps = {
+  formType: FormType;
+};
 
 export type FormHeaderProps = FormType;
 
@@ -14,9 +16,11 @@ export type UseCredentialsFormReturn = {
   formData: CredentialsInput;
   showPassword: boolean;
   formType: FormType;
+  isSubmitting: boolean;
+  errorMessage: string;
   handlers: {
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
     togglePassword: () => void;
   };
 };

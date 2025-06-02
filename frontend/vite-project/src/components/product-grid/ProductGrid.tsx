@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProductCard from "../card-component/ProductCard";
 import useIsMobile from "../../hooks/useIsMobile";
 import "./productGrid.css";
 import { ProductItem } from "../../stores/productsStore";
 import { memo } from "react";
+import { useProductGridStore } from "../../stores/productGridStore"; 
+
 type ProductGridProps = {
     products: ProductItem[];
 }
@@ -12,45 +14,62 @@ const ProductGrid = ({ products }: ProductGridProps) => {
     const [displayedPlants, setDisplayedPlants] = useState<ProductItem[]>([]);
     const [showMore, setShowMore] = useState<boolean>(false);
 
-//check if mobile and load numbers of cards accordingly
-  const isMobile = useIsMobile();
-  const loadStep = isMobile ? 3 : 8;
+    const lastItemRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (products.length > 0) {
-      const initial = products.slice(0, loadStep);
-      setDisplayedPlants(initial);
-      setShowMore(products.length > loadStep);
-    }
-  }, [products, loadStep]);
+    const isMobile = useIsMobile();
+    const loadStep = isMobile ? 3 : 8;
 
-  const handleShowMore = () => {
-    const next = products.slice(0, displayedPlants.length + loadStep);
-    setDisplayedPlants(next);
-    setShowMore(next.length < products.length);
-  };
+    // Zustand store
+    const { displayedCount, setDisplayedCount } = useProductGridStore();
 
-  if (!products.length) return <p>No products found.</p>;
+    useEffect(() => {
+        const initialCount = displayedCount > 0 ? displayedCount : loadStep;
+        const initial = products.slice(0, initialCount);
+        setDisplayedPlants(initial);
+        setShowMore(products.length > initialCount);
+    }, [products, loadStep, displayedCount]);
 
-  return (
-    <div className="product-grid">
-        <div className="cards-container">
-          {displayedPlants.map((plant) => (
-            <div key={plant.id} className="card-item">
-              <ProductCard item={plant} />
+    const handleShowMore = () => {
+        const nextCount = displayedPlants.length + loadStep;
+        const next = products.slice(0, nextCount);
+        setDisplayedPlants(next);
+        setShowMore(next.length < products.length);
+        setDisplayedCount(next.length);
+
+        setTimeout(() => {
+            if (lastItemRef.current) {
+                const rect = lastItemRef.current.getBoundingClientRect();
+                const scrollY = window.scrollY + rect.top - 100;
+                window.scrollTo({ top: scrollY, behavior: "smooth" });
+            }
+        }, 300);
+    };
+
+    if (!products.length) return <p>No products found.</p>;
+
+    return (
+        <div className="product-grid">
+            <div className="cards-container">
+                {displayedPlants.map((plant, idx) => (
+                    <div
+                        key={plant.id}
+                        className="card-item"
+                        ref={idx === displayedPlants.length - 1 ? lastItemRef : null}
+                    >
+                        <ProductCard item={plant} />
+                    </div>
+                ))}
             </div>
-          ))}
-        </div>
 
-      {showMore && (
-        <div className="button-container">
-          <button onClick={handleShowMore} className="button-primary">
-            Show More
-          </button>
+            {showMore && (
+                <div className="button-container">
+                    <button onClick={handleShowMore} className="button-primary">
+                        Show More
+                    </button>
+                </div>
+            )}
         </div>
-      )}
-    </div>
-  );
+    );
 };
 
 export default memo(ProductGrid);

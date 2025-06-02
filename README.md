@@ -25,33 +25,11 @@ cd final-project
 ### Install frontend dependencies
 
 ```bash
-cd frontend
+cd frontend/vite-project
 npm install
 ```
-A simple `npm install` should be fine for most of these, but if you need individual packages:
+A simple `npm install` should be fine for most of these.
 
-React and React-DOM  
-`npx create-react-app your-app-name --template typescript`
-
-For API requests:
-
-Axios (or Fetch API)  
-` npm install axios` 
-
-For Routing:
-
-React Router  
-`npm install react-router-dom @types/react-router-dom`
-
-For Swagger frontend client (optional if you want API integration help):
-
-swagger-ui-react  
-`npm install swagger-ui-react`
-
-State Management:
-
-Zustand  
-`npm install zustand`
 
 ### Install backend dependencies
 
@@ -61,30 +39,13 @@ npm install
 ```
 ---
 
-And if you need individual backend packages:
+### Install backend dependencies
 
-Express (web framework)  
-`npm install express`
-
-TypeScript  
-`npm install typescript ts-node @types/node @types/express`
-
-Swagger (for API documentation)  
-`npm install swagger-jsdoc swagger-ui-express`
-
-Database:
-
-For PostgreSQL:  
-`npm install pg` 
-
-CORS  
-`npm install cors`
-
-dotenv (for environment variables)  
-`npm install dotenv`
-
-Nodemon  
-`npm install nodemon --save-dev`
+```bash
+cd backend
+npm install
+```
+---
 
 ## Running the Application
 
@@ -118,10 +79,15 @@ PORT=5000
 Create a .env file inside the frontend/ directory:
 REACT_APP_API_URL=http://localhost:5000
 
-Backend .env → Private values (DB password, secrets).
-Frontend .env → Only public values (API URL, public keys, etc.).
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+SUPABASE_URL=your_supabase_url
 
+```
+Create a `.env` file inside the `frontend/vite-project` directory with the following:
 
+```bash
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
 ---
@@ -129,6 +95,8 @@ Frontend .env → Only public values (API URL, public keys, etc.).
 ## Features
 
 - User Registration & Login
+- Product Listings
+- Purchase Flow
 - Task Creation, Editing, Deletion
 - Responsive Frontend UI
 - API with full Swagger documentation
@@ -140,13 +108,13 @@ Frontend .env → Only public values (API URL, public keys, etc.).
 ## Project Structure
 
 ```
-frontend/
+frontend/vite-project
 backend/
 database/
 documentation/
 ```
 
-- `frontend/` - React frontend application.
+- `frontend/vite-project` - React frontend application.
 - `backend/` - Node.js API server.
 - `database/` - SQL scripts.
 - `documentation/` - Wireframes and weekly reflections.
@@ -155,7 +123,7 @@ documentation/
 
 ## Documentation
 
-- Swagger API Docs:
+- Swagger API Docs: `http://localhost:5000/docs/` when the backend is running.
 - Wireframe/style notes: [View on Figma](https://www.figma.com/design/gMn627cuSapgWL1CenFnWa/Seedly-Wireframe?node-id=0-1&t=nsUu9aTIooXdR5Vv-1)
 - Product Pitch Document: [View on Google Docs](https://docs.google.com/document/d/1KjFo1T9YKlO1MeHd6rgLfnSx8KKZHpXvHecRJZiAnIM/edit?usp=sharing)
 - Weekly Reflections: `/documentation/weekly-reflections/`
@@ -175,9 +143,9 @@ documentation/
 
 ## Scrum & Work Process
 
-- **Daily Standups** for progress updates (daily chat updates works as well )
-- **Sprint Planning** to define sprint goals
-- **Sprint Reviews** after each sprint
+- **Daily Standups** for progress updates (daily chat updates)
+- **Sprint Planning** every Tuesday to define sprint goals
+- **Sprint Retros** after each sprint; every Tuesday before sprint planning
 - **Weekly Reflections** stored in `/documentation/weekly-reflections/`
 
 ---

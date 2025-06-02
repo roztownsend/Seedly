@@ -30,6 +30,8 @@ export class Plant extends Model<
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
+  declare tasks?: Task[];
+
   declare getPurchaseItems: HasManyGetAssociationsMixin<PurchaseItem>;
   declare getTasks: HasManyGetAssociationsMixin<Task>;
   static initModel(sequelize: Sequelize): typeof Plant {
@@ -41,7 +43,7 @@ export class Plant extends Model<
           primaryKey: true,
         },
         product_name: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
           allowNull: false,
         },
         price: {
@@ -102,7 +104,7 @@ export class Plant extends Model<
   }) {
     Plant.hasMany(models.PurchaseItem, {
       foreignKey: "plant_id",
-      as: "purchaseItems",
+      as: "purchase_items",
     });
     Plant.hasMany(models.Task, {
       foreignKey: "plant_id",

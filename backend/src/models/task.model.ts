@@ -14,7 +14,7 @@ export class Task extends Model<
   InferCreationAttributes<Task>
 > {
   declare id: CreationOptional<string>;
-  declare plant_id: ForeignKey<Plant>;
+  declare plant_id: ForeignKey<Plant["id"]>;
   declare description: string | null;
   declare start_month: number;
   declare end_month: number;
@@ -33,7 +33,15 @@ export class Task extends Model<
         },
         description: {
           type: DataTypes.TEXT,
+          allowNull: true,
+        },
+        plant_id: {
+          type: DataTypes.UUID,
           allowNull: false,
+          references: {
+            model: Plant,
+            key: "id",
+          },
         },
         start_month: {
           type: DataTypes.INTEGER,
@@ -66,6 +74,12 @@ export class Task extends Model<
         modelName: "Task",
         timestamps: true,
         underscored: true,
+        indexes: [
+          {
+            name: "idx_tasks_plant_id",
+            fields: ["plant_id"],
+          },
+        ],
       }
     );
   }

@@ -6,6 +6,10 @@
   @apply w-32 h-32;
 }
 
+.product-card-cart__img {
+  @apply w-32 h-32;
+}
+
 .product-card-cart__details {
   @apply flex justify-between items-start flex-col w-48 h-32 ml-2;
 }

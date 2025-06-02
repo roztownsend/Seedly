@@ -7,7 +7,7 @@
 }
 
 .product-card__img {
-  @apply object-cover w-full h-full;
+  @apply object-cover w-full h-full rounded-t-lg;
 }
 
 .product-card__details {

@@ -9,6 +9,8 @@ import { useShippingOptionsActions, useSelection } from "../stores/shippingOptio
 import { useFormData } from "../stores/paymentStore";
 import ProductCardCartMobile from "../components/card-component/ProductCardCartMobile";
 import { OrderSummary } from "../components/order-summary/OrderSummary";
+import orderConfirmationImg from "../assets/image/order-confirmation.png";
+import "./page-styles/CheckoutPayment.css"; // Importa o CSS customizado
 
 const CheckoutPayment = () => {
   const cartItems = useCartItems();
@@ -31,6 +33,7 @@ const CheckoutPayment = () => {
   }, []);
 
   const paymentFormData = useFormData();
+  const paymentMethod = paymentFormData.paymentMethod;
 
   const lastOrderTotal = useRef(0);
   const lastOrderItemsRef = useRef<typeof cartItems>([]);
@@ -48,8 +51,11 @@ const CheckoutPayment = () => {
   return (
     <section className="container-wrapper">
       <div className="section-heading">
-        <h1 className="h2">Thank you for your order!</h1>
+        <h1 className="animate-fadeIn">Thank you for your order!</h1>
         <p>You should receive a confirmation email shortly.</p>
+        <div>
+          <img src={orderConfirmationImg} alt="Cat with bag of seeds!" />
+        </div>
       </div>
 
       <div className="layout-flex">
@@ -81,17 +87,25 @@ const CheckoutPayment = () => {
               <li><strong>Name:</strong> {lastShippingRef.current.name}</li>
               <li><strong>Email:</strong> {lastShippingRef.current.email}</li>
               <li><strong>Address:</strong> {lastShippingRef.current.address}</li>
-              <li><strong>Apartment:</strong> {lastShippingRef.current.apartment}</li>
+              {lastShippingRef.current.apartment ? <li><strong>Apartment:</strong> {lastShippingRef.current.apartment}</li> : ""}
               <li>
-                <strong>City & Postal Code:</strong>{" "}
-                {lastShippingRef.current.city} - {lastShippingRef.current.postalCode}
+                <strong>Postal Code & City:</strong>{" "}
+                 {lastShippingRef.current.postalCode} - {lastShippingRef.current.city}
               </li>
             </ul>
           </div>
 
           <div className="vertical-stack">
             <h4>Payment Method</h4>
-            <p>Card: **** **** **** {maskedCard}</p>
+            {paymentMethod === "card" && (
+              <p>Card: **** **** **** {maskedCard}</p>
+            )}
+            {paymentMethod === "swish" && (
+              <p>Swish</p>
+            )}
+            {paymentMethod === "klarna" && (
+              <p>Klarna</p>
+            )}
           </div>
         </div>
       </div>

@@ -20,13 +20,13 @@ export const initModels = (sequelize: Sequelize): void => {
   User.initModel(sequelize);
   ShippingOption.initModel(sequelize);
 
-  Purchase.associate({ PurchaseItem, Payment, ShippingInfo });
+  Purchase.associate({ PurchaseItem, Payment, ShippingInfo, User, UserTask });
   Plant.associate({ PurchaseItem, Task });
   Payment.associate({ Purchase });
   ShippingInfo.associate({ Purchase, ShippingOption });
   PurchaseItem.associate({ Purchase, Plant });
   Task.associate({ Plant });
-  UserTask.associate({ Task, User });
-  User.associate({ UserTask });
+  UserTask.associate({ Task, User, Purchase });
+  User.associate({ UserTask, Purchase });
   ShippingOption.associate({ ShippingInfo });
 };

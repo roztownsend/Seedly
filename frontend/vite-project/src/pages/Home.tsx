@@ -1,12 +1,32 @@
 import Hero from "../components/hero/Hero";
 import heroImg from "../assets/image/heroImg.webp";
-import GridHome from "../components/grid-home/GridHome";
+import ProductGrid from "../components/product-grid/ProductGrid";
+import { Loading } from "../components/loading/Loading";
+import { useProductList, useProductLoading, useProductActions } from "../stores/productsStore";
+import { useEffect } from "react";
+import "./page-styles/home.css";
 
 function Home() {
-  
+    const productList = useProductList();
+    const loading = useProductLoading();
+    const { fetchAllPlants } = useProductActions();
+    
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            await fetchAllPlants();
+          } catch (error) {
+            console.log("Error fetching products")
+          }
+        }
+        fetchData();
+    }, [fetchAllPlants])
+    
+    if (loading) return <Loading />;
+    
   return (
-    <>
-      <section>
+    <div className="home">
+      <section className="hero">
         <Hero
           heading={"Spring Vibes"}
           subheading={
@@ -14,15 +34,16 @@ function Home() {
           }
           imageUrl={heroImg}
         />
-
-        <GridHome
-          heading={"Get ready to sow"}
-          subheading={
-            "Spring has sprong and it’s time for you to get a-plantin, buddy."
-          }
-        />
       </section>
-    </>
+
+     <section className="campaign">
+      <div className="campaign-header">
+        <h3 className="hero-desktop-heading">Get ready to sow</h3>
+          <p className="hero-desktop-subheading">Spring has sprong and it's time for you to get a-plantin, buddy.</p>
+      </div>
+          <ProductGrid products={productList} />
+      </section>
+    </div>
   );
 }
 

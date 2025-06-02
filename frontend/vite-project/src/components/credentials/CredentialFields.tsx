@@ -1,10 +1,12 @@
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { CredentialsFormProps } from "../../types/credentialsFormTypes";
-function CredentialFields({
-  handlers,
-  showPassword,
-  formType,
-}: CredentialsFormProps) {
+import { useCredentialForm } from "../../hooks/useCredentialForm";
+import "./Credentials.css";
+
+function CredentialFields({ formType }: CredentialsFormProps) {
+  const { handlers, showPassword, errorMessage, formData, isSubmitting } =
+    useCredentialForm(formType);
+
   return (
     <form
       className="credential-form"
@@ -18,10 +20,11 @@ function CredentialFields({
         placeholder="Email"
         autoComplete="email"
         onChange={(e) => handlers.handleChange(e)}
+        value={formData.email}
         required
         className="credential-form-input email-input"
       />
-      <div className="flex w-full relative mb-5">
+      <div className="password-field">
         <label htmlFor="password"></label>
         <input
           type={showPassword ? "text" : "password"}
@@ -30,6 +33,7 @@ function CredentialFields({
           placeholder="Password"
           autoComplete="new-password"
           required
+          value={formData.password}
           onChange={(e) => handlers.handleChange(e)}
           className="credential-form-input password-input"
         />
@@ -40,6 +44,7 @@ function CredentialFields({
           {showPassword ? <FaEyeSlash /> : <FaEye />}
         </span>
       </div>
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
       {formType === "login" && (
         <div className="credentials-footer">
           <label htmlFor="rememberMe" className="rememberme-label">
@@ -48,6 +53,7 @@ function CredentialFields({
               type="checkbox"
               id="rememberMe"
               name="rememberMe"
+              checked={formData.rememberMe}
               onChange={(e) => handlers.handleChange(e)}
             />
             <span className="rememberme-span-text">Remember me</span>
@@ -57,7 +63,11 @@ function CredentialFields({
           </a>
         </div>
       )}
-      <button type="submit" className="credential-submit-btn"></button>
+      <button
+        disabled={isSubmitting}
+        type="submit"
+        className="credential-submit-btn"
+      ></button>
     </form>
   );
 }

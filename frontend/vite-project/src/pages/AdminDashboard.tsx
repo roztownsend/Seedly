@@ -12,7 +12,7 @@ function AdminDashboard() {
   const handleSalesData = async () => {
     const data = await getSales();
     if (data) {
-      setSalesData(data);
+      setSalesData(data.generalInfo);
     }
   };
 

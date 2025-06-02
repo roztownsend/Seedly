@@ -4,8 +4,10 @@ import { authenticateUser } from "../middleware/authenticateUser";
 import { authenticateAdmin } from "../middleware/authenticateAdmin";
 import sequelize from "../config/sequelizeConnect";
 import { Transaction, Op } from "sequelize";
+import { PurchaseItem } from "../models/purchaseItem.model";
+import { Plant } from "../models/plant.model";
 import { Purchase } from "../models/purchase.model";
-
+import { Payment } from "../models/payment.model";
 const router = Router();
 
 interface SalesResults {
@@ -93,28 +95,54 @@ router.get(
       raw: true,
     })) as SalesResults | null;
 
+    const weeklytopPlants = await PurchaseItem.findAll({
+      attributes: [
+        [sequelize.col("plant.product_name"), "productName"],
+        [sequelize.fn("SUM", sequelize.col("quantity")), "unitsSold"],
+        [sequelize.literal(`SUM(quantity * "plant"."price")`), "revenue"],
+      ],
+      include: [
+        {
+          model: Plant,
+          as: "plant",
+          attributes: [],
+        },
+      ],
+      group: ["plant.id", "plant.product_name"],
+      order: [
+        [sequelize.literal('SUM("quantity")'), "DESC"],
+        [sequelize.literal('SUM(quantity * "plant"."price")'), "DESC"],
+      ],
+      limit: 5,
+      raw: true,
+    });
+    console.log(weeklytopPlants);
     const totalAmount = parseFloat(weeklyResult?.totalAmount || "0");
     const orderCount = parseInt(weeklyResult?.orderCount || "0");
 
     const averageOrderValue = orderCount > 0 ? totalAmount / orderCount : 0;
+    const topPlants = weeklytopPlants;
 
-    res.json([
-      {
-        type: "revenue",
-        title: "Total Revenue",
-        value: totalAmount,
-      },
-      {
-        type: "orders",
-        title: "Number of Orders",
-        value: orderCount,
-      },
-      {
-        type: "averageOrderValue",
-        title: "Average order Value",
-        value: averageOrderValue,
-      },
-    ]);
+    res.json({
+      generalInfo: [
+        {
+          type: "revenue",
+          title: "Total Revenue",
+          value: totalAmount,
+        },
+        {
+          type: "orders",
+          title: "Number of Orders",
+          value: orderCount,
+        },
+        {
+          type: "averageOrderValue",
+          title: "Average Order Value",
+          value: averageOrderValue,
+        },
+      ],
+      topPlants: topPlants,
+    });
   }
 );
 router.get(

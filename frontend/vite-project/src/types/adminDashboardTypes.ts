@@ -1,4 +1,7 @@
-export type SalesDataResponse = SalesData[];
+export type SalesDataResponse = {
+  generalInfo: SalesData[];
+  topPlants: TopPlants[];
+};
 
 export type SalesData = {
   type: string;
@@ -10,4 +13,10 @@ export type AnalyticsCardProps = {
   type: string;
   title: string;
   value: number;
+};
+
+export type TopPlants = {
+  productName: string;
+  revenue: string;
+  unitsSold: string;
 };

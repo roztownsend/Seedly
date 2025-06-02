@@ -22,7 +22,7 @@ function AdminDashboard() {
 
   return (
     <>
-      <section className="flex flex-col w-full  justify-between">
+      <section className="flex flex-col w-full items-center  justify-between">
         <div className="flex flex-col items-center">
           <h3>Seedly</h3>
           <h4>Admin Dashboard</h4>

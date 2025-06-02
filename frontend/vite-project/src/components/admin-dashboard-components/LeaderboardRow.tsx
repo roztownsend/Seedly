@@ -8,13 +8,20 @@ function LeaderBoardRow({
 }: LeaderboardRowProps) {
   return (
     <>
-      <div className="flex w-full justify-between">
-        <div className="flex gap-3">
-          <h4>{index + 1}</h4>
-          <h4>{productName}</h4>
-        </div>
-        <h4>{unitsSold}</h4>
-        <h4>{revenue}kr</h4>
+      <div className="col-span-1 flex items-center">
+        <span className="text-gray-600 font-medium">{index + 1}</span>
+      </div>
+
+      <div className="col-span-6 flex items-center">
+        <span className="text-gray-800 font-medium">{productName}</span>
+      </div>
+
+      <div className="col-span-3 flex items-center justify-center">
+        <span className="text-gray-700">{unitsSold}</span>
+      </div>
+
+      <div className="col-span-2 flex items-center justify-end">
+        <span className="text-gray-800 font-medium">{revenue}kr</span>
       </div>
     </>
   );

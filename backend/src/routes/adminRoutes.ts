@@ -2,18 +2,9 @@ import { Router, Response, Request } from "express";
 
 import { authenticateUser } from "../middleware/authenticateUser";
 import { authenticateAdmin } from "../middleware/authenticateAdmin";
-import sequelize from "../config/sequelizeConnect";
-import { Transaction, Op } from "sequelize";
-import { PurchaseItem } from "../models/purchaseItem.model";
-import { Plant } from "../models/plant.model";
-import { Purchase } from "../models/purchase.model";
-import { Payment } from "../models/payment.model";
+import { salesService } from "../services/salesService";
+import { topSellingPlant } from "../services/topSellingPlantsService";
 const router = Router();
-
-interface SalesResults {
-  totalAmount: string;
-  orderCount: string;
-}
 
 router.get(
   "/sales/day",
@@ -25,38 +16,41 @@ router.get(
     const todayEnd = new Date();
     todayStart.setHours(0, 0, 0, 0);
     todayEnd.setHours(23, 59, 59, 999);
-    const dailyResults = (await Purchase.findOne({
-      attributes: [
-        [sequelize.fn("SUM", sequelize.col("total_amount")), "totalAmount"],
-        [sequelize.fn("COUNT", sequelize.col("id")), "orderCount"],
-      ],
-      where: {
-        purchase_date: {
-          [Op.between]: [todayStart, todayEnd],
-        },
-      },
-      raw: true,
-    })) as SalesResults | null;
 
-    const totalAmount = parseFloat(dailyResults?.totalAmount || "0");
-    const orderCount = parseInt(dailyResults?.orderCount || "0");
+    try {
+      const { totalAmount, averageOrderValue, orderCount } = await salesService(
+        todayStart,
+        todayEnd
+      );
 
-    const averageOrderValue = orderCount > 0 ? totalAmount / orderCount : 0;
+      const topPlants = await topSellingPlant(todayStart, todayEnd);
 
-    res.json({
-      revenue: {
-        title: "Total Revenue",
-        amount: totalAmount,
-      },
-      order: {
-        title: "Number of Orders",
-        orders: orderCount,
-      },
-      averageOrderValue: {
-        title: "Average order Value",
-        value: averageOrderValue,
-      },
-    });
+      res.json({
+        generalInfo: [
+          {
+            type: "revenue",
+            title: "Total Revenue",
+            value: totalAmount,
+          },
+          {
+            type: "orders",
+            title: "Number of Orders",
+            value: orderCount,
+          },
+          {
+            type: "averageOrderValue",
+            title: "Average Order Value",
+            value: averageOrderValue,
+          },
+        ],
+        topPlants: topPlants,
+      });
+    } catch (error) {
+      console.error("Failed to fetch sales for today", error);
+      res
+        .status(500)
+        .json({ message: "Unexpected error fetching sales today" });
+    }
   }
 );
 
@@ -82,73 +76,40 @@ router.get(
     weekEnd.setDate(weekEnd.getDate() + 6);
     weekEnd.setHours(23, 59, 59, 999);
 
-    const weeklyResult = (await Purchase.findOne({
-      attributes: [
-        [sequelize.fn("SUM", sequelize.col("total_amount")), "totalAmount"],
-        [sequelize.fn("COUNT", sequelize.col("id")), "orderCount"],
-      ],
-      where: {
-        purchase_date: {
-          [Op.between]: [weekStart, weekEnd],
-        },
-      },
-      raw: true,
-    })) as SalesResults | null;
+    try {
+      const { totalAmount, averageOrderValue, orderCount } = await salesService(
+        weekStart,
+        weekEnd
+      );
 
-    const weeklytopPlants = await PurchaseItem.findAll({
-      where: {
-        createdAt: {
-          [Op.between]: [weekStart, weekEnd],
-        },
-      },
-      attributes: [
-        [sequelize.col("plant.product_name"), "productName"],
-        [sequelize.fn("SUM", sequelize.col("quantity")), "unitsSold"],
-        [sequelize.literal(`SUM(quantity * "plant"."price")`), "revenue"],
-      ],
-      include: [
-        {
-          model: Plant,
-          as: "plant",
-          attributes: [],
-        },
-      ],
-      group: ["plant.id", "plant.product_name"],
-      order: [
-        [sequelize.literal('SUM("quantity")'), "DESC"],
-        [sequelize.literal('SUM(quantity * "plant"."price")'), "DESC"],
-      ],
-      limit: 5,
-      raw: true,
-    });
-    console.log(weeklytopPlants);
-    const totalAmount = parseFloat(weeklyResult?.totalAmount || "0");
-    const orderCount = parseInt(weeklyResult?.orderCount || "0");
+      const topPlants = await topSellingPlant(weekStart, weekEnd);
 
-    const averageOrderValue =
-      orderCount > 0 ? Math.floor(totalAmount / orderCount) : 0;
-    const topPlants = weeklytopPlants;
-
-    res.json({
-      generalInfo: [
-        {
-          type: "revenue",
-          title: "Total Revenue",
-          value: totalAmount,
-        },
-        {
-          type: "orders",
-          title: "Number of Orders",
-          value: orderCount,
-        },
-        {
-          type: "averageOrderValue",
-          title: "Average Order Value",
-          value: averageOrderValue,
-        },
-      ],
-      topPlants: topPlants,
-    });
+      res.json({
+        generalInfo: [
+          {
+            type: "revenue",
+            title: "Total Revenue",
+            value: totalAmount,
+          },
+          {
+            type: "orders",
+            title: "Number of Orders",
+            value: orderCount,
+          },
+          {
+            type: "averageOrderValue",
+            title: "Average Order Value",
+            value: averageOrderValue,
+          },
+        ],
+        topPlants: topPlants,
+      });
+    } catch (error) {
+      console.error("Failed to fetch weekly sales", error);
+      res
+        .status(500)
+        .json({ mesage: "Unexpected error fetching weekly sales" });
+    }
   }
 );
 router.get(
@@ -165,38 +126,40 @@ router.get(
     const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
     monthEnd.setHours(23, 59, 59, 999);
 
-    const monthlyResult = (await Purchase.findOne({
-      attributes: [
-        [sequelize.fn("SUM", sequelize.col("total_amount")), "totalAmount"],
-        [sequelize.fn("COUNT", sequelize.col("id")), "orderCount"],
-      ],
-      where: {
-        purchase_date: {
-          [Op.between]: [monthStart, monthEnd],
-        },
-      },
-      raw: true,
-    })) as SalesResults | null;
+    try {
+      const { totalAmount, averageOrderValue, orderCount } = await salesService(
+        monthStart,
+        monthEnd
+      );
 
-    const totalAmount = parseFloat(monthlyResult?.totalAmount || "0");
-    const orderCount = parseInt(monthlyResult?.orderCount || "0");
+      const topPlants = await topSellingPlant(monthStart, monthEnd);
 
-    const averageOrderValue = orderCount > 0 ? totalAmount / orderCount : 0;
-
-    res.json({
-      revenue: {
-        title: "Total Revenue",
-        amount: totalAmount,
-      },
-      order: {
-        title: "Number of Orders",
-        orders: orderCount,
-      },
-      averageOrderValue: {
-        title: "Average order Value",
-        value: averageOrderValue,
-      },
-    });
+      res.json({
+        generalInfo: [
+          {
+            type: "revenue",
+            title: "Total Revenue",
+            value: totalAmount,
+          },
+          {
+            type: "orders",
+            title: "Number of Orders",
+            value: orderCount,
+          },
+          {
+            type: "averageOrderValue",
+            title: "Average Order Value",
+            value: averageOrderValue,
+          },
+        ],
+        topPlants: topPlants,
+      });
+    } catch (error) {
+      console.error("Failed to fetch sales for the month", error);
+      res
+        .status(500)
+        .json({ message: "Unexpected error fetching mothly sales" });
+    }
   }
 );
 

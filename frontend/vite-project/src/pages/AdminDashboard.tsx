@@ -1,18 +1,19 @@
 import { useAuthUser, useAuthActions } from "../stores/authStore";
 import { useAdminDashboard } from "../hooks/useAdminDashboard";
 import AnalyticsCard from "../components/admin-dashboard-components/AnalyticsCard";
-
+import { SalesData } from "../types/adminDashboardTypes";
 import AdminDashboardHome from "../components/admin-dashboard-components/AdminDashboardHome";
 import { useState } from "react";
 function AdminDashboard() {
   const { signOutUser } = useAuthActions();
-  const user = useAuthUser();
   const { getSales } = useAdminDashboard();
-  const [salesData, setSalesData] = useState([]);
+  const [salesData, setSalesData] = useState<SalesData[]>();
 
   const handleSalesData = async () => {
     const data = await getSales();
-    setSalesData(data);
+    if (data) {
+      setSalesData(data);
+    }
   };
 
   return (
@@ -22,9 +23,18 @@ function AdminDashboard() {
           <h3>Seedly</h3>
           <h4>Admin Dashboard</h4>
         </div>
-        <AnalyticsCard />
+        {!salesData && <AdminDashboardHome />}
+        {salesData &&
+          salesData.map((data, index) => (
+            <AnalyticsCard
+              key={index}
+              title={data.title}
+              type={data.type}
+              value={data.value}
+            />
+          ))}
 
-        <button onClick={async () => await getSales()}>Log sales</button>
+        <button onClick={handleSalesData}>Log sales</button>
         <button onClick={signOutUser}>Logout</button>
       </section>
     </>

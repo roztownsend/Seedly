@@ -65,13 +65,14 @@ router.get(
   async (req: Request, res: Response) => {
     console.log("Admin route triggerd");
 
-    const weekStart = new Date();
+    const now = new Date();
 
-    const day = weekStart.getDay();
+    const currentDay = now.getDay();
 
-    const diffToMonday = day === 0 ? -6 : 1 - day;
+    const diffToMonday = currentDay === 0 ? -6 : 1 - currentDay;
 
-    weekStart.setDate(weekStart.getDate() + diffToMonday);
+    const weekStart = new Date(now);
+    weekStart.setDate(now.getDate() + diffToMonday);
     weekStart.setHours(0, 0, 0, 0);
 
     const weekEnd = new Date(weekStart);
@@ -97,20 +98,23 @@ router.get(
 
     const averageOrderValue = orderCount > 0 ? totalAmount / orderCount : 0;
 
-    res.json({
-      revenue: {
+    res.json([
+      {
+        type: "revenue",
         title: "Total Revenue",
-        amount: totalAmount,
+        value: totalAmount,
       },
-      order: {
+      {
+        type: "orders",
         title: "Number of Orders",
-        orders: orderCount,
+        value: orderCount,
       },
-      averageOrderValue: {
+      {
+        type: "averageOrderValue",
         title: "Average order Value",
         value: averageOrderValue,
       },
-    });
+    ]);
   }
 );
 router.get(

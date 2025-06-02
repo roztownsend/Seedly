@@ -1,13 +1,14 @@
 import axios from "axios";
 import { useAuthSession } from "../stores/authStore";
+import { SalesDataResponse } from "../types/adminDashboardTypes";
 
 export const useAdminDashboard = () => {
   const session = useAuthSession();
 
   const getTodaysSales = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:5000/admin/sales/day",
+      const response = await axios.get<SalesDataResponse>(
+        "http://localhost:5000/admin/sales/week",
         {
           headers: {
             "Content-Type": "application/json",

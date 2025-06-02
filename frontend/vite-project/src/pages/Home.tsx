@@ -36,14 +36,12 @@ function Home() {
         />
       </section>
 
-        <Hero
-          heading={"Tasty garden treats!"}
-          subheading={
-            "Spring has sprong and it’s time to plant some free groceries!"
-          }
-        />
-          <ProductGrid products={productList}  filterEdibleOnly={true}/>
-
+      <section className="campaign">
+        <div className="campaign-header">
+          <h3 className="hero-desktop-heading">Tasty garden treats!</h3>
+            <p className="hero-desktop-subheading">Spring has sprong and it's time to plant some free groceries!</p>
+        </div>
+        <ProductGrid products={productList}  filterEdibleOnly={true}/>
       </section>
     </div>
   );

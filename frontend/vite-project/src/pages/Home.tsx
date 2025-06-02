@@ -35,8 +35,6 @@ function Home() {
         />
 
         <Hero
-          heading={"Get ready to sow"}
-          subheading={
           heading={"Tasty garden treats!"}
           subheading={
             "Spring has sprong and it’s time to plant some free groceries!"

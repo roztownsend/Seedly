@@ -23,7 +23,7 @@ export const handleTransaction = async (
 
   try {
     const response = await axios.post(
-      `http://localhost:5000/${endpoint}`,
+      `${import.meta.env.VITE_API_URL}/${endpoint}`,
       payload,
       {
         method: "POST",

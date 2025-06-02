@@ -22,7 +22,7 @@ function DashBoard() {
       setIsFetchingTasks(true);
       try {
         const response = await axios.get<UserTasksResponse>(
-          "http://localhost:5000/user-tasks",
+          `${import.meta.env.VITE_API_URL}/user-tasks`,
           {
             headers: {
               "Content-Type": "application/json",

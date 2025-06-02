@@ -71,7 +71,7 @@ const SeedCard = ({
     setIsLoadingSaveChanges(true);
     try {
       const response = await axios.put(
-        "http://localhost:5000/user-tasks/update",
+        `${import.meta.env.VITE_API_URL}/user-tasks/update`,
         tasksToUpdate,
         {
           headers: {

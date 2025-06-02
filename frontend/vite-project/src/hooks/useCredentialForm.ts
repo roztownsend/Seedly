@@ -65,7 +65,7 @@ export const useCredentialForm = (
         if (formType === "signup") {
           console.log(result.data);
           const response = await axios.post(
-            "http://localhost:5000/auth-test/complete-signup",
+            `${import.meta.env.VITE_API_URL}/auth-test/complete-signup`,
             {},
             {
               headers: {
@@ -79,7 +79,7 @@ export const useCredentialForm = (
         } else if (formType === "login") {
           console.log(result.data);
           const response = await axios.post(
-            "http://localhost:5000/auth-test/link-tasks",
+            `${import.meta.env.VITE_API_URL}/auth-test/link-tasks`,
             {},
             {
               headers: {

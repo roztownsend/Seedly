@@ -4,7 +4,7 @@ export const handleGoogleLogin = async () => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: "http://localhost:5173/dashboard",
+      redirectTo: `${import.meta.env.VITE_OAUTH_REDIRECT_URL}/dashboard`,
     },
   });
   if (error) {

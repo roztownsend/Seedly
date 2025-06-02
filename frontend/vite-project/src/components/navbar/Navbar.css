@@ -68,7 +68,7 @@
 }
 
 .mobile-menu {
-    @apply bg-green-800 flex flex-col w-screen h-screen justify-center items-center gap-6;
+    @apply bg-green-800 flex flex-col w-screen h-screen justify-center items-center gap-6 pb-4;
 }
 
 .mobile-link {
@@ -80,7 +80,7 @@
 }
 
 .user-menu {
-    @apply absolute right-0 mt-2 bg-white shadow-md rounded-xl p-4 z-50 w-40 transform transition-all duration-200;
+    @apply absolute right-10 top-0 mt-2 bg-yellow-800 shadow-md rounded-xl p-4 w-40 transform transition-all duration-200;
 }
 
 .user-menu-open {

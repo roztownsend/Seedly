@@ -221,6 +221,26 @@ paths:
                     type: string
                     example: Internal server error
 
+  /shipping-options:
+    get:
+      summary: Get available shipping options
+      description: Returns a list of available shipping options
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShippingOption'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                
 components:
   schemas:
     Plant:
@@ -277,12 +297,25 @@ components:
           format: date
           example: '2025-06-01'
 
+    ShippingOption:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "PostNord SnigelPost"
+        name:
+          type: string
+          example: "PostNord SnigelPost"
+        cost:
+          type: number
+          example: 49
+        estimatedDelivery:
+          type: string
+          example: "4 - 197 business days"
+
     ErrorResponse:
       type: object
       properties:
         error:
           type: string
           example: Internal server error
-          
-
-

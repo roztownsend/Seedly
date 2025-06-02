@@ -3,9 +3,10 @@ import StepHeader from '../components/step-header/StepHeader';
 import CartItemList from '../components/cart-list-item/CartListItem';
 import './page-styles/shipping.css';
 import { ShippingSelector } from '../components/shipping-selector/ShippingSelector';
+import { useSelection } from '../stores/shippingOptionStore';
 
 const ShippingSelectorPage  = () => {
-
+  const selectedShipping = useSelection();
   return (
       <div className="shipping-container">
 
@@ -24,7 +25,7 @@ const ShippingSelectorPage  = () => {
           <CartItemList /> 
 
           {/* Order summary */}
-          <OrderSummary showButton={false}/>
+          <OrderSummary showButton={false} shippingOption={selectedShipping}/>
         </div>
       </div>
   );

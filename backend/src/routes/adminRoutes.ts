@@ -8,7 +8,7 @@ import { Purchase } from "../models/purchase.model";
 
 const router = Router();
 
-interface DailyResults {
+interface SalesResults {
   totalAmount: string;
   orderCount: string;
 }
@@ -34,20 +34,25 @@ router.get(
         },
       },
       raw: true,
-    })) as DailyResults | null;
+    })) as SalesResults | null;
+
+    const totalAmount = parseFloat(dailyResults?.totalAmount || "0");
+    const orderCount = parseInt(dailyResults?.orderCount || "0");
+
+    const averageOrderValue = orderCount > 0 ? totalAmount / orderCount : 0;
 
     res.json({
       revenue: {
         title: "Total Revenue",
-        amount: dailyResults?.totalAmount
-          ? parseFloat(dailyResults.totalAmount)
-          : 0,
+        amount: totalAmount,
       },
       order: {
         title: "Number of Orders",
-        orders: dailyResults?.orderCount
-          ? parseFloat(dailyResults.orderCount)
-          : 0,
+        orders: orderCount,
+      },
+      averageOrderValue: {
+        title: "Average order Value",
+        value: averageOrderValue,
       },
     });
   }
@@ -74,7 +79,7 @@ router.get(
     weekEnd.setDate(weekEnd.getDate() + 6);
     weekEnd.setHours(23, 59, 59, 999);
 
-    const weeklyResult = await Purchase.findOne({
+    const weeklyResult = (await Purchase.findOne({
       attributes: [
         [sequelize.fn("SUM", sequelize.col("total_amount")), "totalAmount"],
         [sequelize.fn("COUNT", sequelize.col("id")), "orderCount"],
@@ -85,10 +90,26 @@ router.get(
         },
       },
       raw: true,
-    });
+    })) as SalesResults | null;
+
+    const totalAmount = parseFloat(weeklyResult?.totalAmount || "0");
+    const orderCount = parseInt(weeklyResult?.orderCount || "0");
+
+    const averageOrderValue = orderCount > 0 ? totalAmount / orderCount : 0;
 
     res.json({
-      weekly: weeklyResult,
+      revenue: {
+        title: "Total Revenue",
+        amount: totalAmount,
+      },
+      order: {
+        title: "Number of Orders",
+        orders: orderCount,
+      },
+      averageOrderValue: {
+        title: "Average order Value",
+        value: averageOrderValue,
+      },
     });
   }
 );
@@ -106,7 +127,7 @@ router.get(
     const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
     monthEnd.setHours(23, 59, 59, 999);
 
-    const monthlyResult = await Purchase.findOne({
+    const monthlyResult = (await Purchase.findOne({
       attributes: [
         [sequelize.fn("SUM", sequelize.col("total_amount")), "totalAmount"],
         [sequelize.fn("COUNT", sequelize.col("id")), "orderCount"],
@@ -117,10 +138,26 @@ router.get(
         },
       },
       raw: true,
-    });
+    })) as SalesResults | null;
+
+    const totalAmount = parseFloat(monthlyResult?.totalAmount || "0");
+    const orderCount = parseInt(monthlyResult?.orderCount || "0");
+
+    const averageOrderValue = orderCount > 0 ? totalAmount / orderCount : 0;
 
     res.json({
-      monthly: monthlyResult,
+      revenue: {
+        title: "Total Revenue",
+        amount: totalAmount,
+      },
+      order: {
+        title: "Number of Orders",
+        orders: orderCount,
+      },
+      averageOrderValue: {
+        title: "Average order Value",
+        value: averageOrderValue,
+      },
     });
   }
 );

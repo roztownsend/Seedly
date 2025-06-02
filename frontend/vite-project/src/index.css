@@ -158,6 +158,10 @@ main {
 
 /* Animations */
 
+.spinner-center {
+  @apply flex justify-center items-center py-6;
+}
+
 /* Fade In Animation */
 @keyframes fadeIn {
   from {

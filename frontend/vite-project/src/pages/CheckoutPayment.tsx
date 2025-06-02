@@ -76,10 +76,10 @@ const CheckoutPayment = () => {
               <li><strong>Name:</strong> {lastShippingRef.current.name}</li>
               <li><strong>Email:</strong> {lastShippingRef.current.email}</li>
               <li><strong>Address:</strong> {lastShippingRef.current.address}</li>
-              <li><strong>Apartment:</strong> {lastShippingRef.current.apartment}</li>
+              {lastShippingRef.current.apartment ? <li><strong>Apartment:</strong> {lastShippingRef.current.apartment}</li> : ""}
               <li>
-                <strong>City & Postal Code:</strong>{" "}
-                {lastShippingRef.current.city} - {lastShippingRef.current.postalCode}
+                <strong>Postal Code & City:</strong>{" "}
+                 {lastShippingRef.current.postalCode} - {lastShippingRef.current.city}
               </li>
             </ul>
           </div>

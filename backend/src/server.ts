@@ -11,6 +11,7 @@ import sequelize from "./config/sequelizeConnect";
 import { initModels } from "./models/initModels";
 import plantRoutes from "./routes/plantRoutes";
 import shippingRoutes from "./routes/shippingRoutes";
+import userTaskRoutes from "./routes/userTaskRoutes";
 import { Purchase } from "./models/purchase.model";
 import { Plant } from "./models/plant.model";
 import { ShippingOption } from "./models/shippingOption.model";
@@ -18,6 +19,7 @@ import plantsInserter from "./utils/plantsInserterHelper";
 import optionsInserter from "./utils/optionsInserterHelper";
 import authTest from "./routes/authTest";
 import { makeUserAdmin } from "./services/makeUserAdmin";
+
 //testing server startup
 
 sequelize
@@ -38,6 +40,7 @@ app.use(express.json());
 app.use("/plants", plantRoutes);
 app.use("/shipping-options", shippingRoutes);
 app.use("/auth-test", authTest);
+app.use("/user-tasks", userTaskRoutes);
 
 const swaggerDocument = YAML.load(
   path.join(__dirname, "../swagger/swagger.yaml")

@@ -7,7 +7,6 @@ import Cart from "./pages/Cart";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import ProductDetails from "./pages/ProductDetails";
-import TestDashboard from "./pages/TestDashboard";
 import TestAdminDashboard from "./pages/TestAdminDashboard";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import AdminRoute from "./components/privateRoute/AdminRoute";
@@ -41,15 +40,17 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/products/:slug" element={<ProductDetails />} />
             <Route path="/checkout/shipping" element={<Shipping />} />
-            <Route path="/checkout/select-shipping" element={<ShippingSelectorPage />} />
+            <Route
+              path="/checkout/select-shipping"
+              element={<ShippingSelectorPage />}
+            />
             <Route path="/checkout/payment" element={<Payment />} />
             <Route path="/checkout/confirm" element={<CheckoutPayment />} />
-            <Route path="/dashboard" element={<DashBoard />} />
             <Route
-              path="/test-dashboard"
+              path="/dashboard"
               element={
                 <PrivateRoute>
-                  <TestDashboard />
+                  <DashBoard />
                 </PrivateRoute>
               }
             ></Route>

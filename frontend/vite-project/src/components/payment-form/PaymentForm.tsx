@@ -6,6 +6,7 @@ import klarnaIcon from '../../assets/image/klarna.svg';
 import "../payment-form/PaymentForm.css";
 import { useNavigate } from "react-router-dom";
 import valid from "card-validator";
+import { ClipLoader } from "react-spinners";
 
 
 const PaymentForm = () => {
@@ -13,6 +14,7 @@ const PaymentForm = () => {
     const { updateFormField } = usePaymentActions();
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [cardBrand, setCardBrand] = useState<string>("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     // Format card number with spaces (e.g., 1234 5678 9012 3456)
@@ -48,8 +50,12 @@ const PaymentForm = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!validate()) return;
+        setLoading(true);
         updateFormField("paymentMethod", "card");
-        navigate("/checkout/confirm");
+        setTimeout(() => {
+            setLoading(false);
+            navigate("/checkout/confirm");
+        }, 2000);
     };
 
     // Allow only numeric input with a max length
@@ -58,13 +64,21 @@ const PaymentForm = () => {
 
     // Dummy handlers for Swish and Klarna
     const handleSwish = () => {
+        setLoading(true);
         updateFormField("paymentMethod", "swish");
-        navigate("/checkout/confirm");
+        setTimeout(() => {
+            setLoading(false);
+            navigate("/checkout/confirm");
+        }, 2000);
     };
 
     const handleKlarna = () => {
+        setLoading(true);
         updateFormField("paymentMethod", "klarna");
-        navigate("/checkout/confirm");
+        setTimeout(() => {
+            setLoading(false);
+            navigate("/checkout/confirm");
+        }, 1000);
     };
 
     // Detect card brand on input change
@@ -186,31 +200,38 @@ const PaymentForm = () => {
                         </label>
                     </div>
 
-                    {/* Submit button */}
-                    <button type="submit" className="button-primary w-full">
-                        Pay with card
-                    </button>
-
-                    <div className="payment-divider">
-                        <span className="payment-divider-text">or pay with:</span>
-                    </div>
-
-                    <div className="payment-button-group">
-                        <button
-                            className="button-secondary__payment flex-1"
-                            type="button"
-                            onClick={handleSwish}
-                        >
-                            <img src={swishIcon} alt="Swish" className="payment-icons" />
+                    {loading ? (
+                        <div className="spinner-center">
+                            <ClipLoader size={32} color="#22c55e" />
+                        </div>
+                    ) : (
+                        <>
+                        <button type="submit" className="button-primary w-full">
+                            Pay with card
                         </button>
-                        <button
-                            className="button-secondary__payment flex-1"
-                            type="button"
-                            onClick={handleKlarna}
-                        >
-                            <img src={klarnaIcon} alt="Klarna" className="payment-icons" />
-                        </button>
-                    </div>
+
+                        <div className="payment-divider">
+                            <span className="payment-divider-text">or pay with:</span>
+                        </div>
+
+                        <div className="payment-button-group">
+                            <button
+                                className="button-secondary__payment flex-1"
+                                type="button"
+                                onClick={handleSwish}
+                            >
+                                <img src={swishIcon} alt="Swish" className="payment-icons" />
+                            </button>
+                            <button
+                                className="button-secondary__payment flex-1"
+                                type="button"
+                                onClick={handleKlarna}
+                            >
+                                <img src={klarnaIcon} alt="Klarna" className="payment-icons" />
+                            </button>
+                        </div>
+                        </>
+                    )}
                 </form>
             </div>
         </section>

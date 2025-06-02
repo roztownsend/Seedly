@@ -1,10 +1,11 @@
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { CredentialsFormProps } from "../../types/credentialsFormTypes";
 import { useCredentialForm } from "../../hooks/useCredentialForm";
+import { ClipLoader } from "react-spinners";
 import "./Credentials.css";
 
 function CredentialFields({ formType }: CredentialsFormProps) {
-  const { handlers, showPassword, errorMessage, formData, isSubmitting } =
+  const { handlers, showPassword, errorMessage, formData, loading } =
     useCredentialForm(formType);
 
   return (
@@ -39,7 +40,7 @@ function CredentialFields({ formType }: CredentialsFormProps) {
         />
         <span
           onClick={() => handlers.togglePassword()}
-          className="credential-eye-icon "
+          className="credential-eye-icon"
         >
           {showPassword ? <FaEyeSlash /> : <FaEye />}
         </span>
@@ -63,12 +64,20 @@ function CredentialFields({ formType }: CredentialsFormProps) {
           </a>
         </div>
       )}
-      <button
-        disabled={isSubmitting}
-        type="submit"
-        className="credential-submit-btn"
-      ></button>
+      {loading ? (
+        <div className="credential-spinner-container">
+          <ClipLoader color="#22c55e" size={32} />
+        </div>
+      ) : (
+        <button
+          type="submit"
+          className="credential-submit-btn"
+        >
+          {formType === "login" ? "Login" : "Sign Up"}
+        </button>
+      )}
     </form>
   );
 }
+
 export default CredentialFields;

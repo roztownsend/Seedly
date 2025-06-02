@@ -58,10 +58,6 @@ const PaymentForm = () => {
       return;
     }
 
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-    const token = session?.access_token;
     try {
       const updatedPayload = {
         ...payload,
@@ -80,7 +76,7 @@ const PaymentForm = () => {
     e.preventDefault();
     if (!validate()) return;
     setLoading(true);
-    updateFormField("paymentMethod", "card");
+    await submitTransaction("card");
     setTimeout(() => {
       setLoading(false);
       navigate("/checkout/confirm");
@@ -92,18 +88,18 @@ const PaymentForm = () => {
     value.replace(/\D/g, "").slice(0, maxLength);
 
   // Dummy handlers for Swish and Klarna
-  const handleSwish = () => {
+  const handleSwish = async () => {
     setLoading(true);
-    updateFormField("paymentMethod", "swish");
+    await submitTransaction("swish");
     setTimeout(() => {
       setLoading(false);
       navigate("/checkout/confirm");
     }, 2000);
   };
 
-  const handleKlarna = () => {
+  const handleKlarna = async () => {
     setLoading(true);
-    updateFormField("paymentMethod", "klarna");
+    await submitTransaction("klarna");
     setTimeout(() => {
       setLoading(false);
       navigate("/checkout/confirm");

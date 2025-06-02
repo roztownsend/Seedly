@@ -139,8 +139,9 @@ export default function Navbar() {
                       Dashboard
                     </Link>
                     <Link to="/" onClick={() => {
-                      {signOutUser}
-                      {setShowUserMenu(false)}}} 
+                      signOutUser();
+                      setShowUserMenu(false);
+                    }} 
                       className="user-menu-link">
                       Sign Out
                     </Link> 

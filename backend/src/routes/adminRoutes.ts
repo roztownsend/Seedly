@@ -125,7 +125,8 @@ router.get(
     const totalAmount = parseFloat(weeklyResult?.totalAmount || "0");
     const orderCount = parseInt(weeklyResult?.orderCount || "0");
 
-    const averageOrderValue = orderCount > 0 ? totalAmount / orderCount : 0;
+    const averageOrderValue =
+      orderCount > 0 ? Math.floor(totalAmount / orderCount) : 0;
     const topPlants = weeklytopPlants;
 
     res.json({

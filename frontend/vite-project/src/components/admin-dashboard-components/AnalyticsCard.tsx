@@ -5,11 +5,20 @@ import { AnalyticsCardProps } from "../../types/adminDashboardTypes";
 
 function AnalyticsCard({ title, type, value }: AnalyticsCardProps) {
   const iconMap = {
-    revenue: <MdAttachMoney size={25} className="text-green-600" />,
-    orders: <MdOutlineShoppingCart size={25} className=" text-purple-600" />,
-    averageOrderValue: <MdAttachMoney size={25} className="text-blue-600" />,
+    revenue: {
+      icon: <MdAttachMoney size={25} className="text-green-600" />,
+      bgColor: "bg-green-100",
+    },
+    orders: {
+      icon: <MdOutlineShoppingCart size={25} className="text-purple-600" />,
+      bgColor: "bg-purple-100",
+    },
+    averageOrderValue: {
+      icon: <MdAttachMoney size={25} className="text-blue-600" />,
+      bgColor: "bg-blue-100",
+    },
   };
-  const IconComponent = iconMap[type as keyof typeof iconMap];
+  const IconConfig = iconMap[type as keyof typeof iconMap];
   return (
     <>
       <div className="w-full flex flex-col justify-center items-center gap-5 mt-4">
@@ -20,7 +29,11 @@ function AnalyticsCard({ title, type, value }: AnalyticsCardProps) {
               {value} {type === "orders" ? "" : "kr"}
             </h5>
           </div>
-          <div className="flex items-center">{IconComponent}</div>
+          <div
+            className={`w-12 h-12 rounded-full ${IconConfig.bgColor} flex items-center justify-center`}
+          >
+            {IconConfig.icon}
+          </div>
         </div>
       </div>
     </>

@@ -12,8 +12,8 @@ function AdminDashboard() {
   const [salesData, setSalesData] = useState<SalesData[]>();
   const [topPlants, setTopPlants] = useState<TopPlants[]>();
 
-  const handleSalesData = async () => {
-    const data = await getSales();
+  const handleSalesData = async (timeframe: "day" | "week" | "month") => {
+    const data = await getSales(timeframe);
     if (data) {
       setSalesData(data.generalInfo);
       setTopPlants(data.topPlants);
@@ -39,7 +39,9 @@ function AdminDashboard() {
           ))}
         {topPlants && <LeaderBoardComponent topPlants={topPlants} />}
 
-        <button onClick={handleSalesData}>Log sales</button>
+        <button onClick={() => handleSalesData("day")}>Today's sales</button>
+        <button onClick={() => handleSalesData("week")}>Weekly sales</button>
+        <button onClick={() => handleSalesData("month")}>Monthly sales</button>
         <button onClick={signOutUser}>Logout</button>
       </section>
     </>

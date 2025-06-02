@@ -5,10 +5,10 @@ import { SalesDataResponse } from "../types/adminDashboardTypes";
 export const useAdminDashboard = () => {
   const session = useAuthSession();
 
-  const getTodaysSales = async () => {
+  const getSales = async (timeframe: "day" | "week" | "month") => {
     try {
       const response = await axios.get<SalesDataResponse>(
-        "http://localhost:5000/admin/sales/month",
+        `http://localhost:5000/admin/sales/${timeframe}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -23,6 +23,6 @@ export const useAdminDashboard = () => {
     }
   };
   return {
-    getSales: getTodaysSales,
+    getSales,
   };
 };

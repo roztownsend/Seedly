@@ -139,10 +139,44 @@ const useAuthStore = create<AuthState>((set, get) => ({
         // Listen for authentication state changes and update store accordingly.
         const {
           data: { subscription },
-        } = supabase.auth.onAuthStateChange((event, eventSession) => {
+        } = supabase.auth.onAuthStateChange(async (event, eventSession) => {
           console.log(
             `onAthStateChange - Event ${event} Session Email - ${eventSession?.user.email}`
           );
+          if (event === "INITIAL_SESSION" && session) {
+            const identities = session.user.app_metadata.provider;
+            if (
+              (identities &&
+                identities.length > 0 &&
+                identities === "google") ||
+              identities === "facebook"
+            ) {
+              const { data, error } = await supabase
+                .from("users")
+                .select("*")
+                .eq("id", session.user.id)
+                .single();
+              if (!data) {
+                const { error: insertError } = await supabase
+                  .from("users")
+                  .insert({
+                    id: session.user.id,
+                    email: session.user.email,
+                    role: "customer",
+                  });
+                if (insertError) {
+                  console.error(
+                    "Failed to create user in public.users",
+                    insertError
+                  );
+                } else {
+                  console.log("User created in public.users");
+                }
+              }
+            } else {
+              console.log("Logged in with email/password");
+            }
+          }
           set({
             user: (eventSession?.user as CustomAuthUser) ?? null,
             session: eventSession

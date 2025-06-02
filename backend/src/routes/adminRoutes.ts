@@ -29,7 +29,7 @@ router.get(
         generalInfo: [
           {
             type: "revenue",
-            title: "Total Revenue",
+            title: "Revenue",
             value: totalAmount,
           },
           {
@@ -39,7 +39,7 @@ router.get(
           },
           {
             type: "averageOrderValue",
-            title: "Average Order Value",
+            title: "Average Purchase Amount",
             value: averageOrderValue,
           },
         ],
@@ -88,7 +88,7 @@ router.get(
         generalInfo: [
           {
             type: "revenue",
-            title: "Total Revenue",
+            title: "Revenue",
             value: totalAmount,
           },
           {
@@ -98,7 +98,7 @@ router.get(
           },
           {
             type: "averageOrderValue",
-            title: "Average Order Value",
+            title: "Average Purchase Amount",
             value: averageOrderValue,
           },
         ],
@@ -138,7 +138,7 @@ router.get(
         generalInfo: [
           {
             type: "revenue",
-            title: "Total Revenue",
+            title: "Revenue",
             value: totalAmount,
           },
           {
@@ -148,7 +148,7 @@ router.get(
           },
           {
             type: "averageOrderValue",
-            title: "Average Order Value",
+            title: "Average Purchase Amount",
             value: averageOrderValue,
           },
         ],

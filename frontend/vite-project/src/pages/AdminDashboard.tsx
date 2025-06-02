@@ -1,13 +1,8 @@
 import { useAuthActions } from "../stores/authStore";
 import { useAdminDashboard } from "../hooks/useAdminDashboard";
-import { SalesData } from "../types/adminDashboardTypes";
 import { useState } from "react";
 import { IoMdRefresh } from "react-icons/io";
-import {
-  TopPlants,
-  SalesCachedData,
-  SalesDataCahe,
-} from "../types/adminDashboardTypes";
+import { SalesDataCahe } from "../types/adminDashboardTypes";
 import { ClipLoader } from "react-spinners";
 import AnalyticsCard from "../components/admin-dashboard-components/AnalyticsCard";
 import TimeFrameButtons from "../components/admin-dashboard-components/TimeFrameButtonContainer";
@@ -16,15 +11,18 @@ import LeaderBoardComponent from "../components/admin-dashboard-components/Leade
 import logoImage from "../assets/image/order-confirmation.png";
 function AdminDashboard() {
   const { signOutUser } = useAuthActions();
-  const { getSales } = useAdminDashboard();
+  const { getSales, getUsers } = useAdminDashboard();
   const [dataCache, setDataCahe] = useState<SalesDataCahe>({});
-  const [salesData, setSalesData] = useState<SalesData[]>();
-  const [topPlants, setTopPlants] = useState<TopPlants[]>();
   const [timeFrame, setTimeFrame] = useState<string>("day");
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const currentData = dataCache[timeFrame as keyof SalesDataCahe];
+
+  const handleUsersData = async () => {
+    const userData = await getUsers();
+    console.log(userData);
+  };
 
   const handleSalesData = async (
     timeframePara: "day" | "week" | "month",
@@ -133,6 +131,7 @@ function AdminDashboard() {
             <ClipLoader color="#22c55e" size={32} />
           </div>
         )}
+        <button onClick={handleUsersData}>Log user data</button>
         <button onClick={signOutUser}>Logout</button>
       </section>
     </>

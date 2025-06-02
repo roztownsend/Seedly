@@ -22,7 +22,26 @@ export const useAdminDashboard = () => {
       console.error("Failed to fetch todays sales", error);
     }
   };
+
+  const getUsers = async () => {
+    try {
+      const response = await axios.get<SalesDataResponse>(
+        `http://localhost:5000/admin/users/month`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.access_token}`,
+          },
+        }
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Failed to fetch todays sales", error);
+    }
+  };
   return {
     getSales,
+    getUsers,
   };
 };

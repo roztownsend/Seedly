@@ -94,13 +94,18 @@ function AdminDashboard() {
   };
   const handleTimeFrameChange = async (timeframe: "day" | "week" | "month") => {
     setTimeFrame(timeframe);
-    await handleSalesData(timeframe);
+    if (page === "sales") {
+      await handleSalesData(timeframe);
+    } else if (page === "users") {
+      await handleUsersData(timeframe);
+    }
   };
 
   const handleInitialLoad = async (
     timeframe: "day" | "week" | "month",
     page: "sales" | "users"
   ) => {
+    setPage(page);
     setTimeFrame(timeframe);
     if (page === "sales") {
       await handleSalesData(timeframe);
@@ -151,10 +156,11 @@ function AdminDashboard() {
           </div>
         )}
 
-        {!hasData && !isLoading && (
+        {!page && !isLoading && (
           <AdminDashboardHome handleInitialLoad={handleInitialLoad} />
         )}
-        {currentUsersData &&
+        {page === "users" &&
+          currentUsersData &&
           currentUsersData.generalInfo.map((data, index) => (
             <AnalyticsCard
               key={index}
@@ -163,7 +169,8 @@ function AdminDashboard() {
               value={data.value}
             />
           ))}
-        {currentSalesData &&
+        {page === "sales" &&
+          currentSalesData &&
           currentSalesData.generalInfo.map((data, index) => (
             <AnalyticsCard
               key={index}
@@ -172,7 +179,7 @@ function AdminDashboard() {
               value={data.value}
             />
           ))}
-        {currentSalesData && currentSalesData.topPlants && (
+        {page === "sales" && currentSalesData && currentSalesData.topPlants && (
           <LeaderBoardComponent topPlants={currentSalesData.topPlants} />
         )}
         {isLoading && !hasData && (

@@ -47,7 +47,7 @@ function TimeFrameButtons({
         onClick={() => handleButtonClick("day")}
         disabled={isLoading}
       >
-        Today's sales
+        Daily Data
       </button>
       <button
         className={getButtonClass("week")}
@@ -56,7 +56,7 @@ function TimeFrameButtons({
         onClick={() => handleButtonClick("week")}
         disabled={isLoading}
       >
-        Weekly sales
+        Weekly Data
       </button>
       <button
         className={getButtonClass("month")}
@@ -65,7 +65,7 @@ function TimeFrameButtons({
         onClick={() => handleButtonClick("month")}
         disabled={isLoading}
       >
-        Monthly sales
+        Monthly Data
       </button>
     </div>
   );

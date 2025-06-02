@@ -1,5 +1,6 @@
 import LeaderBoardRow from "./LeaderboardRow";
 import { LeaderboardProps } from "../../types/adminDashboardTypes";
+import { memo } from "react";
 function LeaderBoardComponent({ topPlants }: LeaderboardProps) {
   return (
     <>
@@ -37,4 +38,4 @@ function LeaderBoardComponent({ topPlants }: LeaderboardProps) {
   );
 }
 
-export default LeaderBoardComponent;
+export default memo(LeaderBoardComponent);

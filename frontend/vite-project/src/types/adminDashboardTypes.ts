@@ -26,3 +26,7 @@ export type LeaderboardRowProps = TopPlants & { index: number };
 export type LeaderboardProps = {
   topPlants: TopPlants[];
 };
+
+export type AdminDashboardHomeProps = {
+  handleSalesData: (timeframe: "day" | "week" | "month") => void;
+};

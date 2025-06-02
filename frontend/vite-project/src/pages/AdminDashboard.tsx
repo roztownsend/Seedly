@@ -6,18 +6,23 @@ import AdminDashboardHome from "../components/admin-dashboard-components/AdminDa
 import { useState } from "react";
 import LeaderBoardComponent from "../components/admin-dashboard-components/LeaderboardComponent";
 import { TopPlants } from "../types/adminDashboardTypes";
+import TimeFrameButtons from "../components/admin-dashboard-components/TimeFrameButtonContainer";
 function AdminDashboard() {
   const { signOutUser } = useAuthActions();
   const { getSales } = useAdminDashboard();
   const [salesData, setSalesData] = useState<SalesData[]>();
   const [topPlants, setTopPlants] = useState<TopPlants[]>();
-
+  const [timeFrame, setTimeFrame] = useState<string>("day");
   const handleSalesData = async (timeframe: "day" | "week" | "month") => {
     const data = await getSales(timeframe);
     if (data) {
       setSalesData(data.generalInfo);
       setTopPlants(data.topPlants);
     }
+  };
+  const handleTimeFrameChange = (timeframe: "day" | "week" | "month") => {
+    handleSalesData(timeframe);
+    setTimeFrame(timeframe);
   };
 
   return (
@@ -27,7 +32,14 @@ function AdminDashboard() {
           <h3>Seedly</h3>
           <h4>Admin Dashboard</h4>
         </div>
-        {!salesData && <AdminDashboardHome />}
+        {salesData && (
+          <TimeFrameButtons
+            handleTimeFrameChange={handleTimeFrameChange}
+            timeFrame={timeFrame}
+          />
+        )}
+
+        {!salesData && <AdminDashboardHome handleSalesData={handleSalesData} />}
         {salesData &&
           salesData.map((data, index) => (
             <AnalyticsCard
@@ -39,9 +51,6 @@ function AdminDashboard() {
           ))}
         {topPlants && <LeaderBoardComponent topPlants={topPlants} />}
 
-        <button onClick={() => handleSalesData("day")}>Today's sales</button>
-        <button onClick={() => handleSalesData("week")}>Weekly sales</button>
-        <button onClick={() => handleSalesData("month")}>Monthly sales</button>
         <button onClick={signOutUser}>Logout</button>
       </section>
     </>

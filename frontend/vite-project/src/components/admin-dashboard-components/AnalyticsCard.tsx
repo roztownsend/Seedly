@@ -2,7 +2,7 @@ import { MdAttachMoney } from "react-icons/md";
 import { FiTrendingUp } from "react-icons/fi";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { AnalyticsCardProps } from "../../types/adminDashboardTypes";
-
+import { memo } from "react";
 function AnalyticsCard({ title, type, value }: AnalyticsCardProps) {
   const iconMap = {
     revenue: {
@@ -40,4 +40,4 @@ function AnalyticsCard({ title, type, value }: AnalyticsCardProps) {
   );
 }
 
-export default AnalyticsCard;
+export default memo(AnalyticsCard);

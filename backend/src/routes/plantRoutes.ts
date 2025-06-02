@@ -56,6 +56,7 @@ router.get("/search", async (_req: Request, res: Response): Promise<void> => {
   }
 });
 
+
 // GET /plants/:id/tasks
 router.get("/:id/tasks", async (req: Request, res: Response) => {
   try {

@@ -4,6 +4,7 @@ import { ShoppingBag, Search, Menu, X, User2 } from "lucide-react";
 import "../navbar/Navbar.css";
 import { useCartUniqueItems } from "../../stores/cartStore";
 import { useSearchActions, useSearchQuery } from "../../stores/searchStore";
+import { useAuthSession, useAuthActions } from "../../stores/authStore";
 
 
 export default function Navbar() {
@@ -16,6 +17,9 @@ export default function Navbar() {
   const cartUniqueItems = useCartUniqueItems();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const session = useAuthSession();
+  const { signOutUser } = useAuthActions();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -61,7 +65,7 @@ export default function Navbar() {
                 <Link to="/shop" className="navbar-link">
                   Seeds
                 </Link>
-                <Link to="/contact" className="navbar-link">
+                <Link to="mailto:9gqf16u0c@mozmail.com" className="navbar-link">
                   Contact Us
                 </Link>
               </div>
@@ -86,12 +90,25 @@ export default function Navbar() {
                 {cartUniqueItems}
               </div>
             </Link>
-            <Link to="/login" className="navbar-auth">
+            {session ?
+            <>
+              <Link to="/dashboard" className="navbar-auth">
+              Dashboard
+            </Link>
+            <Link to="/" onClick={signOutUser} className="navbar-auth">
+              Sign Out
+            </Link> 
+            </> 
+            :             
+            <>
+              <Link to="/login" className="navbar-auth">
               Login
             </Link>
             <Link to="/signup" className="navbar-auth">
               Sign Up
-            </Link>
+            </Link> 
+            </> 
+            }
           </div>
         </div>
       </nav>
@@ -114,22 +131,32 @@ export default function Navbar() {
 
               <div
                 className={`user-menu ${showUserMenu ? "user-menu-open" : "user-menu-closed"
-                  }`}
-              >
-                <Link
-                  to="/login"
-                  className="user-menu-link"
-                  onClick={() => setShowUserMenu(false)}
-                >
-                  Login
-                </Link>
-                <Link
-                  to="/signup"
-                  className="user-menu-link"
-                  onClick={() => setShowUserMenu(false)}
-                >
-                  Sign Up
-                </Link>
+                  }`}>
+                {session ?
+                  <>
+                    <Link to="/dashboard" 
+                      onClick={() => setShowUserMenu(false)} className="user-menu-link">
+                      Dashboard
+                    </Link>
+                    <Link to="/" onClick={() => {
+                      {signOutUser}
+                      {setShowUserMenu(false)}}} 
+                      className="user-menu-link">
+                      Sign Out
+                    </Link> 
+                  </> 
+                    :             
+                  <>
+                    <Link to="/login" 
+                      onClick={() => setShowUserMenu(false)}className="user-menu-link">
+                      Login
+                    </Link>
+                    <Link to="/signup" 
+                      onClick={() => setShowUserMenu(false)}className="user-menu-link">
+                      Sign Up
+                    </Link> 
+                  </> 
+                }
               </div>
             </div>
             <button onClick={() => setIsMenuOpen(!isMenuOpen)}>

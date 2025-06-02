@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 import "./shippingSelector.css";
 import {
   useAllShippingOptions,
@@ -15,12 +16,16 @@ export const ShippingSelector: React.FC = () => {
   const navigate = useNavigate();
 
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [minDelayDone, setMinDelayDone] = useState(false);
 
   useEffect(() => {
     fetchAllOptions();
+    const timer = setTimeout(() => setMinDelayDone(true), 2000);
+    return () => clearTimeout(timer);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!selectedOption) {
@@ -29,8 +34,24 @@ export const ShippingSelector: React.FC = () => {
     }
 
     setError("");
-    navigate("/checkout/payment");
+    setLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      navigate("/checkout/payment");
+    } finally {
+      setLoading(false);
+    }
   };
+
+ // Show loading spinner if no options are available or if minimum delay is not done
+  if (!allShippingOptions.length || !minDelayDone) {
+    return (
+      <div className="spinner-with-text">
+        <ClipLoader size={32} color="#22c55e" />
+        <span className="spinner-message">Loading shipping options...</span>
+      </div>
+    );
+  }
 
   return (
     <section className="section-wrapper">
@@ -42,9 +63,19 @@ export const ShippingSelector: React.FC = () => {
         {error && <p className="error-message">{error}</p>}
 
         <div className="continue-container">
-          <button type="submit" className="button-primary submit-button">
-            Continue to payment
-          </button>
+          {loading ? (
+            <div className="spinner-center">
+              <ClipLoader size={32} color="#22c55e" />
+            </div>
+          ) : (
+            <button
+              type="submit"
+              className="button-primary submit-button"
+              disabled={loading}
+            >
+              Continue to payment
+            </button>
+          )}
         </div>
       </form>
     </section>

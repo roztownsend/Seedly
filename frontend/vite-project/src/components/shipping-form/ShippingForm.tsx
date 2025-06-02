@@ -1,18 +1,17 @@
+import { useState } from "react";
+import { ClipLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import { useShippingStore } from "../../stores/shippingStore";
-import './shippingForm.css'
+import "./shippingForm.css";
 
 const ShippingForm = () => {
-  const {
-  formData,
-  updateFormField,
-  resetForm,
-  saveSubmission,
-} = useShippingStore();
+  const { formData, updateFormField, resetForm, saveSubmission } =
+    useShippingStore();
 
- const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
 
@@ -21,45 +20,51 @@ const ShippingForm = () => {
       return;
     }
 
-    console.log("Shipping form submitted", formData);
-    saveSubmission();
-    navigate("/checkout/select-shipping");
+    setLoading(true);
+
+    try {
+      console.log("Shipping form submitted", formData);
+      await saveSubmission();
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      navigate("/checkout/select-shipping");
+    } finally {
+      setLoading(false);
+    }
   };
+
+  console.log(loading);
 
   return (
     <section className="section-wrapper">
-      <form
-        className="shipping-form" 
-        onSubmit={handleSubmit}
-      >
+      <form className="shipping-form" onSubmit={handleSubmit}>
         <div className="input-container-flex-col">
           <p className="section-title">Shipping Information</p>
 
           <div className="input-group">
-              <div className="label-input">
-                <label htmlFor="name">Name</label>
-                <input
-                  className="text-input"
-                  type="text"
-                  id="name"
-                  value={formData.name}
-                  onChange={(e) => updateFormField("name", e.target.value)}
-                  placeholder="Tom Seedly"
-                  required
-                />
-              </div>
-              <div className="label-input">
-                <label htmlFor="email">Email</label>
-                <input
-                  className="text-input"
-                  type="email"
-                  id="email"
-                  value={formData.email}
-                  onChange={(e) => updateFormField("email", e.target.value)}
-                  placeholder="tom@seedly.se"
-                  required
-                />
-              </div>
+            <div className="label-input">
+              <label htmlFor="name">Name</label>
+              <input
+                className="text-input"
+                type="text"
+                id="name"
+                value={formData.name}
+                onChange={(e) => updateFormField("name", e.target.value)}
+                placeholder="Tom Seedly"
+                required
+              />
+            </div>
+            <div className="label-input">
+              <label htmlFor="email">Email</label>
+              <input
+                className="text-input"
+                type="email"
+                id="email"
+                value={formData.email}
+                onChange={(e) => updateFormField("email", e.target.value)}
+                placeholder="tom@seedly.se"
+                required
+              />
+            </div>
           </div>
         </div>
 
@@ -130,9 +135,19 @@ const ShippingForm = () => {
         </div>
 
         <div>
-          <button type="submit" className="button-primary submit-button">
-            Continue to payment
-          </button>
+          {loading ? (
+            <div className="credential-spinner-container">
+              <ClipLoader size={32} color="#22c55e" />
+            </div>
+          ) : (
+            <button
+              type="submit"
+              className="button-primary submit-button"
+              disabled={loading}
+            >
+              Continue to shipping options
+            </button>
+          )}
         </div>
       </form>
     </section>

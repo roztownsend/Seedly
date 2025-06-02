@@ -3,12 +3,12 @@ import { GoGraph } from "react-icons/go";
 import { FaArrowRight } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io";
 import { AdminDashboardHomeProps } from "../../types/adminDashboardTypes";
-function AdminDashboardHome({ handleSalesData }: AdminDashboardHomeProps) {
+function AdminDashboardHome({ handleInitialLoad }: AdminDashboardHomeProps) {
   return (
     <>
       <div className="w-full flex flex-col justify-center items-center gap-5 mt-4">
         <div
-          onClick={() => handleSalesData("day")}
+          onClick={() => handleInitialLoad("day")}
           className="w-full max-w-[800px] min-h-[250px] bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 cursor-pointer group border-2 border-transparent hover:border-green-300 transform hover:-translate-y-2"
         >
           <div className="flex justify-between">

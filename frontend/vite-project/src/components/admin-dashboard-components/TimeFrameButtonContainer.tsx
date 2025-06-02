@@ -3,13 +3,21 @@ import { useState } from "react";
 type TimeFrameButtonsProps = {
   timeFrame: string;
   handleTimeFrameChange: (timeframe: "day" | "week" | "month") => void;
+  isLoading: boolean;
 };
 
 function TimeFrameButtons({
   timeFrame,
   handleTimeFrameChange,
+  isLoading,
 }: TimeFrameButtonsProps) {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
+
+  const handleButtonClick = (timeFrame: "day" | "week" | "month") => {
+    if (!isLoading) {
+      handleTimeFrameChange(timeFrame);
+    }
+  };
 
   const getButtonClass = (buttonType: string) => {
     const isActive = timeFrame === buttonType;
@@ -34,25 +42,28 @@ function TimeFrameButtons({
     <div className="flex items-center gap-4 mt-4 mb-4">
       <button
         className={getButtonClass("day")}
-        onMouseEnter={() => setHoveredButton("day")}
+        onMouseEnter={() => !isLoading && setHoveredButton("day")}
         onMouseLeave={() => setHoveredButton(null)}
-        onClick={() => handleTimeFrameChange("day")}
+        onClick={() => handleButtonClick("day")}
+        disabled={isLoading}
       >
         Today's sales
       </button>
       <button
         className={getButtonClass("week")}
-        onMouseEnter={() => setHoveredButton("week")}
+        onMouseEnter={() => !isLoading && setHoveredButton("week")}
         onMouseLeave={() => setHoveredButton(null)}
-        onClick={() => handleTimeFrameChange("week")}
+        onClick={() => handleButtonClick("week")}
+        disabled={isLoading}
       >
         Weekly sales
       </button>
       <button
         className={getButtonClass("month")}
-        onMouseEnter={() => setHoveredButton("month")}
+        onMouseEnter={() => !isLoading && setHoveredButton("month")}
         onMouseLeave={() => setHoveredButton(null)}
-        onClick={() => handleTimeFrameChange("month")}
+        onClick={() => handleButtonClick("month")}
+        disabled={isLoading}
       >
         Monthly sales
       </button>

@@ -28,5 +28,16 @@ export type LeaderboardProps = {
 };
 
 export type AdminDashboardHomeProps = {
-  handleSalesData: (timeframe: "day" | "week" | "month") => void;
+  handleInitialLoad: (timeframe: "day" | "week" | "month") => void;
+};
+
+export type SalesCachedData = {
+  generalInfo: SalesData[];
+  topPlants: TopPlants[];
+};
+
+export type SalesDataCahe = {
+  day?: SalesCachedData;
+  week?: SalesCachedData;
+  month?: SalesCachedData;
 };

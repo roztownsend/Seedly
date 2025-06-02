@@ -5,8 +5,11 @@ import { useShippingStore } from "../../stores/shippingStore";
 import "./shippingForm.css";
 
 const ShippingForm = () => {
-  const { formData, updateFormField, resetForm, saveSubmission } =
-    useShippingStore();
+  const {
+  formData,
+  updateFormField,
+  saveSubmission,
+} = useShippingStore();
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -96,7 +99,7 @@ const ShippingForm = () => {
 
         <div className="input-group">
           <div className="label-input">
-            <label htmlFor="postal code">Postal code</label>
+            <label htmlFor="postalCode">Postal code</label>
             <input
               className="text-input"
               type="text"
@@ -108,7 +111,7 @@ const ShippingForm = () => {
             />
           </div>
           <div className="label-input">
-            <label htmlFor="City">City</label>
+            <label htmlFor="city">City</label>
             <input
               className="text-input"
               type="text"

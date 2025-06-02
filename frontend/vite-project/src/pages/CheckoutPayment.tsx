@@ -5,6 +5,7 @@ import {
   useCartTotal,
 } from "../stores/cartStore";
 import { useShippingStore } from "../stores/shippingStore";
+import { useShippingOptionsActions, useSelection } from "../stores/shippingOptionStore";
 import { useFormData } from "../stores/paymentStore";
 import ProductCardCartMobile from "../components/card-component/ProductCardCartMobile";
 import { OrderSummary } from "../components/order-summary/OrderSummary";
@@ -17,12 +18,18 @@ const CheckoutPayment = () => {
   const cartTotal = useCartTotal();
   const { formData: shippingFormData, resetForm } = useShippingStore();
 
+  const shippingOption = useSelection();
+  const { reset: resetShippingOption } = useShippingOptionsActions();
+
   const lastShippingRef = useRef(shippingFormData);
+  const lastShippingOptionRef = useRef(shippingOption);
 
   useEffect(() => {
     lastShippingRef.current = shippingFormData;
     clearCart();
     resetForm();
+
+    resetShippingOption();
   }, []);
 
   const paymentFormData = useFormData();
@@ -69,7 +76,11 @@ const CheckoutPayment = () => {
         </div>
 
         <div className="content-block">
-          <OrderSummary showButton={false} refTotal={lastOrderTotal.current} />
+          <OrderSummary
+            showButton={false}
+            refTotal={lastOrderTotal.current}
+            shippingOption={lastShippingOptionRef.current}
+          />
           <div className="vertical-stack">
             <h4>Shipping Information</h4>
             <ul className="info-list">

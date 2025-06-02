@@ -3,8 +3,12 @@ import { OrderSummary } from '../components/order-summary/OrderSummary';
 import StepHeader from '../components/step-header/StepHeader';
 import CartItemList from '../components/cart-list-item/CartListItem';
 import './page-styles/Payment.css';
+import { useCartTotal } from '../stores/cartStore';
+import { useSelection } from '../stores/shippingOptionStore';
 
 const Payment = () => {
+  const cartTotal = useCartTotal();
+  const selectedShipping = useSelection();
   return (
     <div className="payment-container">
       {/* Payment form section */}
@@ -16,7 +20,11 @@ const Payment = () => {
       {/* Cart items and order summary section */}
       <div className="cart-summary-section">
         <CartItemList />
-        <OrderSummary showButton={false} />
+        <OrderSummary
+          showButton={false}
+          shippingOption={selectedShipping}
+          refTotal={cartTotal}
+        />
       </div>
     </div>
   );

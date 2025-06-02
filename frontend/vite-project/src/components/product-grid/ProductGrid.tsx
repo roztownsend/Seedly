@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ProductCard from "../card-component/ProductCard";
 import useIsMobile from "../../hooks/useIsMobile";
 import "./productGrid.css";
@@ -7,10 +7,11 @@ import { memo } from "react";
 import { useProductGridStore } from "../../stores/productGridStore"; 
 
 type ProductGridProps = {
-    products: ProductItem[];
-}
+  products: ProductItem[];
+  filterEdibleOnly?: boolean;
+};
 
-const ProductGrid = ({ products }: ProductGridProps) => {
+const ProductGrid = ({ products, filterEdibleOnly }: ProductGridProps) => {
     const [displayedPlants, setDisplayedPlants] = useState<ProductItem[]>([]);
     const [showMore, setShowMore] = useState<boolean>(false);
 
@@ -22,18 +23,27 @@ const ProductGrid = ({ products }: ProductGridProps) => {
     // Zustand store
     const { displayedCount, setDisplayedCount } = useProductGridStore();
 
+    //Filter isEdible
+    const filteredProducts = useMemo(() => {
+    return filterEdibleOnly
+        ? products.filter(product => product.isedible === true)
+        : products;
+    }, [products, filterEdibleOnly]);
+
     useEffect(() => {
-        const initialCount = displayedCount > 0 ? displayedCount : loadStep;
-        const initial = products.slice(0, initialCount);
-        setDisplayedPlants(initial);
-        setShowMore(products.length > initialCount);
-    }, [products, loadStep, displayedCount]);
+    const initialCount = displayedCount > 0 ? displayedCount : loadStep;
+    const initial = filteredProducts.slice(0, initialCount);
+    setDisplayedPlants(initial);
+    setShowMore(filteredProducts.length > initialCount);
+}, [filteredProducts, loadStep, displayedCount]);
+
+
 
     const handleShowMore = () => {
         const nextCount = displayedPlants.length + loadStep;
-        const next = products.slice(0, nextCount);
+        const next = filteredProducts.slice(0, nextCount);
         setDisplayedPlants(next);
-        setShowMore(next.length < products.length);
+        setShowMore(next.length < filteredProducts.length);
         setDisplayedCount(next.length);
 
         setTimeout(() => {
@@ -44,31 +54,32 @@ const ProductGrid = ({ products }: ProductGridProps) => {
             }
         }, 300);
     };
+    
+    if (!filteredProducts.length) return <p>No products found.</p>;
 
-    if (!products.length) return <p>No products found.</p>;
 
-    return (
-        <div className="product-grid">
-            <div className="cards-container">
-                {displayedPlants.map((plant, idx) => (
-                    <div
-                        key={plant.id}
-                        className="card-item"
-                        ref={idx === displayedPlants.length - 1 ? lastItemRef : null}
-                    >
-                        <ProductCard item={plant} />
-                    </div>
-                ))}
-            </div>
-
-            {showMore && (
-                <div className="button-container">
-                    <button onClick={handleShowMore} className="button-primary">
-                        Show More
-                    </button>
+return (
+    <div className="product-grid">
+        <div className="cards-container">
+            {displayedPlants.map((plant, idx) => (
+                <div
+                    key={plant.id}
+                    className="card-item"
+                    ref={idx === displayedPlants.length - 1 ? lastItemRef : null}
+                >
+                    <ProductCard item={plant} />
                 </div>
-            )}
+            ))}
         </div>
+
+        {showMore && (
+            <div className="button-container">
+                <button onClick={handleShowMore} className="button-primary">
+                    Show More
+                </button>
+            </div>
+        )}
+    </div>
     );
 };
 

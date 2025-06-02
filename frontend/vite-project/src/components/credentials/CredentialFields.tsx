@@ -25,7 +25,7 @@ function CredentialFields({ formType }: CredentialsFormProps) {
         required
         className="credential-form-input email-input"
       />
-      <div className="flex w-full relative mb-5">
+      <div className="password-field">
         <label htmlFor="password"></label>
         <input
           type={showPassword ? "text" : "password"}
@@ -45,7 +45,7 @@ function CredentialFields({ formType }: CredentialsFormProps) {
           {showPassword ? <FaEyeSlash /> : <FaEye />}
         </span>
       </div>
-      {errorMessage && <p className="text-red-600">{errorMessage}</p>}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
       {formType === "login" && (
         <div className="credentials-footer">
           <label htmlFor="rememberMe" className="rememberme-label">

@@ -25,3 +25,7 @@
 .selection {
     @apply border-4 border-yellow-600;
 }
+
+.continue-container {
+    @apply flex flex-col gap-2;
+}

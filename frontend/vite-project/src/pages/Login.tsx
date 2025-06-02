@@ -6,22 +6,20 @@ import { Link } from "react-router-dom";
 
 function Login() {
   return (
-    <>
-      <div className="flex flex-col w-full items-center">
-        <div className="credential-form-container">
-          <FormHeader formType={"login"} />
-          <CredentialFields formType={"login"} />
-          <span className="form-alternative-text">Or use one of these:</span>
-          <SocialButtons />
-        </div>
-        <p className="mt-4">
-          Don't have an account?{" "}
-          <Link className="font-bold" to="/signup">
-            Sign up.
-          </Link>{" "}
-        </p>
+    <section className="credential-section">
+      <div className="credential-form-container">
+        <FormHeader formType={"login"} />
+        <CredentialFields formType={"login"} />
+        <span className="form-alternative-text">Or use one of these:</span>
+        <SocialButtons />
       </div>
-    </>
+      <p className="has-account">
+        Don't have an account?{" "}
+        <Link className="font-bold" to="/signup">
+          Sign up.
+        </Link>{" "}
+      </p>
+    </section>
   );
 }
 

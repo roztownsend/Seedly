@@ -3,5 +3,13 @@
 }
 
 .assortment-controls {
-    @apply flex justify-between items-center;
+    @apply flex gap-3 justify-between items-center;
+}
+
+.assortment-controls__count {
+    @apply text-sm text-center;
+}
+
+.dropdown {
+    @apply w-5/6;
 }

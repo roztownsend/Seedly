@@ -123,7 +123,7 @@ documentation/
 
 ## Documentation
 
-- Swagger API Docs:
+- Swagger API Docs: `http://localhost:5000/docs/` when the backend is running.
 - Wireframe/style notes: [View on Figma](https://www.figma.com/design/gMn627cuSapgWL1CenFnWa/Seedly-Wireframe?node-id=0-1&t=nsUu9aTIooXdR5Vv-1)
 - Product Pitch Document: [View on Google Docs](https://docs.google.com/document/d/1KjFo1T9YKlO1MeHd6rgLfnSx8KKZHpXvHecRJZiAnIM/edit?usp=sharing)
 - Weekly Reflections: `/documentation/weekly-reflections/`

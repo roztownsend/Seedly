@@ -96,6 +96,11 @@ router.get(
     })) as SalesResults | null;
 
     const weeklytopPlants = await PurchaseItem.findAll({
+      where: {
+        createdAt: {
+          [Op.between]: [weekStart, weekEnd],
+        },
+      },
       attributes: [
         [sequelize.col("plant.product_name"), "productName"],
         [sequelize.fn("SUM", sequelize.col("quantity")), "unitsSold"],

@@ -20,3 +20,9 @@ export type TopPlants = {
   revenue: string;
   unitsSold: string;
 };
+
+export type LeaderboardRowProps = TopPlants & { index: number };
+
+export type LeaderboardProps = {
+  topPlants: TopPlants[];
+};

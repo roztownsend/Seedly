@@ -36,12 +36,12 @@ function Home() {
         />
       </section>
 
-     <section className="campaign">
-      <div className="campaign-header">
-        <h3 className="hero-desktop-heading">Get ready to sow</h3>
-          <p className="hero-desktop-subheading">Spring has sprong and it's time for you to get a-plantin, buddy.</p>
-      </div>
-          <ProductGrid products={productList} />
+      <section className="campaign">
+        <div className="campaign-header">
+          <h3 className="hero-desktop-heading">Tasty garden treats!</h3>
+            <p className="hero-desktop-subheading">Spring has sprong and it's time to plant some free groceries!</p>
+        </div>
+        <ProductGrid products={productList}  filterEdibleOnly={true}/>
       </section>
     </div>
   );

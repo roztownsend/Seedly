@@ -39,7 +39,7 @@ function TimeFrameButtons({
   };
 
   return (
-    <div className="flex items-center gap-4 mt-4 mb-4">
+    <div className="flex items-center gap-4 mt-4 mb-4 max-[482px]:flex-col">
       <button
         className={getButtonClass("day")}
         onMouseEnter={() => !isLoading && setHoveredButton("day")}

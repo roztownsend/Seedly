@@ -12,6 +12,7 @@ const router = Router();
 router.get("/", async (_req: Request, res: Response): Promise<void> => {
   console.log("GET /plants triggered");
   try {
+    console.log("Fetching all plants from the database...", await Plant.findAll());
     const plants = await Plant.findAll();
     console.log(`Got ${plants.length} products.`);
     res.json(plants);

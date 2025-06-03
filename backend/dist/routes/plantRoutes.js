@@ -11,6 +11,7 @@ const router = (0, express_1.Router)();
 router.get("/", async (_req, res) => {
     console.log("GET /plants triggered");
     try {
+        console.log("Fetching all plants from the database...", await plant_model_1.Plant.findAll());
         const plants = await plant_model_1.Plant.findAll();
         console.log(`Got ${plants.length} products.`);
         res.json(plants);

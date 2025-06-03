@@ -17,7 +17,7 @@ router.get("/", async (_req: Request, res: Response): Promise<void> => {
     res.json(plants);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Internal server error", err });
+    res.status(500).json({ error: "Internal server error", err: (err as Error).message });
   }
 });
 

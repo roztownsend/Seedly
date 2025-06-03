@@ -17,7 +17,7 @@ router.get("/", async (_req, res) => {
     }
     catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Internal server error", err });
+        res.status(500).json({ error: "Internal server error", err: err.message });
     }
 });
 //search for a product (plant) by name or description. Nice-to-have: additional search by keywords.

@@ -12,12 +12,6 @@ const yamljs_1 = __importDefault(require("yamljs"));
 const path_1 = __importDefault(require("path"));
 const sequelizeConnect_1 = __importDefault(require("./config/sequelizeConnect"));
 const initModels_1 = require("./models/initModels");
-const plantRoutes_1 = __importDefault(require("./routes/plantRoutes"));
-const shippingRoutes_1 = __importDefault(require("./routes/shippingRoutes"));
-const userTaskRoutes_1 = __importDefault(require("./routes/userTaskRoutes"));
-const authTest_1 = __importDefault(require("./routes/authTest"));
-const purchaseRoutes_1 = __importDefault(require("./routes/purchaseRoutes"));
-//testing server startup
 sequelizeConnect_1.default
     .authenticate()
     .then(() => {
@@ -28,6 +22,11 @@ sequelizeConnect_1.default
     // .catch(() => console.log("boo"));
 })
     .catch((err) => console.error("Sequelize connection error:", err));
+const plantRoutes_1 = __importDefault(require("./routes/plantRoutes"));
+const shippingRoutes_1 = __importDefault(require("./routes/shippingRoutes"));
+const userTaskRoutes_1 = __importDefault(require("./routes/userTaskRoutes"));
+const authTest_1 = __importDefault(require("./routes/authTest"));
+const purchaseRoutes_1 = __importDefault(require("./routes/purchaseRoutes"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
 app.use((0, cors_1.default)());

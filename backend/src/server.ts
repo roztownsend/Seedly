@@ -8,20 +8,6 @@ import YAML from "yamljs";
 import path from "path";
 import sequelize from "./config/sequelizeConnect";
 import { initModels } from "./models/initModels";
-import plantRoutes from "./routes/plantRoutes";
-import shippingRoutes from "./routes/shippingRoutes";
-import userTaskRoutes from "./routes/userTaskRoutes";
-import { Purchase } from "./models/purchase.model";
-import { Plant } from "./models/plant.model";
-import { ShippingOption } from "./models/shippingOption.model";
-import plantsInserter from "./utils/plantsInserterHelper";
-import optionsInserter from "./utils/optionsInserterHelper";
-import authTest from "./routes/authTest";
-import { makeUserAdmin } from "./services/makeUserAdmin";
-
-import purchaseRoutes from "./routes/purchaseRoutes";
-//testing server startup
-
 
 sequelize
   .authenticate()
@@ -34,6 +20,18 @@ sequelize
   })
   .catch((err) => console.error("Sequelize connection error:", err));
 
+import plantRoutes from "./routes/plantRoutes";
+import shippingRoutes from "./routes/shippingRoutes";
+import userTaskRoutes from "./routes/userTaskRoutes";
+import { Purchase } from "./models/purchase.model";
+import { Plant } from "./models/plant.model";
+import { ShippingOption } from "./models/shippingOption.model";
+import plantsInserter from "./utils/plantsInserterHelper";
+import optionsInserter from "./utils/optionsInserterHelper";
+import authTest from "./routes/authTest";
+import { makeUserAdmin } from "./services/makeUserAdmin";
+
+import purchaseRoutes from "./routes/purchaseRoutes";
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors());

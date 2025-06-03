@@ -214,8 +214,6 @@ function AdminDashboard() {
             <ClipLoader color="#22c55e" size={32} />
           </div>
         )}
-
-        <button onClick={signOutUser}>Logout</button>
       </section>
     </>
   );

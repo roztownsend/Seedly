@@ -6,7 +6,7 @@ import { AdminDashboardHomeProps } from "../../types/adminDashboardTypes";
 function AdminDashboardHome({ handleInitialLoad }: AdminDashboardHomeProps) {
   return (
     <>
-      <div className="w-full flex flex-col justify-center items-center gap-5 mt-4">
+      <div className="w-full flex flex-col justify-center items-center gap-5 mt-4 mb-4">
         <div
           onClick={() => handleInitialLoad("day", "sales")}
           className="w-full max-w-[800px] min-h-[250px] bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 cursor-pointer group border-2 border-transparent hover:border-green-300 transform hover:-translate-y-2"

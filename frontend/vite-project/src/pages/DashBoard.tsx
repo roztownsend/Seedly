@@ -58,12 +58,6 @@ function DashBoard() {
   return (
     <div>
       <PurchasedSeeds userTasks={userTasks} />
-      <button
-        className="bg-blue-800 font-bold rounded-lg text-white p-4 mb-3"
-        onClick={signOutUser}
-      >
-        Logout
-      </button>
     </div>
   );
 }

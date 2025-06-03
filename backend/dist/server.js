@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const chalk_1 = __importDefault(require("chalk"));
 dotenv_1.default.config();
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const yamljs_1 = __importDefault(require("yamljs"));
@@ -22,13 +21,13 @@ const purchaseRoutes_1 = __importDefault(require("./routes/purchaseRoutes"));
 sequelizeConnect_1.default
     .authenticate()
     .then(() => {
-    console.log(chalk_1.default.green("Connected to Supabase via Sequelize"));
+    console.log("Connected to Supabase via Sequelize");
     (0, initModels_1.initModels)(sequelizeConnect_1.default);
     // plantsInserter()
     // .then(() => console.log("yay"))
     // .catch(() => console.log("boo"));
 })
-    .catch((err) => console.error(chalk_1.default.red("Sequelize connection error:", err)));
+    .catch((err) => console.error("Sequelize connection error:", err));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
 app.use((0, cors_1.default)());

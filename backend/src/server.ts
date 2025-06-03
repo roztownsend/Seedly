@@ -1,7 +1,6 @@
 import cors from "cors";
 import express from "express";
 import dotenv from "dotenv";
-import chalk from "chalk";
 dotenv.config();
 
 import swaggerUi from "swagger-ui-express";
@@ -23,16 +22,17 @@ import { makeUserAdmin } from "./services/makeUserAdmin";
 import purchaseRoutes from "./routes/purchaseRoutes";
 //testing server startup
 
+
 sequelize
   .authenticate()
   .then(() => {
-    console.log(chalk.green("Connected to Supabase via Sequelize"));
+    console.log("Connected to Supabase via Sequelize");
     initModels(sequelize);
     // plantsInserter()
     // .then(() => console.log("yay"))
     // .catch(() => console.log("boo"));
   })
-  .catch((err) => console.error(chalk.red("Sequelize connection error:", err)));
+  .catch((err) => console.error("Sequelize connection error:", err));
 
 const app = express();
 const PORT = process.env.PORT || 3000;

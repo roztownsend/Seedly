@@ -1,5 +1,5 @@
 import { Response, NextFunction } from "express";
-import { AuthenticatedRequest } from "./authenticateUser.ts";
+import { AuthenticatedRequest } from "./authenticateUser";
 export const authenticateAdmin = async (
   req: AuthenticatedRequest,
   res: Response,

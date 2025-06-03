@@ -10,6 +10,7 @@ import TimeFrameButtons from "../components/admin-dashboard-components/TimeFrame
 import AdminDashboardHome from "../components/admin-dashboard-components/AdminDashboardHome";
 import LeaderBoardComponent from "../components/admin-dashboard-components/LeaderboardComponent";
 import logoImage from "../assets/image/order-confirmation.png";
+import { MdHome } from "react-icons/md";
 
 function AdminDashboard() {
   const { signOutUser } = useAuthActions();
@@ -115,6 +116,17 @@ function AdminDashboard() {
   const handleRefresh = async () => {
     await handleSalesData(timeFrame as "day" | "week" | "month", true);
   };
+
+  const resetDashboard = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setPage("");
+      setIsLoading(false);
+      setSalesDataCache({});
+      setUserDataCache({});
+    }, 100);
+  };
+
   return (
     <>
       <section className="flex flex-col w-full items-center  justify-between">
@@ -132,8 +144,16 @@ function AdminDashboard() {
             </h2>
           </div>
         </div>
-        {hasData && (
+        {hasData && page && (
           <div className="flex items-center gap-4 mb-4">
+            <button
+              onClick={resetDashboard}
+              className="flex tracking-wide items-center gap-2 px-6 py-3 bg-gray-600 text-white rounded-xl hover:bg-gray-700 transition-all duration-200"
+            >
+              <MdHome size={20} />
+              Dashboard
+            </button>
+
             <TimeFrameButtons
               timeFrame={timeFrame}
               handleTimeFrameChange={handleTimeFrameChange}

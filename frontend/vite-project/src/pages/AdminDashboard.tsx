@@ -10,7 +10,6 @@ import TimeFrameButtons from "../components/admin-dashboard-components/TimeFrame
 import AdminDashboardHome from "../components/admin-dashboard-components/AdminDashboardHome";
 import LeaderBoardComponent from "../components/admin-dashboard-components/LeaderboardComponent";
 import logoImage from "../assets/image/order-confirmation.png";
-import { AwardIcon } from "lucide-react";
 
 function AdminDashboard() {
   const { signOutUser } = useAuthActions();
@@ -180,8 +179,13 @@ function AdminDashboard() {
             />
           ))}
         {page === "sales" && currentSalesData && currentSalesData.topPlants && (
-          <LeaderBoardComponent topPlants={currentSalesData.topPlants} />
+          <LeaderBoardComponent topList={currentSalesData.topPlants} />
         )}
+
+        {page === "users" && currentUsersData && currentUsersData.topUsers && (
+          <LeaderBoardComponent topList={currentUsersData.topUsers} />
+        )}
+
         {isLoading && !hasData && (
           <div className="flex items-center flex-col gap-4 py-12">
             <h2 className="text-xl font-semibold text-gray-700 tracking-wide">

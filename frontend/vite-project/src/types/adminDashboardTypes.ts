@@ -23,11 +23,13 @@ export type TopPlants = {
   revenue: string;
   unitsSold: string;
 };
-
-export type LeaderboardRowProps = TopPlants & { index: number };
+export type TopList = TopPlants | TopUsers;
+export type LeaderboardRowProps =
+  | (TopPlants & { index: number })
+  | (TopUsers & { index: number });
 
 export type LeaderboardProps = {
-  topPlants: TopPlants[];
+  topList: TopList[];
 };
 
 export type AdminDashboardHomeProps = {

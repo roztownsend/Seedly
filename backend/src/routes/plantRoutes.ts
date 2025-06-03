@@ -4,6 +4,8 @@ import { Router, Request, Response } from "express";
 import { z } from "zod";
 import { Plant } from "../models/plant.model";
 import { Op } from "sequelize";
+import sequelize from "../config/sequelizeConnect";
+import { initModels } from "../models/initModels";
 import { Task } from "../models/task.model";
 import { idSchema, seedSchema } from "../schemas/schema";
 const router = Router();
@@ -12,6 +14,7 @@ const router = Router();
 router.get("/", async (_req: Request, res: Response): Promise<void> => {
   console.log("GET /plants triggered");
   try {
+    initModels(sequelize);
     console.log("Fetching all plants from the database...", await Plant.findAll());
     const plants = await Plant.findAll();
     console.log(`Got ${plants.length} products.`);

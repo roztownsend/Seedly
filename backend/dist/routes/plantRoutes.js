@@ -1,16 +1,22 @@
 "use strict";
 //there are a few debug console.logs, shouldnt be touched
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const zod_1 = require("zod");
 const plant_model_1 = require("../models/plant.model");
 const sequelize_1 = require("sequelize");
+const sequelizeConnect_1 = __importDefault(require("../config/sequelizeConnect"));
+const initModels_1 = require("../models/initModels");
 const schema_1 = require("../schemas/schema");
 const router = (0, express_1.Router)();
 //get all plants
 router.get("/", async (_req, res) => {
     console.log("GET /plants triggered");
     try {
+        (0, initModels_1.initModels)(sequelizeConnect_1.default);
         console.log("Fetching all plants from the database...", await plant_model_1.Plant.findAll());
         const plants = await plant_model_1.Plant.findAll();
         console.log(`Got ${plants.length} products.`);

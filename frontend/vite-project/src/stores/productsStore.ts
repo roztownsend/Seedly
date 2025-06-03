@@ -35,7 +35,7 @@ const useProductsStore = create<ProductState>((set) => ({
   actions: {
     fetchAllPlants: async () => {
       set({ loading: true })
-      const response = await axios.get("http://localhost:5000/plants");
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/plants`);
       console.log(response.data);
       set({
         productList: response.data,

@@ -26,7 +26,7 @@ const ProductDetails: React.FC = () => {
     const fetchPlant = async () => {
       try {
         const res = await axios.get<ProductItem[]>(
-          "http://localhost:5000/plants"
+          `${import.meta.env.VITE_API_URL}/plants`
         ); // fetch all plants but if you're using a different port, adjust the URL accordingly
         const data = res.data;
         console.log(data);
@@ -46,7 +46,7 @@ const ProductDetails: React.FC = () => {
 
     const fetchTasks = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/plants/${plant.id}/tasks`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/plants/${plant.id}/tasks`);
         setTasks(res.data);
       } catch (err) {
         setTasks([]);

@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "src/server.ts",
   "scripts": {
-    "start": "ts-node src/server.ts",
+    "start": "node dist/server.js",
     "dev": "nodemon --watch src --ext ts --exec ts-node src/server.ts",
     "run:schema": "ts-node src/utils/runSchema.ts",
-    "seed": "ts-node src/utils/runSeed.ts"
+    "seed": "ts-node src/utils/runSeed.ts",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",

@@ -145,24 +145,27 @@ function AdminDashboard() {
           </div>
         </div>
         {hasData && page && (
-          <div className="flex items-center gap-4 mb-4 flex-wrap justify-center ">
+          <div className="flex flex-col flex-wrap sm:flex-row items-center gap-3 sm:gap-4 mb-4 justify-center w-full">
             <button
               onClick={resetDashboard}
-              className="flex tracking-wide items-center gap-2 px-6 py-3 bg-gray-600 text-white rounded-xl hover:bg-gray-700 transition-all duration-200"
+              className="flex tracking-wide items-center gap-2 px-6 py-3 bg-gray-600 text-white rounded-xl hover:bg-gray-700 transition-all duration-200   justify-center"
             >
               <MdHome size={20} />
               Dashboard
             </button>
 
-            <TimeFrameButtons
-              timeFrame={timeFrame}
-              handleTimeFrameChange={handleTimeFrameChange}
-              isLoading={isLoading}
-            />
+            <div className="w-full sm:w-auto flex justify-center">
+              <TimeFrameButtons
+                timeFrame={timeFrame}
+                handleTimeFrameChange={handleTimeFrameChange}
+                isLoading={isLoading}
+              />
+            </div>
+
             <button
               onClick={handleRefresh}
               disabled={isRefreshing}
-              className="flex tracking-wide items-center gap-2 px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+              className="flex tracking-wide items-center gap-2 px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200  justify-center"
             >
               {!isRefreshing ? (
                 <IoMdRefresh size={20} />

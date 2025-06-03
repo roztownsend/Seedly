@@ -7,8 +7,10 @@ const express_1 = require("express");
 const user_model_1 = require("../models/user.model");
 const authenticateUser_1 = require("../middleware/authenticateUser");
 const sequelizeConnect_1 = __importDefault(require("../config/sequelizeConnect"));
+const initModels_1 = require("../models/initModels");
 const assignOrphanedPurchase_1 = require("../services/assignOrphanedPurchase");
 const taskService_1 = require("../services/taskService");
+(0, initModels_1.initModels)(sequelizeConnect_1.default);
 const router = (0, express_1.Router)();
 router.post("/link-tasks", authenticateUser_1.authenticateUser, async (req, res) => {
     const t = await sequelizeConnect_1.default.transaction();

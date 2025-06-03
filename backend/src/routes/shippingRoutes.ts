@@ -1,7 +1,11 @@
 import { Router, Request, Response } from "express";
 import { ShippingOption } from "../models/shippingOption.model";
+import sequelize from "../config/sequelizeConnect";
+import { initModels } from "../models/initModels";
 
 const router = Router();
+
+initModels(sequelize);
 
 //get shipping options
 

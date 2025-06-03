@@ -7,8 +7,10 @@ const express_1 = require("express");
 const authenticateUser_1 = require("../middleware/authenticateUser");
 const getUserTasksService_1 = require("../services/getUserTasksService");
 const sequelizeConnect_1 = __importDefault(require("../config/sequelizeConnect"));
+const initModels_1 = require("../models/initModels");
 const updateUserTaskService_1 = require("../services/updateUserTaskService");
 const router = (0, express_1.Router)();
+(0, initModels_1.initModels)(sequelizeConnect_1.default);
 router.get("/", authenticateUser_1.authenticateUser, async (req, res) => {
     try {
         if (!req.user?.id) {

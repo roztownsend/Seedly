@@ -9,9 +9,12 @@ import path from "path";
 import sequelize from "./config/sequelizeConnect";
 import { initModels } from "./models/initModels";
 
-export const appPromise = sequelize
-  .authenticate()
-  .then(() => {
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+(async () => {
+  try {
+    await sequelize.authenticate();
     console.log("Connected to Supabase via Sequelize");
     initModels(sequelize);
 
@@ -21,8 +24,6 @@ export const appPromise = sequelize
     const purchaseRoutes = require("./routes/purchaseRoutes").default;
     const authTest = require("./routes/authTest").default;
 
-    const app = express();
-    const PORT = process.env.PORT || 3000;
     app.use(cors());
     app.use(express.json());
     app.use("/plants", plantRoutes);
@@ -46,9 +47,10 @@ export const appPromise = sequelize
         console.log(`Server running on http://localhost:${PORT}`);
       });
     }
-    return app;
-  })
-  .catch((err) => {
+  } catch (err) {
     console.error("Sequelize connection error:", err);
     throw err;
-  });
+  }
+})();
+
+export default app;

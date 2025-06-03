@@ -30,7 +30,10 @@ sequelizeConnect_1.default
     .catch((err) => console.error("Sequelize connection error:", err));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)({
+    origin: ["https://seedly-tau.vercel.app", "http://localhost:5173"],
+    credentials: true,
+}));
 app.use(express_1.default.json());
 app.use("/plants", plantRoutes_1.default);
 app.use("/shipping-options", shippingRoutes_1.default);

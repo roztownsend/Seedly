@@ -35,7 +35,12 @@ sequelize
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://seedly-tau.vercel.app", "http://localhost:5173"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use("/plants", plantRoutes);
 app.use("/shipping-options", shippingRoutes);

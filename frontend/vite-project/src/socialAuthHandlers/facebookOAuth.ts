@@ -5,6 +5,7 @@ export const handleFacebookLogin = async () => {
     /\/$/,
     ""
   );
+  console.log("Redirect base URL for Facebook OAuth:", redirectBase);
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "facebook",
     options: {

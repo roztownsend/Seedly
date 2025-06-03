@@ -5,6 +5,7 @@ export const handleGoogleLogin = async () => {
     /\/$/,
     ""
   );
+  console.log("Redirect base URL for Google OAuth:", redirectBase);
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {

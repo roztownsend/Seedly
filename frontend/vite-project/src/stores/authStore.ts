@@ -155,7 +155,7 @@ const useAuthStore = create<AuthState>((set, get) => ({
                 .from("users")
                 .select("*")
                 .eq("id", session.user.id)
-                .single();
+                .maybeSingle();
               if (!data) {
                 const { error: insertError } = await supabase
                   .from("users")

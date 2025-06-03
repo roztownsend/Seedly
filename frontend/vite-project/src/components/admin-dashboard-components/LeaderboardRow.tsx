@@ -6,7 +6,7 @@ function LeaderBoardRow(props: LeaderboardRowProps) {
   const isPlant = "productName" in props;
 
   return isPlant ? (
-    <div className="grid grid-cols-12 max-[662px]:grid-cols-5 gap-4 px-4 py-3 border-b border-gray-200 hover:bg-gray-50 transition-colors">
+    <div className="grid grid-cols-12 gap-4 px-4 py-3 border-b border-gray-200 hover:bg-gray-50 transition-colors">
       <div className="col-span-1 flex items-center">
         <span className="text-gray-600 font-bold">{index + 1}</span>
       </div>
@@ -37,10 +37,10 @@ function LeaderBoardRow(props: LeaderboardRowProps) {
         <span className="text-gray-700 font-bold">{props.purchaseCount}</span>
       </div>
 
-      <div className="col-span-2 flex items-center justify-end">
+      <div className="col-span-2 max-[658px]:col-span-3 flex items-center justify-end">
         <span className="text-gray-700 font-bold">{props.totalSpent} kr</span>
       </div>
-      <div className="col-span-3 flex items-center justify-end">
+      <div className="col-span-3  flex items-center justify-end">
         <span className="text-gray-700 font-bold">
           {formatPurchaseDate(props.created_at)}
         </span>

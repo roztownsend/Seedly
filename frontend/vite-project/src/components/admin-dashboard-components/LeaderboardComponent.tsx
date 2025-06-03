@@ -42,13 +42,13 @@ function LeaderBoardComponent({ topList }: LeaderboardProps) {
           <div className="col-span-1 text-gray-500 max-[781px]:text-xs max-[658px]:hidden text-base font-medium">
             #
           </div>
-          <div className="col-span-3  text-gray-500 max-[781px]:text-xs text-base font-medium">
+          <div className="col-span-3   text-gray-500 max-[781px]:text-xs text-base font-medium">
             USER EMAIL
           </div>
           <div className="col-span-3 text-gray-500 max-[781px]:text-xs text-base font-medium text-center">
             ORDERS
           </div>
-          <div className="col-span-2 text-gray-500 max-[781px]:text-xs text-base font-medium text-right">
+          <div className="col-span-2 max-[658px]:col-span-3 text-gray-500 max-[781px]:text-xs text-base font-medium text-right">
             TOTAL SPENT
           </div>
           <div className="col-span-3 text-gray-500 max-[781px]:text-xs text-base font-medium text-right">

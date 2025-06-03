@@ -6,12 +6,12 @@ function LeaderBoardRow(props: LeaderboardRowProps) {
   const isPlant = "productName" in props;
 
   return isPlant ? (
-    <div className="grid grid-cols-12 gap-4 px-4 py-3 border-b border-gray-200 hover:bg-gray-50 transition-colors">
+    <div className="grid grid-cols-12 max-[662px]:grid-cols-5 gap-4 px-4 py-3 border-b border-gray-200 hover:bg-gray-50 transition-colors">
       <div className="col-span-1 flex items-center">
         <span className="text-gray-600 font-bold">{index + 1}</span>
       </div>
 
-      <div className="col-span-6 flex items-center">
+      <div className="col-span-6 max-[662px]:col-span-2 flex  items-center">
         <span className="text-gray-800 font-bold">{props.productName}</span>
       </div>
 
@@ -24,13 +24,13 @@ function LeaderBoardRow(props: LeaderboardRowProps) {
       </div>
     </div>
   ) : (
-    <div className="grid grid-cols-12 gap-4 px-4 py-3 border-b border-gray-200 hover:bg-gray-50 transition-colors">
-      <div className="col-span-1 flex items-center">
+    <div className="grid grid-cols-12  gap-4 px-4 py-3 border-b border-gray-200 hover:bg-gray-50 transition-colors">
+      <div className="col-span-1 flex items-center max-[658px]:hidden">
         <span className="text-gray-600 font-bold">{index + 1}</span>
       </div>
 
       <div className="col-span-3 flex items-center">
-        <span className="text-gray-800 font-bold">{props.email}</span>
+        <span className="text-gray-800 text-xs font-bold">{props.email}</span>
       </div>
 
       <div className="col-span-3 flex items-center justify-center">

@@ -145,7 +145,7 @@ function AdminDashboard() {
           </div>
         </div>
         {hasData && page && (
-          <div className="flex items-center gap-4 mb-4">
+          <div className="flex items-center gap-4 mb-4 flex-wrap justify-center ">
             <button
               onClick={resetDashboard}
               className="flex tracking-wide items-center gap-2 px-6 py-3 bg-gray-600 text-white rounded-xl hover:bg-gray-700 transition-all duration-200"
@@ -215,7 +215,6 @@ function AdminDashboard() {
           </div>
         )}
 
-        <button onClick={() => handleUsersData("day")}>LOG USER DATA</button>
         <button onClick={signOutUser}>Logout</button>
       </section>
     </>

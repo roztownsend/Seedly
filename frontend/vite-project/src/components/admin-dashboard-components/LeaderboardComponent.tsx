@@ -39,19 +39,19 @@ function LeaderBoardComponent({ topList }: LeaderboardProps) {
     if (isTopUserList(topList)) {
       return (
         <div className="grid grid-cols-12 gap-4 px-4 py-2 bg-gray-100 border-b items-center">
-          <div className="col-span-1 text-gray-500 text-base font-medium">
+          <div className="col-span-1 text-gray-500 max-[781px]:text-xs max-[658px]:hidden text-base font-medium">
             #
           </div>
-          <div className="col-span-3 text-gray-500 text-base font-medium">
+          <div className="col-span-3  text-gray-500 max-[781px]:text-xs text-base font-medium">
             USER EMAIL
           </div>
-          <div className="col-span-3 text-gray-500 text-base font-medium text-center">
+          <div className="col-span-3 text-gray-500 max-[781px]:text-xs text-base font-medium text-center">
             ORDERS
           </div>
-          <div className="col-span-2 text-gray-500 text-base font-medium text-right">
+          <div className="col-span-2 text-gray-500 max-[781px]:text-xs text-base font-medium text-right">
             TOTAL SPENT
           </div>
-          <div className="col-span-3 text-gray-500 text-base font-medium text-right">
+          <div className="col-span-3 text-gray-500 max-[781px]:text-xs text-base font-medium text-right">
             MEMBER SINCE
           </div>
         </div>

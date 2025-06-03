@@ -12,19 +12,18 @@ const sequelizeConnect_1 = __importDefault(require("../config/sequelizeConnect")
 const initModels_1 = require("../models/initModels");
 const schema_1 = require("../schemas/schema");
 const router = (0, express_1.Router)();
+(0, initModels_1.initModels)(sequelizeConnect_1.default);
 //get all plants
 router.get("/", async (_req, res) => {
     console.log("GET /plants triggered");
     try {
-        (0, initModels_1.initModels)(sequelizeConnect_1.default);
-        console.log("Fetching all plants from the database...", await plant_model_1.Plant.findAll());
         const plants = await plant_model_1.Plant.findAll();
         console.log(`Got ${plants.length} products.`);
         res.json(plants);
     }
     catch (err) {
         console.error('Error fetching plants:', err);
-        res.status(500).json({ error: "Internal server error", err: err.message });
+        res.status(500).json({ error: "Internal server error" });
     }
 });
 //search for a product (plant) by name or description. Nice-to-have: additional search by keywords.

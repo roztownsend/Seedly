@@ -10,18 +10,17 @@ import { Task } from "../models/task.model";
 import { idSchema, seedSchema } from "../schemas/schema";
 const router = Router();
 
+initModels(sequelize);
 //get all plants
 router.get("/", async (_req: Request, res: Response): Promise<void> => {
   console.log("GET /plants triggered");
   try {
-    initModels(sequelize);
-    console.log("Fetching all plants from the database...", await Plant.findAll());
     const plants = await Plant.findAll();
     console.log(`Got ${plants.length} products.`);
     res.json(plants);
   } catch (err) {
     console.error('Error fetching plants:', err);
-    res.status(500).json({ error: "Internal server error", err: (err as Error).message });
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

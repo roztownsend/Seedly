@@ -12,7 +12,7 @@ const sequelize = new sequelize_1.Sequelize(connectionString, {
     dialect: "postgres",
     pool: {
         max: 12,
-        min: 0,
+        min: 1,
         acquire: 30000,
         idle: 10000,
     },

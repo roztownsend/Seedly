@@ -34,19 +34,20 @@ const useProductsStore = create<ProductState>((set) => ({
   loading: false,
   actions: {
     fetchAllPlants: async () => {
-      set({ loading: true })
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/plants`);
+      set({ loading: true });
+      const baseUrl = import.meta.env.VITE_API_URL.replace(/\/$/, "");
+      const response = await axios.get(`${baseUrl}/plants`);
       console.log(response.data);
       set({
         productList: response.data,
-        loading: false
+        loading: false,
       });
     },
     updateProductList: (sorted) => {
-      console.log("Sorted store!")
-      set({ productList: sorted })
-    }
-  }
+      console.log("Sorted store!");
+      set({ productList: sorted });
+    },
+  },
 }));
 
 export const useProductList = () =>

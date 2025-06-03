@@ -23,7 +23,8 @@ export const useSelectedShippingOption = () =>
 const useShippingOptionsStore = create<ShippingOptionsState>((set) => {
   const fetchAllOptions = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/shipping-options`);
+      const baseUrl = import.meta.env.VITE_API_URL.replace(/\/$/, "");
+      const response = await axios.get(`${baseUrl}/shipping-options`);
       set({ allShippingOptions: response.data });
     } catch (error) {
       console.error(error);

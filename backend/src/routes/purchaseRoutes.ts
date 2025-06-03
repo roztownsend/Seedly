@@ -5,6 +5,7 @@ import { paymentSchema } from "../schemas/paymentSchema";
 import { checkoutSchema } from "../schemas/checkoutSchema";
 import { authenticateUser } from "../middleware/authenticateUser";
 import sequelize from "../config/sequelizeConnect";
+import { initModels } from "../models/initModels";
 import { Transaction } from "sequelize";
 import { processCheckout } from "../services/checkoutService";
 import { linkUserTasks } from "../services/taskService";

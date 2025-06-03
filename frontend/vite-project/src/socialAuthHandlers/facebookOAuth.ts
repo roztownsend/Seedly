@@ -1,10 +1,14 @@
 import { supabase } from "../helper/supabaseClient";
 
 export const handleFacebookLogin = async () => {
+  const redirectBase = import.meta.env.VITE_OAUTH_REDIRECT_URL.replace(
+    /\/$/,
+    ""
+  );
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "facebook",
     options: {
-      redirectTo: `${import.meta.env.VITE_OAUTH_REDIRECT_URL}/dashboard`,
+      redirectTo: `${redirectBase}/dashboard`,
     },
   });
   if (error) {

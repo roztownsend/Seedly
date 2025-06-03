@@ -21,8 +21,9 @@ function DashBoard() {
     const fetchUserTasks = async () => {
       setIsFetchingTasks(true);
       try {
+        const baseUrl = import.meta.env.VITE_API_URL.replace(/\/$/, "");
         const response = await axios.get<UserTasksResponse>(
-          `${import.meta.env.VITE_API_URL}/user-tasks`,
+          `${baseUrl}/user-tasks`,
           {
             headers: {
               "Content-Type": "application/json",

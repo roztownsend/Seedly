@@ -5,10 +5,12 @@ import {
   authenticateUser,
 } from "../middleware/authenticateUser";
 import sequelize from "../config/sequelizeConnect";
+import { initModels } from "../models/initModels";
 import { Transaction } from "sequelize";
 import { assignOrphanedPurchasesToUser } from "../services/assignOrphanedPurchase";
 import { linkUserTasks } from "../services/taskService";
 
+initModels(sequelize);
 const router = Router();
 router.post(
   "/link-tasks",

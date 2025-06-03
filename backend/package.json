@@ -4,6 +4,7 @@
   "main": "src/server.ts",
   "scripts": {
     "start": "node dist/server.js",
+    "main": "dist/server.js",
     "dev": "nodemon --watch src --ext ts --exec ts-node src/server.ts",
     "run:schema": "ts-node src/utils/runSchema.ts",
     "seed": "ts-node src/utils/runSeed.ts",

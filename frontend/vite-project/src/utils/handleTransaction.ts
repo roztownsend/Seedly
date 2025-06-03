@@ -22,14 +22,11 @@ export const handleTransaction = async (
   }
 
   try {
-    const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/${endpoint}`,
-      payload,
-      {
-        method: "POST",
-        headers,
-      }
-    );
+    const baseUrl = import.meta.env.VITE_API_URL.replace(/\/$/, "");
+    const response = await axios.post(`${baseUrl}/${endpoint}`, payload, {
+      method: "POST",
+      headers,
+    });
     console.log("Transaction complete", response.data);
     return response.data;
   } catch (error) {

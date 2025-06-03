@@ -6,9 +6,12 @@ import {
 } from "../middleware/authenticateUser";
 import { getUserTasks } from "../services/getUserTasksService";
 import sequelize from "../config/sequelizeConnect";
+import { initModels } from "../models/initModels";
 import { Transaction } from "sequelize";
 import { updateUserTask } from "../services/updateUserTaskService";
 const router = Router();
+
+initModels(sequelize);
 
 type TaskUpdateBody = {
   user_task_id: string;

@@ -1,7 +1,6 @@
 import cors from "cors";
 import express from "express";
 import dotenv from "dotenv";
-import chalk from "chalk";
 dotenv.config();
 
 import swaggerUi from "swagger-ui-express";
@@ -26,17 +25,22 @@ import purchaseRoutes from "./routes/purchaseRoutes";
 sequelize
   .authenticate()
   .then(() => {
-    console.log(chalk.green("Connected to Supabase via Sequelize"));
+    console.log("Connected to Supabase via Sequelize");
     initModels(sequelize);
     // plantsInserter()
     // .then(() => console.log("yay"))
     // .catch(() => console.log("boo"));
   })
-  .catch((err) => console.error(chalk.red("Sequelize connection error:", err)));
+  .catch((err) => console.error("Sequelize connection error:", err));
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://seedly-tau.vercel.app", "http://localhost:5173"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use("/plants", plantRoutes);
 app.use("/shipping-options", shippingRoutes);

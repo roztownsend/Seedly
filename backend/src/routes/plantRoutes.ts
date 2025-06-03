@@ -4,10 +4,13 @@ import { Router, Request, Response } from "express";
 import { z } from "zod";
 import { Plant } from "../models/plant.model";
 import { Op } from "sequelize";
+import sequelize from "../config/sequelizeConnect";
+import { initModels } from "../models/initModels";
 import { Task } from "../models/task.model";
 import { idSchema, seedSchema } from "../schemas/schema";
 const router = Router();
 
+initModels(sequelize);
 //get all plants
 router.get("/", async (_req: Request, res: Response): Promise<void> => {
   console.log("GET /plants triggered");
@@ -16,7 +19,7 @@ router.get("/", async (_req: Request, res: Response): Promise<void> => {
     console.log(`Got ${plants.length} products.`);
     res.json(plants);
   } catch (err) {
-    console.error(err);
+    console.error('Error fetching plants:', err);
     res.status(500).json({ error: "Internal server error" });
   }
 });

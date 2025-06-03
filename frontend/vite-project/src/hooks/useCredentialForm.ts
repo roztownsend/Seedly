@@ -61,42 +61,42 @@ export const useCredentialForm = (
 
       const result = await action(email, password);
       //temporary api calls.
-      if (result.success) {
-        if (formType === "signup") {
-          console.log(result.data);
-          const response = await axios.post(
-            `${import.meta.env.VITE_API_URL}/auth-test/complete-signup`,
-            {},
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${result.data?.session?.access_token}`,
-              },
-            }
-          );
-          console.log(response.data);
-          navigate("/dashboard");
-        } else if (formType === "login") {
-          console.log(result.data);
-          const response = await axios.post(
-            `${import.meta.env.VITE_API_URL}/auth-test/link-tasks`,
-            {},
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${result.data?.session?.access_token}`,
-              },
-            }
-          );
+      const baseUrl = import.meta.env.VITE_API_URL.replace(/\/$/, "");
 
-          if (result.data?.user?.app_metadata.role === "admin") {
-            navigate("/admin/test-dashboard");
-          } else {
-            navigate("/dashboard");
+      if (formType === "signup") {
+        console.log(result.data);
+        const response = await axios.post(
+          `${baseUrl}/auth-test/complete-signup`,
+          {},
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${result.data?.session?.access_token}`,
+            },
           }
-        } else if (result.error) {
-          setErrorMessage(result.error.message);
+        );
+        console.log(response.data);
+        navigate("/dashboard");
+      } else if (formType === "login") {
+        console.log(result.data);
+        const response = await axios.post(
+          `${baseUrl}/auth-test/link-tasks`,
+          {},
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${result.data?.session?.access_token}`,
+            },
+          }
+        );
+
+        if (result.data?.user?.app_metadata.role === "admin") {
+          navigate("/admin/test-dashboard");
+        } else {
+          navigate("/dashboard");
         }
+      } else if (result.error) {
+        setErrorMessage(result.error.message);
       }
     } catch (error) {
       await signOutUser();

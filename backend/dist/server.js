@@ -15,6 +15,7 @@ const initModels_1 = require("./models/initModels");
 const plantRoutes_1 = __importDefault(require("./routes/plantRoutes"));
 const shippingRoutes_1 = __importDefault(require("./routes/shippingRoutes"));
 const userTaskRoutes_1 = __importDefault(require("./routes/userTaskRoutes"));
+const adminRoutes_1 = __importDefault(require("./routes/adminRoutes"));
 const authTest_1 = __importDefault(require("./routes/authTest"));
 const purchaseRoutes_1 = __importDefault(require("./routes/purchaseRoutes"));
 //testing server startup
@@ -39,6 +40,7 @@ app.use("/plants", plantRoutes_1.default);
 app.use("/shipping-options", shippingRoutes_1.default);
 app.use("/auth-test", authTest_1.default);
 app.use("/user-tasks", userTaskRoutes_1.default);
+app.use("/admin", adminRoutes_1.default);
 app.use("/purchase", purchaseRoutes_1.default);
 const swaggerDocument = yamljs_1.default.load(path_1.default.join(__dirname, "../swagger/swagger.yaml"));
 // basic route, look /routes folder for actual ones

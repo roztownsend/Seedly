@@ -75,6 +75,9 @@ export const useCredentialForm = (
             },
           }
         );
+        if (result.error) {
+          setErrorMessage(result.error.message);
+        }
         console.log(response.data);
         navigate("/dashboard");
       } else if (formType === "login") {
@@ -90,13 +93,9 @@ export const useCredentialForm = (
           }
         );
 
-        if (result.data?.user?.app_metadata.role === "admin") {
-          navigate("/admin/test-dashboard");
-        } else {
-          navigate("/dashboard");
-        }
-      } else if (result.error) {
-        setErrorMessage(result.error.message);
+        result.data?.user?.app_metadata.role === "admin"
+          ? navigate("/admin/dashboard")
+          : navigate("/dashboard");
       }
     } catch (error) {
       await signOutUser();

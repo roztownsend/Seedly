@@ -4,8 +4,11 @@ import { ShoppingBag, Search, Menu, X, User2 } from "lucide-react";
 import "../navbar/Navbar.css";
 import { useCartUniqueItems } from "../../stores/cartStore";
 import { useSearchActions, useSearchQuery } from "../../stores/searchStore";
-import { useAuthSession, useAuthActions } from "../../stores/authStore";
-
+import {
+  useAuthSession,
+  useAuthActions,
+  useIsAdmin,
+} from "../../stores/authStore";
 
 export default function Navbar() {
   const query = useSearchQuery();
@@ -13,7 +16,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [animateCart, setAnimateCart] = useState(false);
-
+  const isAdmin = useIsAdmin();
   const cartUniqueItems = useCartUniqueItems();
   const navigate = useNavigate();
   const location = useLocation();
@@ -47,7 +50,7 @@ export default function Navbar() {
 
   useEffect(() => {
     if (!location.pathname.startsWith("/search")) {
-      setQuery("");   
+      setQuery("");
     }
   }, [location.pathname]);
 
@@ -86,29 +89,34 @@ export default function Navbar() {
           <div className="navbar-right">
             <Link to="/cart" className="navbar-auth">
               <div className="navbar-cart">
-                <ShoppingBag className={`navbar-icons ${animateCart ? "pop" : ""}`} />
+                <ShoppingBag
+                  className={`navbar-icons ${animateCart ? "pop" : ""}`}
+                />
                 {cartUniqueItems}
               </div>
             </Link>
-            {session ?
-            <>
-              <Link to="/dashboard" className="navbar-auth">
-              Dashboard
-            </Link>
-            <Link to="/" onClick={signOutUser} className="navbar-auth">
-              Sign Out
-            </Link> 
-            </> 
-            :             
-            <>
-              <Link to="/login" className="navbar-auth">
-              Login
-            </Link>
-            <Link to="/signup" className="navbar-auth">
-              Sign Up
-            </Link> 
-            </> 
-            }
+            {session ? (
+              <>
+                <Link
+                  to={isAdmin ? "/admin/dashboard" : "/dashboard"}
+                  className="navbar-auth"
+                >
+                  Dashboard
+                </Link>
+                <Link to="/" onClick={signOutUser} className="navbar-auth">
+                  Sign Out
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="navbar-auth">
+                  Login
+                </Link>
+                <Link to="/signup" className="navbar-auth">
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </nav>
@@ -121,7 +129,9 @@ export default function Navbar() {
           </Link>
           <div className="navbar-mobile-icons">
             <Link to="/cart" className="navbar-cart">
-              <ShoppingBag className={`navbar-icons ${animateCart ? "pop" : ""}`} />
+              <ShoppingBag
+                className={`navbar-icons ${animateCart ? "pop" : ""}`}
+              />
               {cartUniqueItems}
             </Link>
             <div className="relative">
@@ -130,34 +140,48 @@ export default function Navbar() {
               </button>
 
               <div
-                className={`user-menu ${showUserMenu ? "user-menu-open" : "user-menu-closed"
-                  }`}>
-                {session ?
+                className={`user-menu ${
+                  showUserMenu ? "user-menu-open" : "user-menu-closed"
+                }`}
+              >
+                {session ? (
                   <>
-                    <Link to="/dashboard" 
-                      onClick={() => setShowUserMenu(false)} className="user-menu-link">
+                    <Link
+                      to="/dashboard"
+                      onClick={() => setShowUserMenu(false)}
+                      className="user-menu-link"
+                    >
                       Dashboard
                     </Link>
-                    <Link to="/" onClick={() => {
-                      signOutUser();
-                      setShowUserMenu(false);
-                    }} 
-                      className="user-menu-link">
+                    <Link
+                      to="/"
+                      onClick={() => {
+                        signOutUser();
+                        setShowUserMenu(false);
+                      }}
+                      className="user-menu-link"
+                    >
                       Sign Out
-                    </Link> 
-                  </> 
-                    :             
+                    </Link>
+                  </>
+                ) : (
                   <>
-                    <Link to="/login" 
-                      onClick={() => setShowUserMenu(false)}className="user-menu-link">
+                    <Link
+                      to="/login"
+                      onClick={() => setShowUserMenu(false)}
+                      className="user-menu-link"
+                    >
                       Login
                     </Link>
-                    <Link to="/signup" 
-                      onClick={() => setShowUserMenu(false)}className="user-menu-link">
+                    <Link
+                      to="/signup"
+                      onClick={() => setShowUserMenu(false)}
+                      className="user-menu-link"
+                    >
                       Sign Up
-                    </Link> 
-                  </> 
-                }
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
             <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -173,14 +197,14 @@ export default function Navbar() {
         <div className="mobile-search-wrapper">
           <div className="navbar-search">
             <Search className="navbar-search-icon" />
-                <input
-                  type="text"
-                  placeholder="Search Seeds!"
-                  className="navbar-search-input"
-                  value={query}
-                  onKeyDown={handleKeyStroke}
-                  onChange={handleInputChange}
-                />
+            <input
+              type="text"
+              placeholder="Search Seeds!"
+              className="navbar-search-input"
+              value={query}
+              onKeyDown={handleKeyStroke}
+              onChange={handleInputChange}
+            />
           </div>
         </div>
       </nav>

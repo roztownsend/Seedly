@@ -56,6 +56,7 @@ function AdminDashboard() {
     } finally {
       setIsLoading(false);
       setIsRefreshing(false);
+      console.log(currentUsersData);
     }
   };
 

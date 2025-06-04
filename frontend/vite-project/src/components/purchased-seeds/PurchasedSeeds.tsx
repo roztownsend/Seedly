@@ -20,9 +20,9 @@ const PurchasedSeeds: React.FC<PurchasedSeedsProps> = ({ userTasks }) => {
 
       <section className="dashboard-container">
         <div className="seeds-grid">
-          {userTasks.map((task) => (
+          {userTasks.map((task, index) => (
             <SeedCard
-              key={task.plant_data.id}
+              key={index}
               name={task.plant_data.product_name}
               plantId={task.plant_data.id}
               purchaseDate={task.purchase_data.purchase_date}

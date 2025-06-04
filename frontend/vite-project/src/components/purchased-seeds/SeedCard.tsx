@@ -80,7 +80,6 @@ const SeedCard = ({
           },
         }
       );
-      console.log(response.data);
       originalTasksRef.current = [...userTasks];
       setIsLoadingSaveChanges(false);
     } catch (error) {

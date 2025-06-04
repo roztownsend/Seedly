@@ -49,12 +49,11 @@ const ProductDetails: React.FC = () => {
     const fetchPlant = async () => {
       try {
         const baseUrl = import.meta.env.VITE_API_URL.replace(/\/$/, "");
-        const res = await axios.get<ProductItem[]>(`${baseUrl}/plants`);
+        const res = await axios.get<ProductItem>(`${baseUrl}/plants/${id}`);
         // fetch all plants but if you're using a different port, adjust the URL accordingly
         const data = res.data;
-        console.log(data);
-        const found = data.find((p: ProductItem) => p.id === id);
-        setPlant(found || null); // defines the product found
+
+        setPlant(data || null); // defines the product found
       } catch (err) {
         console.error("Error fetching plant data", err);
       } finally {

@@ -31,9 +31,7 @@ function DashBoard() {
             },
           }
         );
-        console.log("FETCHING TRIGGERD");
         setUserTask(response.data.tasks);
-        console.log(response.data.tasks);
       } catch (error) {
         console.error(error);
       } finally {

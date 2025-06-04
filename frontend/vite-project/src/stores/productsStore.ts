@@ -37,7 +37,6 @@ const useProductsStore = create<ProductState>((set) => ({
       set({ loading: true });
       const baseUrl = import.meta.env.VITE_API_URL.replace(/\/$/, "");
       const response = await axios.get(`${baseUrl}/plants`);
-      console.log(response.data);
       set({
         productList: response.data,
         loading: false,

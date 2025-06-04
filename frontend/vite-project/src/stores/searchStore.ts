@@ -33,7 +33,6 @@ export const useSearchStore = create<SearchState>((set, get) => ({
         );
         const data = response.data.data;
         set({ results: data, loading: false });
-        console.log("New search Zustand Store:", response.data.data);
         return data;
       } catch (error) {
         console.error("Search error", error);

@@ -56,7 +56,7 @@ function AdminDashboard() {
     } finally {
       setIsLoading(false);
       setIsRefreshing(false);
-      console.log(salesDataCache);
+      console.log(currentUsersData);
     }
   };
 
@@ -89,7 +89,6 @@ function AdminDashboard() {
     } finally {
       setIsLoading(false);
       setIsRefreshing(false);
-      console.log(salesDataCache);
     }
   };
   const handleTimeFrameChange = async (timeframe: "day" | "week" | "month") => {

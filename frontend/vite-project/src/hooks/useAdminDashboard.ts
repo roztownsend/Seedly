@@ -7,11 +7,11 @@ import {
 
 export const useAdminDashboard = () => {
   const session = useAuthSession();
-
+  const baseUrl: string = import.meta.env.VITE_API_URL || "";
   const getSales = async (timeframe: "day" | "week" | "month") => {
     try {
       const response = await axios.get<SalesDataResponse>(
-        `http://localhost:5000/admin/sales/${timeframe}`,
+        `${baseUrl}/admin/sales/${timeframe}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -29,7 +29,7 @@ export const useAdminDashboard = () => {
   const getUsers = async (timeframe: "day" | "week" | "month") => {
     try {
       const response = await axios.get<UsersDataResponse>(
-        `http://localhost:5000/admin/users/${timeframe}`,
+        `${baseUrl}/users/${timeframe}`,
         {
           headers: {
             "Content-Type": "application/json",

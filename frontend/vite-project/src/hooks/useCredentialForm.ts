@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuthActions } from "../stores/authStore";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AuthError } from "@supabase/supabase-js";
 
 import {
   CredentialsInput,
@@ -15,6 +16,8 @@ export const useCredentialForm = (
 ): UseCredentialsFormReturn & { loading: boolean } => {
   const navigate = useNavigate();
 
+  const isValidEmail = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const { signUpNewUser, signInWithPassword, signOutUser } = useAuthActions();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -47,6 +50,11 @@ export const useCredentialForm = (
     setLoading(true);
     try {
       const { email, password } = formData;
+
+      const validEmail = isValidEmail(email);
+      if (!validEmail) {
+        throw new Error("Invalid email");
+      }
       const action =
         formType === "signup"
           ? signUpNewUser
@@ -62,6 +70,10 @@ export const useCredentialForm = (
       //temporary api calls.
       const baseUrl = import.meta.env.VITE_API_URL.replace(/\/$/, "");
 
+      if (result.error) {
+        throw new Error(result.error.message);
+      }
+
       if (formType === "signup") {
         const response = await axios.post(
           `${baseUrl}/auth-test/complete-signup`,
@@ -73,9 +85,7 @@ export const useCredentialForm = (
             },
           }
         );
-        if (result.error) {
-          setErrorMessage(result.error.message);
-        }
+
         console.log(response.data);
         navigate("/dashboard");
       } else if (formType === "login") {
@@ -94,12 +104,14 @@ export const useCredentialForm = (
           ? navigate("/admin/dashboard")
           : navigate("/dashboard");
       }
-    } catch (error) {
+    } catch (error: unknown) {
       await signOutUser();
       if (axios.isAxiosError(error)) {
         console.error(error.response?.data.message);
       }
-      setErrorMessage("Something went wrong. Please try again.");
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+      }
     } finally {
       setLoading(false);
       setIsSubmitting(false);

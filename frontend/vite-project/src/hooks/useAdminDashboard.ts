@@ -19,7 +19,7 @@ export const useAdminDashboard = () => {
           },
         }
       );
-      console.log(response.data);
+
       return response.data;
     } catch (error) {
       console.error("Failed to fetch todays sales", error);
@@ -29,7 +29,7 @@ export const useAdminDashboard = () => {
   const getUsers = async (timeframe: "day" | "week" | "month") => {
     try {
       const response = await axios.get<UsersDataResponse>(
-        `${baseUrl}/users/${timeframe}`,
+        `${baseUrl}/admin/users/${timeframe}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -37,7 +37,7 @@ export const useAdminDashboard = () => {
           },
         }
       );
-      console.log(response.data);
+
       return response.data;
     } catch (error) {
       console.error("Failed to fetch todays sales", error);

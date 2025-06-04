@@ -105,8 +105,6 @@ const useAuthStore = create<AuthState>((set, get) => ({
         existingSubscription.unsubscribe();
       }
 
-      console.log("initializeAuth: Attempting to get session...");
-
       try {
         // Attempt to retrive the current session.
         const {
@@ -140,9 +138,6 @@ const useAuthStore = create<AuthState>((set, get) => ({
         const {
           data: { subscription },
         } = supabase.auth.onAuthStateChange(async (event, eventSession) => {
-          console.log(
-            `onAthStateChange - Event ${event} Session Email - ${eventSession?.user.email}`
-          );
           if (event === "INITIAL_SESSION" && session) {
             const identities = session.user.app_metadata.provider;
             if (

@@ -37,7 +37,6 @@ export const useCredentialForm = (
       ...prevState,
       [name]: type === "checkbox" ? checked : value,
     }));
-    console.log(formData);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -64,7 +63,6 @@ export const useCredentialForm = (
       const baseUrl = import.meta.env.VITE_API_URL.replace(/\/$/, "");
 
       if (formType === "signup") {
-        console.log(result.data);
         const response = await axios.post(
           `${baseUrl}/auth-test/complete-signup`,
           {},
@@ -81,7 +79,6 @@ export const useCredentialForm = (
         console.log(response.data);
         navigate("/dashboard");
       } else if (formType === "login") {
-        console.log(result.data);
         const response = await axios.post(
           `${baseUrl}/auth-test/link-tasks`,
           {},

@@ -52,7 +52,6 @@ const ProductDetails: React.FC = () => {
         const res = await axios.get<ProductItem>(`${baseUrl}/plants/${id}`);
         // fetch all plants but if you're using a different port, adjust the URL accordingly
         const data = res.data;
-        console.log(data);
 
         setPlant(data || null); // defines the product found
       } catch (err) {

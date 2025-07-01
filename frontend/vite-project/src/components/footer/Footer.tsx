@@ -1,21 +1,28 @@
 import "../footer/Footer.css";
+import { Link } from "react-router-dom";
 export default function Footer() {
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-    return (
-        <footer className="footer">
-            <div className="footer-container">
-                <div className="footer-links">
-                    <a href="#" className="footer-link">Seeds</a>
-                    <a href="#" className="footer-link">Contact Us</a>
-                </div>
-                <div className="footer-logo">Seedly</div>
-                <div className="footer-back">
-                    <button onClick={scrollToTop} className="footer-link">Back to Top</button>
-                </div>
-            </div>
-        </footer>
-    );
+  return (
+    <footer className="footer">
+      <div className="footer-container">
+        <div className="footer-links">
+          <Link to="/shop" className="navbar-link">
+            Seeds
+          </Link>
+          <Link to="mailto:9gqf16u0c@mozmail.com" className="navbar-link">
+            Contact Us
+          </Link>
+        </div>
+        <div className="footer-logo">Seedly</div>
+        <div className="footer-back">
+          <button onClick={scrollToTop} className="footer-link">
+            Back to Top
+          </button>
+        </div>
+      </div>
+    </footer>
+  );
 }
